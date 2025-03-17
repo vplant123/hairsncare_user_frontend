@@ -1,0 +1,240 @@
+* {
+  font-family: Nunito, sans-serif;
+}
+
+.text-blk {
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  line-height: 25px;
+}
+
+.responsive-cell-block {
+  min-height: 75px;
+}
+
+.responsive-container-block {
+  min-height: 75px;
+  height: fit-content;
+  width: 100%;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 0px;
+  margin-right: auto;
+  margin-bottom: 40px;
+  margin-left: auto;
+}
+
+.outer-container {
+  padding-top: 10px;
+  padding-right: 30px;
+  padding-bottom: 10px;
+  padding-left: 30px;
+}
+
+.inner-container {
+  max-width: 1320px;
+  margin-top: 50px;
+  margin-right: auto;
+  margin-bottom: 50px;
+  margin-left: auto;
+}
+
+.heading-text {
+  font-size: 48px;
+  line-height: 65px;
+  font-weight: 900;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 5px;
+  margin-left: 0px;
+}
+
+.sub-heading-text {
+  color: rgb(122, 122, 122);
+  line-height: 30px;
+}
+
+.team-1-swiper {
+  overflow: hidden;
+}
+
+.team-2-swiper {
+  overflow: hidden;
+}
+
+.team-name {
+  font-size: 24px;
+  line-height: 34px;
+  font-weight: 900;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+}
+
+.team-member-image {
+  width: 100%;
+  height: 100%;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+}
+
+
+
+.arrow-left-1 {
+  transform: rotateX(0deg) rotateY(180deg) rotateZ(0deg) scaleX(1) scaleY(1) scaleZ(1);
+  margin-top: 0px;
+  margin-right: 20px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  cursor: pointer;
+}
+
+.swiper-slide {
+  margin-top: 0px;
+  margin-right: 40px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+}
+
+.arrow-left-2 {
+  transform: rotateX(0deg) rotateY(180deg) rotateZ(0deg) scaleX(1) scaleY(1) scaleZ(1);
+  margin-top: 0px;
+  margin-right: 20px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  cursor: pointer;
+}
+
+.arrow-right-1 {
+  height: 14px;
+  cursor: pointer;
+}
+
+.swiper-slide.empty {
+  width: auto;
+  margin-top: 0px;
+  margin-right: 40px;
+  margin-bottom: 0px;
+  margin-left: -20px;
+}
+
+.swiper-container.team-1-swiper,
+.swiper-container.team-2-swiper {
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+}
+
+.arrow-right-2 {
+  cursor: pointer;
+}
+
+.docotr-section-main{
+  background-image: url("https://res.cloudinary.com/drkpwvnun/image/upload/v1730145914/hair-assessment/u0ryi45zl5bbr23kxdtm.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.icon-doctor-num{
+background: #F1F9FE;
+box-shadow: 0px 6.3125px 6.3125px rgba(0, 0, 0, 0.25);
+border-radius: 12.625px;
+padding: 10px;
+width: 15%;
+height: 100px;
+}
+
+.icon-doctor-inner{
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  background: #00A0E3;
+  border-radius: 2222px;
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+  
+
+}
+
+.head-doctor{
+  font-size: 20px;
+  color: white;
+}
+@media (max-width: 768px) {
+  .heading-text {
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+  }
+
+  .sub-heading-text {
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 20px;
+    margin-left: 0px;
+  }
+  .head-doctor{
+    font-size: 18px;
+  }
+}
+
+.doctor-head-2-section-2-htw{
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: rgba(56, 56, 56, 1);
+  line-height: 70px;
+}
+
+.doctor-text-3-section-2-htw{
+  font-size: 30px;
+  color: rgba(68, 68, 68, 1);
+  line-height: 35px;
+  font-weight: 600;
+}
+@media (max-width: 500px) {
+
+
+  .outer-container {
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+  }
+
+  .icon-doctor-num {
+    width: 20%;
+    height: 66px;
+}
+.doctor-head-2-section-2-htw{
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: rgba(56, 56, 56, 1);
+  line-height: 70px;
+}
+.doctor-text-3-section-2-htw{
+  font-size: 24px;
+  color: rgb(91, 82, 82);
+  line-height: 35px;
+  font-weight: 600;
+}
+}

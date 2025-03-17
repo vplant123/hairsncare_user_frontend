@@ -1,0 +1,22 @@
+.page-blog-list {
+    box-shadow: 0 3px 8px 0 rgb(54 57 73 / 5%);
+}
+
+.blog-filter-sm{
+    display: none;
+}
+
+.blog-filter-xl{
+    display: hidden;
+}
+
+
+@media (max-width: 767px) {
+    .blog-filter-xl{
+        display: none;
+    }
+
+    .blog-filter-sm{
+        display: block;
+    }
+}

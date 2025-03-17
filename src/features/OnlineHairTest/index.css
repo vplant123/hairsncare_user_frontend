@@ -1,0 +1,18 @@
+.main-section-3-oht{
+    background-image: url('https://res.cloudinary.com/drkpwvnun/image/upload/v1729420244/hair-assessment/ivsqcr1epbgymuxowzwn.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+.sub-main-section-4-oht{
+    border: 2px dotted rgba(196, 196, 196, 1);
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.strong {
+    color: #fff;
+    margin: 0;
+    padding:0
+}

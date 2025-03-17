@@ -1,0 +1,52 @@
+.main-section-1-op{
+    flex-direction: row;
+    padding: 3% 0 3% 0;
+    gap: 5%;
+}
+
+.main-section-1-op-left{
+    width: 50%;
+    gap: 15px;
+}
+
+.main-section-1-op-right{
+    width: 45%;
+}
+
+.main-section-3-op{
+    background-image: url("https://res.cloudinary.com/drkpwvnun/image/upload/v1729371676/hair-assessment/wh43zikapjenjhgexmwj.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+.sub-button-section-3-op {
+    text-align: center;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    background-color: rgba(0, 160, 227, 1);
+    box-shadow: 0 4px 6.5px 0 rgba(0,0,0,0.25);
+    border-radius: 9px;
+    color: #FFFFFF;
+    cursor: pointer;
+  }
+
+  .new-button{
+  }
+
+  @media (max-width: 768px) {
+    .main-section-1-op{
+        flex-direction: column;
+        /* padding: 3% 0 3% 0; */
+        gap:20px;
+    }
+    
+    .main-section-1-op-left{
+        width: 100%;
+        gap: 15px;
+    }
+    
+    .main-section-1-op-right{
+        width: 100%;
+    }
+}

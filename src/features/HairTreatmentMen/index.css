@@ -1,0 +1,13 @@
+.main-section-1-htm {
+  /* flex-direction: row; */
+  padding: 3% 0 3% 0;
+  gap: 5%;
+}
+
+.main-section-5-htm {
+  background: url("https://res.cloudinary.com/drkpwvnun/image/upload/v1729375604/hair-assessment/vygxt9nztzj3ldfzwmh7.png");
+}
+
+h3 strong {
+  color: black;
+}

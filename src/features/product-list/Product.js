@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { getCartItems } from '../products/CartSlice';
+import useNavigateParams from '../../utils/hookUseNavigateParam';
 
 let data = [
   {
@@ -40,24 +41,24 @@ let data = [
   }
 ];
 
-const ProductCard = ({ product, index,cart,
+const ProductCard = ({ product, index, cart,
   setCart }) => {
 
-  const navigate = useNavigate();
+  const navigate = useNavigateParams();
   const [ref, control] = useDivInView();
-  let disPercent = ((parseFloat(product?.discount || 0)/parseFloat(product?.price)) * 100)?.toFixed(0)
+  let disPercent = ((parseFloat(product?.discount || 0) / parseFloat(product?.price)) * 100)?.toFixed(0)
 
   let storedUserData = JSON.parse(localStorage?.getItem("User343"));
   const dispatch = useDispatch();
 
-  const scrollToTop = () =>{ 
-    window.scrollTo({ 
-      top: 0,  
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
       behavior: 'smooth'
       /* you can also use 'auto' behaviour 
          in place of 'smooth' */
-    }); 
-  }; 
+    });
+  };
 
 
   const handleAddToCart = async () => {
@@ -65,14 +66,14 @@ const ProductCard = ({ product, index,cart,
       item: product,
       quantity: 1,
     };
-    if(!storedUserData?.logedInUser){
+    if (!storedUserData?.logedInUser) {
 
       let c = cart
       let f = c?.findIndex((w) => w?.item?._id == product?._id);
-      if(f != -1){
+      if (f != -1) {
         c[f].quantity = c[f]?.quantity + 1;
       }
-      else{
+      else {
         c.push(data);
       }
       setCart(c);
@@ -127,22 +128,23 @@ const ProductCard = ({ product, index,cart,
     >
       <div className="product-card" style={{ height: '450px', justifyContent: 'space-between' }}>
         <div>
-        {disPercent && disPercent != "0" ? (
-                          <div style={{ position: "absolute",zIndex:1 }}>
-                            <span class="tc nt_labels pa pe_none cw">
-                              <span class="onsale nt_label">
-                                <span>-{disPercent + "%"}</span>
-                              </span>
-                            </span>
-                          </div>
-                        ) : ( 
-                          <></>
-                        )}{" "}
-          <img src={product.src?.[0]} alt={product.name} title={product.name} style={{ height: '200px' }}       onClick={() => {
+          {disPercent && disPercent != "0" ? (
+            <div style={{ position: "absolute", zIndex: 1 }}>
+              <span class="tc nt_labels pa pe_none cw">
+                <span class="onsale nt_label">
+                  <span>-{disPercent + "%"}</span>
+                </span>
+              </span>
+            </div>
+          ) : (
+            <></>
+          )}{" "}
+          <img src={product.src?.[0]} alt={product.name} title={product.name} style={{ height: '200px' }} onClick={() => {
             scrollToTop();
-            navigate('/product-detail/' + product._id)}
+            navigate('/product-detail/' + product?.metaSlug ?? product._id, { id: product?._id })
           }
- />
+          }
+          />
         </div>
         <div className="d-flex flex-column">
           <div
@@ -153,152 +155,154 @@ const ProductCard = ({ product, index,cart,
             }}
             onClick={() => {
               scrollToTop();
-              navigate('/product-detail/' + product._id)}
+              navigate('/product-detail/' + product?.metaSlug ?? product._id, { id: product?._id })
+            }
             }
           >
             {product.name}
           </div>
           <div
             style={{
-              display:"flex",
+              display: "flex",
               textAlign: 'center',
               fontSize: '1rem',
               fontWeight: '500',
-              justifyContent:"center",
-              gap : "10px"
+              justifyContent: "center",
+              gap: "10px"
             }}
             onClick={() => {
               scrollToTop();
-              navigate('/product-detail/' + product._id)}
+              navigate('/product-detail/' + product?.metaSlug ?? product._id, { id: product?._id })
+            }
             }
           >
             ₹ {parseFloat(product?.price || 0) - parseFloat(product?.discount || 0)}
-          {product?.discount ?   <div
-                                className="product-price-des"
-                                style={{
-                                  paddingLeft: "10px",
-                                  fontWeight: "600",
-                                }}
-                              >
-                                ₹{parseFloat(product.price)}
-                              </div> : <></>}
+            {product?.discount ? <div
+              className="product-price-des"
+              style={{
+                paddingLeft: "10px",
+                fontWeight: "600",
+              }}
+            >
+              ₹{parseFloat(product.price)}
+            </div> : <></>}
           </div>
-          <ul style={{ padding: 0,display:"flex",justifyContent: "center",margin : "0" }}>
-                              <div class="ltn__comment-item clearfix">
-                                <div class="ltn__commenter-comment">
-                                  <div class="product-ratting">
-                                    {product?.review != "0" ? (
-                                      <ul className="horizontal-list">
-                                        <li>
-                                          <a href="#">
-                                            <i
-                                              class={
-                                                product?.review > 0
-                                                  ? "fas fa-star star-review-1"
-                                                  : "far fa-star star-review-1-inactive"
-                                              }
-                                            ></i>
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="#">
-                                            <i
-                                              class={
-                                                product?.review > 1
-                                                  ? "fas fa-star star-review-1"
-                                                  : "far fa-star star-review-1-inactive"
-                                              }
-                                            ></i>
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="#">
-                                            <i
-                                              class={
-                                                product?.review > 2
-                                                  ? "fas fa-star star-review-1"
-                                                  : "far fa-star star-review-1-inactive"
-                                              }
-                                            ></i>
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="#">
-                                            <i
-                                              class={
-                                                product?.review > 3
-                                                  ? "fas fa-star star-review-1"
-                                                  : "far fa-star star-review-1-inactive"
-                                              }
-                                            ></i>
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="#">
-                                            <i
-                                              class={
-                                                product?.review > 4
-                                                  ? "fas fa-star star-review-1"
-                                                  : "far fa-star star-review-1-inactive"
-                                              }
-                                            ></i>
-                                          </a>
-                                        </li>
-                                      </ul>
-                                    ) : (
-                                      <ul className="horizontal-list">
-                                        <li>
-                                          <a href="#">
-                                            <i
-                                              class={
-                                                "far fa-star star-review-1-inactive"
-                                              }
-                                            ></i>
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="#">
-                                            <i
-                                              class={
-                                                "far fa-star star-review-1-inactive"
-                                              }
-                                            ></i>
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="#">
-                                            <i
-                                              class={
-                                                "far fa-star star-review-1-inactive"
-                                              }
-                                            ></i>
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="#">
-                                            <i
-                                              class={
-                                                "far fa-star star-review-1-inactive"
-                                              }
-                                            ></i>
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="#">
-                                            <i
-                                              class={
-                                                "far fa-star star-review-1-inactive"
-                                              }
-                                            ></i>
-                                          </a>
-                                        </li>
-                                      </ul>
-                                    )}
-                                  </div>
-                                </div>
-                              </div>
-                            </ul>
-          <div className="btn-container" style={{margin : 0}}  onClick={() => handleAddToCart()}
+          <ul style={{ padding: 0, display: "flex", justifyContent: "center", margin: "0" }}>
+            <div class="ltn__comment-item clearfix">
+              <div class="ltn__commenter-comment">
+                <div class="product-ratting">
+                  {product?.review != "0" ? (
+                    <ul className="horizontal-list">
+                      <li>
+                        <a href="#">
+                          <i
+                            class={
+                              product?.review > 0
+                                ? "fas fa-star star-review-1"
+                                : "far fa-star star-review-1-inactive"
+                            }
+                          ></i>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i
+                            class={
+                              product?.review > 1
+                                ? "fas fa-star star-review-1"
+                                : "far fa-star star-review-1-inactive"
+                            }
+                          ></i>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i
+                            class={
+                              product?.review > 2
+                                ? "fas fa-star star-review-1"
+                                : "far fa-star star-review-1-inactive"
+                            }
+                          ></i>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i
+                            class={
+                              product?.review > 3
+                                ? "fas fa-star star-review-1"
+                                : "far fa-star star-review-1-inactive"
+                            }
+                          ></i>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i
+                            class={
+                              product?.review > 4
+                                ? "fas fa-star star-review-1"
+                                : "far fa-star star-review-1-inactive"
+                            }
+                          ></i>
+                        </a>
+                      </li>
+                    </ul>
+                  ) : (
+                    <ul className="horizontal-list">
+                      <li>
+                        <a href="#">
+                          <i
+                            class={
+                              "far fa-star star-review-1-inactive"
+                            }
+                          ></i>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i
+                            class={
+                              "far fa-star star-review-1-inactive"
+                            }
+                          ></i>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i
+                            class={
+                              "far fa-star star-review-1-inactive"
+                            }
+                          ></i>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i
+                            class={
+                              "far fa-star star-review-1-inactive"
+                            }
+                          ></i>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i
+                            class={
+                              "far fa-star star-review-1-inactive"
+                            }
+                          ></i>
+                        </a>
+                      </li>
+                    </ul>
+                  )}
+                </div>
+              </div>
+            </div>
+          </ul>
+          <div className="btn-container" style={{ margin: 0 }} onClick={() => handleAddToCart()}
           >
             <button className="btn primary">ADD TO CART</button>
           </div>
@@ -308,13 +312,13 @@ const ProductCard = ({ product, index,cart,
   );
 };
 
-const ProductList = ({ products, cart, setCart}) => {
+const ProductList = ({ products, cart, setCart }) => {
   return (
     <div className="col-12 row">
       {products?.map((item, index) => (
-          <ProductCard key={index} product={item} index={index} cart={cart}
-          setCart={setCart}  />
-        ))}
+        <ProductCard key={index} product={item} index={index} cart={cart}
+          setCart={setCart} />
+      ))}
     </div>
   );
 };
@@ -325,21 +329,21 @@ const Pagination = ({ length, cur, setCur }) => {
   return (
     <ul className="slick-dots" role="tablist" style={{ marginTop: '30px' }}>
       {
-      Array.from({ length }).map((e, ind) => {
-        return (
-          <li
-            key={ind}
-            className={cur === ind + 1 ? 'slick-active' : ''}
-            role="presentation"
-            aria-selected={cur === ind + 1}
-            onClick={() => setCur(ind + 1)}
-          >
-            <button type="button" data-role="none" role="button">
-              {ind + 1}
-            </button>
-          </li>
-        );
-      })}
+        Array.from({ length }).map((e, ind) => {
+          return (
+            <li
+              key={ind}
+              className={cur === ind + 1 ? 'slick-active' : ''}
+              role="presentation"
+              aria-selected={cur === ind + 1}
+              onClick={() => setCur(ind + 1)}
+            >
+              <button type="button" data-role="none" role="button">
+                {ind + 1}
+              </button>
+            </li>
+          );
+        })}
     </ul>
   );
 };
@@ -350,8 +354,8 @@ function Product(props) {
   const handleViewAll = () => {
     navigate('/best-hair-care-products-hair-loss-scalp-health');
   };
-  let {cart,
-    setCart} = props;
+  let { cart,
+    setCart } = props;
 
   const [products, setProducts] = useState([]);
   const [status, setStatus] = useState('idle');
@@ -380,7 +384,7 @@ function Product(props) {
       try {
         const response = await fetch(`${BASE_URL}/admin/product?review=4`);
         const data = await response.json();
-        setProducts([...data.message,...data.message,...data.message,...data.message]); // Adjust according to your API response structure
+        setProducts([...data.message, ...data.message, ...data.message, ...data.message]); // Adjust according to your API response structure
         setStatus('idle');
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -402,7 +406,7 @@ function Product(props) {
   //   }
   // }, [isMobile, isLargeScreen]);
 
-  const paginatedProducts = useMemo(()=> products?.slice((cur - 1) * slide, cur * slide), [cur, products, slide])
+  const paginatedProducts = useMemo(() => products?.slice((cur - 1) * slide, cur * slide), [cur, products, slide])
 
   return (
     <div>

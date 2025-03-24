@@ -8,40 +8,41 @@ import { useNavigate } from 'react-router-dom';
 import { Login } from '@mui/icons-material';
 import SignUp from '../signup/SignUp';
 import { FaSearch } from 'react-icons/fa';
+import useNavigateParams from '../../utils/hookUseNavigateParam';
 
-function SearchProduct({ isOpen, onClose,cart,setCart }) {
-
-
-
-
-    const navigate = useNavigate();
-      const [cartItemsNew, setCartItemsNew] = useState([]);
-
-      const cartItems = useSelector((state) => state.cart.items);
-    
-      let storedUserData = JSON.parse(localStorage?.getItem("User343"));
-      const showLogin = useSelector((state) => state.login.showLogin);
-
-      const userId = storedUserData?.logedInUser?.user._id;
-    
-      const dispatch = useDispatch();
-      const [loader, setLoader] = useState(false);
+function SearchProduct({ isOpen, onClose, cart, setCart }) {
 
 
-      useEffect(() => {
-        if(!storedUserData?.logedInUser){
-          setCartItemsNew(cart)
-        }
-        else setCartItemsNew(cartItems)
-      },[cartItems,cart])
 
-  const removeFromCart = async (id,_id) => {
 
-    if(!storedUserData?.logedInUser){
+  const navigate = useNavigateParams();
+  const [cartItemsNew, setCartItemsNew] = useState([]);
 
-      let c = cart?.map((item) => ({...item}));
+  const cartItems = useSelector((state) => state.cart.items);
+
+  let storedUserData = JSON.parse(localStorage?.getItem("User343"));
+  const showLogin = useSelector((state) => state.login.showLogin);
+
+  const userId = storedUserData?.logedInUser?.user._id;
+
+  const dispatch = useDispatch();
+  const [loader, setLoader] = useState(false);
+
+
+  useEffect(() => {
+    if (!storedUserData?.logedInUser) {
+      setCartItemsNew(cart)
+    }
+    else setCartItemsNew(cartItems)
+  }, [cartItems, cart])
+
+  const removeFromCart = async (id, _id) => {
+
+    if (!storedUserData?.logedInUser) {
+
+      let c = cart?.map((item) => ({ ...item }));
       let f = c?.filter((w) => w?.item?._id != _id);
-      console.log("jreijf",f,c,_id)
+      console.log("jreijf", f, c, _id)
 
       setCart(f);
       setCartItemsNew(f)
@@ -79,34 +80,35 @@ function SearchProduct({ isOpen, onClose,cart,setCart }) {
 
   const updateQuantity = (id, quantity) => {
 
-    if(!storedUserData?.logedInUser){
-        let c = cart.map((e) => ({...e}));
-        let f = c?.findIndex((w) => w?.item?._id == id);
-        if((f || f == "0") && f != -1){
-          c[f].quantity = c[f]?.quantity + 1;
-          console.log("jreijf",c[f].quantity)
-        }
-
-        setCart(c);
-        console.log("jreijf",f,c,id)
-        localStorage.setItem("cart", JSON.stringify(c));
-        return;
+    if (!storedUserData?.logedInUser) {
+      let c = cart.map((e) => ({ ...e }));
+      let f = c?.findIndex((w) => w?.item?._id == id);
+      if ((f || f == "0") && f != -1) {
+        c[f].quantity = c[f]?.quantity + 1;
+        console.log("jreijf", c[f].quantity)
       }
-  
-    else {setCartItemsNew(cartItemsNew.map(item => 
-      item?.item?._id == id ? { ...item, quantity: Math.max(1, quantity) } : item
-    ));
-}
+
+      setCart(c);
+      console.log("jreijf", f, c, id)
+      localStorage.setItem("cart", JSON.stringify(c));
+      return;
+    }
+
+    else {
+      setCartItemsNew(cartItemsNew.map(item =>
+        item?.item?._id == id ? { ...item, quantity: Math.max(1, quantity) } : item
+      ));
+    }
   };
 
 
 
-  const [search,setSearch] = useState("")
+  const [search, setSearch] = useState("")
   const [status, setStatus] = useState(false);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    
+
     const fetchProducts = async () => {
       setStatus(true);
       try {
@@ -120,40 +122,40 @@ function SearchProduct({ isOpen, onClose,cart,setCart }) {
       }
     };
 
-    if(search) {
-        let timeout = setTimeout(() => {
-            fetchProducts();
+    if (search) {
+      let timeout = setTimeout(() => {
+        fetchProducts();
 
-          }, 250);
-          return () => {
-            clearTimeout(timeout);
-        };  
-    }   
+      }, 250);
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
     else setProducts([])
   }, [search]);
 
 
   return (
-<div className={`mini-cart ${isOpen ? 'open' : ''}`}>
+    <div className={`mini-cart ${isOpen ? 'open' : ''}`}>
       <div className="mini-cart-header">
         <h3>SEARCH OUR SITE        </h3>
         <button onClick={onClose} className="close-btn">&times;</button>
       </div>
-      <div className='d-flex' style={{justifyContent : "center",margin : "20px 0 0 0",width:"100%"}}>
-        <div style={{position : "relative",    margin: "0 20px 0 20px",width:"100%"}}>
-        <input placeholder="Search" style={{width:"100%"}} onChange={(e)=>setSearch(e?.target?.value)} />
-        <FaSearch size={20} className='search-icon' />
+      <div className='d-flex' style={{ justifyContent: "center", margin: "20px 0 0 0", width: "100%" }}>
+        <div style={{ position: "relative", margin: "0 20px 0 20px", width: "100%" }}>
+          <input placeholder="Search" style={{ width: "100%" }} onChange={(e) => setSearch(e?.target?.value)} />
+          <FaSearch size={20} className='search-icon' />
         </div>
 
       </div>
       <div class="search_header__prs fwb cd" style={{
-    marginTop: "25px"
-}}><span class="h_result dn">Search Result:</span>
-		</div>
+        marginTop: "25px"
+      }}><span class="h_result dn">Search Result:</span>
+      </div>
       <div className="mini-cart-content">
-        {!status? (products?.length > 0 ? (
+        {!status ? (products?.length > 0 ? (
           products?.map((item, index) => (
-            <div className="d-flex" style={{ gap: "10px",margin : "25px 0 25px 0",cursor:"pointer" }} onClick={(it) => navigate(`/product-detail/${item?._id}`)}>
+            <div className="d-flex" style={{ gap: "10px", margin: "25px 0 25px 0", cursor: "pointer" }} onClick={(it) => navigate('/product-detail/' + item?.metaSlug ?? item._id, { id: item?._id })}>
               <div className="d-flex">
                 <img
                   style={{ width: "70px", height: "70px" }}
@@ -161,30 +163,30 @@ function SearchProduct({ isOpen, onClose,cart,setCart }) {
                 />
               </div>
               <div className="d-flex flex-column">
-              <div className="seacrh-product-name" style={{fontWeight : "700"}}>{item?.name}</div>
-              <div className='d-flex' >
-              <div
-                  style={{
-                    textDecoration: "line-through",
-                    fontSize : "14px",
-                    color: "#aaa",
-                  }}
-                  className="buyNow-product-name"
-                >
-                  ₹ {parseFloat(item?.price || 0)}
-                </div>
-                <div className="buyNow-product-name"                   style={{
-                    fontSize : "14px",
+                <div className="seacrh-product-name" style={{ fontWeight: "700" }}>{item?.name}</div>
+                <div className='d-flex' >
+                  <div
+                    style={{
+                      textDecoration: "line-through",
+                      fontSize: "14px",
+                      color: "#aaa",
+                    }}
+                    className="buyNow-product-name"
+                  >
+                    ₹ {parseFloat(item?.price || 0)}
+                  </div>
+                  <div className="buyNow-product-name" style={{
+                    fontSize: "14px",
                   }}>
-                  ₹{" "}
-                  {parseFloat(item?.price || 0) -
-                    parseFloat(item?.discount || 0)}
-                </div>
+                    ₹{" "}
+                    {parseFloat(item?.price || 0) -
+                      parseFloat(item?.discount || 0)}
+                  </div>
                 </div>
               </div>
             </div>
           ))
-        ): <p>No Result Found</p>): (
+        ) : <p>No Result Found</p>) : (
           <p>loading...</p>
         )}
       </div>

@@ -6,7 +6,7 @@ import BASE_URL from '../../../Config';
 export default function Nutritional({
   data,
   setBanner,
-  testId, 
+  testId,
 
   showSubQuestions,
   setShowSubQuestions,
@@ -21,13 +21,13 @@ export default function Nutritional({
   currentQuestionIndex,
   setCurrentQuestionIndex,
   hairTestExist,
-  scrollToTop
+  scrollToTop, fetchData
 }) {
   const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
     setBanner(data.questions[currentQuestionIndex].banner);
-    console.log("snmkrfner",currentQuestionIndex)
+    console.log("snmkrfner", currentQuestionIndex)
     const currentOptions = selectedOptions[currentQuestionIndex];
     if (currentOptions && currentOptions.length > 0) {
       const selectedOption = currentOptions[0].option;
@@ -54,13 +54,17 @@ export default function Nutritional({
   const token = storedUserData?.logedInUser?.accessToken;
 
   useEffect(() => {
-    if(hairTestExist?.Nutritional){
-      console.log("erknker",hairTestExist?.Nutritional)
+    if (hairTestExist?.Nutritional) {
+      console.log("erknker", hairTestExist?.Nutritional)
       setSelectedOptions(hairTestExist?.Nutritional);
     }
-  },[hairTestExist])
+  }, [hairTestExist])
 
-  const handleNextQuestion =async () => {
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const handleNextQuestion = async () => {
     if (currentQuestionIndex < data.questions.length - 1) {
       scrollToTop()
       setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -72,26 +76,26 @@ export default function Nutritional({
             'Content-Type': 'application/json',
             'Authorization': token
           },
-          body: JSON.stringify({id:testId,data:{Nutritional:selectedOptions,userId:storedUserData.logedInUser.user._id}})
+          body: JSON.stringify({ id: testId, data: { Nutritional: selectedOptions, userId: storedUserData.logedInUser.user._id } })
         });
-      
+
         if (!response.ok) {
-        
+
           throw new Error('Network response was not ok');
-        }else{
+        } else {
           const responseData = await response.json();
-         
-       
-         
+
+
+
           nextStep()
-          console.log(responseData,'huhuhuh');
+          console.log(responseData, 'huhuhuh');
         }
-      
-       
+
+
         // Handle the response data as needed
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error.message);
-      } 
+      }
       nextStep();
     }
   };
@@ -151,7 +155,7 @@ export default function Nutritional({
       setCurrentSubQuestions({});
       setSelectedSubOption(null);
     }
-    console.log("okwoke",newSelectedOptions)
+    console.log("okwoke", newSelectedOptions)
 
     setSelectedOptions(newSelectedOptions);
   };
@@ -183,15 +187,15 @@ export default function Nutritional({
 
   const isSelected = (option) => {
     const currentOptions = selectedOptions[currentQuestionIndex] || [];
-    console.log("jeokjroperjk",option,currentOptions,currentOptions.some((item) => item.option == option || item.option?.name == option?.name))
+    console.log("jeokjroperjk", option, currentOptions, currentOptions.some((item) => item.option == option || item.option?.name == option?.name))
     return currentOptions.some((item) => item.option == option || (item?.option?.name && item?.option?.name == option?.name));
   };
 
   return (
     <div>
-         <h1 style={{marginTop:'0'}}>Nutritional</h1>
+      <h1 style={{ marginTop: '0' }}>Nutritional</h1>
       <div className="progress-indicator">
-   
+
         {data.questions.map((_, index) => (
           <span key={index} className={index === currentQuestionIndex ? 'dot active' : 'dot-nut'} />
         ))}
@@ -202,9 +206,8 @@ export default function Nutritional({
         {data.questions[currentQuestionIndex].options.map((option, optionIndex) => (
           <div
             key={optionIndex}
-            className={`option ${typeof option === 'string' ? 'circle' : ''} ${
-              isSelected(option) ? 'selected-nut' : ''
-            }`}
+            className={`option ${typeof option === 'string' ? 'circle' : ''} ${isSelected(option) ? 'selected-nut' : ''
+              }`}
             onClick={() => handleOptionSelect(option)}
           >
             {typeof option === 'string' ? (
@@ -231,9 +234,8 @@ export default function Nutritional({
               currentSubQuestions.options.map((option, optionIndex) => (
                 <div
                   key={optionIndex}
-                  className={`option ${typeof option === 'string' ? 'circle' : ''} ${
-                    selectedSubOption === option ? 'selected-nut' : ''
-                  }`}
+                  className={`option ${typeof option === 'string' ? 'circle' : ''} ${selectedSubOption === option ? 'selected-nut' : ''
+                    }`}
                   onClick={() => handleSubOptionSelect(option, selectedOptions[currentQuestionIndex][0].option, currentSubQuestions)}
                 >
                   {typeof option === 'string' ? (

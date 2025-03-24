@@ -275,7 +275,7 @@
 
 // export default ProductDetail;
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Navbar from "../nav/Navbar";
 import ProductDetailSlider from "./ProductDetailSlider";
 import "./ProductDetail.css";
@@ -326,8 +326,8 @@ function ProductDetail(props) {
   //   if(props?.setTitle) props?.setTitle(window.location.pathname)
   // },[])
 
-  let {cart,
-    setCart} = props;
+  let { cart,
+    setCart } = props;
   const isMobile = useMediaQuery("(max-width: 768px)");
 
 
@@ -341,8 +341,8 @@ function ProductDetail(props) {
     if (typeof window !== "undefined") {
       window.onscroll = () => {
         let currentScrollPos = window.pageYOffset - 700;
-        let maxScroll = (document.body.scrollHeight - window.innerHeight); 
-        console.log("nmkmsen",document.body.scrollHeight,window.innerHeight,currentScrollPos)
+        let maxScroll = (document.body.scrollHeight - window.innerHeight);
+        console.log("nmkmsen", document.body.scrollHeight, window.innerHeight, currentScrollPos)
         if (currentScrollPos > 0 && currentScrollPos < maxScroll) {
           setIsVisible(true)
           // console.log(currentScrollPos)
@@ -358,13 +358,13 @@ function ProductDetail(props) {
   const targetDivRef = useRef(null);
   const scrollToDiv = () => {
     if (targetDivRef.current) {
-        targetDivRef.current.scrollIntoView({ behavior: "smooth" });
+      targetDivRef.current.scrollIntoView({ behavior: "smooth" });
     }
-};
+  };
 
   // useEffect(() => {
   //   let timeout;
-    
+
   //   if(product){
   //     timeout =     setTimeout(
   //       () =>
@@ -380,9 +380,14 @@ function ProductDetail(props) {
   //     clearTimeout(timeout);
   //   };
   // }, [select]);
-  const [readMore,setReadMore]=useState(-1)
+  const [readMore, setReadMore] = useState(-1)
   const [product, setProduct] = useState(null);
-  const params = useParams();
+  // const params = useParams();
+  const query = useSearchParams()[0].get("id");
+  const params = {
+    id: query
+  }
+  console.log("query", query)
   const [quantity, setQuantity] = useState(1);
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState({
@@ -390,6 +395,9 @@ function ProductDetail(props) {
     rating: "",
     comment: "",
   });
+
+  console.log("product", query)
+
   const [loader, setLoader] = useState(false); // New state for discount
   const [openReview, setOpenReview] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
@@ -429,11 +437,11 @@ function ProductDetail(props) {
   };
 
   let pageCount =
-  reviews?.length % 5 ==0
-    ? reviews?.length / 5
-    : Math.floor(reviews?.length / 5) + 1;
+    reviews?.length % 5 == 0
+      ? reviews?.length / 5
+      : Math.floor(reviews?.length / 5) + 1;
 
-    console.log("srjie",pageCount,reviews)
+  console.log("srjie", pageCount, reviews)
 
   const handleLoginClick = () => {
     dispatch(toggleLogin());
@@ -470,7 +478,7 @@ function ProductDetail(props) {
       [name]: value,
     });
   };
-  console.log("jkcoiejro",reviews?.length)
+  console.log("jkcoiejro", reviews?.length)
   const [cur1, setCur1] = useState(0);
 
 
@@ -482,7 +490,7 @@ function ProductDetail(props) {
     //   rating: '',
     //   comment: ''
     // });
-    if (!userId ) {
+    if (!userId) {
       toast.error("login required");
       return false;
     }
@@ -525,15 +533,15 @@ function ProductDetail(props) {
     }
   };
 
-  
+
   function setTransform(el, xpos, zpos, yAngle) {
     el.style.transform = `translateX(${xpos}px) translateZ(${zpos}px) rotateY(${yAngle}deg)`;
   }
   const ITEM_DISTANCE = 200;
-const ITEM_ANGLE = -45;
-const CENTER_ITEM_POP = 500;
-const CENTER_ITEM_DISTANCE = 80;
-const el = useRef(null);
+  const ITEM_ANGLE = -45;
+  const CENTER_ITEM_POP = 500;
+  const CENTER_ITEM_DISTANCE = 80;
+  const el = useRef(null);
 
   function target(index) {
     const items = el.current.children;
@@ -556,7 +564,7 @@ const el = useRef(null);
   const [yurl, setYurl] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const handlePlay = (ud) => {
-    console.log("smrfj",ud)
+    console.log("smrfj", ud)
     setYurl(ud);
     setShowPopup(true);
   }
@@ -578,21 +586,21 @@ const el = useRef(null);
 
 
 
-  console.log("momvoer",cur,cur+4)
+  console.log("momvoer", cur, cur + 4)
 
   const handleBuyNow = async () => {
     let data = {
       item: product,
       quantity: quantity,
     };
-    if(!storedUserData?.logedInUser){
+    if (!storedUserData?.logedInUser) {
 
       let c = cart
       let f = c?.findIndex((w) => w?.item?._id == product?._id);
-      if(f != -1){
+      if (f != -1) {
         c[f].quantity = c[f]?.quantity + 1;
       }
-      else{
+      else {
         c.push(data);
       }
       setCart(c);
@@ -635,14 +643,14 @@ const el = useRef(null);
       item: product,
       quantity: quantity,
     };
-    if(!storedUserData?.logedInUser){
+    if (!storedUserData?.logedInUser) {
 
       let c = cart
       let f = c?.findIndex((w) => w?.item?._id == product?._id);
-      if(f != -1){
+      if (f != -1) {
         c[f].quantity = c[f]?.quantity + 1;
       }
-      else{
+      else {
         c.push(data);
       }
       setCart(c);
@@ -689,7 +697,7 @@ const el = useRef(null);
     setIsZoomed(false);
   };
 
-  let disPercent = ((parseFloat(product?.discount || 0)/parseFloat(product?.price)) * 100)?.toFixed(0)
+  let disPercent = ((parseFloat(product?.discount || 0) / parseFloat(product?.price)) * 100)?.toFixed(0)
 
 
 
@@ -730,14 +738,14 @@ const el = useRef(null);
             </div>
             <div style={{ margin: "10px 0 10px 0" }}>{">"}</div>
             <div style={{ margin: "10px 0 10px 0", cursor: "pointer" }}>
-              {isMobile ? (product?.name?.length> 15 ? product?.name?.substring(0,15)+"..." : product?.name) : product?.name}
+              {isMobile ? (product?.name?.length > 15 ? product?.name?.substring(0, 15) + "..." : product?.name) : product?.name}
             </div>
           </div>
         </div>
       </div>
       <div className="container">
         <div className="product-section row">
-          <div className="product-image col-12 col-md-6" style={{    position: "relative"}}>
+          <div className="product-image col-12 col-md-6" style={{ position: "relative" }}>
             {/* <TransformWrapper
       defaultScale={1}
       defaultPositionX={100}
@@ -787,22 +795,26 @@ const el = useRef(null);
                 },
               }}
               imageClassName="img-magnify"
-              enlargedImageContainerStyle={{ zIndex: 10,width:"100%",height:"100%" }}
-              // imageStyle={{ maxWidth: "100%", height: "400px" }} 
+              enlargedImageContainerStyle={{ zIndex: 10, width: "100%", height: "100%" }}
+            // imageStyle={{ maxWidth: "100%", height: "400px" }} 
             />
-                        {disPercent && disPercent != "0" ? (
-                          <div style={{ position: "absolute",top : 0,    width: "71px",
-                            height: "40px" }}>
-                            <span class="tc nt_labels pa pe_none cw" style={{height: "100%",
-    display: "flex"}}>
-                              <span class="onsale nt_label" style={{width : "100%",fontSize : "18px"}}>
-                                <span>-{disPercent + "%"}</span>
-                              </span>
-                            </span>
-                          </div>
-                        ) : (
-                          <></>
-                        )}
+            {disPercent && disPercent != "0" ? (
+              <div style={{
+                position: "absolute", top: 0, width: "71px",
+                height: "40px"
+              }}>
+                <span class="tc nt_labels pa pe_none cw" style={{
+                  height: "100%",
+                  display: "flex"
+                }}>
+                  <span class="onsale nt_label" style={{ width: "100%", fontSize: "18px" }}>
+                    <span>-{disPercent + "%"}</span>
+                  </span>
+                </span>
+              </div>
+            ) : (
+              <></>
+            )}
 
             <ul class="slick-dots" role="tablist" style={{ marginTop: "30px" }}>
               {product?.src?.map((e, ind) => {
@@ -950,7 +962,7 @@ const el = useRef(null);
                   style={{
                     margin: "0px 0 0 10px",
                     fontWeight: "700",
-                    cursor:"pointer "
+                    cursor: "pointer "
                   }}
                   onClick={scrollToDiv}
                 >
@@ -1034,21 +1046,21 @@ const el = useRef(null);
                   Add to cart
                 </div>
               </div>
-            </div> 
+            </div>
             {
-                        (parseFloat(product?.price || 0) -
-                          parseFloat(product?.discount || 0))?.toFixed(0) < content1?.deliveryAmt  ?                       
-                          <div className="d-flex" style={{padding: "10px 0 10px 0",gap : "10px"}}>
-                            < LocalShippingIcon style={{fontSize : "30px"}}/>
-                        <strong style={{fontSize : "18px"}}>Delivery Fee : </strong> 
-                        <div style={{fontSize : "18px"}}>&nbsp;₹ {content1?.deliveryCharge}</div>
-                      </div> : <div className="d-flex" style={{padding: "10px 0 10px 0",gap : "10px"}}>
-                      < LocalShippingIcon style={{fontSize : "30px"}}/>
+              (parseFloat(product?.price || 0) -
+                parseFloat(product?.discount || 0))?.toFixed(0) < content1?.deliveryAmt ?
+                <div className="d-flex" style={{ padding: "10px 0 10px 0", gap: "10px" }}>
+                  < LocalShippingIcon style={{ fontSize: "30px" }} />
+                  <strong style={{ fontSize: "18px" }}>Delivery Fee : </strong>
+                  <div style={{ fontSize: "18px" }}>&nbsp;₹ {content1?.deliveryCharge}</div>
+                </div> : <div className="d-flex" style={{ padding: "10px 0 10px 0", gap: "10px" }}>
+                  < LocalShippingIcon style={{ fontSize: "30px" }} />
 
-                        <strong style={{color : "green",fontSize : "18px"}}>FREE Delivery&nbsp;&nbsp; </strong>
-                        <div style={{textDecoration : "line-through",fontSize : "18px"}}>₹ {content1?.deliveryCharge}</div>
-                      </div>
-                      }
+                  <strong style={{ color: "green", fontSize: "18px" }}>FREE Delivery&nbsp;&nbsp; </strong>
+                  <div style={{ textDecoration: "line-through", fontSize: "18px" }}>₹ {content1?.deliveryCharge}</div>
+                </div>
+            }
             <div className="d-flex flex-column">
               <div className="hilight">Highlights:</div>
               <div
@@ -1123,11 +1135,10 @@ const el = useRef(null);
                                   <span></span>
                                   <div
                                     id={e?._id}
-                                    className={`accordion-collapse collapse ${
-                                      openSection === e?._id ? "show" : ""
-                                    }`}
+                                    className={`accordion-collapse collapse ${openSection === e?._id ? "show" : ""
+                                      }`}
                                     data-bs-parent="#accordion_2"
-                                    //
+                                  //
                                   >
                                     <div class="card-body">
                                       <div
@@ -1185,11 +1196,10 @@ const el = useRef(null);
                       <span></span>
                       <div
                         id={e?._id}
-                        className={`accordion-collapse collapse ${
-                          openSection2 === e?._id ? "show" : ""
-                        }`}
+                        className={`accordion-collapse collapse ${openSection2 === e?._id ? "show" : ""
+                          }`}
                         data-bs-parent="#accordion_2"
-                        //
+                      //
                       >
                         <div class="card-body">
                           <div dangerouslySetInnerHTML={{ __html: e?.desc }} />
@@ -1205,7 +1215,7 @@ const el = useRef(null);
 
         <div
           style={{ margin: "50px 0 50px 0" }}
-          // dangerouslySetInnerHTML={{ __html: product.longDes }}
+        // dangerouslySetInnerHTML={{ __html: product.longDes }}
         />
       </div>
 
@@ -1328,11 +1338,11 @@ const el = useRef(null);
                             </div>
                           </div>
                           <div style={{ fontSize: "17px" }}>{e?.comment?.length > 50 ?
-                          <div className="d-flex">{readMore  == i ? e?.comment : e?.comment?.substring(0,50)}
-                          <div onClick={() => setReadMore(i)}>
-                          &nbsp; &nbsp;...Read More
-                          </div>
-                          </div> : e?.comment}</div>
+                            <div className="d-flex">{readMore == i ? e?.comment : e?.comment?.substring(0, 50)}
+                              <div onClick={() => setReadMore(i)}>
+                                &nbsp; &nbsp;...Read More
+                              </div>
+                            </div> : e?.comment}</div>
                         </li>
                       );
                     })}
@@ -1368,34 +1378,36 @@ const el = useRef(null);
                         );
                       })} */}
 
-<div className="reactPagination" style={{display: "flex",
-    justifyContent: "center"}}>
-          <ReactPaginate
-            breakLabel="..."
-            nextLabel=" >"
-            onPageChange={(event) => {
-              setCur(event.selected * 5)
-              // console.log("sjiorjfre",event.selected)
-              // setSelectedPage(event.selected)
-          
-            }}
-            pageRangeDisplayed={5}
-            pageCount={pageCount}
-            // forcePage={selectedPage} 
-            previousLabel="<"
-            renderOnZeroPageCount={null}
-            breakClassName={"page-item"}
-            breakLinkClassName={"page-link"}
-            containerClassName={"pagination"}
-            pageClassName={"page-item"}
-            pageLinkClassName={"page-link"}
-            previousClassName={"page-item"}
-            previousLinkClassName={"page-link"}
-            nextClassName={"page-item"}
-            nextLinkClassName={"page-link"}
-            activeClassName={"active"}
-          />
-        </div>
+                    <div className="reactPagination" style={{
+                      display: "flex",
+                      justifyContent: "center"
+                    }}>
+                      <ReactPaginate
+                        breakLabel="..."
+                        nextLabel=" >"
+                        onPageChange={(event) => {
+                          setCur(event.selected * 5)
+                          // console.log("sjiorjfre",event.selected)
+                          // setSelectedPage(event.selected)
+
+                        }}
+                        pageRangeDisplayed={5}
+                        pageCount={pageCount}
+                        // forcePage={selectedPage} 
+                        previousLabel="<"
+                        renderOnZeroPageCount={null}
+                        breakClassName={"page-item"}
+                        breakLinkClassName={"page-link"}
+                        containerClassName={"pagination"}
+                        pageClassName={"page-item"}
+                        pageLinkClassName={"page-link"}
+                        previousClassName={"page-item"}
+                        previousLinkClassName={"page-link"}
+                        nextClassName={"page-item"}
+                        nextLinkClassName={"page-link"}
+                        activeClassName={"active"}
+                      />
+                    </div>
                   </ul>
                 </div>
               </div>
@@ -1441,7 +1453,7 @@ const el = useRef(null);
             <button
               type="submit"
               className="submit-review-btn"
-              // disabled={userId ? false : true}
+            // disabled={userId ? false : true}
             >
               {loader ? "Loading" : "Submit Review"}
             </button>
@@ -1568,53 +1580,53 @@ const el = useRef(null);
       >
         <div className="container">
           {isMobile ? (
-            <div className="d-flex" style={{justifyContent : "end", margin: "12px 0 12px 0",gap : "10px"}}>
-                              <div className="cout-cont">
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    {" "}
-                    <div className="negative-sign" onClick={decrementQuantity}>
-                      -
-                    </div>
-                    <div style={{ width: "2rem", height: "2rem" }}>
-                      <input
-                        type="text"
-                        style={{
-                          width: "100%",
-                          textAlign: "center",
-                          height: "100%",
-                        }}
-                        value={quantity}
-                        readOnly
-                      />
-                    </div>
-                    <div className="plus-sign" onClick={incrementQuantity}>
-                      +
-                    </div>
-                  </div>
-                </div>
+            <div className="d-flex" style={{ justifyContent: "end", margin: "12px 0 12px 0", gap: "10px" }}>
+              <div className="cout-cont">
                 <div
-                  className="d-flex shop-btn1 btn-33"
-                  style={{ cursor: "pointer",marginTop : 0 }}
-                  onClick={() => handleBuyNow()}
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
                 >
-                  <img
-                    src="/assets/img/cart-icon.png"
-                    style={{
-                      width: "28px",
-                      height: "28px",
-                      margin: "5px 0 0 10px",
-                    }}
-                  />
-                  <div className="" style={{ margin: "8px 0 0 17px" }}> 
-                    Add to cart
+                  {" "}
+                  <div className="negative-sign" onClick={decrementQuantity}>
+                    -
+                  </div>
+                  <div style={{ width: "2rem", height: "2rem" }}>
+                    <input
+                      type="text"
+                      style={{
+                        width: "100%",
+                        textAlign: "center",
+                        height: "100%",
+                      }}
+                      value={quantity}
+                      readOnly
+                    />
+                  </div>
+                  <div className="plus-sign" onClick={incrementQuantity}>
+                    +
                   </div>
                 </div>
+              </div>
+              <div
+                className="d-flex shop-btn1 btn-33"
+                style={{ cursor: "pointer", marginTop: 0 }}
+                onClick={() => handleBuyNow()}
+              >
+                <img
+                  src="/assets/img/cart-icon.png"
+                  style={{
+                    width: "28px",
+                    height: "28px",
+                    margin: "5px 0 0 10px",
+                  }}
+                />
+                <div className="" style={{ margin: "8px 0 0 17px" }}>
+                  Add to cart
+                </div>
+              </div>
             </div>
           ) : (
             <div className="d-flex" style={{ justifyContent: "space-between" }}>
@@ -1693,7 +1705,7 @@ const el = useRef(null);
           )}
         </div>
       </div>
-      <Product cart={cart} setCart={setCart}/>
+      <Product cart={cart} setCart={setCart} />
       <ShoppingFeature />
       <FaqProducts product={product} />
       <Footer />

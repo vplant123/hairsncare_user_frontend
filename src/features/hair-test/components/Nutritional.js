@@ -21,7 +21,7 @@ export default function Nutritional({
   currentQuestionIndex,
   setCurrentQuestionIndex,
   hairTestExist,
-  scrollToTop, fetchData
+  scrollToTop
 }) {
   const [inputValue, setInputValue] = useState('');
 
@@ -60,9 +60,9 @@ export default function Nutritional({
     }
   }, [hairTestExist])
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  // useEffect(() => {
+  //   fetchData();
+  // }, [fetchData]);
 
   const handleNextQuestion = async () => {
     if (currentQuestionIndex < data.questions.length - 1) {

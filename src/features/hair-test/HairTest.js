@@ -32,7 +32,6 @@ export default function HairTest() {
   const [step, setStep] = useState(1);
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [api, setApi] = useState("");
 
   const [email, setEmail] = useState("");
   const [selectedOptionP, setSelectedOptionP] = useState(null);
@@ -105,15 +104,15 @@ export default function HairTest() {
 
   }, []);
 
+
+
   // const [selectedOptions3, setSelectedOptions3] = useState({1:[],2:[],3:[],4:[],5:[]});
   const [selectedOptions3, setSelectedOptions3] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentQuestionIndex1, setCurrentQuestionIndex1] = useState(0);
-  const [currentQuestionIndex2, setCurrentQuestionIndex2] = useState(0);
 
   const [currentSubQuestions, setCurrentSubQuestions] = useState({});
   const [currentSubQuestions1, setCurrentSubQuestions1] = useState({});
-  const [currentSubQuestions3, setCurrentSubQuestions3] = useState({});
 
   const [selectedSubOption, setSelectedSubOption] = useState(null);
   const [selectedSubOption1, setSelectedSubOption1] = useState(null);
@@ -122,13 +121,6 @@ export default function HairTest() {
   // const [selectedSubOption1, setSelectedSubOption1] = useState(null);
   const [showSubQuestions, setShowSubQuestions] = useState(false);
   const [showSubQuestions1, setShowSubQuestions1] = useState(false);
-  const [showSignup, setShowSignup] = useState(false);
-
-  const handleSignupClick = () => {
-    setShowSignup(!showSignup);
-  };
-  console.log(selectedOptions4, 'Stress')
-  console.log(selectedOptionP, 'fiajsoijasoijfoasij');
   const nextStep = () => {
     scrollToTop();
     setStep(step + 1)
@@ -154,12 +146,11 @@ export default function HairTest() {
         name={name}
         setName={setName}
         phoneNumber={phoneNumber}
+        fetchData={fetchData}
         setPhoneNumber={setPhoneNumber}
         email={email}
         setEmail={setEmail}
         hairTestExist={hairTestExist}
-        handleSignupClick={handleSignupClick}
-        setApi={setApi}
         scrollToTop={scrollToTop}
       />;
       break;
@@ -193,7 +184,6 @@ export default function HairTest() {
         <LifeStyle
           nextStep={nextStep}
           testId={testId}
-
           setBanner={setBanner}
           prevStep={prevStep}
           data={data[1]}
@@ -313,17 +303,9 @@ export default function HairTest() {
         <a id="scrollUp" href="#top" style={{ position: "fixed", zIndex: "2147483647" }} onClick={scrollToTop}><i class="fa fa-angle-up"></i></a>
       </div>
       <div>
-        {showSignup && <SignByhairTestUp onClose={handleSignupClick} name={name}
-          emailAdd={email}
-          phoneNumber={phoneNumber}
-          api={api}
-          nextStep={nextStep}
-
-        />}
         {
           openS && <PopUp msg={"You have completed the Hair Test. Thank you. ! Our team will contact you soon."} onClose={handlePopShowClick} />
         }
-
       </div>
       <ToastContainer position="bottom-right" />
     </>

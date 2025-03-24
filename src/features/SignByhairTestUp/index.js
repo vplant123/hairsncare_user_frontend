@@ -6,15 +6,11 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 // import { useAlert } from 'react-alert'
 
-function SignByhairTestUp(props){
-  const {onClose,
+function SignByhairTestUp(props) {
+  const { onClose,
     name,
     emailAdd,
-    phoneNumber,api,nextStep} = props
-  // const alert = useAlert()
-  console.log("jkerojo",name,
-    emailAdd,
-    phoneNumber)
+    phoneNumber, api, nextStep } = props
   const [fullName, setFullName] = useState(name);
   const [email, setEmail] = useState(emailAdd);
   const [password, setPassword] = useState("");
@@ -26,15 +22,15 @@ function SignByhairTestUp(props){
   const [timer, setTimer] = useState(120); // Timer starts at 2 minutes (120 seconds)
   const [resendAllowed, setResendAllowed] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate =useNavigate()
+  const navigate = useNavigate()
   useEffect(() => {
     let countdownTimer;
-if (showOtpInput && timer > 0) {
+    if (showOtpInput && timer > 0) {
       countdownTimer = setInterval(() => {
         setTimer((prevTimer) => prevTimer - 1);
       }, 1000);
     }
-return () => clearInterval(countdownTimer);
+    return () => clearInterval(countdownTimer);
   }, [showOtpInput, timer]);
 
   useEffect(() => {
@@ -52,18 +48,18 @@ return () => clearInterval(countdownTimer);
       body: JSON.stringify({
         // email: loginMethod === 'email' ? email : '',
         // phone: loginMethod === 'phone' ? phone : '',
-        mobile:phone,
-       
+        mobile: phone,
+
       })
-      
+
     });
     console.log(response);
     // Reset timer and resend OTP logic here
-   if(response.ok){
-    // alert.show('Resend OTP Successfully !')
-    setTimer(120); // Reset timer to 2 minutes
-    setResendAllowed(false); // Disable resend option
-   }
+    if (response.ok) {
+      // alert.show('Resend OTP Successfully !')
+      setTimer(120); // Reset timer to 2 minutes
+      setResendAllowed(false); // Disable resend option
+    }
   };
 
   const validateForm = () => {
@@ -87,25 +83,6 @@ return () => clearInterval(countdownTimer);
       newErrors.email = "Email is invalid";
     }
 
-    // Password validation
-    // if (!password) {
-    //   isValid = false;
-    //   newErrors.password = "Password is required";
-    // } else if (password.length < 6) {
-    //   isValid = false;
-    //   newErrors.password = "Password must be at least 6 characters long";
-    // }
-
-    // // Confirm password validation
-    // if (!confirmPassword) {
-    //   isValid = false;
-    //   newErrors.confirmPassword = "Confirm Password is required";
-    // } else if (confirmPassword !== password) {
-    //   isValid = false;
-    //   newErrors.confirmPassword = "Passwords do not match";
-    // }
-
-    // Phone number validation
     if (!phone) {
       isValid = false;
       newErrors.phone = "Phone number is required";
@@ -127,18 +104,18 @@ return () => clearInterval(countdownTimer);
   useEffect(() => {
     setTimer(120); // Reset timer to 2 minutes when starting
     setResendAllowed(false);
-  },[])
+  }, [])
 
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-   if(validateForm()){
-    const startTimer = () => {
-      setTimer(120); // Reset timer to 2 minutes when starting
-      setResendAllowed(false); // Disable resend option initially
-    };
-    if(showOtpInput){
-  setLoading(true)
-     
+    if (validateForm()) {
+      const startTimer = () => {
+        setTimer(120); // Reset timer to 2 minutes when starting
+        setResendAllowed(false); // Disable resend option initially
+      };
+      if (showOtpInput) {
+        setLoading(true)
+
         const response = await fetch(`${BASE_URL}/users/verifyOTP`, {
           method: 'POST',
           headers: {
@@ -147,79 +124,78 @@ return () => clearInterval(countdownTimer);
           body: JSON.stringify({
             // email: loginMethod === 'email' ? email : '',
             // phone: loginMethod === 'phone' ? phone : '',
-            mobile:phone,
+            mobile: phone,
             otp
           })
-          
-        });
-        console.log(response);  // Validate OTP and complete sign-up process
-      // For demonstration, you can navigate to a different page
-       // Close the signup popup
-       if(response.ok){
-        const response2 = await fetch(`${BASE_URL}/users/register`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-           
-            fullname:fullName,
-            email,
-            password,
-            mobile:phone,
-          
-          })
-        });
-      if(response2.ok){
-        const userData = await response2.json();
-        console.log('Login successful:', userData.data);
-        localStorage.setItem("User343", JSON.stringify(userData.data));  
-        toast.success('Register Successfull')
-        // window.location.reload()
-        nextStep()
-        onClose()
-      }else{
-        toast.error("Please logout and login again with valid credentials.")
-        setLoading(false)
-      }
-        console.log(response2,"register response");
-        
-        // alert.show('Register Successfully !')
-        setLoading(false)
-        onClose()
-       }
-    }else{
-      try {
-        setLoading(true)
-        const response1 = await fetch(`${BASE_URL}/users/${api}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            mobile: phone
-          })
-        });
-        console.log("kjdoigj",response1)
 
-        if (response1.ok) {
-          // alert.show('OTP sent Successfully !')
+        });
+        // For demonstration, you can navigate to a different page
+        // Close the signup popup
+        if (response.ok) {
+          const response2 = await fetch(`${BASE_URL}/users/register`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+
+              fullname: fullName,
+              email,
+              password,
+              mobile: phone,
+
+            })
+          });
+          if (response2.ok) {
+            const userData = await response2.json();
+            console.log('Login successful:', userData.data);
+            localStorage.setItem("User343", JSON.stringify(userData.data));
+            toast.success('Register Successfull')
+            // window.location.reload()
+            nextStep()
+            onClose()
+          } else {
+            toast.error("Please logout and login again with valid credentials.")
+            setLoading(false)
+          }
+          console.log(response2, "register response");
+
+          // alert.show('Register Successfully !')
           setLoading(false)
-          setShowOtpInput(true); // Display OTP input field after successfully sending OTP
-          startTimer(); // Start the countdown timer
+          onClose()
         }
-        else{
-          // toast.success('Register Successfull')
+      } else {
+        try {
+          setLoading(true)
+          const response1 = await fetch(`${BASE_URL}/users/${api}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              mobile: phone
+            })
+          });
+          console.log("kjdoigj", response1)
+
+          if (response1.ok) {
+            // alert.show('OTP sent Successfully !')
+            setLoading(false)
+            setShowOtpInput(true); // Display OTP input field after successfully sending OTP
+            startTimer(); // Start the countdown timer
+          }
+          else {
+            // toast.success('Register Successfull')
+          }
+        } catch (error) {
+          console.error('Error logging in:', error);
+          // Handle network errors or other unexpected errors
         }
-      } catch (error) {
-        console.error('Error logging in:', error);
-        // Handle network errors or other unexpected errors
       }
     }
-   }
   };
 
- 
+
 
   return (
     <div className="overlay">
@@ -228,62 +204,6 @@ return () => clearInterval(countdownTimer);
           <MdClose size={15} />
         </button>
         <form className="signup-form" onSubmit={handleSubmit}>
-          {/* <div className="form-group">
-            <label className="sign-label">Full Name:</label>
-            <input
-              className="sign-input"
-              type="text"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-            />
-            {errors.fullName && (
-              <span className="error">{errors.fullName}</span>
-            )}
-          </div>
-          <div className="form-group">
-            <label className="sign-label">Email:</label>
-            <input
-              className="sign-input"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            {errors.email && <span className="error">{errors.email}</span>}
-          </div> */}
-          {/* <div className="form-group">
-            <label className="sign-label">Password:</label>
-            <input
-              className="sign-input"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            {errors.password && (
-              <span className="error">{errors.password}</span>
-            )}
-          </div>
-          <div className="form-group">
-            <label className="sign-label">Confirm Password:</label>
-            <input
-              className="sign-input"
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-            {errors.confirmPassword && (
-              <span className="error">{errors.confirmPassword}</span>
-            )}
-          </div> */}
-          {/* <div className="form-group">
-            <label className="sign-label">Phone:</label>
-            <input
-              className="sign-input"
-              type="tel"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-            {errors.phone && <span className="error">{errors.phone}</span>}
-          </div> */}
           {showOtpInput && (
             <div className="form-group">
               <label className="sign-label">Enter OTP:</label>
@@ -294,7 +214,7 @@ return () => clearInterval(countdownTimer);
                 onChange={(e) => setOtp(e.target.value)}
               />
               {errors.otp && <span className="error">{errors.otp}</span>}
-              </div>
+            </div>
           )}
 
           {/* Countdown timer display */}
@@ -311,7 +231,7 @@ return () => clearInterval(countdownTimer);
 
           {/* Submit button */}
           <button type="submit" className="submit-1">
-            {!loading?(showOtpInput ? "Verify Your Phone Number" : "Send OTP"):'Please Wait'}
+            {!loading ? (showOtpInput ? "Verify Your Phone Number" : "Send OTP") : 'Please Wait'}
           </button>
 
           {/* Existing code for resend message */}

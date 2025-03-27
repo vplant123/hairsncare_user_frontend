@@ -322,8 +322,15 @@ export default function InvoiceView() {
                   style={{ justifyContent: "space-between", margin: "10px 0 20px 0" }}
                 >
                   <div>MRP Total</div>
-                  <div style={{ marginRight: "20%" }}>₹ {data?.total - data?.deliveryCharges ?? 0}</div>
+                  <div style={{ marginRight: "20%" }}>₹ {data?.totalAmount}</div>
                 </div>
+                {data?.totalDiscount !== 0 && <div
+                  className="d-flex"
+                  style={{ justifyContent: "space-between", margin: "10px 0 20px 0" }}
+                >
+                  <div>Coupon Discount</div>
+                  <div style={{ marginRight: "20%" }}>-₹ {data?.totalDiscount}</div>
+                </div>}
                 {
                   data?.deliveryCharges && <div
                     className="d-flex"
@@ -333,13 +340,7 @@ export default function InvoiceView() {
                     <div style={{ marginRight: "20%" }}>₹ {data?.deliveryCharges}</div>
                   </div>
                 }
-                {data?.couponDiscount !== 0 && <div
-                  className="d-flex"
-                  style={{ justifyContent: "space-between", margin: "10px 0 20px 0" }}
-                >
-                  <div>Coupon Discount</div>
-                  <div style={{ marginRight: "20%" }}>₹ {data?.couponDiscount}</div>
-                </div>}
+
 
                 {/* <div
                   className="d-flex"

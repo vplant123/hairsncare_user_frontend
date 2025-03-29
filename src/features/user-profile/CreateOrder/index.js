@@ -751,7 +751,7 @@ export default function CreateOrder(props) {
                         {discount ? (
                           <div className="total d-flex">
                             <div>DISCOUNT</div>
-                            <div>- {discount}</div>
+                            <div>- {discount} %</div>
                           </div>
                         ) : (
                           <></>

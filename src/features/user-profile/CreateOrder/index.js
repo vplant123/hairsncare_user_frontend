@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { renderWelcomeEmail } from "../renderEmail";
 import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 import styles from "../Address.module.css";
-import ReactLoading from 'react-loading';
+import ReactLoading from "react-loading";
 
 import { styled } from "@mui/material/styles";
 import { getCartItems } from "../../products/CartSlice";
@@ -43,7 +43,7 @@ const statuses = ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"];
 export default function CreateOrder(props) {
   useEffect(() => {
     if (props?.setTitle) props?.setTitle(window.location.pathname);
-    scrollToTop()
+    scrollToTop();
   }, []);
 
   const contentRef = useRef();
@@ -52,8 +52,6 @@ export default function CreateOrder(props) {
     contentRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
-
-
   const [orders, setOrders] = useState([]);
   const [addresses, setAddresses] = useState([]);
   const [height, setHeight] = useState("100px");
@@ -61,13 +59,13 @@ export default function CreateOrder(props) {
   const cartItems = useSelector((state) => state.cart.items);
   const [add, setAdd] = useState(false);
   const [loading, setSetLoading] = useState(false);
-  const [subtotal, setSubTotal] = useState(0)
-  const [total, setTotal] = useState(0)
+  const [subtotal, setSubTotal] = useState(0);
+  const [total, setTotal] = useState(0);
 
   const [Razorpay] = useRazorpay();
 
   const navigate = useNavigate();
-  console.log("smrfoejr", cartItemsNew)
+  console.log("smrfoejr", cartItemsNew);
   useEffect(() => {
     setCartItemsNew(cartItems);
     getSubTotalAmount();
@@ -82,7 +80,7 @@ export default function CreateOrder(props) {
   let storedUserData = JSON.parse(localStorage.getItem("User343"));
   const dispatch = useDispatch();
   const content = useSelector((state) => state.content.config);
-  console.log("smkjir", content)
+  console.log("smkjir", content);
   useEffect(() => {
     dispatch(getCartItems(storedUserData?.logedInUser?.user?._id));
 
@@ -99,7 +97,7 @@ export default function CreateOrder(props) {
       .then((response) => response.json())
       .then((data) => {
         setHeight(
-          data?.data?.length < 3 ? 100 * parseFloat(data?.data?.length) : "150"
+          data?.data?.length < 3 ? 100 * parseFloat(data?.data?.length) : "150",
         );
         setAddresses(data.data);
       })
@@ -113,31 +111,29 @@ export default function CreateOrder(props) {
   };
 
   const getTotalAmount = (dist) => {
-    let tot = cartItems
-      .reduce(
-        (total, item) =>
-          total +
-          (item?.item?.price - parseFloat(item?.item?.discount || 0)) *
+    let tot = cartItems.reduce(
+      (total, item) =>
+        total +
+        (item?.item?.price - parseFloat(item?.item?.discount || 0)) *
           (item?.quantity || 1),
-        0
-      );
+      0,
+    );
     // console.log("mkjrsr",tot,discount)
-    let p = parseFloat(tot || 0) - ((parseFloat(tot || 0) * (dist || 0)) / 100)
-    if (p < content?.deliveryAmt) p = p + parseFloat(content?.deliveryCharge || 0)
-    setTotal(p)
-    return (p).toFixed(2);
+    let p = parseFloat(tot || 0) - (parseFloat(tot || 0) * (dist || 0)) / 100;
+    if (p < content?.deliveryAmt)
+      p = p + parseFloat(content?.deliveryCharge || 0);
+    setTotal(p);
+    return p.toFixed(2);
   };
 
-
   const getSubTotalAmount = () => {
-    let sub = cartItems
-      .reduce(
-        (total, item) =>
-          total +
-          (item?.item?.price - parseFloat(item?.item?.discount || 0)) *
+    let sub = cartItems.reduce(
+      (total, item) =>
+        total +
+        (item?.item?.price - parseFloat(item?.item?.discount || 0)) *
           (item?.quantity || 1),
-        0
-      );
+      0,
+    );
     setSubTotal(sub);
     return sub.toFixed(2);
   };
@@ -155,12 +151,7 @@ export default function CreateOrder(props) {
 
   const handleCheckout = async (values) => {
     console.log("smrgiioer", values);
-    if (
-      !total ||
-      !values?.products ||
-      !values?.addressId ||
-      !values?.mode
-    ) {
+    if (!total || !values?.products || !values?.addressId || !values?.mode) {
       toast.error("Please fill all details");
       return false;
     }
@@ -173,7 +164,7 @@ export default function CreateOrder(props) {
         address: values?.address?.fullAdress,
       },
       1,
-      ""
+      "",
     );
     console.log("sjofje", emailHtml);
 
@@ -183,7 +174,7 @@ export default function CreateOrder(props) {
       addressId: values?.addressId,
       mode: values?.mode,
       htmls: emailHtml,
-      couponId: couponData?._id
+      couponId: couponData?._id,
     };
 
     setSetLoading(true);
@@ -191,17 +182,14 @@ export default function CreateOrder(props) {
     try {
       const token = storedUserData.logedInUser.accessToken;
       console.log(token, "token");
-      const response = await fetch(
-        `${BASE_URL}/payment/place-order`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      const response = await fetch(`${BASE_URL}/payment/place-order`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify(data),
+      });
 
       if (!response.ok) {
         toast.error("Please logout and login again with valid credentials.");
@@ -216,7 +204,7 @@ export default function CreateOrder(props) {
           // window.location = "https://www.hairsncares.com/success/2";
           navigate("/success/2");
         } else {
-          console.log("jsoejoj", Math.round(total * 100))
+          console.log("jsoejoj", Math.round(total * 100));
           const responseData = await response.json();
           const options = {
             key: "rzp_live_mArtCmiYqSB4nm",
@@ -240,7 +228,7 @@ export default function CreateOrder(props) {
                     Authorization: token,
                   },
                   body: JSON.stringify(data),
-                }
+                },
               );
 
               console.log(await res.json());
@@ -253,24 +241,31 @@ export default function CreateOrder(props) {
               // There can be 3 reasons when this modal is closed.
               ondismiss: async (reason) => {
                 const {
-                  reason: paymentReason, field, step, code,
+                  reason: paymentReason,
+                  field,
+                  step,
+                  code,
                 } = reason && reason.error ? reason.error : {};
-                // Reason 1 - when payment is cancelled. It can happend when we click cross icon or cancel any payment explicitly. 
+                // Reason 1 - when payment is cancelled. It can happend when we click cross icon or cancel any payment explicitly.
                 if (reason === undefined) {
-                  console.log('cancelled');
+                  console.log("cancelled");
                   toast.error("Payment Unsuccessful!! Try again");
                   setSetLoading(false);
                 }
                 // Reason 2 - When modal is auto closed because of time out
-                else if (reason === 'timeout') {
-                  console.log('timedout');
-                  toast.error("Please logout and login again with valid credentials.");
+                else if (reason === "timeout") {
+                  console.log("timedout");
+                  toast.error(
+                    "Please logout and login again with valid credentials.",
+                  );
                   setSetLoading(false);
                 }
                 // Reason 3 - When payment gets failed.
                 else {
-                  console.log('failed');
-                  toast.error("Please logout and login again with valid credentials.");
+                  console.log("failed");
+                  toast.error(
+                    "Please logout and login again with valid credentials.",
+                  );
                   setSetLoading(false);
                 }
               },
@@ -287,7 +282,9 @@ export default function CreateOrder(props) {
           const rzp1 = new Razorpay(options);
 
           rzp1.on("payment.failed", function (response) {
-            toast.error("Please logout and login again with valid credentials.");
+            toast.error(
+              "Please logout and login again with valid credentials.",
+            );
             setSetLoading(false);
             throw new Error("Payment failed");
           });
@@ -300,7 +297,7 @@ export default function CreateOrder(props) {
     } catch (error) {
       console.error(
         "There was a problem with the fetch operation:",
-        error.message
+        error.message,
       );
     }
   };
@@ -380,8 +377,8 @@ export default function CreateOrder(props) {
           toast.success("Address edit successfully");
           setAddresses(
             addresses.map((addr) =>
-              addr._id == values?.address?._id ? data?.data : addr
-            )
+              addr._id == values?.address?._id ? data?.data : addr,
+            ),
           );
           setFieldValue("address", data?.data, true);
           setFieldValue("addressId", values?.address?._id, true);
@@ -399,39 +396,38 @@ export default function CreateOrder(props) {
       });
   };
 
-  const [openC, setOpenC] = useState(false)
-  const [code, setCode] = useState("")
-  const [couponData, setCouponData] = useState("")
-  const [discount, setDiscount] = useState("")
+  const [openC, setOpenC] = useState(false);
+  const [code, setCode] = useState("");
+  const [couponData, setCouponData] = useState("");
+  const [discount, setDiscount] = useState("");
 
   const applyCoupon = async () => {
     fetch(`${BASE_URL}/users/applyCoupon`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': storedUserData.logedInUser.accessToken
+        "Content-Type": "application/json",
+        Authorization: storedUserData.logedInUser.accessToken,
       },
       body: JSON.stringify({ code, type: "2" }),
     })
-      .then(response => response.json())
-      .then(data => {
-        console.log("sjkorjf", data)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("sjkorjf", data);
         if (data?.statusCode == 200) {
-          setDiscount(data?.data?.percent)
-          getTotalAmount(data?.data?.percent)
-          setCouponData(data?.data)
+          setDiscount(data?.data?.percent);
+          getTotalAmount(data?.data?.percent);
+          setCouponData(data?.data);
           toast.success("coupon applied successfully");
-        }
-        else {
-          toast.error(data?.message || "error")
+        } else {
+          toast.error(data?.message || "error");
         }
         // setAddresses(addresses.filter(addr => addr._id !== id));
       })
-      .catch(error => {
+      .catch((error) => {
         toast.error("Please logout and login again with valid credentials.");
-        console.error('Error deleting address:', error)
+        console.error("Error deleting address:", error);
       });
-  }
+  };
   return (
     <Navbar>
       <Sidebar>
@@ -440,23 +436,36 @@ export default function CreateOrder(props) {
             <div onClick={() => setOpenC(!openC)} style={{ cursor: "pointer" }}>
               Have a coupon? <strong>Click here</strong>
             </div>
-            {openC && <div className="animate__animated animate__fadeInUp"><div style={{ marginTop: "10px" }}>
-              If you have a coupon code, please apply it below.
-            </div>
-              <div className="couponApply-input-main">
-                <input type="text" className="couponApply-input" placeholder="Enter Coupon Code" onChange={(e) => {
-                  setCouponData("")
-                  setDiscount("")
-                  getTotalAmount(0)
-                  setCode(e.target.value)
-                }} />
-                <button className="couponApply-input-button" onClick={() => {
-                  if (code == couponData?.code) {
-                    toast.error("Coupon already applied")
-                  }
-                  else applyCoupon()
-                }}>Apply Coupon</button>
-              </div></div>}
+            {openC && (
+              <div className="animate__animated animate__fadeInUp">
+                <div style={{ marginTop: "10px" }}>
+                  If you have a coupon code, please apply it below.
+                </div>
+                <div className="couponApply-input-main">
+                  <input
+                    type="text"
+                    className="couponApply-input"
+                    placeholder="Enter Coupon Code"
+                    onChange={(e) => {
+                      setCouponData("");
+                      setDiscount("");
+                      getTotalAmount(0);
+                      setCode(e.target.value);
+                    }}
+                  />
+                  <button
+                    className="couponApply-input-button"
+                    onClick={() => {
+                      if (code == couponData?.code) {
+                        toast.error("Coupon already applied");
+                      } else applyCoupon();
+                    }}
+                  >
+                    Apply Coupon
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
           <div className="create-order" style={{ gap: 0, padding: 0 }}>
             <Formik
@@ -471,7 +480,7 @@ export default function CreateOrder(props) {
                 mode: "",
                 agree: false,
               }}
-              onSubmit={(values, actions) => { }}
+              onSubmit={(values, actions) => {}}
             >
               {({
                 handleBlur,
@@ -509,7 +518,10 @@ export default function CreateOrder(props) {
                           {"< Back To Cart"}
                         </div> */}
                         </div>
-                        <div className="col-12" style={{ padding: "20px 0 0 0" }}>
+                        <div
+                          className="col-12"
+                          style={{ padding: "20px 0 0 0" }}
+                        >
                           {addresses?.length > 0 ? (
                             <StyledAutocomplete
                               options={addresses}
@@ -526,7 +538,7 @@ export default function CreateOrder(props) {
                                       "-" +
                                       item?.name +
                                       "-" +
-                                      item?.phone
+                                      item?.phone;
                                   }
                                 }
                                 return reqValue;
@@ -667,12 +679,16 @@ export default function CreateOrder(props) {
 
                     <div className="col-12 col-md-6 order-div">
                       <div className="d-flex flex-column">
-                        <div className="d-flex" style={{ justifyContent: "space-between" }}>
+                        <div
+                          className="d-flex"
+                          style={{ justifyContent: "space-between" }}
+                        >
                           <label>Your Order</label>
                           <div
                             onClick={() => navigate("/cart")}
                             style={{
-                              cursor: "pointer", fontWeight: 600,
+                              cursor: "pointer",
+                              fontWeight: 600,
                             }}
                           >
                             {"< Back To Cart"}
@@ -732,18 +748,24 @@ export default function CreateOrder(props) {
                           <div>SUBTOTAL</div>
                           <div>₹ {subtotal?.toFixed(2)}</div>
                         </div>
-                        {
-                          discount ? <div className="total d-flex">
+                        {discount ? (
+                          <div className="total d-flex">
                             <div>DISCOUNT</div>
                             <div>- {discount}</div>
-                          </div> : <></>
-                        }
-                        {
-                          total < content?.deliveryAmt ? <div className="total d-flex">
-                            <div>Delivery : </div>
-                            <div>+{content?.deliveryCharge}</div>
-                          </div> : <></>
-                        }
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+
+                        <div className="total d-flex">
+                          <div>Delivery : </div>
+                          <div>
+                            {total < content?.deliveryAmt
+                              ? "₹ " + content.deliveryCharge
+                              : "Free Delivery"}
+                          </div>
+                        </div>
+
                         <div className="total d-flex">
                           <div>TOTAL</div>
                           <div style={{ fontWeight: "700" }}>
@@ -767,12 +789,16 @@ export default function CreateOrder(props) {
                           </div>
                           <div
                             className="d-flex"
-                            onClick={() => setFieldValue("mode", "online", true)}
+                            onClick={() =>
+                              setFieldValue("mode", "online", true)
+                            }
                           >
                             <div style={{ width: "5%" }}>
                               <input
                                 type="checkbox"
-                                checked={values?.mode == "online" ? true : false}
+                                checked={
+                                  values?.mode == "online" ? true : false
+                                }
                               />
                             </div>
                             <div
@@ -787,10 +813,13 @@ export default function CreateOrder(props) {
                             </div>
                           </div>
                           <div style={{ padding: "15px 0 0 0" }}>
-                            Your personal data will be used to process your order,
-                            support your experience throughout this website, and
-                            for other purposes described in our{" "}
-                            <a onClick={() => navigate("/policy")} style={{ cursor: "pointer" }} >
+                            Your personal data will be used to process your
+                            order, support your experience throughout this
+                            website, and for other purposes described in our{" "}
+                            <a
+                              onClick={() => navigate("/policy")}
+                              style={{ cursor: "pointer" }}
+                            >
                               privacy policy
                             </a>
                             .
@@ -813,7 +842,7 @@ export default function CreateOrder(props) {
                                   setFieldValue(
                                     "agree",
                                     e?.target?.checked,
-                                    true
+                                    true,
                                   );
                                 }}
                               />
@@ -837,15 +866,18 @@ export default function CreateOrder(props) {
                                 borderRadius: "5px",
                                 backgroundColor:
                                   values?.mode &&
-                                    values?.agree &&
-                                    values?.addressId
+                                  values?.agree &&
+                                  values?.addressId
                                     ? "#e31e24"
                                     : "grey",
                                 cursor: "pointer",
                               }}
                               className="generateOtp textAddCust Medium btn btn-secondary"
                               disabled={
-                                (values?.mode && values?.agree && values?.addressId || loading)
+                                (values?.mode &&
+                                  values?.agree &&
+                                  values?.addressId) ||
+                                loading
                                   ? false
                                   : true
                               }
@@ -862,12 +894,16 @@ export default function CreateOrder(props) {
               )}
             </Formik>
           </div>
-          {
-            loading && <div className="loading">
-              <ReactLoading type="spinningBubbles" color="#007bff" height={200} width={200} />
+          {loading && (
+            <div className="loading">
+              <ReactLoading
+                type="spinningBubbles"
+                color="#007bff"
+                height={200}
+                width={200}
+              />
             </div>
-          }
-
+          )}
         </div>
 
         <ToastContainer position="bottom-right" />

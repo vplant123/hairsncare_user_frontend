@@ -140,7 +140,7 @@ function PrescriptionOption({ label, planId, price, onSelect, selected,testId,co
       const token = storedUserData.logedInUser.accessToken;
       console.log(token, "token")
       const response = await fetch(
-        `https://backend.hairsncares.com/api/vi/bookAppointment/bookAppointment`,
+        `https://apihair.txogavideo.in/api/vi/bookAppointment/bookAppointment`,
         {
           method: "POST",
           headers: {
@@ -173,7 +173,7 @@ function PrescriptionOption({ label, planId, price, onSelect, selected,testId,co
               planId
             }
             const res = await fetch(
-              `https://backend.hairsncares.com/api/vi/bookAppointment/update-payment`,
+              `https://apihair.txogavideo.in/api/vi/bookAppointment/update-payment`,
               {
                 method: "POST",
                 headers: {

@@ -220,7 +220,7 @@ export default function CreateOrder(props) {
                 orderId: responseData.data,
               };
               const res = await fetch(
-                `https://backend.hairsncares.com/api/vi/bookAppointment/update-payment-order`,
+                `https://apihair.txogavideo.in/api/vi/bookAppointment/update-payment-order`,
                 {
                   method: "POST",
                   headers: {

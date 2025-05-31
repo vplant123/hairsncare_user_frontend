@@ -39,7 +39,7 @@ export default function OtherProcedure() {
         style={{ fontFamily: '"Poppins", sans-serif' }}
       >
         <Helmet>
-          <link rel="canonical" href="https://www.hairsncares.com/advanced-hair-loss-solutions-prp-smp-cloning-systems" />
+          <link rel="canonical" href="https://hairs.txogavideo.in/advanced-hair-loss-solutions-prp-smp-cloning-systems" />
         </Helmet>
         <div style={{ background: "rgba(193, 237, 255, 1)" }} className="main-div-resp">
           <div className="d-flex flex-column container">

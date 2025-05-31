@@ -318,7 +318,7 @@ export default function OurSpecialist() {
             <h1 className="contect-us-heading">{content?.section1?.title}</h1>
           </div>
           <Helmet>
-        <link rel="canonical" href="https://www.hairsncares.com/hair-loss-treatment-experts-dermatologists" />
+        <link rel="canonical" href="https://hairs.txogavideo.in/hair-loss-treatment-experts-dermatologists" />
       </Helmet>
         </div>
       </LeftAnimatedDiv>

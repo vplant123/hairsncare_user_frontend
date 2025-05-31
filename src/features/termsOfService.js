@@ -43,7 +43,7 @@ function TermsOfService(props) {
             <li>
               <div>
                 These Terms of Service (“Terms”) govern your use of and access
-                to the internal portal available at https://www.hairsncares.com/
+                to the internal portal available at https://hairs.txogavideo.in/
                 and the Products and Services (as defined below). The Website
                 and its associated services are collectively referred to as the
                 “Platform.”

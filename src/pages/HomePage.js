@@ -71,7 +71,7 @@ function HomePage(props) {
 
     <Navbar>
            <Helmet>
-        <link rel="canonical" href="https://www.hairsncares.com" />
+        <link rel="canonical" href="https://hairs.txogavideo.in" />
       </Helmet>
       {content ? <>
         <Hero />

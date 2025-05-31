@@ -201,7 +201,7 @@ export default function CreateOrder(props) {
           console.log("wemskfiew", responseData.data);
           toast.success("Order placed successfully");
           setSetLoading(false);
-          // window.location = "https://www.hairsncares.com/success/2";
+          // window.location = "https://hairs.txogavideo.in/success/2";
           navigate("/success/2");
         } else {
           console.log("jsoejoj", Math.round(total * 100));
@@ -232,7 +232,7 @@ export default function CreateOrder(props) {
               );
 
               console.log(await res.json());
-              // window.location = "https://www.hairsncares.com/success/2";
+              // window.location = "https://hairs.txogavideo.in/success/2";
               navigate("/success/2");
             },
             modal: {

@@ -113,7 +113,7 @@ export default function Dermatologist() {
         style={{ fontFamily: '"Poppins", sans-serif' }}
       >
         <Helmet>
-          <link rel="canonical" href="https://www.hairsncares.com/dr-amit-agarkar-hair-restoration-expert" />
+          <link rel="canonical" href="https://backend.hairsncares.com//dr-amit-agarkar-hair-restoration-expert" />
         </Helmet>
         <div style={{ background: "rgba(193, 237, 255, 1)", width: "100vw" }} className="main-div-resp">
           <div className="d-flex flex-column container">

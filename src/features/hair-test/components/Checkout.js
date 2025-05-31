@@ -184,7 +184,7 @@ function PrescriptionOption({ label, planId, price, onSelect, selected,testId,co
               }
             );
             console.log(await res.json())
-            window.location = 'https://www.hairsncares.com/success/1'
+            window.location = 'https://hairs.txogavideo.in/success/1'
           },
           modal: {
             confirm_close: true, // this is set to true, if we want confirmation when clicked on cross button.

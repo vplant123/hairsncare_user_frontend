@@ -122,7 +122,7 @@ export default function HairTreatmentMen() {
         style={{ fontFamily: '"Poppins", sans-serif' }}
       >
         <Helmet>
-          <link rel="canonical" href="https://www.hairsncares.com/effective-hair-loss-treatment-men" />
+          <link rel="canonical" href="https://hairs.txogavideo.in/effective-hair-loss-treatment-men" />
         </Helmet>
         <div style={{ background: "rgba(193, 237, 255, 1)" }} className="main-div-resp">
           <div className="main-section-1-htm desktop-view-1 container">

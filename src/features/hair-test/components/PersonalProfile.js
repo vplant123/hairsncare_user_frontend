@@ -1,8 +1,23 @@
 import React, { useState, useEffect } from "react";
-import BASE_URL from '../../../Config';
+import BASE_URL from "../../../Config";
 import SignByhairTestUp from "../../SignByhairTestUp";
 
-export default function PersonalProfile({ data, setTestId, selectedOptionP, setMale, setSelectedOptionP, nextStep, name, setName, phoneNumber, setPhoneNumber, email, setEmail, hairTestExist, fetchData }) {
+export default function PersonalProfile({
+  data,
+  setTestId,
+  selectedOptionP,
+  setMale,
+  setSelectedOptionP,
+  nextStep,
+  name,
+  setName,
+  phoneNumber,
+  setPhoneNumber,
+  email,
+  setEmail,
+  hairTestExist,
+  fetchData,
+}) {
   // const [name, setName] = useState("");
   // const [phoneNumber, setPhoneNumber] = useState("");
   // const [email, setEmail] = useState("");
@@ -13,43 +28,50 @@ export default function PersonalProfile({ data, setTestId, selectedOptionP, setM
   const [showSignup, setShowSignup] = useState(false);
   const [api, setApi] = useState("");
 
-
-
   const handleSignupClick = () => {
     setShowSignup(!showSignup);
   };
 
   useEffect(() => {
-    const allInputsFilled = name && phoneNumber && email && questions.every(question => question.selectedOption !== undefined);
+    const allInputsFilled =
+      name &&
+      phoneNumber &&
+      email &&
+      questions.every((question) => question.selectedOption !== undefined);
     setAllQuestionsAnswered(allInputsFilled);
   }, [name, phoneNumber, email, questions]);
 
   useEffect(() => {
     if (hairTestExist?.personal) {
       let x = hairTestExist?.personal;
-      setName(x?.name)
-      setPhoneNumber(x?.phoneNumber)
-      setEmail(x?.email)
+      setName(x?.name);
+      setPhoneNumber(x?.phoneNumber);
+      setEmail(x?.email);
       const updatedQuestions = [...questions];
       let a, b;
-      a = updatedQuestions?.findIndex((e) => e?.ques == "Select your age group");
+      a = updatedQuestions?.findIndex(
+        (e) => e?.ques == "Select your age group"
+      );
       if (a != -1) {
-        b = updatedQuestions[a]?.options?.findIndex((e) => e == x["Select your age group"]);
+        b = updatedQuestions[a]?.options?.findIndex(
+          (e) => e == x["Select your age group"]
+        );
         updatedQuestions[a].selectedOption = b;
       }
       a = updatedQuestions?.findIndex((e) => e?.ques == "Gender");
       if (a != -1) {
-        b = updatedQuestions[a]?.options?.findIndex((e) => e?.src == x["Gender"]?.src);
+        b = updatedQuestions[a]?.options?.findIndex(
+          (e) => e?.src == x["Gender"]?.src
+        );
         updatedQuestions[a].selectedOption = b;
       }
-      if (x?.Gender && x?.Gender?.src === '/assets/img/question/male.svg') {
+      if (x?.Gender && x?.Gender?.src === "/assets/img/question/male.svg") {
         setMale(true);
       }
       setQuestions(updatedQuestions);
-      setSelectedOptionP(updatedQuestions)
+      setSelectedOptionP(updatedQuestions);
     }
-
-  }, [hairTestExist])
+  }, [hairTestExist]);
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -87,14 +109,13 @@ export default function PersonalProfile({ data, setTestId, selectedOptionP, setM
 
     // Check if the selected option has the specific source for male
     const selectedOption = updatedQuestions[index].options[optionIndex];
-    if (selectedOption.src === '/assets/img/question/male.svg') {
+    if (selectedOption.src === "/assets/img/question/male.svg") {
       setMale(true);
     }
 
     setQuestions(updatedQuestions);
-    setSelectedOptionP(updatedQuestions)
+    setSelectedOptionP(updatedQuestions);
   };
-
 
   const handleNextQuestion = async () => {
     let token;
@@ -104,85 +125,99 @@ export default function PersonalProfile({ data, setTestId, selectedOptionP, setM
       if (allQuestionsAnswered && !phoneError && !emailError) {
         let data = {
           personal: {
-            name, email, phoneNumber, [selectedOptionP[0].ques]: selectedOptionP[0].options[selectedOptionP[0].selectedOption],
-            [selectedOptionP[1].ques]: selectedOptionP[1].options[selectedOptionP[1].selectedOption],
-          }
-        }
+            name,
+            email,
+            phoneNumber,
+            [selectedOptionP[0].ques]:
+              selectedOptionP[0].options[selectedOptionP[0].selectedOption],
+            [selectedOptionP[1].ques]:
+              selectedOptionP[1].options[selectedOptionP[1].selectedOption],
+          },
+        };
 
         try {
-          const response = await fetch(`${BASE_URL}/hair-tests/createHairTestForUserStepWise`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': token
-            },
-            body: hairTestExist ? JSON.stringify({ id: hairTestExist?._id, data: { ...data, userId: storedUserData.logedInUser.user._id } }) : JSON.stringify({ data: { ...data, userId: storedUserData.logedInUser.user._id } })
-          });
+          const response = await fetch(
+            `${BASE_URL}/hair-tests/createHairTestForUserStepWise`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: token,
+              },
+              body: hairTestExist
+                ? JSON.stringify({
+                    id: hairTestExist?._id,
+                    data: {
+                      ...data,
+                      userId: storedUserData.logedInUser.user._id,
+                    },
+                  })
+                : JSON.stringify({
+                    data: {
+                      ...data,
+                      userId: storedUserData.logedInUser.user._id,
+                    },
+                  }),
+            }
+          );
 
           if (!response.ok) {
-
-            throw new Error('Network response was not ok');
+            throw new Error("Network response was not ok");
           } else {
             const responseData = await response.json();
-            setTestId(responseData.data._id)
+            setTestId(responseData.data._id);
 
-
-            nextStep()
+            nextStep();
           }
-
 
           // Handle the response data as needed
         } catch (error) {
-          console.error('There was a problem with the fetch operation:', error.message);
+          console.error(
+            "There was a problem with the fetch operation:",
+            error.message
+          );
         }
         nextStep();
       }
-    }
-
-    else {
+    } else {
       try {
         const response1 = await fetch(`${BASE_URL}/users/sendotp`, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            mobile: phoneNumber
-          })
+            mobile: phoneNumber,
+          }),
         });
         const jsonData = await response1.json();
 
-
         if (response1.ok) {
-          setApi("verifyOTP")
+          setApi("verifyOTP");
           // alert.show('OTP sent Successfully !')
-          handleSignupClick()
-        }
-        else {
+          handleSignupClick();
+        } else {
           if (jsonData?.statusCode == 400) {
             const response2 = await fetch(`${BASE_URL}/users/sendOtpForLogin`, {
-              method: 'POST',
+              method: "POST",
               headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                mobile: phoneNumber
-              })
+                mobile: phoneNumber,
+              }),
             });
             if (response2.ok) {
-              setApi("verifyOtpAndLogin")
-              handleSignupClick()
+              setApi("verifyOtpAndLogin");
+              handleSignupClick();
             }
-
           }
-
         }
       } catch (error) {
-        console.error('Error logging in:', error);
+        console.error("Error logging in:", error);
         // Handle network errors or other unexpected errors
       }
     }
-
   };
 
   return (
@@ -211,39 +246,49 @@ export default function PersonalProfile({ data, setTestId, selectedOptionP, setM
                 return (
                   <div
                     key={opIndex}
-                    className={`option circle-01 ${item.selectedOption === opIndex ? 'selected-personal' : ''}`}
+                    className={`option circle-01 ${
+                      item.selectedOption === opIndex ? "selected-personal" : ""
+                    }`}
                     onClick={() => handleOptionSelect(index, opIndex)}
                   >
                     {op.src ? (
-                      <div className="image-container4"><img alt='hair' src={op.src} /></div>
+                      <div className="image-container4">
+                        <img alt="hair" src={op.src} />
+                      </div>
                     ) : (
                       <div className="circle-01">{op}</div>
                     )}
                   </div>
                 );
-
               })}
             </div>
           </div>
         );
       })}
 
-      {showSignup && <SignByhairTestUp onClose={handleSignupClick} name={name}
-        emailAdd={email}
-        phoneNumber={phoneNumber}
-        api={api}
-        nextStep={() => {
-          fetchData()
-          handleNextQuestion()
-        }}
-      />}
+      {showSignup && (
+        <SignByhairTestUp
+          onClose={handleSignupClick}
+          name={name}
+          emailAdd={email}
+          phoneNumber={phoneNumber}
+          api={api}
+          nextStep={() => {
+            fetchData();
+            handleNextQuestion();
+          }}
+        />
+      )}
 
       <div className="test-btnn">
         <button disabled={true}>Prev</button>
-        <button disabled={!allQuestionsAnswered || phoneError || emailError} onClick={handleNextQuestion}>Next</button>
+        <button
+          disabled={!allQuestionsAnswered || phoneError || emailError}
+          onClick={handleNextQuestion}
+        >
+          Next
+        </button>
       </div>
-
-
     </div>
   );
 }

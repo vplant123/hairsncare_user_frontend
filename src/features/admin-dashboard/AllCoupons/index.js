@@ -34,7 +34,7 @@ export default function AllCoupons(props) {
 
   useEffect(() => {
     fetch(fetchApiUrl, {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': storedUserData?.logedInUser?.accessToken

@@ -16,7 +16,7 @@ export default function Coupons(props) {
 
   useEffect(() => {
     fetch(fetchApiUrl, {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: storedUserData?.logedInUser?.accessToken,
@@ -26,6 +26,7 @@ export default function Coupons(props) {
       .then((response) => response.json())
       .then((data) => {
         setCoupons(data.data);
+        console.log(coupons);
       })
       .catch((error) => console.error("Error fetching coupons:", error));
   }, []);

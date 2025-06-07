@@ -36,9 +36,9 @@ useEffect(() => {
   else if(window.location.pathname == "/address"){
     setText("My Profile")
   }
-  else if(window.location.pathname == "/coupon"){
-    setText("Coupons")
-  }
+  // else if(window.location.pathname == "/coupon"){
+  //   setText("Coupons")
+  // }
   else{
     setText("My Profile")
   }
@@ -76,10 +76,10 @@ useEffect(() => {
           navigate('/address')
 
         }}>My Profile </div>
-        <div className='tab-color' onClick={()=>{
+        {/* <div className='tab-color' onClick={()=>{
           navigate('/coupon')
 
-        }}>Coupons </div>
+        }}>Coupons </div> */}
 
       </div>}
         </div> : <div className="left-column sideBar-col-width-1" >
@@ -88,7 +88,7 @@ useEffect(() => {
         <div className='tab-color' onClick={()=>navigate('/my-orders')}>My Order </div>
         <div className='tab-color' onClick={()=>navigate('/cart')}>My Cart </div>
         <div className='tab-color' onClick={()=>navigate('/address')}>My Profile </div>
-        <div className='tab-color' onClick={()=>navigate('/coupon')}>Coupons </div>
+        {/* <div className='tab-color' onClick={()=>navigate('/coupon')}>Coupons </div> */}
 
       </div>)
       

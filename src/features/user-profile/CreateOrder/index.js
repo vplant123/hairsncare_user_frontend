@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import Sidebar from "./../Sidebar";
+// import Sidebar from "./../Sidebar";
 import Navbar from "../../nav/Navbar";
 import "./index.css";
 import { Formik } from "formik";
@@ -115,7 +115,7 @@ export default function CreateOrder(props) {
       (total, item) =>
         total +
         (item?.item?.price - parseFloat(item?.item?.discount || 0)) *
-          (item?.quantity || 1),
+        (item?.quantity || 1),
       0,
     );
     // console.log("mkjrsr",tot,discount)
@@ -131,7 +131,7 @@ export default function CreateOrder(props) {
       (total, item) =>
         total +
         (item?.item?.price - parseFloat(item?.item?.discount || 0)) *
-          (item?.quantity || 1),
+        (item?.quantity || 1),
       0,
     );
     setSubTotal(sub);
@@ -430,310 +430,137 @@ export default function CreateOrder(props) {
   };
   return (
     <Navbar>
-      <Sidebar>
-        <div className="d-flex flex-column" ref={contentRef}>
-          <div className="couponApply d-flex flex-column">
-            <div onClick={() => setOpenC(!openC)} style={{ cursor: "pointer" }}>
-              Have a coupon? <strong>Click here</strong>
-            </div>
-            {openC && (
-              <div className="animate__animated animate__fadeInUp">
-                <div style={{ marginTop: "10px" }}>
-                  If you have a coupon code, please apply it below.
-                </div>
-                <div className="couponApply-input-main">
-                  <input
-                    type="text"
-                    className="couponApply-input"
-                    placeholder="Enter Coupon Code"
-                    onChange={(e) => {
-                      setCouponData("");
-                      setDiscount("");
-                      getTotalAmount(0);
-                      setCode(e.target.value);
-                    }}
-                  />
-                  <button
-                    className="couponApply-input-button"
-                    onClick={() => {
-                      if (code == couponData?.code) {
-                        toast.error("Coupon already applied");
-                      } else applyCoupon();
-                    }}
-                  >
-                    Apply Coupon
-                  </button>
-                </div>
-              </div>
-            )}
+
+      <div className="d-flex flex-column container" ref={contentRef}>
+        <div className="couponApply d-flex flex-column">
+          <div onClick={() => setOpenC(!openC)} style={{ cursor: "pointer" }}>
+            Have a coupon? <strong>Click here</strong>
           </div>
-          <div className="create-order" style={{ gap: 0, padding: 0 }}>
-            <Formik
-              // isValid='true'
-              enableReinitialize
-              //   validationSchema={validationSchema}
-              initialValues={{
-                address: "",
-                amount: total,
-                addressId: "",
-                products: cartItemsNew,
-                mode: "",
-                agree: false,
-              }}
-              onSubmit={(values, actions) => {}}
-            >
-              {({
-                handleBlur,
-                handleChange,
-                handleSubmit,
-                setFieldValue,
-                values,
-                touched,
-                isValid,
-                errors,
-              }) => (
-                <Form
-                  onSubmit={handleSubmit}
-                  className="create_div-main"
-                  style={{ marginTop: "40px" }}
+          {openC && (
+            <div className="animate__animated animate__fadeInUp">
+              <div style={{ marginTop: "10px" }}>
+                If you have a coupon code, please apply it below.
+              </div>
+              <div className="couponApply-input-main">
+                <input
+                  type="text"
+                  className="couponApply-input"
+                  placeholder="Enter Coupon Code"
+                  onChange={(e) => {
+                    setCouponData("");
+                    setDiscount("");
+                    getTotalAmount(0);
+                    setCode(e.target.value);
+                  }}
+                />
+                <button
+                  className="couponApply-input-button"
+                  onClick={() => {
+                    if (code == couponData?.code) {
+                      toast.error("Coupon already applied");
+                    } else applyCoupon();
+                  }}
                 >
-                  <FormGroup className="order-flow" style={{ gap: "20px" }}>
-                    <div
-                      className="col-12 col-md-6 order-div"
-                      style={{ padding: "0% 4% 0 1%" }}
-                    >
-                      <div className="d-flex flex-column">
+                  Apply Coupon
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="create-order" style={{ gap: 0, padding: 0 }}>
+          <Formik
+            // isValid='true'
+            enableReinitialize
+            //   validationSchema={validationSchema}
+            initialValues={{
+              address: "",
+              amount: total,
+              addressId: "",
+              products: cartItemsNew,
+              mode: "",
+              agree: false,
+            }}
+            onSubmit={(values, actions) => { }}
+          >
+            {({
+              handleBlur,
+              handleChange,
+              handleSubmit,
+              setFieldValue,
+              values,
+              touched,
+              isValid,
+              errors,
+            }) => (
+              <Form
+                onSubmit={handleSubmit}
+                className="create_div-main"
+                style={{
+
+                  maxWidth: "1200px",
+                
+                  padding: "20px"
+                }}
+              >
+                <FormGroup className="order-flow" style={{
+                
+                  display: "flex",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  justifyContent: "space-between"
+                }}>
+                  <div className="col-12 col-md-6 order-div" style={{
+                    padding: "30px",
+                    backgroundColor: "#fff",
+                    borderRadius: "12px",
+                    boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
+                    flex: "1",
+                    minWidth: "300px",
+                    maxWidth: "45%",
+                    position: "sticky",
+                    top: "20px",
+                    height: "fit-content"
+                  }}>
+                    <div className="d-flex flex-column">
+                      <div
+                        className="d-flex"
+                        style={{
+                          justifyContent: "space-between",
+                          marginBottom: "20px"
+                        }}
+                      >
+                        <label style={{
+                          fontSize: "1.2rem",
+                          fontWeight: "600",
+                          color: "#333"
+                        }}>Your Order</label>
                         <div
-                          className="d-flex"
+                          onClick={() => navigate("/cart")}
                           style={{
-                            justifyContent: "space-between",
+                            cursor: "pointer",
                             fontWeight: 600,
+                            color: "#e31e24"
                           }}
                         >
-                          <div>Billing details</div>
-                          {/* <div
-                          onClick={() => navigate("/cart")}
-                          style={{ cursor: "pointer" }}
-                        >
                           {"< Back To Cart"}
-                        </div> */}
-                        </div>
-                        <div
-                          className="col-12"
-                          style={{ padding: "20px 0 0 0" }}
-                        >
-                          {addresses?.length > 0 ? (
-                            <StyledAutocomplete
-                              options={addresses}
-                              getOptionSelected={(option, value) =>
-                                option?._id == value?.addressId
-                              }
-                              getOptionLabel={(item) => {
-                                console.log("mkmeromore", item);
-                                let reqValue = "";
-                                if (item) {
-                                  if (item?._id) {
-                                    reqValue =
-                                      item?.fullAdress +
-                                      "-" +
-                                      item?.name +
-                                      "-" +
-                                      item?.phone;
-                                  }
-                                }
-                                return reqValue;
-                              }}
-                              onOpen={() => {
-                                console.log("moo3");
-                                setAdd(true);
-                              }}
-                              style={{ width: "80%" }}
-                              value={values?.address}
-                              onInputChange={(event, newValue) => {
-                                console.log("jiejroj", event, newValue);
-                                if (newValue == "") {
-                                  setFieldValue("addressId", "", true);
-                                }
-                              }}
-                              onChange={(event, newValue) => {
-                                console.log("msdomfod", newValue);
-                                setFieldValue("addressId", newValue?._id, true);
-                                setFieldValue("address", newValue, true);
-                              }}
-                              renderInput={(params) => (
-                                <TextField
-                                  {...params}
-                                  label="Select a Address"
-                                  variant="standard"
-                                  InputProps={{
-                                    ...params.InputProps,
-                                    endAdornment: (
-                                      <>{params.InputProps.endAdornment}</>
-                                    ),
-                                  }}
-                                />
-                              )}
-                            />
-                          ) : (
-                            <></>
-                          )}
-
-                          <div style={{ margin: "10% 0 0 0" }}>
-                            <div className={styles.formGroup}>
-                              <label>Name: </label>
-                              <input
-                                type="text"
-                                name="name"
-                                value={values?.address?.name}
-                                onChange={(e) =>
-                                  handleInputChange(e, values, setFieldValue)
-                                }
-                                required
-                              />
-                            </div>
-                            <div className={styles.formGroup}>
-                              <label>Phone: </label>
-                              <input
-                                type="text"
-                                name="phone"
-                                value={values?.address?.phone}
-                                onChange={(e) =>
-                                  handleInputChange(e, values, setFieldValue)
-                                }
-                                required
-                              />
-                            </div>
-                            <div className={styles.formGroup}>
-                              <label>State: </label>
-                              <input
-                                type="text"
-                                name="state"
-                                value={values?.address?.state}
-                                onChange={(e) =>
-                                  handleInputChange(e, values, setFieldValue)
-                                }
-                                required
-                              />
-                            </div>
-                            <div className={styles.formGroup}>
-                              <label>City: </label>
-                              <input
-                                type="text"
-                                name="city"
-                                value={values?.address?.city}
-                                onChange={(e) =>
-                                  handleInputChange(e, values, setFieldValue)
-                                }
-                                required
-                              />
-                            </div>
-                            <div className={styles.formGroup}>
-                              <label>Pin: </label>
-                              <input
-                                type="text"
-                                name="pin"
-                                value={values?.address?.pin}
-                                onChange={(e) =>
-                                  handleInputChange(e, values, setFieldValue)
-                                }
-                                required
-                              />
-                            </div>
-                            <div className={styles.formGroup}>
-                              <label>Email (optional): </label>
-                              <input
-                                type="email"
-                                name="email"
-                                value={values?.address?.email}
-                                onChange={(e) =>
-                                  handleInputChange(e, values, setFieldValue)
-                                }
-                              />
-                            </div>
-                            <div className={styles.formGroup}>
-                              <label>Full Address: </label>
-                              <textarea
-                                name="fullAdress"
-                                value={values?.address?.fullAdress}
-                                onChange={(e) =>
-                                  handleInputChange(e, values, setFieldValue)
-                                }
-                                required
-                              />
-                            </div>
-                            <button
-                              type="submit"
-                              className={styles.button}
-                              onClick={() =>
-                                handleSubmitAdd(values, setFieldValue)
-                              }
-                            >
-                              {values?.address?._id
-                                ? "Edit Changes"
-                                : "Add Address"}
-                            </button>
-                          </div>
                         </div>
                       </div>
-                    </div>
-
-                    <div className="col-12 col-md-6 order-div">
-                      <div className="d-flex flex-column">
-                        <div
-                          className="d-flex"
-                          style={{ justifyContent: "space-between" }}
-                        >
-                          <label>Your Order</label>
-                          <div
-                            onClick={() => navigate("/cart")}
-                            style={{
-                              cursor: "pointer",
-                              fontWeight: 600,
-                            }}
-                          >
-                            {"< Back To Cart"}
-                          </div>
-                        </div>
-                        <div style={{ marginTop: "20px" }}>
-                          {cartItemsNew?.map((e) => {
-                            return (
-                              <div
-                                className="d-flex"
-                                style={{ marginBottom: "10px" }}
-                              >
-                                <img
-                                  width="60"
-                                  height="60"
-                                  src={e?.item?.src[0]}
-                                  class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail et-lazyload ls-is-cached lazyloaded"
-                                  alt=""
-                                  decoding="async"
-                                  loading="lazy"
-                                  data-sizes="(max-width: 450px) 100vw, 450px"
-                                  sizes="(max-width: 450px) 100vw, 450px"
-                                ></img>
-                                <div className="d-flex product-desc">
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      alignItems: "center",
-                                    }}
-                                  >
-                                    {e?.item?.name}
-                                  </div>
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      alignItems: "center",
-                                    }}
-                                  >
-                                    <strong class="product-quantity">
-                                      ×&nbsp;{e?.quantity}
-                                    </strong>
-                                  </div>
-                                </div>
-
-                                <div style={{ margin: "17px 0 0 10px" }}>
+                      <div >
+                        {cartItemsNew?.map((e, index) => (
+                          <div key={index} className="cart-item">
+                            <img
+                              src={e?.item?.src[0]}
+                              alt={e?.item?.name}
+                            />
+                            <div className="product-desc">
+                              <div className="product-info">
+                                {e?.item?.name}
+                              </div>
+                              <div className="product-price">
+                                <strong className="product-quantity">
+                                  ×&nbsp;{e?.quantity}
+                                </strong>
+                                <div style={{ fontWeight: "600", color: "black" }}>
                                   ₹{" "}
                                   {(
                                     parseFloat(e?.item?.price || 0) -
@@ -741,173 +568,322 @@ export default function CreateOrder(props) {
                                   )?.toFixed(2)}
                                 </div>
                               </div>
-                            );
-                          })}
-                        </div>
-                        <div className="total d-flex">
-                          <div>SUBTOTAL</div>
-                          <div>₹ {subtotal?.toFixed(2)}</div>
-                        </div>
-                        {discount ? (
-                          <div className="total d-flex">
-                            <div>DISCOUNT</div>
-                            <div>- {discount} %</div>
+                            </div>
                           </div>
+                        ))}
+                      </div>
+                      <div className="total-section">
+                        <div>SUBTOTAL</div>
+                        <div>₹ {subtotal?.toFixed(2)}</div>
+                      </div>
+                      {discount ? (
+                        <div className="total-section" style={{ color: "#28a745" }}>
+                          <div>DISCOUNT</div>
+                          <div>- {discount} %</div>
+                        </div>
+                      ) : null}
+
+                      <div className="total-section">
+                        <div>Delivery : </div>
+                        <div style={{ color: total < content?.deliveryAmt ? "#e31e24" : "#28a745" }}>
+                          {total < content?.deliveryAmt
+                            ? "₹ " + content.deliveryCharge
+                            : "Free Delivery"}
+                        </div>
+                      </div>
+
+                      <div className="total-section" style={{ fontSize: "1.1rem" }}>
+                        <div style={{ fontWeight: "600" }}>TOTAL</div>
+                        <div style={{ fontWeight: "700", color: "black" }}>
+                          ₹ {total?.toFixed(2)}
+                        </div>
+                      </div>
+                      <div className="checkout-style-regular d-flex flex-column">
+                        <div
+                          className="payment-option"
+                          onClick={() => setFieldValue("mode", "cash", true)}
+                        >
+                          <div style={{ width: "5%" }}>
+                            <input
+                              type="checkbox"
+                              checked={values?.mode == "cash"}
+                              style={{ width: "18px", height: "18px" }}
+                            />
+                          </div>
+                          <div style={{ padding: "0 0 0 20px" }}>
+                            Cash on delivery
+                          </div>
+                        </div>
+                        <div
+                          className="payment-option"
+                          onClick={() => setFieldValue("mode", "online", true)}
+                        >
+                          <div style={{ width: "5%" }}>
+                            <input
+                              type="checkbox"
+                              checked={values?.mode == "online"}
+                              style={{ width: "18px", height: "18px" }}
+                            />
+                          </div>
+                          <div style={{ padding: "0 0 0 20px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                            <div>Pay online</div>
+                            <img
+                              src="https://cdn.razorpay.com/static/assets/logo/rzp_payment_icon.svg"
+                              style={{ height: "24px" }}
+                              alt="Razorpay"
+                            />
+                          </div>
+                        </div>
+                        <div className="terms-section">
+                          Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our{" "}
+                          <a
+                            onClick={() => navigate("/policy")}
+                            style={{
+                              cursor: "pointer",
+                              color: "#e31e24",
+                              textDecoration: "none"
+                            }}
+                          >
+                            privacy policy
+                          </a>
+                          .
+                        </div>
+                        <div className="terms-checkbox">
+                          <div>
+                            <input
+                              type="checkbox"
+                              checked={values?.agree}
+                              onChange={(e) => {
+                                setFieldValue("agree", e?.target?.checked, true);
+                              }}
+                            />
+                          </div>
+                          <div>
+                            I have read and agree to the website terms and conditions *
+                          </div>
+                        </div>
+                        <Button
+                          className="checkout-button"
+                          disabled={
+                            !(values?.mode && values?.agree && values?.addressId) || loading
+                          }
+                          onClick={() => handleCheckout(values)}
+                        >
+                          {loading ? "Processing..." : "Place order"}
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    className="col-12 col-md-6 order-div"
+                    style={{
+                      padding: "30px",
+                      backgroundColor: "#fff",
+                      borderRadius: "12px",
+                      boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
+                      flex: "1",
+                      minWidth: "300px",
+                      maxWidth: "45%"
+                    }}
+                  >
+                    <div className="d-flex flex-column">
+                      <div
+                        className="d-flex"
+                        style={{
+                          justifyContent: "space-between",
+                          fontWeight: 600,
+                          fontSize: "1.2rem",
+
+                          color: "#333"
+                        }}
+                      >
+                        <div>Billing details</div>
+                      </div>
+                      <div
+                        className="col-12 "
+                        
+                      >
+                        {addresses?.length > 0 ? (
+                          <StyledAutocomplete
+                            options={addresses}
+                            getOptionSelected={(option, value) =>
+                              option?._id == value?.addressId
+                            }
+                            getOptionLabel={(item) => {
+                              let reqValue = "";
+                              if (item) {
+                                if (item?._id) {
+                                  reqValue =
+                                    item?.fullAdress +
+                                    "-" +
+                                    item?.name +
+                                    "-" +
+                                    item?.phone;
+                                }
+                              }
+                              return reqValue;
+                            }}
+                            onOpen={() => setAdd(true)}
+                            className="address-select"
+                            value={values?.address}
+                            onInputChange={(event, newValue) => {
+                              if (newValue == "") {
+                                setFieldValue("addressId", "", true);
+                              }
+                            }}
+                            onChange={(event, newValue) => {
+                              setFieldValue("addressId", newValue?._id, true);
+                              setFieldValue("address", newValue, true);
+                            }}
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                label="Select a Address"
+                                variant="outlined"
+                                fullWidth
+                                className="address-text-field"
+                              />
+                            )}
+                          />
                         ) : (
                           <></>
                         )}
 
-                        <div className="total d-flex">
-                          <div>Delivery : </div>
-                          <div>
-                            {total < content?.deliveryAmt
-                              ? "₹ " + content.deliveryCharge
-                              : "Free Delivery"}
+                        <div className="form-grid">
+                          {/* Name Input - Top-left in image */}
+                          <div className={`${styles.formGroup} form-group-half`}>
+                            <label className="form-label">Name: </label>
+                            <input
+                              type="text"
+                              name="name"
+                              value={values?.address?.name}
+                              onChange={(e) =>
+                                handleInputChange(e, values, setFieldValue)
+                              }
+                              required
+                              className="form-input"
+                            />
                           </div>
-                        </div>
+                          {/* Phone Input - Top-right in image (10-digit mobile number) */}
+                          <div className={`${styles.formGroup} form-group-half`}>
+                            <label className="form-label">Phone: </label>
+                            <input
+                              type="text"
+                              name="phone"
+                              value={values?.address?.phone}
+                              onChange={(e) =>
+                                handleInputChange(e, values, setFieldValue)
+                              }
+                              required
+                              className="form-input"
+                            />
+                          </div>
+                          
+                          {/* Pin Input - Second row, left in image (Pincode) */}
+                          <div className={`${styles.formGroup} form-group-half`}>
+                            <label className="form-label">Pin: </label>
+                            <input
+                              type="text"
+                              name="pin"
+                              value={values?.address?.pin}
+                              onChange={(e) =>
+                                handleInputChange(e, values, setFieldValue)
+                              }
+                              required
+                              className="form-input"
+                            />
+                          </div>
+                          {/* City Input - Second row, right in image (Locality) */}
+                          <div className={`${styles.formGroup} form-group-half`}>
+                            <label className="form-label">City: </label>
+                            <input
+                              type="text"
+                              name="city"
+                              value={values?.address?.city}
+                              onChange={(e) =>
+                                handleInputChange(e, values, setFieldValue)
+                              }
+                              required
+                              className="form-input"
+                            />
+                          </div>
 
-                        <div className="total d-flex">
-                          <div>TOTAL</div>
-                          <div style={{ fontWeight: "700" }}>
-                            ₹ {total?.toFixed(2)}
+                          {/* Full Address Textarea - Third row, full width in image (Address (Area and Street)) */}
+                          <div className={`${styles.formGroup} form-group-full`}>
+                            <label className="form-label">Full Address: </label>
+                            <textarea
+                              name="fullAdress"
+                              value={values?.address?.fullAdress}
+                              onChange={(e) =>
+                                handleInputChange(e, values, setFieldValue)
+                              }
+                              required
+                              className="form-textarea"
+                            />
+                          </div>
+
+                          {/* State Input - Fourth row, left in image */}
+                          <div className={`${styles.formGroup} form-group-half`}>
+                            <label className="form-label">State: </label>
+                            <input
+                              type="text"
+                              name="state"
+                              value={values?.address?.state}
+                              onChange={(e) =>
+                                handleInputChange(e, values, setFieldValue)
+                              }
+                              required
+                              className="form-input"
+                            />
+                          </div>
+                          {/* Email (Optional) Input - Fourth row, right in image */}
+                          <div className={`${styles.formGroup} form-group-half`}>
+                            <label className="form-label">Email (optional): </label>
+                            <input
+                              type="email"
+                              name="email"
+                              value={values?.address?.email}
+                              onChange={(e) =>
+                                handleInputChange(e, values, setFieldValue)
+                              }
+                              className="form-input"
+                            />
                           </div>
                         </div>
-                        <div className="checkout-style-regular d-flex flex-column">
-                          <div
-                            className="d-flex"
-                            onClick={() => setFieldValue("mode", "cash", true)}
-                          >
-                            <div style={{ width: "5%" }}>
-                              <input
-                                type="checkbox"
-                                checked={values?.mode == "cash" ? true : false}
-                              />
-                            </div>
-                            <div style={{ padding: "0 0 0 20px" }}>
-                              Cash on delivery
-                            </div>
-                          </div>
-                          <div
-                            className="d-flex"
+                          <button
+                            type="submit"
+                            className="add-address-button"
                             onClick={() =>
-                              setFieldValue("mode", "online", true)
+                              handleSubmitAdd(values, setFieldValue)
                             }
                           >
-                            <div style={{ width: "5%" }}>
-                              <input
-                                type="checkbox"
-                                checked={
-                                  values?.mode == "online" ? true : false
-                                }
-                              />
-                            </div>
-                            <div
-                              style={{
-                                padding: "0 0 0 20px",
-                                display: "flex",
-                                flexDirection: "column",
-                              }}
-                            >
-                              <div>Pay online</div>
-                              <img src="https://cdn.razorpay.com/static/assets/logo/rzp_payment_icon.svg" />
-                            </div>
-                          </div>
-                          <div style={{ padding: "15px 0 0 0" }}>
-                            Your personal data will be used to process your
-                            order, support your experience throughout this
-                            website, and for other purposes described in our{" "}
-                            <a
-                              onClick={() => navigate("/policy")}
-                              style={{ cursor: "pointer" }}
-                            >
-                              privacy policy
-                            </a>
-                            .
-                          </div>
-                          <div
-                            className="d-flex"
-                            style={{ gap: "15px", margin: "10px 0 0 0" }}
-                          >
-                            <div
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                              }}
-                            >
-                              <input
-                                type="checkbox"
-                                checked={values?.agree ? true : false}
-                                style={{ width: "20px", height: "20px" }}
-                                onChange={(e) => {
-                                  setFieldValue(
-                                    "agree",
-                                    e?.target?.checked,
-                                    true,
-                                  );
-                                }}
-                              />
-                            </div>
-                            <div>
-                              I have read and agree to the website terms and
-                              conditions *
-                            </div>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              margin: "30px 0 0 0",
-                            }}
-                          >
-                            <Button
-                              //   type="submit"
-                              style={{
-                                width: "100%",
-                                borderRadius: "5px",
-                                backgroundColor:
-                                  values?.mode &&
-                                  values?.agree &&
-                                  values?.addressId
-                                    ? "#e31e24"
-                                    : "grey",
-                                cursor: "pointer",
-                              }}
-                              className="generateOtp textAddCust Medium btn btn-secondary"
-                              disabled={
-                                (values?.mode &&
-                                  values?.agree &&
-                                  values?.addressId) ||
-                                loading
-                                  ? false
-                                  : true
-                              }
-                              onClick={() => handleCheckout(values)}
-                            >
-                              {loading ? "loading" : "Place order"}
-                            </Button>
-                          </div>
-                        </div>
+                            {values?.address?._id
+                              ? "Edit Changes"
+                              : "Add Address"}
+                          </button>
                       </div>
                     </div>
-                  </FormGroup>
-                </Form>
-              )}
-            </Formik>
-          </div>
-          {loading && (
-            <div className="loading">
-              <ReactLoading
-                type="spinningBubbles"
-                color="#007bff"
-                height={200}
-                width={200}
-              />
-            </div>
-          )}
+                  </div>
+                </FormGroup>
+              </Form>
+            )}
+          </Formik>
         </div>
+        {loading && (
+          <div className="loading">
+            <ReactLoading
+              type="spinningBubbles"
+              color="#007bff"
+              height={200}
+              width={200}
+            />
+          </div>
+        )}
+      </div>
 
-        <ToastContainer position="bottom-right" />
-      </Sidebar>
+      <ToastContainer position="bottom-right" />
+
     </Navbar>
   );
 }

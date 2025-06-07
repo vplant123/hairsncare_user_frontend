@@ -8,7 +8,7 @@
     color: #282828;
     background-color: #fff;
     background-clip: padding-box;
-    border: 2px solid #ddd;
+    border: none;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -23,7 +23,7 @@ padding: 0
 }
 
 .mainAddress{
-    border: 2px solid #ddd;
+    border: none;
     width : 93%;
     margin-top: 10px;
 }
@@ -96,7 +96,7 @@ padding: 0
 .shop_table tbody .et-product-thumbnail img, .shop_table tbody .arg-product-image img {
     max-width: 100%;
     border-radius: 2px;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: none;
 }
 
 .goya-lazyload .lazyloaded {
@@ -142,7 +142,7 @@ padding: 0
 }
 
 .shop_table tfoot tr {
-    border-bottom: 1px solid #ddd;
+    border-bottom: none;
 }
 
 #order_review {
@@ -150,6 +150,7 @@ padding: 0
     margin: 30px auto;
     line-height: 1.6;
     padding-bottom: 30px;
+    width: 100%;
 }
 
 .product-quantity {
@@ -174,18 +175,17 @@ padding: 0
 .product-desc{
     justify-content: space-between;
     width: 300px;
-    /* padding: 0 0 0 1px; */
     margin: 0 0 0 25px;
 }
 
 .total{
-    border-top: 1px solid #ddd;
+    border-top: none;
     justify-content: space-between;
     padding: 15px 0 15px 0;
 }
 
 .checkout-style-regular {
-    border: 1px solid currentColor;
+    border: none;
     padding: 30px;
     margin-bottom: 20px;
 }
@@ -202,6 +202,70 @@ padding: 0
 
 .create_div-main{
     padding: 0 25px 0 25px;
+}
+
+.form-grid {
+    display: flex;
+    flex-wrap: wrap;
+   
+    gap: 5px;
+}
+
+.form-group-half {
+    flex: 1 1 calc(50% - 10px);
+}
+
+.form-group-full {
+    flex: 1 1 100%;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 0px;
+    border: none;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.form-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.address-select .MuiInputBase-root {
+    margin-bottom: 10px;
+    /* Adjust spacing for the select */
+}
+
+.address-text-field {
+    margin-bottom: 0px !important; /* Override default Material-UI margin */
+}
+
+.add-address-button {
+    width: 100%;
+    padding: 14px;
+    background-color: #e31e24;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.add-address-button:hover {
+    background-color: #c71a1f; /* Darken on hover */
 }
 
 .couponApply-input-button{
@@ -241,17 +305,79 @@ padding: 0
     }
     .order-div{
         width: 100%;
-        /* padding: 0 0 0 30px; */
+        padding: 0;
     }
     .create_div-main{
-        padding: 0 0px 0 8px
+        padding: 0 15px;
     }
     .couponApply-input-button{
         padding: 0;
     }
-  }
+    #order_review {
+        padding: 15px;
+        margin: 15px auto;
+    }
+    .shop_table {
+        font-size: 14px;
+    }
+    .shop_table tbody .et-product-thumbnail, 
+    .shop_table tbody .arg-product-image {
+        width: 50px;
+    }
+    .product-desc {
+        width: auto;
+        margin: 0 0 0 15px;
+    }
+    .shop_table tbody .et-product-desc {
+        padding-left: 15px;
+    }
+    .shop_table thead tr th, 
+    .shop_table thead tr td {
+        padding: 10px;
+    }
+    .shop_table tbody tr th, 
+    .shop_table tbody tr td {
+        padding: 0 0 10px 0;
+    }
+    .product-quantity {
+        font-size: 12px;
+        min-width: 1.5em;
+        height: 20px;
+    }
+    .total {
+        padding: 10px 0;
+    }
+    .checkout-style-regular {
+        padding: 20px 15px;
+    }
+}
 
-  .couponApply{
+@media screen and (max-width: 480px) {
+    .shop_table tbody .et-product-thumbnail, 
+    .shop_table tbody .arg-product-image {
+        width: 40px;
+    }
+    .product-desc {
+        margin: 0 0 0 10px;
+    }
+    .shop_table tbody .et-product-desc {
+        padding-left: 10px;
+    }
+    .shop_table thead tr th, 
+    .shop_table thead tr td {
+        padding: 8px;
+    }
+    .product-quantity {
+        font-size: 11px;
+        min-width: 1.3em;
+        height: 18px;
+    }
+    .checkout-style-regular {
+        padding: 15px 10px;
+    }
+}
+
+.couponApply{
     /* display: block; */
     padding: 10px;
     background: #f8f8f8;
@@ -372,5 +498,252 @@ padding: 0
     30%  { left: 52px  }
     60%  { left: 22px  }
     100% { left: 100px }
+}
+
+.order-flow {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    width: 100%;
+}
+
+.order-div {
+    width: 50%;
+    padding: 0;
+}
+
+.create_div-main {
+    padding: 0 25px 0 25px;
+}
+
+/* Order Review Styles */
+#order_review {
+    max-width: 640px;
+    margin: 30px auto;
+    line-height: 1.6;
+    padding-bottom: 30px;
+    width: 100%;
+}
+
+.cart-item {
+    margin-bottom: 10px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.cart-item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.product-desc {
+    flex: 1;
+    margin-left: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-info {
+    font-weight: 500;
+    color: #333;
+}
+
+.product-price {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.total-section {
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+}
+
+.payment-option {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.payment-option:hover {
+    background-color: #f8f9fa;
+}
+
+.terms-section {
+    padding: 15px 0;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.terms-checkbox {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    align-items: center;
+}
+
+.checkout-button {
+    width: 100%;
+    padding: 16px;
+    border-radius: 6px;
+    background-color: #e31e24;
+    color: white;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 30px;
+}
+
+.checkout-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 1024px) {
+    .order-flow {
+        gap: 20px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .order-flow {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .order-div {
+        width: 100%;
+        padding: 0;
+    }
+
+    .create_div-main {
+        padding: 0 15px;
+    }
+
+    .cart-item {
+        padding: 12px;
+    }
+
+    .cart-item img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .product-desc {
+        margin-left: 12px;
+    }
+
+    .product-info {
+        font-size: 14px;
+    }
+
+    .product-price {
+        gap: 10px;
+    }
+
+    .total-section {
+        padding: 12px 0;
+        font-size: 14px;
+    }
+
+    .payment-option {
+        padding: 10px;
+    }
+
+    .terms-section {
+        font-size: 13px;
+    }
+
+    .terms-checkbox {
+        padding: 12px;
+        font-size: 13px;
+    }
+
+    .checkout-button {
+        padding: 14px;
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .create_div-main {
+        padding: 0 10px;
+    }
+
+    .cart-item {
+        padding: 10px;
+    }
+
+    .cart-item img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .product-desc {
+        margin-left: 10px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .product-info {
+        font-size: 13px;
+    }
+
+    .product-price {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .total-section {
+        padding: 10px 0;
+        font-size: 13px;
+    }
+
+    .payment-option {
+        padding: 8px;
+    }
+
+    .payment-option input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+    }
+
+    .terms-section {
+        font-size: 12px;
+    }
+
+    .terms-checkbox {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .terms-checkbox input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+    }
+
+    .checkout-button {
+        padding: 12px;
+        font-size: 14px;
+    }
 }
 

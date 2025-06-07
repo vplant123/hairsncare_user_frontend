@@ -74,25 +74,25 @@ function MiniCart({ isOpen, onClose,cart,setCart }) {
 
 
   const updateQuantity = (id, quantity) => {
+    // Ensure quantity is between 1 and 5
+    const limitedQuantity = Math.min(Math.max(1, parseInt(quantity) || 1), 5);
 
     if(!storedUserData?.logedInUser){
         let c = cart.map((e) => ({...e}));
         let f = c?.findIndex((w) => w?.item?._id == id);
         if((f || f == "0") && f != -1){
-          c[f].quantity = c[f]?.quantity + 1;
-          console.log("jreijf",c[f].quantity)
+          c[f].quantity = limitedQuantity;
         }
 
         setCart(c);
-        console.log("jreijf",f,c,id)
         localStorage.setItem("cart", JSON.stringify(c));
         return;
-      }
-  
-    else {setCartItemsNew(cartItemsNew.map(item => 
-      item?.item?._id == id ? { ...item, quantity: Math.max(1, quantity) } : item
-    ));
-}
+    }
+    else {
+      setCartItemsNew(cartItemsNew.map(item => 
+        item?.item?._id == id ? { ...item, quantity: limitedQuantity } : item
+      ));
+    }
   };
   const [showLogin1,setShowLogin1]= useState(false)
 

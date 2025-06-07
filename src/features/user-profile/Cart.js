@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Cart.css';
-import Sidebar from './Sidebar'
+// import Sidebar from './Sidebar'
 import Navbar from '../nav/Navbar';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ import SignUp from '../signup/SignUp';
 import { ToastContainer } from 'react-toastify';
 import Footer from '../footer/Footer';
 import useNavigateParams from '../../utils/hookUseNavigateParam';
+import { max } from 'moment';
 
 // Sample cart data for demonstration purposes
 const sampleCart = [
@@ -223,7 +224,7 @@ export default function Cart(props) {
   return (
     <Navbar cart={cart}
       setCart={setCart}>
-      <Sidebar>
+    
         <div className="cart">
           {
             cartItemsNew?.length == 0 ? <div className='d-flex flex-column'>
@@ -244,15 +245,35 @@ export default function Cart(props) {
                         }} style={{ cursor: "pointer" }} />
                         <div className="cart-item-details">
                           <h3 onClick={() => navigate('/product-detail/' + item?.item.metaSlug ?? item.item._id, { id: item?.item._id })} style={{ cursor: "pointer" }}>{item?.item?.name}</h3>
-                          <p>Price: {item?.item?.price?.toFixed(0) - parseFloat(item?.item?.discount || 0)?.toFixed(0)}</p>
+                          <p>Price:₹{item?.item?.price?.toFixed(0) - parseFloat(item?.item?.discount || 0)?.toFixed(0)}</p>
                         </div>
                         <div className="cart-item-actions">
                           <input
                             type="number"
                             value={q}
+                            min="1"
+                            max="5"
                             onChange={(e) => {
-                              console.log("kokokroo", e.target.value)
-                              updateQuantity(item?.item?._id, e.target.value)
+                              const value = parseInt(e.target.value);
+                              if (value > 5) {
+                                updateQuantity(item?.item?._id, 5);
+                              } else if (value < 1) {
+                                updateQuantity(item?.item?._id, 1);
+                              } else {
+                                updateQuantity(item?.item?._id, value);
+                              }
+                            }}
+                            onKeyPress={(e) => {
+                              if (e.key === '-' || e.key === 'e') {
+                                e.preventDefault();
+                              }
+                            }}
+                            style={{
+                              width: '60px',
+                              padding: '5px',
+                              textAlign: 'center',
+                              border: '1px solid #ddd',
+                              borderRadius: '4px'
                             }}
                           />
                           <button className="remove" onClick={() => removeFromCart(item?._id, item?.item?._id)}>{loader ? "Loading" : "Remove"}</button>
@@ -262,7 +283,7 @@ export default function Cart(props) {
                   })}
                 </ul>
                 <div className="cart-summary">
-                  <p>Total Amount: {getTotalAmount()}</p>
+                <p>Total Amount: ₹{getTotalAmount()}</p>
                   <button onClick={() => {
                     handleAddToCart()
                   }}>Buy</button>
@@ -300,7 +321,7 @@ export default function Cart(props) {
 
         </div>
         <ToastContainer position="bottom-right" />
-      </Sidebar>
+      
       {/* <Footer/> */}
     </Navbar>
   );

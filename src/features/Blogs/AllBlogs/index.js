@@ -124,11 +124,14 @@ export default function AllBlog(props) {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
-      /* you can also use 'auto' behaviour 
-         in place of 'smooth' */
     });
   };
   const content = useSelector((state) => state.content.home);
+
+  useEffect(() => {
+    // Redirect to external blog URL
+    window.location.href = "https://blogs.hairsncares.com/";
+  }, []);
 
   useEffect(() => {
     if (props?.setDesc) props?.setDesc(window.location.pathname);
@@ -528,7 +531,7 @@ export default function AllBlog(props) {
                     />
                 </div>
                 <div>
-                I’m Dr. Amit Agarkar, a dermatologist and trichologist with over 20 years of experience in helping people regain their hair and confidence. Let’s dive into a topic that affects millions of women—hair loss. It’s a common issue, but it doesn’t have to be your forever reality. Today, I’m going to break down why women experience hair loss, what you can do about it, and the treatments that work best based on my own professional experience
+                I'm Dr. Amit Agarkar, a dermatologist and trichologist with over 20 years of experience in helping people regain their hair and confidence. Let's dive into a topic that affects millions of women—hair loss. It's a common issue, but it doesn't have to be your forever reality. Today, I'm going to break down why women experience hair loss, what you can do about it, and the treatments that work best based on my own professional experience
                 </div>
                 <div
                 className="blog-take-hair-test-main d-flex flex-column"

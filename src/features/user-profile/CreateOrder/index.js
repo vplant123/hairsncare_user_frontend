@@ -498,12 +498,13 @@ export default function CreateOrder(props) {
                 style={{
 
                   maxWidth: "1200px",
-                
+
                   padding: "20px"
                 }}
               >
                 <FormGroup className="order-flow" style={{
                 
+
                   display: "flex",
                   flexDirection: "row",
                   flexWrap: "wrap",
@@ -702,7 +703,7 @@ export default function CreateOrder(props) {
                       </div>
                       <div
                         className="col-12 "
-                        
+
                       >
                         {addresses?.length > 0 ? (
                           <StyledAutocomplete
@@ -779,7 +780,7 @@ export default function CreateOrder(props) {
                               className="form-input"
                             />
                           </div>
-                          
+
                           {/* Pin Input - Second row, left in image (Pincode) */}
                           <div className={`${styles.formGroup} form-group-half`}>
                             <label className="form-label">Pin: </label>
@@ -851,17 +852,17 @@ export default function CreateOrder(props) {
                             />
                           </div>
                         </div>
-                          <button
-                            type="submit"
-                            className="add-address-button"
-                            onClick={() =>
-                              handleSubmitAdd(values, setFieldValue)
-                            }
-                          >
-                            {values?.address?._id
-                              ? "Edit Changes"
-                              : "Add Address"}
-                          </button>
+                        <button
+                          type="submit"
+                          className="add-address-button"
+                          onClick={() =>
+                            handleSubmitAdd(values, setFieldValue)
+                          }
+                        >
+                          {values?.address?._id
+                            ? "Edit Changes"
+                            : "Add Address"}
+                        </button>
                       </div>
                     </div>
                   </div>

@@ -503,7 +503,6 @@ export default function CreateOrder(props) {
                 }}
               >
                 <FormGroup className="order-flow" style={{
-                
 
                   display: "flex",
                   flexDirection: "row",

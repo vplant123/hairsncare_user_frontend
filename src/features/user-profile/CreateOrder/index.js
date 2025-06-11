@@ -602,35 +602,36 @@ export default function CreateOrder(props) {
                         <div
                           className="payment-option"
                           onClick={() => setFieldValue("mode", "cash", true)}
+                          style={{ display: "flex", alignItems: "center" }}
                         >
-                          <div style={{ width: "5%" }}>
-                            <input
-                              type="checkbox"
-                              checked={values?.mode == "cash"}
-                              style={{ width: "18px", height: "18px" }}
-                            />
-                          </div>
-                          <div style={{ padding: "0 0 0 20px" }}>
-                            Cash on delivery
-                          </div>
+                          <input
+                            type="checkbox"
+                            checked={values?.mode == "cash"}
+                            style={{ width: "18px", height: "18px", marginRight: "20px" }}
+                          />
+                          <div>Cash on delivery</div>
                         </div>
                         <div
                           className="payment-option"
                           onClick={() => setFieldValue("mode", "online", true)}
+                          style={{ display: "flex", alignItems: "center" }}
                         >
-                          <div style={{ width: "5%" }}>
-                            <input
-                              type="checkbox"
-                              checked={values?.mode == "online"}
-                              style={{ width: "18px", height: "18px" }}
-                            />
-                          </div>
-                          <div style={{ padding: "0 0 0 20px", display: "flex", flexDirection: "column", gap: "8px" }}>
-                            <div>Pay online</div>
-                            <img
+                          <input
+                            type="checkbox"
+                            checked={values?.mode == "online"}
+                            style={{ width: "18px", height: "18px", marginRight: "20px" }}
+                          />
+                          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                            <span>Pay Online</span>
+                            <img 
                               src="https://cdn.razorpay.com/static/assets/logo/rzp_payment_icon.svg"
-                              style={{ height: "24px" }}
-                              alt="Razorpay"
+                              alt="Payment methods"
+                              style={{ 
+                                maxWidth: "100%",
+                                height: "auto",
+                                maxHeight: "30px",
+                                objectFit: "contain"
+                              }}
                             />
                           </div>
                         </div>
@@ -742,7 +743,7 @@ export default function CreateOrder(props) {
                                 label="Select a Address"
                                 variant="outlined"
                                 fullWidth
-                                className="address-text-field"
+                                className="address-text-field mt-6"
                               />
                             )}
                           />

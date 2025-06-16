@@ -8,38 +8,38 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import ReactLoading from 'react-loading';
 
-function Checkout({testId}) {
+function Checkout({ testId }) {
   const [selectedOption, setSelectedOption] = useState("rs500");
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
   };
 
   const content = useSelector((state) => state.content?.plan);
-  console.log("testIdtestIdtestIdtestId",content)
+  console.log("testIdtestIdtestIdtestId", content)
 
   let p1 = content?.find((e) => e?.name == "Local Plan")
   let p2 = content?.find((e) => e?.name == "Premium Plan")
 
   let storedUserData = JSON.parse(localStorage.getItem("User343"));
 
-  const [openC,setOpenC] = useState(false)
-  const [code,setCode] = useState("")
-  const [couponData,setCouponData] = useState("")
-  const [discount,setDiscount] = useState("")
+  const [openC, setOpenC] = useState(false)
+  const [code, setCode] = useState("")
+  const [couponData, setCouponData] = useState("")
+  const [discount, setDiscount] = useState("")
 
-  const applyCoupon = async() => {
+  const applyCoupon = async () => {
     fetch(`${BASE_URL}/users/applyCoupon`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': storedUserData.logedInUser.accessToken
       },
-      body: JSON.stringify({ code,type : "1"}),
+      body: JSON.stringify({ code, type: "1" }),
     })
       .then(response => response.json())
       .then(data => {
-        console.log("sjkorjf",data)
-        if(data?.statusCode == 200){
+        console.log("sjkorjf", data)
+        if (data?.statusCode == 200) {
           setDiscount(data?.data?.percent)
           // getTotalAmount(data?.data?.percent)
           setCouponData(data?.data)
@@ -57,43 +57,43 @@ function Checkout({testId}) {
   }
   return (
     <div className="ltn__checkout-payment-method payment-method mb-50">
-                <div className="couponApply d-flex flex-column">
-            <div onClick={()=>setOpenC(!openC)} style={{cursor : "pointer"}}>
-            Have a coupon? <strong>Click here</strong>
-            </div>
-            {openC && <div className="animate__animated animate__fadeInUp"><div style={{marginTop : "10px"}}>
-            If you have a coupon code, please apply it below.
-            </div>
-            <div className="couponApply-input-main">
-              <input type = "text" className="couponApply-input" placeholder="Enter Coupon Code" onChange={(e) => {
-                setCouponData("")
-                setDiscount("")
-                // getTotalAmount(0)
-                setCode(e.target.value)
-              }}/>
-              <button className="couponApply-input-button" onClick={() => {
-                if(code == couponData?.code){
-                  toast.error("Coupon already applied")
-                }
-                else applyCoupon()
-              }}>Apply Coupon</button>
-            </div></div>} 
-          </div>
+      <div className="couponApply d-flex flex-column">
+        <div onClick={() => setOpenC(!openC)} style={{ cursor: "pointer" }}>
+          Have a coupon? <strong>Click here</strong>
+        </div>
+        {openC && <div className="animate__animated animate__fadeInUp"><div style={{ marginTop: "10px" }}>
+          If you have a coupon code, please apply it below.
+        </div>
+          <div className="couponApply-input-main">
+            <input type="text" className="couponApply-input" placeholder="Enter Coupon Code" onChange={(e) => {
+              setCouponData("")
+              setDiscount("")
+              // getTotalAmount(0)
+              setCode(e.target.value)
+            }} />
+            <button className="couponApply-input-button" onClick={() => {
+              if (code == couponData?.code) {
+                toast.error("Coupon already applied")
+              }
+              else applyCoupon()
+            }}>Apply Coupon</button>
+          </div></div>}
+      </div>
       <h4>Prescription Required*</h4>
       <div id="checkout_accordion_1">
         <PrescriptionOption
           label="Get a Auto generated Prescription that contains your medications and dosages."
-          price={`₹${parseFloat(p1?.price) - (parseFloat(p1?.price || 0)*discount/100)}`}
+          price={`₹${parseFloat(p1?.price) - (parseFloat(p1?.price || 0) * discount / 100)}`}
           onSelect={() => handleOptionSelect("rs100")}
           selected={selectedOption === "rs100"}
           planId="66194c29e6c1744156eb35cf"
           testId={testId}
           couponData={couponData}
-setCouponData={setCouponData}
+          setCouponData={setCouponData}
         />
         <PrescriptionOption
           label="Get a consultation appointment with doctor and medical prescription for your medications, dosages, and usage instructions by doctor."
-          price={`₹${parseFloat(p2?.price) - (parseFloat(p2?.price || 0)*discount/100)}`}
+          price={`₹${parseFloat(p2?.price) - (parseFloat(p2?.price || 0) * discount / 100)}`}
           onSelect={() => handleOptionSelect("rs500")}
           selected={selectedOption === "rs500"}
           planId="66194c51e6c1744156eb35d2"
@@ -106,7 +106,7 @@ setCouponData={setCouponData}
   );
 }
 
-function PrescriptionOption({ label, planId, price, onSelect, selected,testId,couponData,setCouponData}) {
+function PrescriptionOption({ label, planId, price, onSelect, selected, testId, couponData, setCouponData }) {
   const navigate = useNavigate()
   const [startDate, setStartDate] = useState(new Date());
   const [selectedTimeSlot, setSelectedTimeSlot] = useState("morning");
@@ -120,7 +120,6 @@ function PrescriptionOption({ label, planId, price, onSelect, selected,testId,co
     setSelectedTimeSlot(slot);
   };
   const handleCheckout = async () => {
-
     let data;
     let amount;
     if (planId === "66194c51e6c1744156eb35d2") {
@@ -128,10 +127,10 @@ function PrescriptionOption({ label, planId, price, onSelect, selected,testId,co
         appointmentDate: startDate.toLocaleDateString("en-IN"),
         timeSlot: selectedTimeSlot,
         planId,
-        testId,couponId : couponData?._id
+        testId, couponId: couponData?._id
       };
     } else {
-      data = { planId,testId,couponId : couponData?._id};
+      data = { planId, testId, couponId: couponData?._id };
     }
 
     setSetLoading(true);
@@ -140,7 +139,7 @@ function PrescriptionOption({ label, planId, price, onSelect, selected,testId,co
       const token = storedUserData.logedInUser.accessToken;
       console.log(token, "token")
       const response = await fetch(
-        `https://apihair.txogavideo.in/api/vi/bookAppointment/bookAppointment`,
+        `${BASE_URL}/bookAppointment/bookAppointment`,
         {
           method: "POST",
           headers: {
@@ -152,12 +151,14 @@ function PrescriptionOption({ label, planId, price, onSelect, selected,testId,co
       );
 
       if (!response.ok) {
-        toast.error("Please logout and login again with valid credentials.");
+        // const data =  response.json();
+        toast.error("No Response Found");
+        console.log(response);
         setSetLoading(false);
         throw new Error("Network response was not ok");
       } else {
         const responseData = await response.json();
-        console.log("kjnwije",(responseData?.data?.totalAmount + "00")?.toString(),response)
+        console.log("kjnwije", (responseData?.data?.totalAmount + "00")?.toString(), response)
         const options = {
           key: "rzp_live_mArtCmiYqSB4nm",
           amount: Math.round(parseFloat(responseData?.data?.totalAmount) * 100),
@@ -173,7 +174,7 @@ function PrescriptionOption({ label, planId, price, onSelect, selected,testId,co
               planId
             }
             const res = await fetch(
-              `https://apihair.txogavideo.in/api/vi/bookAppointment/update-payment`,
+              `${BASE_URL}/bookAppointment/update-payment`,
               {
                 method: "POST",
                 headers: {
@@ -199,13 +200,13 @@ function PrescriptionOption({ label, planId, price, onSelect, selected,testId,co
                 console.log('cancelled');
                 toast.error("Payment Unsuccessful!! Try again");
                 setSetLoading(false);
-              } 
+              }
               // Reason 2 - When modal is auto closed because of time out
               else if (reason === 'timeout') {
                 console.log('timedout');
                 toast.error("Please logout and login again with valid credentials.");
                 setSetLoading(false);
-              } 
+              }
               // Reason 3 - When payment gets failed.
               else {
                 console.log('failed');
@@ -348,9 +349,9 @@ function PrescriptionOption({ label, planId, price, onSelect, selected,testId,co
               </button>
             </div>
             {
-               loading && <div className="loading">
-               <ReactLoading type="spinningBubbles" color="#007bff" height={200} width={200} />
-             </div>
+              loading && <div className="loading">
+                <ReactLoading type="spinningBubbles" color="#007bff" height={200} width={200} />
+              </div>
             }
 
           </div>

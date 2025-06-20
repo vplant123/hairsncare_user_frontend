@@ -15,38 +15,54 @@ export default function MyReport() {
 
     let storedUserData = localStorage.getItem("User343");
     let User=JSON.parse(storedUserData).logedInUser.user;
-console.log(User._id);
-    useEffect(() => {
-       setLoading(true)
-        const fetchData = async () => {
-          try {
-            const response = await fetch(`${BASE_URL}/doctor/getPrescription?appointmentId=${params.id }`, {
-              method: 'GET',
-              headers: {
-                
-              }
-            });
-    
-            if (!response.ok) {
-              setNoData(true)
-              throw new Error('Network response was not ok');
-            }
-     
-            const data = await response.json();
-            console.log(data.data
-                ,'fsijsaijfijiasjijis');
-            setdata1(data.data);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        };
-    
-        fetchData();
-        setLoading(false)
-   
-      }, []);
+    console.log(User._id);
 
-    const handleTabChange = (tab) => {
+    // Fetch data based on selected tab
+  const fetchData = async (tab) => {
+    console.log(tab, "tab")
+    
+      setLoading(true);
+      setNoData(false);
+      let endpoint = '';
+      if (tab === 'Prescription') {
+        endpoint = `${BASE_URL}/doctor/getPrescription?appointmentId=${params.id}`;
+      } else if (tab === 'Management Report') {
+        // endpoint = `${BASE_URL}/doctor/getManagementReport?appointmentId=${params.id}`;
+        endpoint = `${BASE_URL}/doctor/getPrescription?appointmentId=${params.id}`;
+      } else if (tab === 'Doctor Analyse Report') {
+        // endpoint = `${BASE_URL}/doctor/getDoctorAnalysis?appointmentId=${params.id}`;
+        endpoint = `${BASE_URL}/doctor/getPrescription?appointmentId=${params.id}`;
+      }
+      console.log('params:', params);
+      console.log('appointmentId:', params.id);
+      console.log('fetching:', endpoint);
+      try {
+        const response = await fetch(endpoint, { method: 'GET' });
+        if (!response.ok) {
+          setNoData(true);
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setdata1(data.data);
+        console.log('API data:', data.data, 'for', tab);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+      setLoading(false);
+    };
+
+    // Fetch data when selectedTab or params.id changes
+    useEffect(() => {
+      fetchData(selectedTab);
+      // eslint-disable-next-line
+    }, [selectedTab, params.id]);
+
+  const handleTabChange = (tab) => {
+  // const response =  fetchData(tab)
+  //   window.open(
+  //     `${process.env.REACT_APP_FRONTEND_URL}/order-prescription/${params.id}`,
+  //     "_blank"
+  //   );
       setSelectedTab(tab);
     };
   // return (
@@ -74,29 +90,26 @@ console.log(User._id);
       {loading ? (
         <h1>Loading...</h1>
       ) : (
-        noData?<h1>Give a Test</h1>:
-          data1.showToUser ? (
-            selectedTab === 'Management Report' ? (
-              <div>
-                 {/* <ManagementReportUser data={data1}/> */}
-
-                <ManagementReport data={data1}/>
-                
-              </div>
-            ) : selectedTab === 'Doctor Analyse Report' ? (
-              // <div><DoctorAnalyseUser data={data1}/></div>
-              <div><DoctorAnalysis data={data1}/></div>
-
-            ) : (
-              <div><PrescriptionUser data={data1}/></div>
-            )
+        noData ? (
+          <h1>Give a Test</h1>
+        ) : (
+          selectedTab === 'Management Report' ? (
+            <div>
+              <ManagementReport data={data1} />
+            </div>
+          ) : selectedTab === 'Doctor Analyse Report' ? (
+            <div><DoctorAnalysis data={data1} /></div>
           ) : (
-            <h1>Wait for Doctor Response</h1>
+            <div><PrescriptionUser data={data1} /></div>
           )
-         
+        )
       )}
+
+         
+      
       
     </div>
   );
 }
+
 

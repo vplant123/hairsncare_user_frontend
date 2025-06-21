@@ -57,45 +57,10 @@ export default function MyReport() {
     fetchData(selectedTab);
     // eslint-disable-next-line
   }, [selectedTab, params.id]);
-    let storedUserData = localStorage.getItem("User343");
-    let User=JSON.parse(storedUserData).logedInUser.user;
-console.log(User._id);
-    useEffect(() => {
-       setLoading(true)
-        const fetchData = async () => {
-          try {
-            const response = await fetch(`${BASE_URL}/doctor/getPrescription?appointmentId=${params.id }`, {
-              method: 'GET',
-              headers: {
-                
-              }
-            });
-    
-            if (!response.ok) {
-              setNoData(true)
-              throw new Error('Network response was not ok');
-            }
-     
-            const data = await response.json();
-            console.log(data.data
-                ,'fsijsaijfijiasjijis');
-            setdata1(data.data);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        };
-    
-        fetchData();
-        setLoading(false)
-   
-      }, []);
 
   const handleTabChange = (tab) => {
     setSelectedTab(tab);
   };
-    const handleTabChange = (tab) => {
-      setSelectedTab(tab);
-    };
   // return (
   //   <div>
   //         <div className='test-link container'>
@@ -139,29 +104,8 @@ console.log(User._id);
 
 
 
-        noData?<h1>Give a Test</h1>:
-          data1.showToUser ? (
-            selectedTab === 'Management Report' ? (
-              <div>
-                 {/* <ManagementReportUser data={data1}/> */}
-
-                <ManagementReport data={data1}/>
-                
-              </div>
-            ) : selectedTab === 'Doctor Analyse Report' ? (
-              // <div><DoctorAnalyseUser data={data1}/></div>
-              <div><DoctorAnalysis data={data1}/></div>
-
-            ) : (
-              <div><PrescriptionUser data={data1}/></div>
-            )
-          ) : (
-            <h1>Wait for Doctor Response</h1>
-          )
-         
-      )}
-      
     </div>
   );
 }
+
 

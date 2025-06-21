@@ -183,7 +183,7 @@ const Footer = () => {
       </div>
     </footer>
           <div className="row">
-          <div className="copyright col-12">2024 Copyrights with HairsNcares.com      </div>
+          <div className="copyright col-12">{new Date().getFullYear()} Copyrights with HairsNcares.com</div>
     
           </div>
     </div>

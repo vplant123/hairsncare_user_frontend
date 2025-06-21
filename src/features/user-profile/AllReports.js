@@ -147,21 +147,43 @@ export default function AllReports() {
               header: 'Patient Name',
               size: 150,
               id: 'patientName', // Added id
+                },
+            
+            {
+              accessorKey: 'appointmentData.appointmentType',
+              header: 'Appointment Type',
+              size: 100,
+              id: 'appointment Type', // Added id
+              Cell: ({ row }) => {
+                const { appointmentType, followUpDate, followupOf } = row.original.appointmentData;
+        
+                if (appointmentType === 'hair_test_with_prescription' && followupOf) {
+                  return 'Follow Up Prescription';
+                }
+                if (appointmentType === 'prescription_only') {
+                  return 'Order Prescription';
+                }
+
+        
+                // Default formatting for other cases
+                return appointmentType 
+                  ? "Hair Test" 
+                  : 'N/A';
+              },
+            },
+            {
+              accessorKey: 'appointmentData.followUpDate',
+              header: 'Next FollowUp Date',
+              size: 150,
+              id: 'date', // Added id
+              Cell: ({ cell }) => {
+                const dateValue = cell.getValue();
+                if (!dateValue) return '';
+                return moment(dateValue).format("D MMMM YYYY");
+              },
             },
             // {
-            //   accessorKey: 'personal.age',
-            //   header: 'Age',
-            //   size: 100,
-            //   id: 'age', // Added id
-            // },
-            // {
-            //   accessorKey: 'personal.phone',
-            //   header: 'Phone',
-            //   size: 150,
-            //   id: 'phone', // Added id
-            // },
-            // {
-            //   accessorKey: 'personal.email',
+            //   accessorKey: 'appointmentData.createdAt',
             //   header: 'Email',
             //   size: 150,
             //   id: 'email', // Added id
@@ -180,19 +202,13 @@ export default function AllReports() {
               ),
             },
             {
-              // header: 'appointment Date',
               header: "Session Date",
               size: 150,
-              Cell: ({ cell }) => (
-                // <span style={{ backgroundColor: cell.row.original.amount === 50000 ? 'yellow' : 'orange', padding: '5px', borderRadius: '4px' }}>
-                //   {cell.row.original.amount===50000?"Rs 500":"Rs 100"}
-                // </span>
-                <div>
-                  {cell.row.original?.appointmentData?.createdAt
-                    ? moment(cell.row.original?.appointmentData?.createdAt).format("DD-MM-YYYY")
-                    : "-"}
-                </div>
-              ),
+              Cell: ({ cell }) => {
+                const dateValue = cell.row.original?.appointmentData?.createdAt;
+                if (!dateValue) return '';
+                return moment(dateValue).format("D MMMM YYYY");
+              },
             },
           ]}
           data={data || []}

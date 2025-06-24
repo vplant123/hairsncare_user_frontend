@@ -77,6 +77,7 @@ export default function CreateOrder(props) {
       setOrders(sampleOrders);
     }, 1000);
   }, []);
+
   let storedUserData = JSON.parse(localStorage.getItem("User343"));
   const dispatch = useDispatch();
   const content = useSelector((state) => state.content.config);
@@ -97,7 +98,7 @@ export default function CreateOrder(props) {
       .then((response) => response.json())
       .then((data) => {
         setHeight(
-          data?.data?.length < 3 ? 100 * parseFloat(data?.data?.length) : "150",
+          data?.data?.length < 3 ? 100 * parseFloat(data?.data?.length) : "150"
         );
         setAddresses(data.data);
       })
@@ -111,12 +112,12 @@ export default function CreateOrder(props) {
   };
 
   const getTotalAmount = (dist) => {
-    let tot = cartItems.reduce(
+    let tot = cartItems?.reduce(
       (total, item) =>
         total +
         (item?.item?.price - parseFloat(item?.item?.discount || 0)) *
-        (item?.quantity || 1),
-      0,
+          (item?.quantity || 1),
+      0
     );
     // console.log("mkjrsr",tot,discount)
     let p = parseFloat(tot || 0) - (parseFloat(tot || 0) * (dist || 0)) / 100;
@@ -127,12 +128,12 @@ export default function CreateOrder(props) {
   };
 
   const getSubTotalAmount = () => {
-    let sub = cartItems.reduce(
+    let sub = cartItems?.reduce(
       (total, item) =>
         total +
         (item?.item?.price - parseFloat(item?.item?.discount || 0)) *
-        (item?.quantity || 1),
-      0,
+          (item?.quantity || 1),
+      0
     );
     setSubTotal(sub);
     return sub.toFixed(2);
@@ -164,7 +165,7 @@ export default function CreateOrder(props) {
         address: values?.address?.fullAdress,
       },
       1,
-      "",
+      ""
     );
     console.log("sjofje", emailHtml);
 
@@ -194,11 +195,12 @@ export default function CreateOrder(props) {
 
       if (!response.ok) {
         const responseData = await response.json();
-        console.log("wemskfiew", responseData.data);
-        toast.error(responseData.message);
+        console.log("data", responseData.data);
+
+        toast.error("Invalid Email or Mobile in address");
+
         setSetLoading(false);
         throw new Error("Network response was not ok");
-
       } else {
         if (data?.mode == "cash") {
           const responseData = await response.json();
@@ -232,7 +234,7 @@ export default function CreateOrder(props) {
                     Authorization: token,
                   },
                   body: JSON.stringify(data),
-                },
+                }
               );
 
               console.log(await res.json());
@@ -259,17 +261,13 @@ export default function CreateOrder(props) {
                 // Reason 2 - When modal is auto closed because of time out
                 else if (reason === "timeout") {
                   console.log("timedout");
-                  toast.error(
-                    "Please logout and login again with valid credentials.",
-                  );
+                  toast.error("Too slow, timeout.");
                   setSetLoading(false);
                 }
                 // Reason 3 - When payment gets failed.
                 else {
                   console.log("failed");
-                  toast.error(
-                    "Please logout and login again with valid credentials.",
-                  );
+                  toast.error("failed ,try again.");
                   setSetLoading(false);
                 }
               },
@@ -286,9 +284,7 @@ export default function CreateOrder(props) {
           const rzp1 = new Razorpay(options);
 
           rzp1.on("payment.failed", function (response) {
-            toast.error(
-              "Please logout and login again with valid credentials.",
-            );
+            toast.error("Payent failed due to some reasons , Try again.");
             setSetLoading(false);
             throw new Error("Payment failed");
           });
@@ -301,7 +297,7 @@ export default function CreateOrder(props) {
     } catch (error) {
       console.error(
         "There was a problem with the fetch operation:",
-        error.message,
+        error.message
       );
     }
   };
@@ -381,8 +377,8 @@ export default function CreateOrder(props) {
           toast.success("Address edit successfully");
           setAddresses(
             addresses.map((addr) =>
-              addr._id == values?.address?._id ? data?.data : addr,
-            ),
+              addr._id == values?.address?._id ? data?.data : addr
+            )
           );
           setFieldValue("address", data?.data, true);
           setFieldValue("addressId", values?.address?._id, true);
@@ -434,7 +430,6 @@ export default function CreateOrder(props) {
   };
   return (
     <Navbar>
-
       <div className="d-flex flex-column container" ref={contentRef}>
         <div className="couponApply d-flex flex-column">
           <div onClick={() => setOpenC(!openC)} style={{ cursor: "pointer" }}>
@@ -484,7 +479,7 @@ export default function CreateOrder(props) {
               mode: "",
               agree: false,
             }}
-            onSubmit={(values, actions) => { }}
+            onSubmit={(values, actions) => {}}
           >
             {({
               handleBlur,
@@ -500,62 +495,67 @@ export default function CreateOrder(props) {
                 onSubmit={handleSubmit}
                 className="create_div-main"
                 style={{
-
                   maxWidth: "1200px",
 
-                  padding: "20px"
+                  padding: "20px",
                 }}
               >
-                <FormGroup className="order-flow" style={{
-
-                  display: "flex",
-                  flexDirection: "row",
-                  flexWrap: "wrap",
-                  justifyContent: "space-between"
-                }}>
-                  <div className="col-12 col-md-6 order-div" style={{
-                    padding: "30px",
-                    backgroundColor: "#fff",
-                    borderRadius: "12px",
-                    boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
-                    flex: "1",
-                    minWidth: "300px",
-                    maxWidth: "45%",
-                    position: "sticky",
-                    top: "20px",
-                    height: "fit-content"
-                  }}>
+                <FormGroup
+                  className="order-flow"
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div
+                    className="col-12 col-md-6 order-div"
+                    style={{
+                      padding: "30px",
+                      backgroundColor: "#fff",
+                      borderRadius: "12px",
+                      boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
+                      flex: "1",
+                      minWidth: "300px",
+                      maxWidth: "45%",
+                      position: "sticky",
+                      top: "20px",
+                      height: "fit-content",
+                    }}
+                  >
                     <div className="d-flex flex-column">
                       <div
                         className="d-flex"
                         style={{
                           justifyContent: "space-between",
-                          marginBottom: "20px"
+                          marginBottom: "20px",
                         }}
                       >
-                        <label style={{
-                          fontSize: "1.2rem",
-                          fontWeight: "600",
-                          color: "#333"
-                        }}>Your Order</label>
+                        <label
+                          style={{
+                            fontSize: "1.2rem",
+                            fontWeight: "600",
+                            color: "#333",
+                          }}
+                        >
+                          Your Order
+                        </label>
                         <div
                           onClick={() => navigate("/cart")}
                           style={{
                             cursor: "pointer",
                             fontWeight: 600,
-                            color: "#e31e24"
+                            color: "#e31e24",
                           }}
                         >
                           {"< Back To Cart"}
                         </div>
                       </div>
-                      <div >
+                      <div>
                         {cartItemsNew?.map((e, index) => (
                           <div key={index} className="cart-item">
-                            <img
-                              src={e?.item?.src[0]}
-                              alt={e?.item?.name}
-                            />
+                            <img src={e?.item?.src[0]} alt={e?.item?.name} />
                             <div className="product-desc">
                               <div className="product-info">
                                 {e?.item?.name}
@@ -564,7 +564,9 @@ export default function CreateOrder(props) {
                                 <strong className="product-quantity">
                                   ×&nbsp;{e?.quantity}
                                 </strong>
-                                <div style={{ fontWeight: "600", color: "black" }}>
+                                <div
+                                  style={{ fontWeight: "600", color: "black" }}
+                                >
                                   ₹{" "}
                                   {(
                                     parseFloat(e?.item?.price || 0) -
@@ -581,7 +583,10 @@ export default function CreateOrder(props) {
                         <div>₹ {subtotal?.toFixed(2)}</div>
                       </div>
                       {discount ? (
-                        <div className="total-section" style={{ color: "#28a745" }}>
+                        <div
+                          className="total-section"
+                          style={{ color: "#28a745" }}
+                        >
                           <div>DISCOUNT</div>
                           <div>- {discount} %</div>
                         </div>
@@ -589,14 +594,24 @@ export default function CreateOrder(props) {
 
                       <div className="total-section">
                         <div>Delivery : </div>
-                        <div style={{ color: total < content?.deliveryAmt ? "#e31e24" : "#28a745" }}>
+                        <div
+                          style={{
+                            color:
+                              total < content?.deliveryAmt
+                                ? "#e31e24"
+                                : "#28a745",
+                          }}
+                        >
                           {total < content?.deliveryAmt
                             ? "₹ " + content.deliveryCharge
                             : "Free Delivery"}
                         </div>
                       </div>
 
-                      <div className="total-section" style={{ fontSize: "1.1rem" }}>
+                      <div
+                        className="total-section"
+                        style={{ fontSize: "1.1rem" }}
+                      >
                         <div style={{ fontWeight: "600" }}>TOTAL</div>
                         <div style={{ fontWeight: "700", color: "black" }}>
                           ₹ {total?.toFixed(2)}
@@ -611,7 +626,11 @@ export default function CreateOrder(props) {
                           <input
                             type="checkbox"
                             checked={values?.mode == "cash"}
-                            style={{ width: "18px", height: "18px", marginRight: "20px" }}
+                            style={{
+                              width: "18px",
+                              height: "18px",
+                              marginRight: "20px",
+                            }}
                           />
                           <div>Cash on delivery</div>
                         </div>
@@ -623,9 +642,19 @@ export default function CreateOrder(props) {
                           <input
                             type="checkbox"
                             checked={values?.mode == "online"}
-                            style={{ width: "18px", height: "18px", marginRight: "20px" }}
+                            style={{
+                              width: "18px",
+                              height: "18px",
+                              marginRight: "20px",
+                            }}
                           />
-                          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "10px",
+                            }}
+                          >
                             <span>Pay Online</span>
                             <img
                               src="https://cdn.razorpay.com/static/assets/logo/rzp_payment_icon.svg"
@@ -634,19 +663,21 @@ export default function CreateOrder(props) {
                                 maxWidth: "100%",
                                 height: "auto",
                                 maxHeight: "30px",
-                                objectFit: "contain"
+                                objectFit: "contain",
                               }}
                             />
                           </div>
                         </div>
                         <div className="terms-section">
-                          Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our{" "}
+                          Your personal data will be used to process your order,
+                          support your experience throughout this website, and
+                          for other purposes described in our{" "}
                           <a
                             onClick={() => navigate("/policy")}
                             style={{
                               cursor: "pointer",
                               color: "#e31e24",
-                              textDecoration: "none"
+                              textDecoration: "none",
                             }}
                           >
                             privacy policy
@@ -659,18 +690,27 @@ export default function CreateOrder(props) {
                               type="checkbox"
                               checked={values?.agree}
                               onChange={(e) => {
-                                setFieldValue("agree", e?.target?.checked, true);
+                                setFieldValue(
+                                  "agree",
+                                  e?.target?.checked,
+                                  true
+                                );
                               }}
                             />
                           </div>
                           <div>
-                            I have read and agree to the website terms and conditions *
+                            I have read and agree to the website terms and
+                            conditions *
                           </div>
                         </div>
                         <Button
                           className="checkout-button"
                           disabled={
-                            !(values?.mode && values?.agree && values?.addressId) || loading
+                            !(
+                              values?.mode &&
+                              values?.agree &&
+                              values?.addressId
+                            ) || loading
                           }
                           onClick={() => handleCheckout(values)}
                         >
@@ -689,7 +729,7 @@ export default function CreateOrder(props) {
                       boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
                       flex: "1",
                       minWidth: "300px",
-                      maxWidth: "45%"
+                      maxWidth: "45%",
                     }}
                   >
                     <div className="d-flex flex-column">
@@ -700,15 +740,12 @@ export default function CreateOrder(props) {
                           fontWeight: 600,
                           fontSize: "1.2rem",
 
-                          color: "#333"
+                          color: "#333",
                         }}
                       >
                         <div>Billing details</div>
                       </div>
-                      <div
-                        className="col-12 "
-
-                      >
+                      <div className="col-12 ">
                         {addresses?.length > 0 ? (
                           <StyledAutocomplete
                             options={addresses}
@@ -757,7 +794,9 @@ export default function CreateOrder(props) {
 
                         <div className="form-grid">
                           {/* Name Input - Top-left in image */}
-                          <div className={`${styles.formGroup} form-group-half`}>
+                          <div
+                            className={`${styles.formGroup} form-group-half`}
+                          >
                             <label className="form-label">Name: </label>
                             <input
                               type="text"
@@ -771,7 +810,9 @@ export default function CreateOrder(props) {
                             />
                           </div>
                           {/* Phone Input - Top-right in image (10-digit mobile number) */}
-                          <div className={`${styles.formGroup} form-group-half`}>
+                          <div
+                            className={`${styles.formGroup} form-group-half`}
+                          >
                             <label className="form-label">Phone: </label>
                             <input
                               type="text"
@@ -786,7 +827,9 @@ export default function CreateOrder(props) {
                           </div>
 
                           {/* Pin Input - Second row, left in image (Pincode) */}
-                          <div className={`${styles.formGroup} form-group-half`}>
+                          <div
+                            className={`${styles.formGroup} form-group-half`}
+                          >
                             <label className="form-label">Pin: </label>
                             <input
                               type="text"
@@ -800,7 +843,9 @@ export default function CreateOrder(props) {
                             />
                           </div>
                           {/* City Input - Second row, right in image (Locality) */}
-                          <div className={`${styles.formGroup} form-group-half`}>
+                          <div
+                            className={`${styles.formGroup} form-group-half`}
+                          >
                             <label className="form-label">City: </label>
                             <input
                               type="text"
@@ -815,7 +860,9 @@ export default function CreateOrder(props) {
                           </div>
 
                           {/* Full Address Textarea - Third row, full width in image (Address (Area and Street)) */}
-                          <div className={`${styles.formGroup} form-group-full`}>
+                          <div
+                            className={`${styles.formGroup} form-group-full`}
+                          >
                             <label className="form-label">Full Address: </label>
                             <textarea
                               name="fullAdress"
@@ -829,7 +876,9 @@ export default function CreateOrder(props) {
                           </div>
 
                           {/* State Input - Fourth row, left in image */}
-                          <div className={`${styles.formGroup} form-group-half`}>
+                          <div
+                            className={`${styles.formGroup} form-group-half`}
+                          >
                             <label className="form-label">State: </label>
                             <input
                               type="text"
@@ -843,8 +892,12 @@ export default function CreateOrder(props) {
                             />
                           </div>
                           {/* Email (Optional) Input - Fourth row, right in image */}
-                          <div className={`${styles.formGroup} form-group-half`}>
-                            <label className="form-label">Email (optional): </label>
+                          <div
+                            className={`${styles.formGroup} form-group-half`}
+                          >
+                            <label className="form-label">
+                              Email (optional):{" "}
+                            </label>
                             <input
                               type="email"
                               name="email"
@@ -859,9 +912,7 @@ export default function CreateOrder(props) {
                         <button
                           type="submit"
                           className="add-address-button"
-                          onClick={() =>
-                            handleSubmitAdd(values, setFieldValue)
-                          }
+                          onClick={() => handleSubmitAdd(values, setFieldValue)}
                         >
                           {values?.address?._id
                             ? "Edit Changes"
@@ -888,7 +939,6 @@ export default function CreateOrder(props) {
       </div>
 
       <ToastContainer position="bottom-right" />
-
     </Navbar>
   );
 }

@@ -219,7 +219,7 @@ export default function PrescriptionUser({ data }) {
                       <div className="d-flex" style={{ fontSize: "16px", fontWeight: "600" }}>
                         <div>{index + 1}.</div>
                         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "0 0 0 7px" }}>
-                          {medicine.name} X {medicine.quantity} ({medicine.kit})
+                          {medicine.name} X {medicine.quantity} 
                         </div>
                       </div>
                       <div style={{ margin: "0 0 6px 25px", fontSize: "13px", fontWeight: "600" }}>

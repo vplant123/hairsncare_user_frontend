@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import ManagementReport from '../Reports/managementReport';
 import DoctorAnalysis from '../Reports/DoctorAnalysis';
 export default function MyReport() {
-  const [selectedTab, setSelectedTab] = useState('Prescription');
+  const [selectedTab, setSelectedTab] = useState('Doctor Analyse Report');
   const [data1, setdata1] = useState({});
   const [loading, setLoading] = useState(true);
   const [noData, setNoData] = useState(false);
@@ -83,22 +83,87 @@ export default function MyReport() {
           <div onClick={() => handleTabChange('Prescription')} className={`tab-3 tab tab2 ${selectedTab === 'Prescription' ? 'selected1' : ''}`}>Prescription</div>
         </div>
       </div>
+      {/* Loader CSS */}
+      <style>
+        {`
+.loader {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #3498db;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 3s linear infinite;
+  margin: 40px auto;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+`}
+      </style>
       {loading ? (
-        <h1>Loading...</h1>
-      ) : (
-        noData ? (
-          <h1>Give a Test</h1>
+        <div className="loader"></div>
+      ) : noData ? (
+        <div style={{
+          background: '#f8f9fa',
+          border: '1px solid #e0e0e0',
+          borderRadius: '8px',
+          padding: '32px',
+          margin: '32px auto',
+          maxWidth: '400px',
+          textAlign: 'center',
+          color: '#555',
+          fontSize: '1.2rem',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+        }}>
+          <span style={{fontSize: '2.5rem', color: '#bdbdbd', display: 'block', marginBottom: '12px'}}>&#9888;</span>
+          <strong>No report available yet.</strong>
+          <div style={{marginTop: '8px', fontSize: '1rem', color: '#888'}}>Please check back later or contact support if you think this is an error.</div>
+        </div>
+      ) : selectedTab === 'Management Report' ? (
+        (data1.dianosis && data1.dianosis.length > 0) ? (
+          <div><ManagementReport data={data1} /></div>
         ) : (
-          selectedTab === 'Management Report' ? (
-            <div>
-              <ManagementReport data={data1} />
-            </div>
-          ) : selectedTab === 'Doctor Analyse Report' ? (
-            <div><DoctorAnalysis data={data1} /></div>
-          ) : (
-            <div><PrescriptionUser data={data1} /></div>
-          )
+                <div style={{
+                  background: '#f8f9fa',
+                  border: '1px solid #e0e0e0',
+                  borderRadius: '8px',
+                  padding: '32px',
+                  margin: '32px auto',
+                  maxWidth: '400px',
+                  textAlign: 'center',
+                  color: '#555',
+                  fontSize: '1.2rem',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+                }}>
+                  <span style={{ fontSize: '2.5rem', color: '#bdbdbd', display: 'block', marginBottom: '12px' }}>&#9888;</span>
+                  <strong>No report available yet.</strong>
+                  <div style={{ marginTop: '8px', fontSize: '1rem', color: '#888' }}>Please check back later or contact support if you think this is an error.</div>
+                </div>
         )
+      ) : selectedTab === 'Doctor Analyse Report' ? (
+        (data1.dianosis && data1.dianosis.length > 0) ? (
+          <div><DoctorAnalysis data={data1} /></div>
+        ) : (
+                  <div style={{
+                    background: '#f8f9fa',
+                    border: '1px solid #e0e0e0',
+                    borderRadius: '8px',
+                    padding: '32px',
+                    margin: '32px auto',
+                    maxWidth: '400px',
+                    textAlign: 'center',
+                    color: '#555',
+                    fontSize: '1.2rem',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+                  }}>
+                    <span style={{ fontSize: '2.5rem', color: '#bdbdbd', display: 'block', marginBottom: '12px' }}>&#9888;</span>
+                    <strong>No report available yet.</strong>
+                    <div style={{ marginTop: '8px', fontSize: '1rem', color: '#888' }}>Please check back later or contact support if you think this is an error.</div>
+                  </div>
+        )
+      ) : (
+        <div><PrescriptionUser data={data1} /></div>
       )}
 
 

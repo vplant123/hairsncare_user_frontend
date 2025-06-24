@@ -155,8 +155,12 @@ export default function AllReports() {
               size: 100,
               id: 'appointment Type', // Added id
               Cell: ({ row }) => {
-                const { appointmentType, followUpDate, followupOf } = row.original.appointmentData;
-        
+                const appointmentData = row.original.appointmentData;
+
+                if (!appointmentData) return ''; // Fallback for null/undefined
+
+                const { appointmentType, followUpDate, followupOf } = appointmentData;
+
                 if (appointmentType === 'hair_test_with_prescription' && followupOf) {
                   return 'Follow Up Prescription';
                 }
@@ -164,12 +168,10 @@ export default function AllReports() {
                   return 'Order Prescription';
                 }
 
-        
-                // Default formatting for other cases
-                return appointmentType 
-                  ? "Hair Test" 
-                  : 'N/A';
+                // Default case
+                return appointmentType ? "Hair Test" : '';
               },
+
             },
             {
               accessorKey: 'appointmentData.followUpDate',

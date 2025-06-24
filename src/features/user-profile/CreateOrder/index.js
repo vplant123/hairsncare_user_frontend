@@ -190,11 +190,15 @@ export default function CreateOrder(props) {
         },
         body: JSON.stringify(data),
       });
+      console.log("result", response);
 
       if (!response.ok) {
-        toast.error("Please logout and login again with valid credentials.");
+        const responseData = await response.json();
+        console.log("wemskfiew", responseData.data);
+        toast.error(responseData.message);
         setSetLoading(false);
         throw new Error("Network response was not ok");
+
       } else {
         if (data?.mode == "cash") {
           const responseData = await response.json();
@@ -623,10 +627,10 @@ export default function CreateOrder(props) {
                           />
                           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                             <span>Pay Online</span>
-                            <img 
+                            <img
                               src="https://cdn.razorpay.com/static/assets/logo/rzp_payment_icon.svg"
                               alt="Payment methods"
-                              style={{ 
+                              style={{
                                 maxWidth: "100%",
                                 height: "auto",
                                 maxHeight: "30px",

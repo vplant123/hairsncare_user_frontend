@@ -158,7 +158,7 @@ export default function HairTreatmentWomen() {
         style={{ fontFamily: '"Poppins", sans-serif' }}
       >
         <Helmet>
-          <link rel="canonical" href="https://hairs.txogavideo.in/hair-loss-women-causes-treatments-remedies" />
+          <link rel="canonical" href="https://hairsncares.com/hair-loss-women-causes-treatments-remedies" />
         </Helmet>
         <div style={{ background: "rgba(193, 237, 255, 1)" }} className="main-div-resp">
           <div className="main-section-1-htw desktop-view-1 container">

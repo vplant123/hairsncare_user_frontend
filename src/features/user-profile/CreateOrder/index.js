@@ -207,7 +207,7 @@ export default function CreateOrder(props) {
           console.log("wemskfiew", responseData.data);
           toast.success("Order placed successfully");
           setSetLoading(false);
-          // window.location = "https://hairs.txogavideo.in/success/2";
+          // window.location = "https://hairsncares.com/success/2";
           navigate("/success/2");
         } else {
           console.log("jsoejoj", Math.round(total * 100));
@@ -226,7 +226,7 @@ export default function CreateOrder(props) {
                 orderId: responseData.data,
               };
               const res = await fetch(
-                `https://apihair.txogavideo.in/api/vi/bookAppointment/update-payment-order`,
+                `${BASE_URL}/bookAppointment/update-payment-order`,
                 {
                   method: "POST",
                   headers: {
@@ -238,7 +238,7 @@ export default function CreateOrder(props) {
               );
 
               console.log(await res.json());
-              // window.location = "https://hairs.txogavideo.in/success/2";
+              // window.location = "https://hairsncares.com/success/2";
               navigate("/success/2");
             },
             modal: {

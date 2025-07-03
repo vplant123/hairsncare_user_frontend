@@ -72,8 +72,7 @@ export default function HairTest() {
       }
 
       const data = await response.json();
-      console.log(data
-        , 'fsijsaijfijiasjijis');
+   
       // setdata1(data.data[0]);
       if (data?.hairTest) {
         let all = data?.hairTest;

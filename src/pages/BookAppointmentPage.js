@@ -12,7 +12,7 @@ function BookAppointmentPage(props) {
   return (
     <Navbar>
                 <Helmet>
-        <link rel="canonical" href="https://hairs.txogavideo.in/contact-hair-experts" />
+        <link rel="canonical" href="https://hairsncares.com/contact-hair-experts" />
       </Helmet>
         <BookAppointment/>
         <ShoppingFeature/>

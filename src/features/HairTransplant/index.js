@@ -127,7 +127,7 @@ export default function HairTransplant() {
         style={{ fontFamily: '"Poppins", sans-serif' }}
       >
         <Helmet>
-          <link rel="canonical" href="https://hairs.txogavideo.in/hair-transplants-fue-dhi-mhi-natural-restoration" />
+          <link rel="canonical" href="https://hairsncares.com/hair-transplants-fue-dhi-mhi-natural-restoration" />
         </Helmet>
         <div style={{ background: "rgba(193, 237, 255, 1)" }} className="main-div-resp">
           <div className="main-section-1-htw desktop-view-1 container">

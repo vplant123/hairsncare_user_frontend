@@ -301,7 +301,7 @@ export default function AllBlog(props) {
       <Navbar cart={cart} setCart={setCart}>
 
       <Helmet>
-        <link rel="canonical" href="https://hairs.txogavideo.in/hair-care-blogs" />
+        <link rel="canonical" href="https://hairsncares.com/hair-care-blogs" />
       </Helmet>
       <div className='main-hero' style={{marginBottom : "4rem"}}>
         <View1 navigate ={navigate} category={category} content={content}/>

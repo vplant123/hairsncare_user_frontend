@@ -1697,7 +1697,7 @@ export default function HairAndScalp({male,scrollToTop,data,testId, selectedOpti
   const [showGrayHairManagementSubquestions, setShowGrayHairManagementSubquestions] = useState(true);
   const [showImages, setShowImages] = useState(false);
   const [imagesData, setImagesData] = useState();
-
+ 
   
   let storedUserData = JSON.parse(localStorage.getItem("User343"));
   const token = storedUserData.logedInUser.accessToken;

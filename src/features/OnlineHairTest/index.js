@@ -177,7 +177,7 @@ export default function OnlineHairTest() {
           }}
         >
           <Helmet>
-            <link rel="canonical" href="https://hairs.txogavideo.in/online-hair-loss-test-diagnosis-treatment" />
+            <link rel="canonical" href="https://hairsncares.com/online-hair-loss-test-diagnosis-treatment" />
           </Helmet>
           <div className="d-flex flex-column container p-2">
             <div style={{ display: "flex", justifyContent: "center" }}>

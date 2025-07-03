@@ -16,7 +16,7 @@ export default function AboutUsPage
     <div>
       <Navbar>
       <Helmet>
-        <link rel="canonical" href="https://hairs.txogavideo.in/about-us-quality-hair-loss-scalp-care" />
+        <link rel="canonical" href="https://hairsncares.com/about-us-quality-hair-loss-scalp-care" />
       </Helmet>
         {content ? <>
           <About />

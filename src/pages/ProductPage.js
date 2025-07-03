@@ -111,7 +111,7 @@ function ProductPage(props) {
     <div style={{ position: "relative" }}>
       <Navbar cart={cart} setCart={setCart}>
       <Helmet>
-        <link rel="canonical" href="https://hairs.txogavideo.in/best-hair-care-products-hair-loss-scalp-health" />
+        <link rel="canonical" href="https://hairsncares.com/best-hair-care-products-hair-loss-scalp-health" />
       </Helmet>
         <MiniCart
           isOpen={isCartOpen}

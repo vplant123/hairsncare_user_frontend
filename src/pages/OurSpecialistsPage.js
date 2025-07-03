@@ -18,7 +18,7 @@ function OurSpecialistsPage(props) {
     <div>
         <Navbar>
         <Helmet>
-        <link rel="canonical" href="https://hairs.txogavideo.in/our-hair-specialists" />
+        <link rel="canonical" href="https://hairsncares.com/our-hair-specialists" />
       </Helmet>
           {content ? <><OurSpecialist/>
             <Footer/></> : <></>}

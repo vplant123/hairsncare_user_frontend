@@ -115,7 +115,7 @@ export default function CreateOrder(props) {
     let tot = cartItems?.reduce(
       (total, item) =>
         total +
-        (item?.item?.price - parseFloat(item?.item?.discount || 0)) *
+        (item?.item?.price * (1 - parseFloat(item?.item?.discount || 0) / 100)) *
         (item?.quantity || 1),
       0
     );
@@ -132,13 +132,14 @@ export default function CreateOrder(props) {
     let sub = cartItems?.reduce(
       (total, item) =>
         total +
-        (item?.item?.price - parseFloat(item?.item?.discount || 0)) *
+        (item?.item?.price * (1 - parseFloat(item?.item?.discount || 0) / 100)) *
         (item?.quantity || 1),
       0
     );
     setSubTotal(sub);
     return sub.toFixed(2);
   };
+
 
   const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
     '& .MuiAutocomplete-option[data-focus="true"]': {
@@ -569,10 +570,7 @@ export default function CreateOrder(props) {
                                   style={{ fontWeight: "600", color: "black" }}
                                 >
                                   ₹{" "}
-                                  {(
-                                    parseFloat(e?.item?.price || 0) -
-                                    parseFloat(e?.item?.discount || 0)
-                                  )?.toFixed(2)}
+                                  {(e.item?.price * (1 - parseFloat(e.item?.discount || 0) / 100))?.toFixed(2)}
                                 </div>
                               </div>
                             </div>

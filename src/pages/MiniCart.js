@@ -167,7 +167,7 @@ function MiniCart({ isOpen, onClose,cart,setCart }) {
                   }} 
                 />
                 <button className="remove" onClick={() => removeFromCart(item?._id,item?.item?._id)}>{loader ? "Loading" : "Remove"}</button>
-              </div>                <div>Price: {item?.item?.price?.toFixed(2) - parseFloat(item?.item?.discount || 0)}</div>
+              </div>                <div>Price: {item?.item?.price?.toFixed(2) - (item?.item?.price * ( parseFloat(item?.item?.discount || 0) / 100))?.toFixed(2)}</div>
               </div>
             </div>
           ))

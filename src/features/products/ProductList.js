@@ -448,8 +448,7 @@ function ProductList(props) {
                     >
                       <div style={{ fontWeight: "600" }}>
                         ₹{" "}
-                        {(parseFloat(product.price) -
-                          parseFloat(product.discount || 0))?.toFixed(0)}
+                        {(parseFloat(product.price) * (1 - parseFloat(product.discount || 0) / 100))?.toFixed(0)}
                       </div>
                       {product.discount ? (
                         <div

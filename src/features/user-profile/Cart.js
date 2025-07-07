@@ -182,7 +182,7 @@ export default function Cart(props) {
   };
 
   const getTotalAmount = () => {
-    return cartItemsNew.reduce((total, item) => total + (item?.item?.price - parseFloat(item?.item?.discount || 0)) * (item?.quantity || 1), 0).toFixed(0);
+    return cartItemsNew.reduce((total, item) => total + (item?.item?.price * (1 - parseFloat(item?.item?.discount || 0) / 100)) * (item?.quantity || 1), 0).toFixed(0);
   };
 
   const handleAddToCart = async () => {
@@ -245,7 +245,7 @@ export default function Cart(props) {
                         }} style={{ cursor: "pointer" }} />
                         <div className="cart-item-details">
                           <h3 onClick={() => navigate('/product-detail/' + item?.item.metaSlug ?? item.item._id, { id: item?.item._id })} style={{ cursor: "pointer" }}>{item?.item?.name}</h3>
-                          <p>Price:₹{item?.item?.price?.toFixed(0) - parseFloat(item?.item?.discount || 0)?.toFixed(0)}</p>
+                          <p>Price:₹{item?.item?.price?.toFixed(0) - (item?.item?.price * ( parseFloat(item?.item?.discount || 0) / 100))?.toFixed(0)}</p>
                         </div>
                         <div className="cart-item-actions">
                           <input

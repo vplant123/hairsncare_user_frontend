@@ -116,13 +116,14 @@ export default function CreateOrder(props) {
       (total, item) =>
         total +
         (item?.item?.price - parseFloat(item?.item?.discount || 0)) *
-          (item?.quantity || 1),
+        (item?.quantity || 1),
       0
     );
     // console.log("mkjrsr",tot,discount)
     let p = parseFloat(tot || 0) - (parseFloat(tot || 0) * (dist || 0)) / 100;
     if (p < content?.deliveryAmt)
       p = p + parseFloat(content?.deliveryCharge || 0);
+    
     setTotal(p);
     return p.toFixed(2);
   };
@@ -132,7 +133,7 @@ export default function CreateOrder(props) {
       (total, item) =>
         total +
         (item?.item?.price - parseFloat(item?.item?.discount || 0)) *
-          (item?.quantity || 1),
+        (item?.quantity || 1),
       0
     );
     setSubTotal(sub);
@@ -479,7 +480,7 @@ export default function CreateOrder(props) {
               mode: "",
               agree: false,
             }}
-            onSubmit={(values, actions) => {}}
+            onSubmit={(values, actions) => { }}
           >
             {({
               handleBlur,
@@ -591,8 +592,9 @@ export default function CreateOrder(props) {
                           <div>- {discount} %</div>
                         </div>
                       ) : null}
-
+                     
                       <div className="total-section">
+                       
                         <div>Delivery : </div>
                         <div
                           style={{
@@ -602,7 +604,7 @@ export default function CreateOrder(props) {
                                 : "#28a745",
                           }}
                         >
-                          {total < content?.deliveryAmt
+                          {subtotal < content?.deliveryAmt
                             ? "₹ " + content.deliveryCharge
                             : "Free Delivery"}
                         </div>

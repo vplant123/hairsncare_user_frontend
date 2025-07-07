@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 import { FaSearch, FaShoppingCart, FaRegUser } from "react-icons/fa";
@@ -40,6 +39,8 @@ function Navbar({ children, cart, setCart }) {
     toast("Logout Successfully");
     dispatch(getCartItems());
     // setCart([])
+    navigate('/');
+    window.location.reload();
   };
 
   const goToDash = () => {
@@ -115,10 +116,10 @@ function Navbar({ children, cart, setCart }) {
 
             </a>
             <a className="who-we-link-1">
-              <NavLink activeClassName="active" onClick={()=>setActive(!active)}>
+              <NavLink activeClassName="active" onClick={() => setActive(!active)}>
                 OUR EXPERTISE
               </NavLink>
-              <div className="sub-link-3" style={{display: active ? "block" : "none"}}>
+              <div className="sub-link-3" style={{ display: active ? "block" : "none" }}>
                 <p onClick={() => navigate('/effective-hair-loss-treatment-men')}>Hair Loss in Men</p>
                 <p onClick={() => navigate('/hair-loss-women-causes-treatments-remedies')} style={{ fontSize: "17px" }}>Hair Loss in Women</p>
                 <p onClick={() => navigate('/hair-transplants-fue-dhi-mhi-natural-restoration')} style={{ fontSize: "17px" }}>Hair Transplant</p>

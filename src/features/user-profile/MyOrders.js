@@ -122,7 +122,7 @@ export default function MyOrders(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("nkniknsf", data?.data);
+        console.log("myorders", data?.data);
         setOrders(data?.data);
       })
       .catch((error) => console.error("Error fetching addresses:", error));

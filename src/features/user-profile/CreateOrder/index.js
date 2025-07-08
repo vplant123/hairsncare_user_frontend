@@ -113,13 +113,16 @@ export default function CreateOrder(props) {
 
   const getTotalAmount = (dist) => {
     let tot = cartItems?.reduce(
-      (total, item) =>
-        total +
-        (item?.item?.price * (1 - parseFloat(item?.item?.discount || 0) / 100)) *
-        (item?.quantity || 1),
+      (total, item) => {
+        // Calculate discounted price
+        const discountedPrice = item?.item?.price * (1 - parseFloat(item?.item?.discount || 0) / 100);
+        // Add GST to discounted price
+        const priceWithGST = discountedPrice + (discountedPrice * parseFloat(item?.item?.gst || 0) / 100);
+        return total + priceWithGST * (item?.quantity || 1);
+      },
       0
     );
-    // console.log("mkjrsr",tot,discount)
+    
     let p = parseFloat(tot || 0) - (parseFloat(tot || 0) * (dist || 0)) / 100;
     if (p < content?.deliveryAmt)
       p = p + parseFloat(content?.deliveryCharge || 0);
@@ -130,10 +133,13 @@ export default function CreateOrder(props) {
 
   const getSubTotalAmount = () => {
     let sub = cartItems?.reduce(
-      (total, item) =>
-        total +
-        (item?.item?.price * (1 - parseFloat(item?.item?.discount || 0) / 100)) *
-        (item?.quantity || 1),
+      (total, item) => {
+        // Calculate discounted price
+        const discountedPrice = item?.item?.price * (1 - parseFloat(item?.item?.discount || 0) / 100);
+        // Add GST to discounted price
+        const priceWithGST = discountedPrice + (discountedPrice * parseFloat(item?.item?.gst || 0) / 100);
+        return total + priceWithGST * (item?.quantity || 1);
+      },
       0
     );
     setSubTotal(sub);
@@ -570,7 +576,10 @@ export default function CreateOrder(props) {
                                   style={{ fontWeight: "600", color: "black" }}
                                 >
                                   ₹{" "}
-                                  {(e.item?.price * (1 - parseFloat(e.item?.discount || 0) / 100))?.toFixed(2)}
+                                  {(
+                                    (e.item?.price * (1 - parseFloat(e.item?.discount || 0) / 100)) * 
+                                    (1 + parseFloat(e.item?.gst || 0) / 100)
+                                  )?.toFixed(0)}
                                 </div>
                               </div>
                             </div>
@@ -579,7 +588,7 @@ export default function CreateOrder(props) {
                       </div>
                       <div className="total-section">
                         <div>SUBTOTAL</div>
-                        <div>₹ {subtotal?.toFixed(2)}</div>
+                        <div>₹ {subtotal?.toFixed(0)}</div>
                       </div>
                       {discount ? (
                         <div
@@ -614,7 +623,7 @@ export default function CreateOrder(props) {
                       >
                         <div style={{ fontWeight: "600" }}>TOTAL</div>
                         <div style={{ fontWeight: "700", color: "black" }}>
-                          ₹ {total?.toFixed(2)}
+                          ₹ {total?.toFixed(0)}
                         </div>
                       </div>
                       <div className="checkout-style-regular d-flex flex-column">

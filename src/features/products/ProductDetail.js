@@ -22,6 +22,8 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import { useMediaQuery } from "@mui/material";
 import ReactPaginate from "react-paginate";
 import { Helmet } from "react-helmet";
+import { generateProductSchema } from "../../utils/seoUtils";
+import Breadcrumb from "../../components/Breadcrumb";
 
 const findNearestWhitespace = (str, index) => {
   let left = index;
@@ -423,50 +425,31 @@ function ProductDetail(props) {
 
   let disPercent = ((parseFloat(product?.discount || 0) / parseFloat(product?.price)) * 100)?.toFixed(0)
 
-
+  // Generate product schema
+  const productSchema = product ? generateProductSchema({
+    name: product.name,
+    description: product.shortDes,
+    image: product.src?.[0] || '',
+    price: product.price,
+    discount: product.discount
+  }) : null;
 
   return (
     <>
       <Helmet>
         <link rel="canonical" href={`${window.location.origin}/${product?.metaCanonical}`} />
+        {productSchema && (
+          <script type="application/ld+json">
+            {JSON.stringify(productSchema)}
+          </script>
+        )}
       </Helmet>
       <Navbar cart={cart} setCart={setCart} />
-      <div className="barr2" style={{ backgroundColor: "#005cad" }}>
-        <div className="container">
-          <div
-            className="d-flex"
-            style={{
-              fontSize: "18px",
-              gap: "12px",
-              color: "white",
-              fontWeight: "500",
-            }}
-          >
-            <div
-              className="d-flex"
-              style={{ margin: "10px 0 10px 0", gap: "12px" }}
-            >
-              <span class="ltn__secondary-color">
-                <i class="fas fa-home"></i>
-              </span>
-              <div onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
-                Home
-              </div>
-            </div>
-            <div style={{ margin: "10px 0 10px 0" }}>{">"}</div>
-            <div
-              style={{ margin: "10px 0 10px 0", cursor: "pointer" }}
-              onClick={() => navigate("/shop")}
-            >
-              Shop
-            </div>
-            <div style={{ margin: "10px 0 10px 0" }}>{">"}</div>
-            <div style={{ margin: "10px 0 10px 0", cursor: "pointer" }}>
-              {isMobile ? (product?.name?.length > 15 ? product?.name?.substring(0, 15) + "..." : product?.name) : product?.name}
-            </div>
-          </div>
-        </div>
+      
+      <div className="container" style={{ marginTop: "20px" }}>
+        <Breadcrumb />
       </div>
+      
       <div className="container">
         <div className="product-section row">
           <div className="product-image col-12 col-md-6" style={{ position: "relative" }}>

@@ -23,30 +23,30 @@ const ScalpPopup = ({
   const [img, setImg] = useState("");
   const [error, setError] = useState(false);
   const handleFileChange = (e, ind) => {
-    console.log("kjsorjkf",e.target.files)
+    console.log("kjsorjkf", e.target.files)
     if (e.target.files?.length > 1) {
       setFile([...file, ...e.target.files]);
     } else {
-      let f = file?.map((e) => ({...e}));
+      let f = file?.map((e) => ({ ...e }));
       f[ind] = e.target.files[0];
-      console.log("jfjroe",f)
+      console.log("jfjroe", f)
       // Accept only one file
       setFile(f);
     }
   };
 
   const removeFromImage = (ind) => {
-      let f = [...file];
-      let c = f?.filter((x,indx) => indx!=ind)
-      if(c?.length == 0){
-        console.log("jij4rie")
-        setFile([""]);
-      }
-      // Accept only one file
-      else {
-        console.log("rfeihri",c,f)
-        setFile([...c]);
-      }
+    let f = [...file];
+    let c = f?.filter((x, indx) => indx != ind)
+    if (c?.length == 0) {
+      console.log("jij4rie")
+      setFile([""]);
+    }
+    // Accept only one file
+    else {
+      console.log("rfeihri", c, f)
+      setFile([...c]);
+    }
 
   };
 
@@ -93,7 +93,7 @@ const ScalpPopup = ({
             }
           }
         }
-        console.log("jnieiji",p);
+        console.log("jnieiji", p);
         if (p?.length < 1) {
           throw new Error("Network response was not ok");
         } else {
@@ -118,7 +118,7 @@ const ScalpPopup = ({
             );
 
             if (!response.ok) {
-              toast.error("Please logout and login again with valid credentials.");
+              toast.error("Somethin want wrong try again");
               throw new Error("Network response was not ok");
             } else {
               const responseData = await response.json();
@@ -208,39 +208,41 @@ const ScalpPopup = ({
                     onChange={(x) => handleFileChange(x, i)}
                   /> */}
 
-<div style={{    position: "relative",display : "flex"}}>
-  <div style={{width : "80%"}}>
-  <input
-        type="text"
-        value={e?.name || ""}
-        placeholder="Choose a file..."
-        readOnly
-        // onClick={handleClick}
-        style={{ cursor: 'pointer' }}
-      />
-      <input
-        type="file"
-        id="fileInput"
-        multiple 
-        style={{ position: "absolute",
-          top: 0, 
-          left: 0,
-          /* z-index: 0; */
-          opacity: 0,
-          width: "80%" }}
-        onChange={(x) => handleFileChange(x, i)}
-        />
-  </div>
+                  <div style={{ position: "relative", display: "flex" }}>
+                    <div style={{ width: "80%" }}>
+                      <input
+                        type="text"
+                        value={e?.name || ""}
+                        placeholder="Choose a file..."
+                        readOnly
+                        // onClick={handleClick}
+                        style={{ cursor: 'pointer' }}
+                      />
+                      <input
+                        type="file"
+                        id="fileInput"
+                        multiple
+                        style={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          /* z-index: 0; */
+                          opacity: 0,
+                          width: "80%"
+                        }}
+                        onChange={(x) => handleFileChange(x, i)}
+                      />
+                    </div>
 
-  <div style={{width : "20%",margin:"6px"}}> 
- {e?.name ?  <button type="button" onClick={() => removeFromImage(i)} >{"Remove"} </button> : <></>}
-  </div>
+                    <div style={{ width: "20%", margin: "6px" }}>
+                      {e?.name ? <button type="button" onClick={() => removeFromImage(i)} >{"Remove"} </button> : <></>}
+                    </div>
 
-</div>
+                  </div>
 
                 </>
               );
-            })} 
+            })}
           </div>
           {/* <div
             className="inputBoxCust3-1 Prescription Required*"

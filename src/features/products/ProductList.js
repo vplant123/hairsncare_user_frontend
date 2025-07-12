@@ -260,7 +260,7 @@ function ProductList(props) {
                     <div style={{ position: "absolute", zIndex: 1 }}>
                       <span class="tc nt_labels pa pe_none cw">
                         <span class="onsale nt_label">
-                          <span>-{disPercent + "%"}</span>
+                          <span>-{product?.discount + "%"}</span>
                         </span>
                       </span>
                     </div>
@@ -469,9 +469,10 @@ function ProductList(props) {
                         props?.toggleCart();
                         handleAddToCart(product);
                       }}
-                      className="btn primary theme-btn-2"
+                      className={`btn primary ${product.stock === 0 ? 'disabled' : 'theme-btn-2'}`}
+                      disabled={product.stock === 0}
                     >
-                      {loader ? "Loading" : "ADD TO CART"}
+                      {loader ? "Loading" : product.stock === 0 ? "OUT OF STOCK" : "ADD TO CART"}
                     </button>
                   </div>
                 </div>

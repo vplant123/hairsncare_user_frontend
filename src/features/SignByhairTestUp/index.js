@@ -155,7 +155,7 @@ function SignByhairTestUp(props) {
             nextStep()
             onClose()
           } else {
-            toast.error("Please logout and login again with valid credentials.")
+            toast.error("Somethin want wrong try again")
             setLoading(false)
           }
           console.log(response2, "register response");

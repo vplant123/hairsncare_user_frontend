@@ -184,8 +184,7 @@ export default function Cart(props) {
   const getTotalAmount = () => {
     return cartItemsNew.reduce((total, item) => {
       const discountedPrice = item?.item?.price * (1 - parseFloat(item?.item?.discount || 0) / 100);
-      const priceWithGST = discountedPrice * (1 + parseFloat(item?.item?.gst || 0) / 100);
-      return total + priceWithGST * (item?.quantity || 1);
+      return total + discountedPrice * (item?.quantity || 1);
     }, 0).toFixed(0);
   };
 
@@ -252,7 +251,7 @@ export default function Cart(props) {
                           <h3 onClick={() => navigate('/product-detail/' + item?.item.metaSlug ?? item.item._id, { id: item?.item._id })} style={{ cursor: "pointer" }}>{item?.item?.name}</h3>
                       
                           <p>GST: {item?.item?.gst}%</p>
-                          <p>Price:₹{((item?.item?.price - (item?.item?.price * parseFloat(item?.item?.discount || 0) / 100)) * (1 + parseFloat(item?.item?.gst || 0) / 100))?.toFixed(0)}</p>
+                          <p>Price:₹{(item?.item?.price - (item?.item?.price * parseFloat(item?.item?.discount || 0) / 100))?.toFixed(0)}</p>
                         </div>
                         <div className="cart-item-actions">
                           <input

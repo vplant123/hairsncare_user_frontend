@@ -636,6 +636,7 @@ const Products = (props) => {
             <button onClick={handleMobileMenuToggle} style={{ margin: "0", cursor: "pointer", color: "rgba(114, 114, 114, 1)", fontSize: "12px" }} className="btn-d btn-prod ">Sort by Relevance</button>
 
           </div>
+
           {/* <div
             className="sortBylistMenu"
             onClick={handleMobileMenuToggle}

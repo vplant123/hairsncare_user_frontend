@@ -293,7 +293,7 @@ export default function OurSpecialist() {
       console.log("vejorj", jsonData);
       setDoctors(jsonData?.data);
     } catch (error) {
-      toast.error("Please logout and login again with valid credentials. ");
+      toast.error("Somethin want wrong try again ");
     }
   };
 

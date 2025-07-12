@@ -61,12 +61,12 @@ function BookAppointment() {
         }
       } catch (error) {
         setLoader(false)
-        toast.error("Please logout and login again with valid credentials.");
+        toast.error("Somethin want wrong try again");
         console.error('Error:', error);
       }
     } catch (error) {
       setLoader(false)
-      toast.error("Please logout and login again with valid credentials.");
+      toast.error("Somethin want wrong try again");
       console.error('Error:', error);
     }
   };
@@ -75,54 +75,54 @@ function BookAppointment() {
 
   return (
     <>
-      <div className="book-appointment" style={{    height: "600px"}}>
-        <div className="book-appointment-container container" style={{    height: "100%"}}>
+      <div className="book-appointment" style={{ height: "600px" }}>
+        <div className="book-appointment-container container" style={{ height: "100%" }}>
           <LeftAnimatedDiv>
             <div >
               <h1 className="contect-us-heading animate__animated animate__fadeInLeft">{content?.section1?.title}</h1>
             </div>
           </LeftAnimatedDiv>
           <ZoomInDiv className="contact-img">
-            <img 
-            title="Contact Experts"
-            alt='Smiling woman holding a laptop, symbolizing easy online access to contact HairsnCares for expert advice on hair care, hair loss, and personalized solutions.' src={content?.section1?.image} style={{height: "100%"}} />
+            <img
+              title="Contact Experts"
+              alt='Smiling woman holding a laptop, symbolizing easy online access to contact HairsnCares for expert advice on hair care, hair loss, and personalized solutions.' src={content?.section1?.image} style={{ height: "100%" }} />
           </ZoomInDiv>
 
           <RightAnimatedDiv>
             <div>
-              <h4 className="sub-had-2" style={{fontSize : "2rem"}}>{content?.section1?.description}</h4>
+              <h4 className="sub-had-2" style={{ fontSize: "2rem" }}>{content?.section1?.description}</h4>
             </div>
           </RightAnimatedDiv>
         </div>
         <div className='icon-abs'>
-        {home?.section1?.socialImg?.map((e, ind) => {
-          let alt = ind == "0" ? "Facebook" : ind == 1 ? "Whatsapp" : ind == 1 ? 
-            "Youtube" : ind == 3 ? "Instagram" : "X";
-          let title = ind == "0" ? "Facebook logo" : ind == 1 ? "Whatsapp logo" : ind == 1 ? 
-            "Youtube logo" : ind == 3 ? "Instagram logo" : "X logo";
-          return (
-            <div onClick={() => {
-              if (ind == 0) {
-                window.open("https://www.facebook.com/profile.php?id=61558302628092")
-              }
-              if (ind == 1) {
-                window.open("https://wa.link/pcousx")
-              }
-              if (ind == 2) {
-                window.open("https://www.youtube.com/@Hairsncares")
-              }
-              if (ind == 3) {
-                window.open("https://www.instagram.com/hairsncares/?hl=en")
-              }
-              if (ind == 4) {
-                window.open("https://x.com/hairsncare")
-              }
-            }} style={{ cursor: "pointer" }}>
-              <img src={e} style={{ width: "25px", height: "25px" }} alt={alt} title={title}/>
-            </div>
-          )
-        })}
-      </div>
+          {home?.section1?.socialImg?.map((e, ind) => {
+            let alt = ind == "0" ? "Facebook" : ind == 1 ? "Whatsapp" : ind == 1 ?
+              "Youtube" : ind == 3 ? "Instagram" : "X";
+            let title = ind == "0" ? "Facebook logo" : ind == 1 ? "Whatsapp logo" : ind == 1 ?
+              "Youtube logo" : ind == 3 ? "Instagram logo" : "X logo";
+            return (
+              <div onClick={() => {
+                if (ind == 0) {
+                  window.open("https://www.facebook.com/profile.php?id=61558302628092")
+                }
+                if (ind == 1) {
+                  window.open("https://wa.link/pcousx")
+                }
+                if (ind == 2) {
+                  window.open("https://www.youtube.com/@Hairsncares")
+                }
+                if (ind == 3) {
+                  window.open("https://www.instagram.com/hairsncares/?hl=en")
+                }
+                if (ind == 4) {
+                  window.open("https://x.com/hairsncare")
+                }
+              }} style={{ cursor: "pointer" }}>
+                <img src={e} style={{ width: "25px", height: "25px" }} alt={alt} title={title} />
+              </div>
+            )
+          })}
+        </div>
       </div>
 
 
@@ -144,20 +144,20 @@ function BookAppointment() {
               <div className="touch-container">
                 <div className="touch">
                   <img src="/assets/img/icons/location.png" alt="Location icon indicating HairsnCares' contact information for finding expert hair care and hair loss treatment support."
-                  
-                  title="Location"/>
+
+                    title="Location" />
                   <div className="c-content">
                     <h4 style={{
                       fontWeight: "600",
                       lineHeight: "normal", fontSize: "16px", marginBottom: "15px"
                     }}>{content?.section2?.name}</h4>
                     <p>
-                    {content?.section2?.address}
+                      {content?.section2?.address}
                     </p>
                   </div>
                 </div>
                 <div className="touch">
-                  <img  src="/assets/img/icons/contact-icon.png" 
+                  <img src="/assets/img/icons/contact-icon.png"
                     alt="Phone icon representing HairsnCares contact support for expert hair care inquiries and personalized hair solutions."
                     title="Phone Support"
                   />
@@ -168,14 +168,14 @@ function BookAppointment() {
                     }}>{content?.section2?.phone}</h4>
                     <p style={{
                       fontWeight: "600",
-                      lineHeight: "normal", fontSize: "16px", marginBottom: "15px",wordBreak:"break-all"
+                      lineHeight: "normal", fontSize: "16px", marginBottom: "15px", wordBreak: "break-all"
                     }}>{content?.section2?.email}</p>
                   </div>
                 </div>
                 <div className="touch">
-                  <img alt='Clock icon indicating operating hours for HairsnCares hair care and hair loss treatment services.' 
-                  title="Operating Hours"
-                  src="/assets/img/icons/time.png" />
+                  <img alt='Clock icon indicating operating hours for HairsnCares hair care and hair loss treatment services.'
+                    title="Operating Hours"
+                    src="/assets/img/icons/time.png" />
                   <div className="c-content">
                     <h4 style={{
                       fontWeight: "600",
@@ -194,7 +194,7 @@ function BookAppointment() {
       </div>
 
 
-      <div className="contect-input container " id ="section3">
+      <div className="contect-input container " id="section3">
         <LeftAnimatedDiv className="input-content ">
 
           <h2>Book a Quick Online Appointment</h2>
@@ -229,23 +229,23 @@ function BookAppointment() {
           <h2>{content?.section3?.title}</h2>
           <figure className="text-center">
             <img alt='Laptop displaying a virtual consultation with a doctor, highlighting HairsnCares easy online access to expert hair care and scalp health advice.'
-            title="Virtual Consultation"
-            src={content?.section3?.img} />
+              title="Virtual Consultation"
+              src={content?.section3?.img} />
           </figure>
           {
-                content?.section3?.data?.map((item,i) => {
-                    return(
-                        <>
-                                  <p className="text-list">
-            <span>{"0"+(i+1)}</span>       <h3>{item?.desc}</h3>
-          </p>
-                        </>
-                    )
-                })
-            }
+            content?.section3?.data?.map((item, i) => {
+              return (
+                <>
+                  <p className="text-list">
+                    <span>{"0" + (i + 1)}</span>       <h3>{item?.desc}</h3>
+                  </p>
+                </>
+              )
+            })
+          }
         </RightAnimatedDiv>
       </div>
-      <ToastContainer  position="bottom-right"/>
+      <ToastContainer position="bottom-right" />
 
     </>
   );

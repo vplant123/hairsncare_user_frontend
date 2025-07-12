@@ -51,7 +51,7 @@ function Checkout({ testId }) {
         // setAddresses(addresses.filter(addr => addr._id !== id));
       })
       .catch(error => {
-        toast.error("Please logout and login again with valid credentials.");
+        toast.error("Somethin want wrong try again");
         console.error('Error deleting address:', error)
       });
   }
@@ -204,13 +204,13 @@ function PrescriptionOption({ label, planId, price, onSelect, selected, testId, 
               // Reason 2 - When modal is auto closed because of time out
               else if (reason === 'timeout') {
                 console.log('timedout');
-                toast.error("Please logout and login again with valid credentials.");
+                toast.error("Somethin want wrong try again");
                 setSetLoading(false);
               }
               // Reason 3 - When payment gets failed.
               else {
                 console.log('failed');
-                toast.error("Please logout and login again with valid credentials.");
+                toast.error("Somethin want wrong try again");
                 setSetLoading(false);
               }
             },
@@ -228,7 +228,7 @@ function PrescriptionOption({ label, planId, price, onSelect, selected, testId, 
         const rzp1 = new Razorpay(options);
 
         rzp1.on("payment.failed", function (response) {
-          toast.error("Please logout and login again with valid credentials.");
+          toast.error("Somethin want wrong try again");
           setSetLoading(false);
           throw new Error("Payment failed");
         });

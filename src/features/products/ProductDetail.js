@@ -532,7 +532,7 @@ function ProductDetail(props) {
                   display: "flex"
                 }}>
                   <span class="onsale nt_label" style={{ width: "100%", fontSize: "18px" }}>
-                    <span>-{disPercent + "%"}</span>
+                    <span>-{product?.discount + "%"}</span>
                   </span>
                 </span>
               </div>
@@ -698,9 +698,12 @@ function ProductDetail(props) {
             <div className="quantity-input">
               <h2>
                 Price ₹{" "}
-                {(parseFloat(product?.price || 0) -
-                  parseFloat(product?.discount || 0))?.toFixed(0)}
+                {(
+                  parseFloat(product?.price || 0) -
+                  (parseFloat(product?.price || 0) * (parseFloat(product?.discount || 0) / 100))
+                )?.toFixed(0)}
               </h2>
+
               <div style={{ textDecoration: "line-through", fontSize: "20px" }}>
                 ₹{parseFloat(product?.price || 0)?.toFixed(0)}
               </div>
@@ -736,9 +739,9 @@ function ProductDetail(props) {
             </div>
             <div className="d-flex .shop-btn1">
               <div
-                className="d-flex shop-btn1 btn-222"
-                style={{ cursor: "pointer" }}
-                onClick={() => handleAddToCart()}
+                className={`d-flex shop-btn1 btn-222 ${product?.stock === 0 ? 'disabled' : ''}`}
+                style={{ cursor: product?.stock === 0 ? "not-allowed" : "pointer", opacity: product?.stock === 0 ? 0.6 : 1 }}
+                onClick={() => product?.stock > 0 && handleAddToCart()}
               >
                 <img
                   src="/assets/img/buy-icon.png"
@@ -749,14 +752,14 @@ function ProductDetail(props) {
                   }}
                 />
                 <div className="" style={{ margin: "8px 0 0 17px" }}>
-                  Buy Now
+                  {product?.stock === 0 ? "Out of Stock" : "Buy Now"}
                 </div>
               </div>
 
               <div
-                className="d-flex shop-btn1 btn-33"
-                style={{ cursor: "pointer" }}
-                onClick={() => handleBuyNow()}
+                className={`d-flex shop-btn1 btn-33 ${product?.stock === 0 ? 'disabled' : ''}`}
+                style={{ cursor: product?.stock === 0 ? "not-allowed" : "pointer", opacity: product?.stock === 0 ? 0.6 : 1 }}
+                onClick={() => product?.stock > 0 && handleBuyNow()}
               >
                 <img
                   src="/assets/img/cart-icon.png"
@@ -767,8 +770,8 @@ function ProductDetail(props) {
                   }}
                 />
                 <div className="" style={{ margin: "8px 0 0 17px" }}>
-                  Add to cart
-                </div>
+                  {product?.stock === 0 ? "Out of Stock" : "Add to cart"}
+                </div>  
               </div>
             </div>
             {
@@ -1335,9 +1338,9 @@ function ProductDetail(props) {
                 </div>
               </div>
               <div
-                className="d-flex shop-btn1 btn-33"
-                style={{ cursor: "pointer", marginTop: 0 }}
-                onClick={() => handleBuyNow()}
+                className={`d-flex shop-btn1 btn-33 ${product?.stock === 0 ? 'disabled' : ''}`}
+                style={{ cursor: product?.stock === 0 ? "not-allowed" : "pointer", marginTop: 0, opacity: product?.stock === 0 ? 0.6 : 1 }}
+                onClick={() => product?.stock > 0 && handleBuyNow()}
               >
                 <img
                   src="/assets/img/cart-icon.png"
@@ -1348,7 +1351,7 @@ function ProductDetail(props) {
                   }}
                 />
                 <div className="" style={{ margin: "8px 0 0 17px" }}>
-                  Add to cart
+                  {product?.stock === 0 ? "Out of Stock" : "Add to cart"}
                 </div>
               </div>
             </div>

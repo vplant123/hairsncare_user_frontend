@@ -116,16 +116,17 @@ export default function CreateOrder(props) {
       (total, item) => {
         // Calculate discounted price
         const discountedPrice = item?.item?.price * (1 - parseFloat(item?.item?.discount || 0) / 100);
-        // Add GST to discounted price
-        const priceWithGST = discountedPrice + (discountedPrice * parseFloat(item?.item?.gst || 0) / 100);
-        return total + priceWithGST * (item?.quantity || 1);
+        return total + discountedPrice * (item?.quantity || 1);
       },
       0
     );
     
     let p = parseFloat(tot || 0) - (parseFloat(tot || 0) * (dist || 0)) / 100;
-    if (p < content?.deliveryAmt)
-      p = p + parseFloat(content?.deliveryCharge || 0);
+    
+    // Add ₹200 delivery charge if total after coupon is less than ₹2000
+    if (p < 2000) {
+      p = p + 200;
+    }
     
     setTotal(p);
     return p.toFixed(2);
@@ -136,14 +137,27 @@ export default function CreateOrder(props) {
       (total, item) => {
         // Calculate discounted price
         const discountedPrice = item?.item?.price * (1 - parseFloat(item?.item?.discount || 0) / 100);
-        // Add GST to discounted price
-        const priceWithGST = discountedPrice + (discountedPrice * parseFloat(item?.item?.gst || 0) / 100);
-        return total + priceWithGST * (item?.quantity || 1);
+        return total + discountedPrice * (item?.quantity || 1);
       },
       0
     );
     setSubTotal(sub);
     return sub.toFixed(2);
+  };
+
+  // Calculate amount after discount (before delivery charge)
+  const getAmountAfterDiscount = (dist) => {
+    let tot = cartItems?.reduce(
+      (total, item) => {
+        // Calculate discounted price
+        const discountedPrice = item?.item?.price * (1 - parseFloat(item?.item?.discount || 0) / 100);
+        return total + discountedPrice * (item?.quantity || 1);
+      },
+      0
+    );
+    
+    let p = parseFloat(tot || 0) - (parseFloat(tot || 0) * (dist || 0)) / 100;
+    return p;
   };
 
 
@@ -205,7 +219,7 @@ export default function CreateOrder(props) {
         const responseData = await response.json();
         console.log("data", responseData.data);
 
-        toast.error("Invalid Email or Mobile in address");
+        toast.error(responseData.message);
 
         setSetLoading(false);
         throw new Error("Network response was not ok");
@@ -215,8 +229,10 @@ export default function CreateOrder(props) {
           console.log("wemskfiew", responseData.data);
           toast.success("Order placed successfully");
           setSetLoading(false);
-          // window.location = "https://hairsncares.com/success/2";
           navigate("/success/2");
+          setTimeout(() => {
+            window.location.reload();
+          }, 100); // 2 seconds delay to ensure navigation completes
         } else {
           console.log("jsoejoj", Math.round(total * 100));
           const responseData = await response.json();
@@ -400,7 +416,7 @@ export default function CreateOrder(props) {
       })
       .catch((error) => {
         console.error("Error adding/editing address:", error);
-        toast.error("Please logout and login again with valid credentials.");
+        toast.error("Somethin want wrong try again");
       });
   };
 
@@ -432,7 +448,7 @@ export default function CreateOrder(props) {
         // setAddresses(addresses.filter(addr => addr._id !== id));
       })
       .catch((error) => {
-        toast.error("Please logout and login again with valid credentials.");
+        toast.error("Somethin want wrong try again");
         console.error("Error deleting address:", error);
       });
   };
@@ -577,8 +593,7 @@ export default function CreateOrder(props) {
                                 >
                                   ₹{" "}
                                   {(
-                                    (e.item?.price * (1 - parseFloat(e.item?.discount || 0) / 100)) * 
-                                    (1 + parseFloat(e.item?.gst || 0) / 100)
+                                    e.item?.price * (1 - parseFloat(e.item?.discount || 0) / 100)
                                   )?.toFixed(0)}
                                 </div>
                               </div>
@@ -599,20 +614,20 @@ export default function CreateOrder(props) {
                           <div>- {discount} %</div>
                         </div>
                       ) : null}
-                     
+
                       <div className="total-section">
-                       
+
                         <div>Delivery : </div>
                         <div
                           style={{
                             color:
-                              total < content?.deliveryAmt
+                              getAmountAfterDiscount(discount) < 2000
                                 ? "#e31e24"
                                 : "#28a745",
                           }}
                         >
-                          {subtotal < content?.deliveryAmt
-                            ? "₹ " + content.deliveryCharge
+                          {getAmountAfterDiscount(discount) < 2000
+                            ? "₹ 200"
                             : "Free Delivery"}
                         </div>
                       </div>

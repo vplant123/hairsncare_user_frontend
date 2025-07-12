@@ -197,7 +197,7 @@
 
 //   const handleSubmit = (e) => {
 //     e.preventDefault();
-    
+
 //     // Add new address to the server
 //     fetch(addApiUrl, {
 //       method: 'POST',
@@ -214,7 +214,7 @@
 //         console.log({...newAddress, userId:storedUserData.logedInUser?.user?._id,})
 //         // Reset form
 //         setNewAddress({
-         
+
 //           name: '',
 //           phone: '',
 //           state: '',
@@ -337,8 +337,8 @@ export default function Address(props) {
 
 
   useEffect(() => {
-    if(props?.setTitle) props?.setTitle(window.location.pathname)
-  },[])
+    if (props?.setTitle) props?.setTitle(window.location.pathname)
+  }, [])
 
 
 
@@ -386,16 +386,16 @@ export default function Address(props) {
     const apiUrl = editingAddress ? editApiUrl : addApiUrl;
     const method = editingAddress ? 'POST' : 'POST';
     const addressData = editingAddress ? { ...newAddress, id: editingAddress._id } : newAddress;
-    console.log("jsiejfijer",addressData)
-    if(!addressData?.name) {
+    console.log("jsiejfijer", addressData)
+    if (!addressData?.name) {
       toast.error("Please provide name");
       return false
     }
-    if(!addressData?.phone) {
+    if (!addressData?.phone) {
       toast.error("Please provide name");
       return false
     }
-    else{
+    else {
       const phoneRegex = /^[6-9]\d{9}$/;
       if (!phoneRegex.test(addressData?.phone)) {
         toast.error("Please provide correct phone number");
@@ -403,27 +403,27 @@ export default function Address(props) {
       }
     }
 
-    if(!addressData?.fullAdress) {
+    if (!addressData?.fullAdress) {
       toast.error("Please provide address");
       return false
     }
-    if(!addressData?.pin) {
+    if (!addressData?.pin) {
       toast.error("Please provide pincode");
       return false
     }
-    else{
+    else {
       let pincodeRegex = /^[0-9]\d{5}$/;
       if (!pincodeRegex.test(addressData?.pin)) {
         toast.error("Please provide correct pincode");
         return false;
       }
     }
-    if(!addressData?.state) {
+    if (!addressData?.state) {
       toast.error("Please provide state name");
       return false
     }
 
-    if(!addressData?.city) {
+    if (!addressData?.city) {
       toast.error("Please provide city name");
       return false
     }
@@ -438,7 +438,7 @@ export default function Address(props) {
     })
       .then(response => response.json())
       .then(data => {
-        console.log("nwenifew",data)
+        console.log("nwenifew", data)
         if (editingAddress) {
           toast.success("Address edit successfully");
           setAddresses(addresses.map(addr => addr._id == editingAddress._id ? data?.data : addr));
@@ -459,7 +459,7 @@ export default function Address(props) {
       })
       .catch(error => {
         console.error('Error adding/editing address:', error)
-        toast.error("Please logout and login again with valid credentials.");
+        toast.error("Somethin want wrong try again");
       });
   };
 
@@ -483,7 +483,7 @@ export default function Address(props) {
         setAddresses(addresses.filter(addr => addr._id !== id));
       })
       .catch(error => {
-        toast.error("Please logout and login again with valid credentials.");
+        toast.error("Somethin want wrong try again");
         console.error('Error deleting address:', error)
       });
   };
@@ -491,100 +491,100 @@ export default function Address(props) {
   return (
     <Navbar>
 
-    <Sidebar>
-      <div className={styles.container} style={{padding : 0}}>
-        {/* <h2 className={styles.header}>Addresses</h2> */}
-        <ul className={styles.addressList}>
-          {addresses?.map((address, index) => (
-            <li key={index} className={styles.addressItem}>
-              <p><strong>Name:</strong> {address.name}</p>
-              <p><strong>Phone:</strong> {address.phone}</p>
-              <p><strong>State:</strong> {address.state}</p>
-              <p><strong>City:</strong> {address.city}</p>
-              <p><strong>Pin:</strong> {address.pin}</p>
-              <p><strong>Email:</strong> {address.email}</p>
-              <p><strong>Full Address:</strong> {address.fullAdress}</p>
-              <button onClick={() => handleEdit(address)} className={styles.button}>Edit</button>
-              <button style={{margin: "0 0 0 5px"}} onClick={() => handleDelete(address._id)} className={styles.button}>Delete</button>
-            </li>
-          ))}
-        </ul>
-        <h2 className={styles.header}>{editingAddress ? 'Edit Address' : 'Add New Address'}</h2>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <div className={styles.formGroup}>
-            <label>Name: </label>
-            <input
-              type="text"
-              name="name"
-              value={newAddress.name}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label>Phone: </label>
-            <input
-              type="text"
-              name="phone"
-              value={newAddress.phone}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label>State: </label>
-            <input
-              type="text"
-              name="state"
-              value={newAddress.state}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label>City: </label>
-            <input
-              type="text"
-              name="city"
-              value={newAddress.city}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label>Pin: </label>
-            <input
-              type="text"
-              name="pin"
-              value={newAddress.pin}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label>Email (optional): </label>
-            <input
-              type="email"
-              name="email"
-              value={newAddress.email}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label>Full Address: </label>
-            <textarea
-              name="fullAdress"
-              value={newAddress.fullAdress}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <button type="submit" className={styles.button}>{editingAddress ? 'Save Changes' : 'Add Address'}</button>
-        </form>
-      </div>
-      <ToastContainer position="bottom-right"/>
-    </Sidebar>
-    {/* <Footer/> */}
+      <Sidebar>
+        <div className={styles.container} style={{ padding: 0 }}>
+          {/* <h2 className={styles.header}>Addresses</h2> */}
+          <ul className={styles.addressList}>
+            {addresses?.map((address, index) => (
+              <li key={index} className={styles.addressItem}>
+                <p><strong>Name:</strong> {address.name}</p>
+                <p><strong>Phone:</strong> {address.phone}</p>
+                <p><strong>State:</strong> {address.state}</p>
+                <p><strong>City:</strong> {address.city}</p>
+                <p><strong>Pin:</strong> {address.pin}</p>
+                <p><strong>Email:</strong> {address.email}</p>
+                <p><strong>Full Address:</strong> {address.fullAdress}</p>
+                <button onClick={() => handleEdit(address)} className={styles.button}>Edit</button>
+                <button style={{ margin: "0 0 0 5px" }} onClick={() => handleDelete(address._id)} className={styles.button}>Delete</button>
+              </li>
+            ))}
+          </ul>
+          <h2 className={styles.header}>{editingAddress ? 'Edit Address' : 'Add New Address'}</h2>
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <div className={styles.formGroup}>
+              <label>Name: </label>
+              <input
+                type="text"
+                name="name"
+                value={newAddress.name}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Phone: </label>
+              <input
+                type="text"
+                name="phone"
+                value={newAddress.phone}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>State: </label>
+              <input
+                type="text"
+                name="state"
+                value={newAddress.state}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>City: </label>
+              <input
+                type="text"
+                name="city"
+                value={newAddress.city}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Pin: </label>
+              <input
+                type="text"
+                name="pin"
+                value={newAddress.pin}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Email (optional): </label>
+              <input
+                type="email"
+                name="email"
+                value={newAddress.email}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Full Address: </label>
+              <textarea
+                name="fullAdress"
+                value={newAddress.fullAdress}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <button type="submit" className={styles.button}>{editingAddress ? 'Save Changes' : 'Add Address'}</button>
+          </form>
+        </div>
+        <ToastContainer position="bottom-right" />
+      </Sidebar>
+      {/* <Footer/> */}
     </Navbar>
   );
 }

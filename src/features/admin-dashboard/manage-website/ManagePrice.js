@@ -11,17 +11,17 @@ import { toast } from 'react-toastify';
 import { getUtilityContentData } from '../../../app/conteneDataSlice';
 
 export default function ManagePrice() {
-    const content = useSelector((state) => state.content?.plan);
+  const content = useSelector((state) => state.content?.plan);
 
   const [price1, setPrice1] = useState(content?.[0]?.price)
   const [price2, setPrice2] = useState(content?.[1]?.price)
   const [loader, setLoader] = useState(false)
   const dispatch = useDispatch();
 
-console.log("jdfojer",price1,content,
+  console.log("jdfojer", price1, content,
     price2)
   const handleSubmit = async (e) => {
-    
+
     // const formData = new FormData();
     // console.log("nnirhei",images)
     // images.forEach(image => formData.append('image', image));
@@ -29,9 +29,9 @@ console.log("jdfojer",price1,content,
 
 
       const data = {
-        appPrice1 : price1,
-        appPrice2 : price2,
-        plan : "1"
+        appPrice1: price1,
+        appPrice2: price2,
+        plan: "1"
       };
       let url = `${BASE_URL}/utility/editVideoCustomer`;
 
@@ -46,7 +46,7 @@ console.log("jdfojer",price1,content,
         setLoader(false)
         if (response.ok) {
           const result = await response.json();
-          dispatch(getUtilityContentData()); 
+          dispatch(getUtilityContentData());
 
           toast.success("content update successfully");
           console.log('Product created successfully:', result);
@@ -56,49 +56,49 @@ console.log("jdfojer",price1,content,
         }
       } catch (error) {
         setLoader(false)
-        toast.error("Please logout and login again with valid credentials.");
+        toast.error("Somethin want wrong try again");
         console.error('Error:', error);
       }
     } catch (error) {
       setLoader(false)
-      toast.error("Please logout and login again with valid credentials.");
+      toast.error("Somethin want wrong try again");
       console.error('Error:', error);
     }
   };
   return (
     <>
-    <div>
+      <div>
         Appointment 1 price
-    <input
-                type="text"
-                defaultValue={                price1
-                }
-                onChange={(e) => setPrice1(e?.target?.value)}
-                // className="contect-us-heading"
-              />
-    </div>
+        <input
+          type="text"
+          defaultValue={price1
+          }
+          onChange={(e) => setPrice1(e?.target?.value)}
+        // className="contect-us-heading"
+        />
+      </div>
 
-    <div>
-    Appointment 2 price
+      <div>
+        Appointment 2 price
 
-    <input
-                type="text"
-                defaultValue={                price2
-                }
-                onChange={(e) => setPrice2(e?.target?.value)}
-                // className="contect-us-heading"
-              />
-    </div>
+        <input
+          type="text"
+          defaultValue={price2
+          }
+          onChange={(e) => setPrice2(e?.target?.value)}
+        // className="contect-us-heading"
+        />
+      </div>
 
-    <div>
-              <button
-                style={{ background: "bisque", cursor: "pointer" }}
-                onClick={() => handleSubmit()}
-                className="btn"
-              >
-                {loader ? "loadin" : "Update Data"}
-              </button>
-            </div> 
+      <div>
+        <button
+          style={{ background: "bisque", cursor: "pointer" }}
+          onClick={() => handleSubmit()}
+          className="btn"
+        >
+          {loader ? "loadin" : "Update Data"}
+        </button>
+      </div>
     </>
   );
 }

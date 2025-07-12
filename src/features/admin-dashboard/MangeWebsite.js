@@ -11,7 +11,7 @@ import OurEpertiseEdit from './manage-website/OurExpertiseEdit'
 import AboutUsEdit from './manage-website/AboutUsEdit'
 
 // import DoctorPrescribe from '../doctor-dashboard/analysis/DoctorPrescribe'
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from "react-redux";
 import SliderImageEdit from "../video-slider/SliderImageEdit";
 import MediaEdit from "../media/MediaEdit";
@@ -29,49 +29,49 @@ function ManageWebsite() {
   const content = useSelector((state) => state.content);
   const [loader, setLoader] = useState(false);  // New state for discount
 
-  console.log("mwokorke",content)
+  console.log("mwokorke", content)
 
-  const [section1,setSection1] = useState()
-  const [section2,setSection2] = useState()
-  const [section3,setSection3] = useState()
-  const [section4,setSection4] = useState()
-  const [section5,setSection5] = useState()
-  const [section6,setSection6] = useState()
-  const [section7,setSection7] = useState()
-  const [section8,setSection8] = useState()
-  const [section9,setSection9] = useState()
-  const [section10,setSection10] = useState()
-  const [section11,setSection11] = useState()
-  const [section12,setSection12] = useState()
+  const [section1, setSection1] = useState()
+  const [section2, setSection2] = useState()
+  const [section3, setSection3] = useState()
+  const [section4, setSection4] = useState()
+  const [section5, setSection5] = useState()
+  const [section6, setSection6] = useState()
+  const [section7, setSection7] = useState()
+  const [section8, setSection8] = useState()
+  const [section9, setSection9] = useState()
+  const [section10, setSection10] = useState()
+  const [section11, setSection11] = useState()
+  const [section12, setSection12] = useState()
 
 
   useEffect(() => {
-    setSection1(content?.home?.section1) 
-    setSection2(content?.home?.section2) 
-    setSection3(content?.home?.section3) 
-    setSection4(content?.home?.section4) 
-    setSection5(content?.home?.section5) 
+    setSection1(content?.home?.section1)
+    setSection2(content?.home?.section2)
+    setSection3(content?.home?.section3)
+    setSection4(content?.home?.section4)
+    setSection5(content?.home?.section5)
     setSection6(content?.home?.section6)
-    setSection7(content?.home?.section7) 
-    setSection8(content?.home?.section8) 
+    setSection7(content?.home?.section7)
+    setSection8(content?.home?.section8)
     setSection9(content?.home?.section9)
     setSection10(content?.home?.section10)
     setSection11(content?.home?.section11)
     setSection12(content?.home?.section12)
 
-    
-  },[content])
+
+  }, [content])
 
 
   const changeContent = (type) => {
-    setSection1(content[type]?.section1) 
-    setSection2(content[type]?.section2) 
-    setSection3(content[type]?.section3) 
-    setSection4(content[type]?.section4) 
-    setSection5(content[type]?.section5) 
+    setSection1(content[type]?.section1)
+    setSection2(content[type]?.section2)
+    setSection3(content[type]?.section3)
+    setSection4(content[type]?.section4)
+    setSection5(content[type]?.section5)
     setSection6(content[type]?.section6)
-    setSection7(content[type]?.section7) 
-    setSection8(content[type]?.section8) 
+    setSection7(content[type]?.section7)
+    setSection8(content[type]?.section8)
     setSection9(content[type]?.section9)
     setSection10(content[type]?.section10)
     setSection11(content[type]?.section11)
@@ -81,7 +81,7 @@ function ManageWebsite() {
 
 
   const handleSubmit = async (e) => {
-    
+
     setLoader(true)
     // const formData = new FormData();
     // console.log("nnirhei",images)
@@ -102,31 +102,31 @@ function ManageWebsite() {
         section10,
         section11,
         section12,
-        id : content?._id
+        id: content?._id
       };
       let url =
         selectedTab === "HomePage"
           ? `${BASE_URL}/utility/editHome`
           : selectedTab === "About Us Page"
-          ? `${BASE_URL}/utility/editAboutUs1`
-          : selectedTab === "Our Specialists Page"
-          ? `${BASE_URL}/utility/editSpecialist`
-          : selectedTab === "Our Expertise Page"
-          ? `${BASE_URL}/utility/editExpertise`
-          : selectedTab === "Happy Customer"
-          ? `${BASE_URL}/utility/editVideoCustomer`
-          :  selectedTab === "Contact Us"
-          ? `${BASE_URL}/utility/editContactUs` : "";
+            ? `${BASE_URL}/utility/editAboutUs1`
+            : selectedTab === "Our Specialists Page"
+              ? `${BASE_URL}/utility/editSpecialist`
+              : selectedTab === "Our Expertise Page"
+                ? `${BASE_URL}/utility/editExpertise`
+                : selectedTab === "Happy Customer"
+                  ? `${BASE_URL}/utility/editVideoCustomer`
+                  : selectedTab === "Contact Us"
+                    ? `${BASE_URL}/utility/editContactUs` : "";
       data["id"] =
         selectedTab === "HomePage"
           ? content?.home?._id
           : selectedTab === "About Us Page"
-          ? content?.aboutUs?._id : selectedTab === "Our Specialists Page"
-          ? content?.specialist?._id : selectedTab === "Our Expertise Page"
-          ? content?.expertise?._id : selectedTab === "Happy Customer"
-          ? content?.customerVideos?._id : selectedTab === "Contact Us"
-          ? content?.contactus?._id
-          : "";
+            ? content?.aboutUs?._id : selectedTab === "Our Specialists Page"
+              ? content?.specialist?._id : selectedTab === "Our Expertise Page"
+                ? content?.expertise?._id : selectedTab === "Happy Customer"
+                  ? content?.customerVideos?._id : selectedTab === "Contact Us"
+                    ? content?.contactus?._id
+                    : "";
 
       try {
         const response = await fetch(url, {
@@ -147,12 +147,12 @@ function ManageWebsite() {
         }
       } catch (error) {
         setLoader(false)
-        toast.error("Please logout and login again with valid credentials.");
+        toast.error("Somethin want wrong try again");
         console.error('Error:', error);
       }
     } catch (error) {
       setLoader(false)
-      toast.error("Please logout and login again with valid credentials.");
+      toast.error("Somethin want wrong try again");
       console.error('Error:', error);
     }
   };
@@ -169,9 +169,8 @@ function ManageWebsite() {
               changeContent("home");
               handleTabChange("HomePage")
             }}
-            className={`tab-3 tab tab2 ${
-              selectedTab === "HomePage" ? "selected1" : ""
-            }`}
+            className={`tab-3 tab tab2 ${selectedTab === "HomePage" ? "selected1" : ""
+              }`}
           >
             HomePage
           </div>
@@ -180,9 +179,8 @@ function ManageWebsite() {
               changeContent("aboutUs");
               handleTabChange("About Us Page");
             }}
-            className={`tab-1 tab tab2 ${
-              selectedTab === "About Us Page" ? "selected1" : ""
-            }`}
+            className={`tab-1 tab tab2 ${selectedTab === "About Us Page" ? "selected1" : ""
+              }`}
           >
             About Us Page
           </div>
@@ -191,9 +189,8 @@ function ManageWebsite() {
               changeContent("specialist");
               handleTabChange("Our Specialists Page");
             }}
-            className={`tab-4 tab tab2 ${
-              selectedTab === "Our Specialists Page" ? "selected1" : ""
-            }`}
+            className={`tab-4 tab tab2 ${selectedTab === "Our Specialists Page" ? "selected1" : ""
+              }`}
           >
             Our Specialists Page
           </div>
@@ -203,9 +200,8 @@ function ManageWebsite() {
               changeContent("expertise");
               handleTabChange("Our Expertise Page");
             }}
-            className={`tab-2 tab tab2 ${
-              selectedTab === "Our Exepertise Page" ? "selected1" : ""
-            }`}
+            className={`tab-2 tab tab2 ${selectedTab === "Our Exepertise Page" ? "selected1" : ""
+              }`}
           >
             Our Exepertise Page
           </div>
@@ -216,9 +212,8 @@ function ManageWebsite() {
               changeContent("customerVideos");
               handleTabChange("Happy Customer");
             }}
-            className={`tab-2 tab tab2 ${
-              selectedTab === "Happy Customer" ? "selected1" : ""
-            }`}
+            className={`tab-2 tab tab2 ${selectedTab === "Happy Customer" ? "selected1" : ""
+              }`}
           >
             Happy Customer
           </div>
@@ -227,9 +222,8 @@ function ManageWebsite() {
               changeContent("plan");
               handleTabChange("Hair-test-price");
             }}
-            className={`tab-2 tab tab2 ${
-              selectedTab === "Hair-test-price" ? "selected1" : ""
-            }`}
+            className={`tab-2 tab tab2 ${selectedTab === "Hair-test-price" ? "selected1" : ""
+              }`}
           >
             Hair-test price
           </div>
@@ -238,9 +232,8 @@ function ManageWebsite() {
               changeContent("contactus");
               handleTabChange("Contact Us");
             }}
-            className={`tab-2 tab tab2 ${
-              selectedTab === "Contact Us" ? "selected1" : ""
-            }`}
+            className={`tab-2 tab tab2 ${selectedTab === "Contact Us" ? "selected1" : ""
+              }`}
           >
             Contact Us
           </div>
@@ -279,58 +272,58 @@ function ManageWebsite() {
           setSection6={setSection6}
         />
       )}
-      {selectedTab === "Our Specialists Page" && <SpecialistEdit           section1={section1}
-          setSection1={setSection1}
-          section2={section2}
-          setSection2={setSection2}
-          section3={section3}
-          setSection3={setSection3}
-          section4={section4}
-          setSection4={setSection4}
-          section5={section5}
-          setSection5={setSection5} />}
-      {selectedTab === "Our Expertise Page" && <OurEpertiseEdit           section1={section1}
-          setSection1={setSection1}
-          section2={section2}
-          setSection2={setSection2}
-          section3={section3}
-          setSection3={setSection3}
-          section4={section4}
-          setSection4={setSection4}
-          section5={section5}
-          setSection5={setSection5}
-          section6={section6}
-          setSection6={setSection6}
-            section7={section7}
-            setSection7={setSection7
-          }
-           />}
-                        {selectedTab === "Happy Customer" && <HappyCustomer            section1={section1}
-          setSection1={setSection1}
-           />}     
-             {selectedTab === "Hair-test-price" && <ManagePrice  />}
-             {selectedTab === "Contact Us" && <BookAppointmentEdit            section1={section1}
-          setSection1={setSection1}
-          section2={section2}
-          setSection2={setSection2}
-          section3={section3}
-          setSection3={setSection3}
-           />}   
-             {
-              selectedTab != "Hair-test-price" ?                     <div>
-              <button
-                style={{ background: "bisque", cursor: "pointer" }}
-                onClick={() => handleSubmit()}
-                className="btn"
-              >
-                {loader ? "loadin" : "Update Data"}
-              </button>
-            </div> : <></>
-             }   
+      {selectedTab === "Our Specialists Page" && <SpecialistEdit section1={section1}
+        setSection1={setSection1}
+        section2={section2}
+        setSection2={setSection2}
+        section3={section3}
+        setSection3={setSection3}
+        section4={section4}
+        setSection4={setSection4}
+        section5={section5}
+        setSection5={setSection5} />}
+      {selectedTab === "Our Expertise Page" && <OurEpertiseEdit section1={section1}
+        setSection1={setSection1}
+        section2={section2}
+        setSection2={setSection2}
+        section3={section3}
+        setSection3={setSection3}
+        section4={section4}
+        setSection4={setSection4}
+        section5={section5}
+        setSection5={setSection5}
+        section6={section6}
+        setSection6={setSection6}
+        section7={section7}
+        setSection7={setSection7
+        }
+      />}
+      {selectedTab === "Happy Customer" && <HappyCustomer section1={section1}
+        setSection1={setSection1}
+      />}
+      {selectedTab === "Hair-test-price" && <ManagePrice />}
+      {selectedTab === "Contact Us" && <BookAppointmentEdit section1={section1}
+        setSection1={setSection1}
+        section2={section2}
+        setSection2={setSection2}
+        section3={section3}
+        setSection3={setSection3}
+      />}
+      {
+        selectedTab != "Hair-test-price" ? <div>
+          <button
+            style={{ background: "bisque", cursor: "pointer" }}
+            onClick={() => handleSubmit()}
+            className="btn"
+          >
+            {loader ? "loadin" : "Update Data"}
+          </button>
+        </div> : <></>
+      }
 
-                   
 
-      <ToastContainer  position="bottom-right"/>
+
+      <ToastContainer position="bottom-right" />
     </AdminNavbar>
   );
 }

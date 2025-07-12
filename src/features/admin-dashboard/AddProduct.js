@@ -69,7 +69,7 @@
 
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
-    
+
 //     if (!validateForm()) return;
 
 //     const formData = new FormData();
@@ -87,7 +87,7 @@
 //       }
 
 //       const imageData = await imageResponse.json();
-      
+
 //       const data = {
 //         productName: name,
 //         productPrice: price,
@@ -172,14 +172,14 @@
 //               required
 //             />
 //           </div>
-         
+
 
 //           {category === 'kit' && kitItems.map((item, index) => (
 //             <div key={index} className="kit-item">
 //               {!item.isManual ? (
 //                 <>
 //                   <div className="form-group gk-p">
-                
+
 //                     <div style={{flex:"0 0 auto",width:"50%"}}>
 //                       <label>Choose from existing single Product:</label>
 //                     <select
@@ -201,11 +201,11 @@
 //                     Or Add Product Manually
 //                   </button>
 //                   </div>
-                
+
 //                 </>
 //               ) : (
 //                 <div className="form-group gk-p">
-                  
+
 //                <div style={{flex:"0 0 auto",width:"50%"}}>   <label>Product Name:</label>
 //                   <input
 //                     type="text"
@@ -252,13 +252,13 @@ function AddProduct() {
   const [shortDescription, setShortDescription] = useState('');
   const [longDescription, setLongDescription] = useState('');
   const [ingredient, setIngredient] = useState([{
-    title : "",desc : ""
+    title: "", desc: ""
   }]);
   const [faq, setFaq] = useState([{
-    title : "",desc : ""
+    title: "", desc: ""
   }])
   const [benefits, setBenefits] = useState([{
-    title : "",desc : ""
+    title: "", desc: ""
   }]);
   const [highlights, setHighlights] = useState('');
   const [benefitsMain, setBenefitsMain] = useState('');
@@ -295,63 +295,63 @@ function AddProduct() {
   };
 
   const handleLongDescriptionChange = (value) => {
-    console.log("mmrijtier",value)
+    console.log("mmrijtier", value)
     setLongDescription(value);
   };
 
 
 
-  const handleSetIngredientChange = (value,i,type) => {
+  const handleSetIngredientChange = (value, i, type) => {
     let input = ingredient;
     input[i][type] = value;
-    console.log("sjdijer",input)
+    console.log("sjdijer", input)
     setIngredient(input);
-  };  
+  };
   const addSetIngredientChange = () => {
-    console.log("jijoeijror",[...ingredient,{title : "",desc : ""}])
-    setIngredient([...ingredient,{title : "",desc : ""}]);
-  };  
+    console.log("jijoeijror", [...ingredient, { title: "", desc: "" }])
+    setIngredient([...ingredient, { title: "", desc: "" }]);
+  };
   const removeSetIngredientChange = (ind) => {
     let input = ingredient;
-    let new1 = input?.filter((e,i) => i != ind);
+    let new1 = input?.filter((e, i) => i != ind);
     setIngredient(new1);
-  };  
+  };
 
 
-  const handleSetBenefitsChange = (value,i,type) => {
+  const handleSetBenefitsChange = (value, i, type) => {
     let input = benefits;
     input[i][type] = value;
-    console.log("sjdijer",input)
+    console.log("sjdijer", input)
     setBenefits(input);
-  };  
+  };
   const addSetBenefitsChange = () => {
-    setBenefits([...benefits,{title : "",desc : ""}]);
-  };  
+    setBenefits([...benefits, { title: "", desc: "" }]);
+  };
   const removeSetBenefitsChange = (ind) => {
     let input = benefits;
-    let new1 = input?.filter((e,i) => i != ind);
+    let new1 = input?.filter((e, i) => i != ind);
     setBenefits(new1);
-  };  
+  };
 
 
-  const handlesetFaqChange = (value,i,type) => {
-    console.log("sjdijer",value,i,type)
+  const handlesetFaqChange = (value, i, type) => {
+    console.log("sjdijer", value, i, type)
     let input = faq;
     input[i][type] = value;
     setFaq(input);
-  };  
+  };
   const addsetFaqChange = () => {
-    setFaq([...faq,{title : "",desc : ""}]);
-  };  
+    setFaq([...faq, { title: "", desc: "" }]);
+  };
   const removesetFaqtChange = (ind) => {
     let input = faq;
-    let new1 = input?.filter((e,i) => i != ind);
+    let new1 = input?.filter((e, i) => i != ind);
     setFaq(new1);
-  };  
+  };
 
 
 
-   const handleSetHighlightsChange = (value) => {
+  const handleSetHighlightsChange = (value) => {
     setHighlights(value);
   };
   const handleStockChange = (e) => {
@@ -363,9 +363,9 @@ function AddProduct() {
     // setImages([...images,e.target.files]);
 
     const files = Array.from(e.target.files);
-    console.log("kojoewjojfe",[...images,files[0]])
+    console.log("kojoewjojfe", [...images, files[0]])
     // console.log("kojoewjojfe",files)
-    setImages([...images,files[0]]);
+    setImages([...images, files[0]]);
   };
 
   const handleCategoryChange = (e) => {
@@ -403,7 +403,7 @@ function AddProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
     setLoader(true)
     // const formData = new FormData();
@@ -415,14 +415,14 @@ function AddProduct() {
         const element = images[index];
         const formData = new FormData();
         formData.append('image', element)
-        
+
         const imageResponse = await fetch(`${BASE_URL}/hair-tests/upload-image`, {
           method: 'POST',
           body: formData
         });
-  
+
         if (!imageResponse.ok) {
-          toast.error("Please logout and login again with valid credentials.");
+          toast.error("Somethin want wrong try again");
           throw new Error('Network response was not ok');
         }
         const imageData = await imageResponse.json();
@@ -438,14 +438,14 @@ function AddProduct() {
         discount,  // Include discount in the data object
         src: imageArr,
         kit: category === 'kit' ? kitItems.map((item) => item.productName) : [],
-        shortDes : shortDescription,
-        benefits :benefits,
-        ingredient : ingredient,
+        shortDes: shortDescription,
+        benefits: benefits,
+        ingredient: ingredient,
         faq: faq,
-        highlights :highlights,
-        benefitsMain : benefitsMain,
-        ingredientMain : ingredientMain,
-        productDisplay : isDisplay
+        highlights: highlights,
+        benefitsMain: benefitsMain,
+        ingredientMain: ingredientMain,
+        productDisplay: isDisplay
       };
 
       try {
@@ -468,7 +468,7 @@ function AddProduct() {
         }
       } catch (error) {
         setLoader(false)
-        toast.error("Please logout and login again with valid credentials.");
+        toast.error("Somethin want wrong try again");
         console.error('Error:', error);
       }
     } catch (error) {
@@ -760,14 +760,14 @@ function AddProduct() {
             />
           </div>
           <div className=''>
-          <label>Products display on product section:</label> {/* New input field for discount */}
-          <input
-            type="checkbox"
-            value={isDisplay}
-            onChange={(e) =>
-              setIsDisplay(!isDisplay)
-            }
-          />
+            <label>Products display on product section:</label> {/* New input field for discount */}
+            <input
+              type="checkbox"
+              value={isDisplay}
+              onChange={(e) =>
+                setIsDisplay(!isDisplay)
+              }
+            />
           </div>
           <div className="form-group">
             <label>Upload Images:</label>
@@ -862,7 +862,7 @@ function AddProduct() {
           </button>
         </form>
       </div>
-      <ToastContainer position="bottom-right"/>
+      <ToastContainer position="bottom-right" />
     </AdminNavbar>
   );
 }

@@ -438,17 +438,17 @@ const ManageOrder = () => {
   // Handle status change
   let storedUserData = JSON.parse(localStorage?.getItem("User343"));
 
-  const handleStatusChange = async (orderId,newStatus,order,paymentStatus) => {
-    let emailHtml=null;
-    if(newStatus || paymentStatus){
-      emailHtml = renderWelcomeEmail(order,2,newStatus || paymentStatus);
-      console.log("nmkmneor",emailHtml)
+  const handleStatusChange = async (orderId, newStatus, order, paymentStatus) => {
+    let emailHtml = null;
+    if (newStatus || paymentStatus) {
+      emailHtml = renderWelcomeEmail(order, 2, newStatus || paymentStatus);
+      console.log("nmkmneor", emailHtml)
     }
     let data = {
       orderId,
-      status : newStatus,
+      status: newStatus,
       emailHtml,
-      payment : paymentStatus
+      payment: paymentStatus
     };
     try {
       const response = await fetch(`${BASE_URL}/payment/change-order-status`, {
@@ -464,19 +464,19 @@ const ManageOrder = () => {
         const result = await response.json();
         toast.success("order status changed");
       } else {
-        toast.error("Please logout and login again with valid credentials.");
+        toast.error("Somethin want wrong try again");
         console.error('Failed to create review:', response.statusText);
       }
     } catch (error) {
-      toast.error("Please logout and login again with valid credentials.");
+      toast.error("Somethin want wrong try again");
       console.error('Error:', error);
     }
   };
 
   const handleSubmitAdd = (id) => {
-    if(!id) return;
+    if (!id) return;
     const apiUrl = `${BASE_URL}/users/editAddress`;
-    let addressData = {id : id}
+    let addressData = { id: id }
 
     fetch(apiUrl, {
       method: "POST",
@@ -488,12 +488,12 @@ const ManageOrder = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log("nwenifew",data?.data)
+        console.log("nwenifew", data?.data)
         setAddressesDetail(data?.data);
       })
       .catch(error => {
         console.error('Error adding/editing address:', error)
-        toast.error("Please logout and login again with valid credentials.");
+        toast.error("Somethin want wrong try again");
       });
   };
 
@@ -515,7 +515,7 @@ const ManageOrder = () => {
 
   // Handle row click to show product details
   const handleRowClick = (order) => {
-    console.log("koekjor",order)
+    console.log("koekjor", order)
     setSelectedOrder(order);
     handleSubmitAdd(order?.addressId?._id)
     setOpen(true);
@@ -539,7 +539,7 @@ const ManageOrder = () => {
       {
         accessorKey: 'userId.fullname',
         header: 'Customer',
-        
+
       },
       // {
       //   accessorKey: 'addressId.fullAdress',
@@ -554,58 +554,58 @@ const ManageOrder = () => {
           //   {cell.row.original.amount===50000?"Rs 500":"Rs 100"}
           // </span>
           <div>{cell.row.original?.amount?.toFixed(2)}
-              </div>
+          </div>
         ),
       },
       {
         accessorKey: 'mode',
-        header: 'Mode',    
+        header: 'Mode',
       },
       {
         // accessorKey: 'payme',
-        header: 'payment status',   
+        header: 'payment status',
         Cell: ({ cell }) => (
           <Select
             value={cell.row.original.status}
             onClick={(e) => e.stopPropagation()} // Stop event propagation
             onChange={(e) => {
-              handleStatusChange(cell.row.original._id, null,cell.row.original,e.target.value);
+              handleStatusChange(cell.row.original._id, null, cell.row.original, e.target.value);
               e.stopPropagation(); // Stop event propagation
             }}
             displayEmpty
             renderValue={(value) => (value ? value : 'Change Status')}
             fullWidth
           >
-           
+
             {paymentStatus.map((status) => (
               <MenuItem key={status} value={status}>
                 {status}
               </MenuItem>
             ))}
           </Select>
-        ), 
+        ),
       },
       {
         accessorKey: 'createdAt',
         header: 'Date',
-        
+
         id: 'Date', // Added id
         Cell: ({ cell }) => (
           // <span style={{ backgroundColor: cell.row.original.amount === 50000 ? 'yellow' : 'orange', padding: '5px', borderRadius: '4px' }}>
           //   {cell.row.original.amount===50000?"Rs 500":"Rs 100"}
           // </span>
           <div>{cell.row.original?.createdAt ? moment(cell.row.original?.createdAt).format("DD-MM-YYYY") : "-"}
-              </div>
+          </div>
         ),
       },
       {
         accessorKey: 'deliveryStatus',
         header: 'Status',
-        
+
         Cell: ({ cell }) => {
           const status = cell.row.original.deliveryStatus.toLowerCase();
           let backgroundColor;
-          console.log("kmejij",status)
+          console.log("kmejij", status)
           switch (status) {
             case 'delivered':
               backgroundColor = 'green';
@@ -627,7 +627,7 @@ const ManageOrder = () => {
           }
 
           return (
-            <div style={{ backgroundColor, padding: '5px', borderRadius: '4px',color : "#FFFFFF",fontWeight : "700" }}>
+            <div style={{ backgroundColor, padding: '5px', borderRadius: '4px', color: "#FFFFFF", fontWeight: "700" }}>
               {cell.row.original.deliveryStatus}
             </div>
           );
@@ -635,20 +635,20 @@ const ManageOrder = () => {
       },
       {
         header: 'Action',
-        
+
         Cell: ({ cell }) => (
           <Select
             value={cell.row.original.deliveryStatus}
             onClick={(e) => e.stopPropagation()} // Stop event propagation
             onChange={(e) => {
-              handleStatusChange(cell.row.original._id, e.target.value,cell.row.original);
+              handleStatusChange(cell.row.original._id, e.target.value, cell.row.original);
               e.stopPropagation(); // Stop event propagation
             }}
             displayEmpty
             renderValue={(value) => (value ? value : 'Change Status')}
             fullWidth
           >
-           
+
             {statuses.map((status) => (
               <MenuItem key={status} value={status}>
                 {status}
@@ -682,7 +682,7 @@ const ManageOrder = () => {
   return (
     <AdminNavbar>
       <div className='manager-order-tabel'>
-      <MaterialReactTable table={table}        />
+        <MaterialReactTable table={table} />
       </div>
 
       <Dialog open={open} onClose={handleClose}>
@@ -716,13 +716,11 @@ const ManageOrder = () => {
               {selectedOrder?.products?.map((item) => (
                 <ListItem key={item?.item?._id}>
                   <ListItemText
-                    primary={`${item?.item?.name} - Quantity: ${
-                      item?.quantity
-                    } - Price: ${item?.item?.price} - Total: ${
-                     ( parseFloat(item?.item?.price) -
-                      parseFloat(item?.item?.discount || 0)) *
-                        parseFloat(item?.quantity)
-                    } `}
+                    primary={`${item?.item?.name} - Quantity: ${item?.quantity
+                      } - Price: ${item?.item?.price} - Total: ${(parseFloat(item?.item?.price) -
+                        parseFloat(item?.item?.discount || 0)) *
+                      parseFloat(item?.quantity)
+                      } `}
                   />
                 </ListItem>
               ))}

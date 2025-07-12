@@ -183,7 +183,7 @@ import { useNavigate } from "react-router-dom";
 import { signInWithGooglePopup } from "../../utils/firebase.utils"
 
 // import { useAlert } from 'react-alert'
-const SignUp = ({ onClose,handleLoginClick }) => {
+const SignUp = ({ onClose, handleLoginClick }) => {
   // const alert = useAlert()
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -196,15 +196,15 @@ const SignUp = ({ onClose,handleLoginClick }) => {
   const [timer, setTimer] = useState(120); // Timer starts at 2 minutes (120 seconds)
   const [resendAllowed, setResendAllowed] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate =useNavigate()
+  const navigate = useNavigate()
   useEffect(() => {
     let countdownTimer;
-if (showOtpInput && timer > 0) {
+    if (showOtpInput && timer > 0) {
       countdownTimer = setInterval(() => {
         setTimer((prevTimer) => prevTimer - 1);
       }, 1000);
     }
-return () => clearInterval(countdownTimer);
+    return () => clearInterval(countdownTimer);
   }, [showOtpInput, timer]);
 
   useEffect(() => {
@@ -222,28 +222,28 @@ return () => clearInterval(countdownTimer);
       body: JSON.stringify({
         // email: loginMethod === 'email' ? email : '',
         // phone: loginMethod === 'phone' ? phone : '',
-        mobile:phone,
-       
+        mobile: phone,
+
       })
-      
+
     });
     console.log(response);
     // Reset timer and resend OTP logic here
-   if(response.ok){
-    // alert.show('Resend OTP Successfully !')
-    setTimer(120); // Reset timer to 2 minutes
-    setResendAllowed(false); // Disable resend option
-   }
+    if (response.ok) {
+      // alert.show('Resend OTP Successfully !')
+      setTimer(120); // Reset timer to 2 minutes
+      setResendAllowed(false); // Disable resend option
+    }
   };
 
   const logGoogleUser = async () => {
     const response = await signInWithGooglePopup();
-    console.log("mkwej",response?.user?.displayName);
+    console.log("mkwej", response?.user?.displayName);
 
     setFullName(response?.user?.displayName)
     setEmail(response?.user?.email)
-    
-}
+
+  }
 
   const validateForm = () => {
     let isValid = true;
@@ -303,16 +303,16 @@ return () => clearInterval(countdownTimer);
     return isValid;
   };
 
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-   if(validateForm()){
-    const startTimer = () => {
-      setTimer(120); // Reset timer to 2 minutes when starting
-      setResendAllowed(false); // Disable resend option initially
-    };
-    if(showOtpInput){
-  setLoading(true)
-     
+    if (validateForm()) {
+      const startTimer = () => {
+        setTimer(120); // Reset timer to 2 minutes when starting
+        setResendAllowed(false); // Disable resend option initially
+      };
+      if (showOtpInput) {
+        setLoading(true)
+
         const response = await fetch(`${BASE_URL}/users/verifyOTP`, {
           method: 'POST',
           headers: {
@@ -321,71 +321,71 @@ return () => clearInterval(countdownTimer);
           body: JSON.stringify({
             // email: loginMethod === 'email' ? email : '',
             // phone: loginMethod === 'phone' ? phone : '',
-            mobile:phone,
+            mobile: phone,
             otp
           })
-          
+
         });
         console.log(response);  // Validate OTP and complete sign-up process
-      // For demonstration, you can navigate to a different page
-       // Close the signup popup
-       if(response.ok){
-        const response2 = await fetch(`${BASE_URL}/users/register`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-           
-            fullname:fullName,
-            email,
-            password,
-            mobile:phone,
-          
-          })
-        });
-      if(response2.ok){
-        toast.success('Register Successfull')
-        navigate("/login")
-      }else{
-        toast.error("Please logout and login again with valid credentials.")
-        setLoading(false)
-      }
-        console.log(response2,"register response");
-        
-        // alert.show('Register Successfully !')
-        setLoading(false)
-        onClose()
-       }
-    }else{
-      try {
-        setLoading(true)
-        const response1 = await fetch(`${BASE_URL}/users/sendotp`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            mobile: phone
-          })
-        });
-        console.log(response1, 'jiji');
-    
-        if (response1.ok) {
-          // alert.show('OTP sent Successfully !')
+        // For demonstration, you can navigate to a different page
+        // Close the signup popup
+        if (response.ok) {
+          const response2 = await fetch(`${BASE_URL}/users/register`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+
+              fullname: fullName,
+              email,
+              password,
+              mobile: phone,
+
+            })
+          });
+          if (response2.ok) {
+            toast.success('Register Successfull')
+            navigate("/login")
+          } else {
+            toast.error("Somethin want wrong try again")
+            setLoading(false)
+          }
+          console.log(response2, "register response");
+
+          // alert.show('Register Successfully !')
           setLoading(false)
-          setShowOtpInput(true); // Display OTP input field after successfully sending OTP
-          startTimer(); // Start the countdown timer
+          onClose()
         }
-      } catch (error) {
-        console.error('Error logging in:', error);
-        // Handle network errors or other unexpected errors
+      } else {
+        try {
+          setLoading(true)
+          const response1 = await fetch(`${BASE_URL}/users/sendotp`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              mobile: phone
+            })
+          });
+          console.log(response1, 'jiji');
+
+          if (response1.ok) {
+            // alert.show('OTP sent Successfully !')
+            setLoading(false)
+            setShowOtpInput(true); // Display OTP input field after successfully sending OTP
+            startTimer(); // Start the countdown timer
+          }
+        } catch (error) {
+          console.error('Error logging in:', error);
+          // Handle network errors or other unexpected errors
+        }
       }
     }
-   }
   };
 
- 
+
 
   return (
     <div className="overlay">
@@ -460,7 +460,7 @@ return () => clearInterval(countdownTimer);
                 onChange={(e) => setOtp(e.target.value)}
               />
               {errors.otp && <span className="error">{errors.otp}</span>}
-              </div>
+            </div>
           )}
 
           {/* Countdown timer display */}
@@ -477,24 +477,24 @@ return () => clearInterval(countdownTimer);
 
           {/* Submit button */}
           <button type="submit" className="submit">
-            {!loading?(showOtpInput ? "Verify OTP and Register" : "Send OTP"):'Please Wait'}
+            {!loading ? (showOtpInput ? "Verify OTP and Register" : "Send OTP") : 'Please Wait'}
           </button>
-          <div               style={{margin : "20px 0 8px 0",fontSize : "15px"}}
-              >
-                Do you already have account? 
-              </div>
-              <button  
-              style={{marginTop : 0}}
-              
-              onClick={() => {
-                onClose()
-                handleLoginClick()
-                // setShowSignup(true)
-              }} className="submit">{"Login"}</button>
+          <div style={{ margin: "20px 0 8px 0", fontSize: "15px" }}
+          >
+            Do you already have account?
+          </div>
+          <button
+            style={{ marginTop: 0 }}
 
-          <div class="social"  style={{cursor:"pointer"}} onClick={logGoogleUser}>
-          <div class="go"><i class="fab fa-google"></i>  Google</div>
-        </div>
+            onClick={() => {
+              onClose()
+              handleLoginClick()
+              // setShowSignup(true)
+            }} className="submit">{"Login"}</button>
+
+          <div class="social" style={{ cursor: "pointer" }} onClick={logGoogleUser}>
+            <div class="go"><i class="fab fa-google"></i>  Google</div>
+          </div>
 
 
           {/* Existing code for resend message */}

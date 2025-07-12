@@ -148,7 +148,20 @@ export default function AllReports() {
               size: 150,
               id: 'patientName', // Added id
                 },
-            
+                {
+                  // header: 'View Details',
+                  header: "View Report",
+                  size: 150,
+                  id: 'viewDetails', // Added id
+                  Cell: ({ cell }) => (
+                    <Button onClick={() => handleGeneratePrescription(cell.row.original?.appointmentId)}
+                      style={{
+                        background: "#6ED6F4",
+                        boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
+                        color: "black"
+                      }}>View Report</Button>
+                  ),
+                },
             {
               accessorKey: 'appointmentData.appointmentType',
               header: 'Appointment Type',
@@ -190,19 +203,7 @@ export default function AllReports() {
             //   size: 150,
             //   id: 'email', // Added id
             // },
-            {
-              // header: 'View Details',
-              header: "View Report",
-              size: 150,
-              id: 'viewDetails', // Added id
-              Cell: ({ cell }) => (
-                <Button onClick={() => handleGeneratePrescription(cell.row.original?.appointmentId)} 
-                style={{    
-                  background: "#6ED6F4",
-                  boxShadow:"0 2px 5px rgba(0, 0, 0, 0.2)",
-                  color: "black"}}>View Report</Button> 
-              ),
-            },
+           
             {
               header: "Session Date",
               size: 150,

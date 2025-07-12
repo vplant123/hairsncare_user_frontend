@@ -46,19 +46,19 @@
 //     const uploadImageAndSaveProduct = async () => {
 //       const formData = new FormData();
 //       formData.append('image', editData.image);
-  
+
 //       try {
 //         console.log('Uploading image:', editData.image);
 //         const imageResponse = await fetch(`${BASE_URL}/hair-tests/upload-image`, {
 //           method: 'POST',
 //           body: formData
 //         });
-  
+
 //         if (!imageResponse.ok) {
 //           toast.error("Error uploading image.");
 //           throw new Error('Network response was not ok');
 //         }
-  
+
 //         const imageData = await imageResponse.json();
 //         console.log('Image uploaded successfully:', imageData.imageUrl);
 //         return imageData.imageUrl;
@@ -68,7 +68,7 @@
 //         throw error;
 //       }
 //     };
-  
+
 //     const updateProduct = async (imageUrl = null) => {
 //       const data = {
 //         id: products[index]?._id,
@@ -79,7 +79,7 @@
 //         categoryName: editData.category,
 //         kit: editData.category === 'kit' ? editData.kitItems.map((item) => item.productName) : []
 //       };
-  
+
 //       try {
 //         const response = await fetch(`${BASE_URL}/admin/update-product`, {
 //           method: 'PUT',
@@ -89,7 +89,7 @@
 //           },
 //           body: JSON.stringify(data),
 //         });
-  
+
 //         if (response.ok) {
 //           const result = await response.json();
 //           toast.success("Product updated successfully");
@@ -106,7 +106,7 @@
 //         console.error('Error:', error);
 //       }
 //     };
-  
+
 //     try {
 //       if (editData.image) {
 //         console.log('Image selected:', editData.image);
@@ -120,7 +120,7 @@
 //       console.error('Error:', error);
 //     }
 //   };
-  
+
 
 //   const handleDelete = async (index) => {
 //     const productId = products[index]?._id; // Added optional chaining
@@ -133,7 +133,7 @@
 //           'Content-Type': 'application/json'
 //         },
 //         body: JSON.stringify({id:productId}),
-     
+
 //       });
 
 //       if (response.ok) {
@@ -302,13 +302,13 @@ function EditDeleteProduct() {
   let storedUserData = JSON.parse(localStorage.getItem("User343"));
 
   const [ingredient, setIngredient] = useState([{
-    title : "",desc : ""
+    title: "", desc: ""
   }]);
   const [faq, setFaq] = useState([{
-    title : "",desc : ""
+    title: "", desc: ""
   }])
   const [benefits, setBenefits] = useState([{
-    title : "",desc : ""
+    title: "", desc: ""
   }]);
   const [highlights, setHighlights] = useState('');
   const [benefitsMain, setBenefitsMain] = useState('');
@@ -321,7 +321,7 @@ function EditDeleteProduct() {
 
   useEffect(() => {
 
-  },[])
+  }, [])
   const [editData, setEditData] = useState({
     name: '',
     price: '',
@@ -333,10 +333,10 @@ function EditDeleteProduct() {
     src: '',
     category: 'single-product',
     kitItems: [{ isManual: false, productName: '' }],
-    productDisplay : ''
+    productDisplay: ''
   });
 
-  console.log("jeijro",editData)
+  console.log("jeijro", editData)
 
   useEffect(() => {
     fetch(`${BASE_URL}/admin/product`)
@@ -348,9 +348,9 @@ function EditDeleteProduct() {
   const [cur, setCur] = useState(0);
 
   let pageCount =
-  products?.length % 10 === 0
-    ? products?.length / 10
-    : Math.floor(products?.length / 10) + 1;
+    products?.length % 10 === 0
+      ? products?.length / 10
+      : Math.floor(products?.length / 10) + 1;
 
 
 
@@ -376,7 +376,7 @@ function EditDeleteProduct() {
         // src: product.src,  // Add src to editData
         category: product.kit.length > 0 ? 'kit' : 'single-product',
         kitItems: product.kit.length > 0 ? product.kit.map(item => ({ isManual: true, productName: item })) : [{ isManual: false, productName: '' }],
-        productDisplay : product?.productDisplay
+        productDisplay: product?.productDisplay
       });
       setIngredient(product?.ingredient)
       setIngredientMain(product?.ingredientMain)
@@ -388,38 +388,38 @@ function EditDeleteProduct() {
     }
   };
 
-  const handleSetIngredientChange = (value,i,type) => {
+  const handleSetIngredientChange = (value, i, type) => {
     let input = ingredient;
     input[i][type] = value;
-    console.log("sjdijer",input)
+    console.log("sjdijer", input)
     setIngredient(input);
-  };  
+  };
   const addSetIngredientChange = () => {
-    console.log("jijoeijror",[...ingredient,{title : "",desc : ""}])
-    setIngredient([...ingredient,{title : "",desc : ""}]);
-  };  
+    console.log("jijoeijror", [...ingredient, { title: "", desc: "" }])
+    setIngredient([...ingredient, { title: "", desc: "" }]);
+  };
   const removeSetIngredientChange = (ind) => {
     let input = ingredient;
-    let new1 = input?.filter((e,i) => i != ind);
+    let new1 = input?.filter((e, i) => i != ind);
     setIngredient(new1);
-  };  
+  };
 
 
 
-  const handleSetBenefitsChange = (value,i,type) => {
+  const handleSetBenefitsChange = (value, i, type) => {
     let input = benefits;
     input[i][type] = value;
-    console.log("sjdijer",input)
+    console.log("sjdijer", input)
     setBenefits(input);
-  };  
+  };
   const addSetBenefitsChange = () => {
-    setBenefits([...benefits,{title : "",desc : ""}]);
-  };  
+    setBenefits([...benefits, { title: "", desc: "" }]);
+  };
   const removeSetBenefitsChange = (ind) => {
     let input = benefits;
-    let new1 = input?.filter((e,i) => i != ind);
+    let new1 = input?.filter((e, i) => i != ind);
     setBenefits(new1);
-  };  
+  };
 
   const handleSetHighlightsChange = (value) => {
     setHighlights(value);
@@ -438,14 +438,14 @@ function EditDeleteProduct() {
           const element = images[index];
           const formData = new FormData();
           formData.append('image', element)
-          
+
           const imageResponse = await fetch(`${BASE_URL}/hair-tests/upload-image`, {
             method: 'POST',
             body: formData
           });
-    
+
           if (!imageResponse.ok) {
-            toast.error("Please logout and login again with valid credentials.");
+            toast.error("Somethin want wrong try again");
             throw new Error('Network response was not ok');
           }
           const imageData = await imageResponse.json();
@@ -454,7 +454,7 @@ function EditDeleteProduct() {
         return imageArr;
 
       } catch (error) {
-        toast.error("Please logout and login again with valid credentials.");
+        toast.error("Somethin want wrong try again");
         console.error('Error:', error);
         return [];
         throw error;
@@ -478,9 +478,9 @@ function EditDeleteProduct() {
         highlights,
         benefitsMain,
         ingredientMain,
-        productDisplay : editData?.productDisplay
+        productDisplay: editData?.productDisplay
       };
-console.log(data,"edited")
+      console.log(data, "edited")
       try {
         const response = await fetch(`${BASE_URL}/admin/update-product`, {
           method: 'PUT',
@@ -497,14 +497,14 @@ console.log(data,"edited")
           setEditMode(null);
           const updatedProducts = [...products];
           updatedProducts[index] = result?.data;
-          console.log("korkto",updatedProducts,result)
+          console.log("korkto", updatedProducts, result)
           setProducts(updatedProducts);
         } else {
           toast.error(`Failed to update product: ${response.statusText}`);
           console.error('Failed to update product:', response.statusText);
         }
       } catch (error) {
-        toast.error("Please logout and login again with valid credentials.");
+        toast.error("Somethin want wrong try again");
         console.error('Error:', error);
       }
     };
@@ -545,7 +545,7 @@ console.log(data,"edited")
         console.error('Failed to delete product:', response.statusText);
       }
     } catch (error) {
-      toast.error("Please logout and login again with valid credentials.");
+      toast.error("Somethin want wrong try again");
       console.error('Error:', error);
     }
   };
@@ -565,15 +565,15 @@ console.log(data,"edited")
     // setImages([...images,e.target.files]);
 
     const files = Array.from(e.target.files);
-    console.log("kojoewjojfe",[...images,files[0]])
+    console.log("kojoewjojfe", [...images, files[0]])
     // console.log("kojoewjojfe",files)
-    setImages([...images,files[0]]);
+    setImages([...images, files[0]]);
   };
   const RemoveOriginalImg = (index) => {
     setIsImage(true)
 
-    let newArr = imagesrc?.filter((it,indx) => indx != index);
-    setImagesSrc(newArr||[]);
+    let newArr = imagesrc?.filter((it, indx) => indx != index);
+    setImagesSrc(newArr || []);
 
   };
 
@@ -594,7 +594,7 @@ console.log(data,"edited")
     <AdminNavbar>
       <h2>Edit/Delete Products</h2>
       <div className="edit-delete-product-container">
-        {products.length > 0 && products?.slice(cur*10,(cur+1)*10)?.map((product, index) => (
+        {products.length > 0 && products?.slice(cur * 10, (cur + 1) * 10)?.map((product, index) => (
           <div className="product-item" key={index}>
             <img src={editMode === index ? (editData.image ? URL.createObjectURL(editData.image) : product?.src) : product?.src?.[0]} alt={product?.name} />
             {editMode === index ? (
@@ -624,54 +624,81 @@ console.log(data,"edited")
                   onChange={handleLongDescriptionChange}
                 />
                 <div>
-                <div style={{ display: "flex" }}>
-              <label>Ingredient:</label>
-              <div
-                className="inputBoxCust3"
-                style={{
-                  cursor: "pointer",
-                  textAlign: "center",
-                  margin: "0 0 0 10px",
-                }}
-                onClick={addSetIngredientChange}
-              >
-                +
-              </div>
-            </div>
-            <ReactQuill
-              value={ingredientMain}
-              onChange={(value) => {
-                setIngredientMain(value);
-              }}
-              required
-            />
-            {ingredient?.map((e, i) => {
-              return (
-                <>
                   <div style={{ display: "flex" }}>
-                    <input
-                      type="text"
-                      defaultValue={e?.title}
-                      onChange={(event) => {
-                        console.log("keokrowek", event?.target.value, i);
-                        handleSetIngredientChange(
-                          event?.target.value,
-                          i,
-                          "title"
-                        );
-                      }}
-                      // required
-                      style={{ margin: "10px 0 0 0", width: "90%" }}
-                    />
+                    <label>Ingredient:</label>
                     <div
+                      className="inputBoxCust3"
                       style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        width: "10%",
+                        cursor: "pointer",
+                        textAlign: "center",
+                        margin: "0 0 0 10px",
                       }}
+                      onClick={addSetIngredientChange}
                     >
-                      {" "}
+                      +
+                    </div>
+                  </div>
+                  <ReactQuill
+                    value={ingredientMain}
+                    onChange={(value) => {
+                      setIngredientMain(value);
+                    }}
+                    required
+                  />
+                  {ingredient?.map((e, i) => {
+                    return (
+                      <>
+                        <div style={{ display: "flex" }}>
+                          <input
+                            type="text"
+                            defaultValue={e?.title}
+                            onChange={(event) => {
+                              console.log("keokrowek", event?.target.value, i);
+                              handleSetIngredientChange(
+                                event?.target.value,
+                                i,
+                                "title"
+                              );
+                            }}
+                            // required
+                            style={{ margin: "10px 0 0 0", width: "90%" }}
+                          />
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              width: "10%",
+                            }}
+                          >
+                            {" "}
+                            <div
+                              className="inputBoxCust3"
+                              style={{
+                                cursor: "pointer",
+                                textAlign: "center",
+                                margin: "0 0 0 10px",
+                              }}
+                              onClick={() => removeSetIngredientChange(i)}
+                            >
+                              -
+                            </div>
+                          </div>
+                        </div>
+
+                        <ReactQuill
+                          value={e?.desc}
+                          onChange={(value) =>
+                            handleSetIngredientChange(value, i, "desc")
+                          }
+                          required
+                        />
+                      </>
+                    );
+                  })}
+                  <div>
+                    <div style={{ display: "flex" }}>
+                      <label>Benefits:</label>
                       <div
                         className="inputBoxCust3"
                         style={{
@@ -679,103 +706,76 @@ console.log(data,"edited")
                           textAlign: "center",
                           margin: "0 0 0 10px",
                         }}
-                        onClick={() => removeSetIngredientChange(i)}
+                        onClick={addSetBenefitsChange}
                       >
-                        -
+                        +
                       </div>
                     </div>
-                  </div>
-
-                  <ReactQuill
-                    value={e?.desc}
-                    onChange={(value) =>
-                      handleSetIngredientChange(value, i, "desc")
-                    }
-                    required
-                  />
-                </>
-              );
-            })}
-            <div>
-            <div style={{ display: "flex" }}>
-              <label>Benefits:</label>
-              <div
-                className="inputBoxCust3"
-                style={{
-                  cursor: "pointer",
-                  textAlign: "center",
-                  margin: "0 0 0 10px",
-                }}
-                onClick={addSetBenefitsChange}
-              >
-                +
-              </div>
-            </div>
-            <ReactQuill
-              value={benefitsMain}
-              onChange={(value) => {
-                setBenefitsMain(value);
-              }}
-              required
-            />
-            {benefits?.map((e, i) => {
-              return (
-                <>
-                  <div style={{ display: "flex" }}>
-                    <input
-                      type="text"
-                      defaultValue={e?.title}
-                      onChange={(event) => {
-                        console.log("keokrowek", event?.target.value, i);
-                        handleSetBenefitsChange(
-                          event?.target.value,
-                          i,
-                          "title"
-                        );
+                    <ReactQuill
+                      value={benefitsMain}
+                      onChange={(value) => {
+                        setBenefitsMain(value);
                       }}
-                      // required
-                      style={{ margin: "10px 0 0 0", width: "90%" }}
+                      required
                     />
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        width: "10%",
-                      }}
-                    >
-                      {" "}
-                      <div
-                        className="inputBoxCust3"
-                        style={{
-                          cursor: "pointer",
-                          textAlign: "center",
-                          margin: "0 0 0 10px",
-                        }}
-                        onClick={() => removeSetBenefitsChange(i)}
-                      >
-                        -
-                      </div>
-                    </div>
-                  </div>
+                    {benefits?.map((e, i) => {
+                      return (
+                        <>
+                          <div style={{ display: "flex" }}>
+                            <input
+                              type="text"
+                              defaultValue={e?.title}
+                              onChange={(event) => {
+                                console.log("keokrowek", event?.target.value, i);
+                                handleSetBenefitsChange(
+                                  event?.target.value,
+                                  i,
+                                  "title"
+                                );
+                              }}
+                              // required
+                              style={{ margin: "10px 0 0 0", width: "90%" }}
+                            />
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                width: "10%",
+                              }}
+                            >
+                              {" "}
+                              <div
+                                className="inputBoxCust3"
+                                style={{
+                                  cursor: "pointer",
+                                  textAlign: "center",
+                                  margin: "0 0 0 10px",
+                                }}
+                                onClick={() => removeSetBenefitsChange(i)}
+                              >
+                                -
+                              </div>
+                            </div>
+                          </div>
 
+                          <ReactQuill
+                            value={e?.desc}
+                            onChange={(value) =>
+                              handleSetBenefitsChange(value, i, "desc")
+                            }
+                            required
+                          />
+                        </>
+                      );
+                    })}
+                  </div>
+                  <label>Highlights:</label>
                   <ReactQuill
-                    value={e?.desc}
-                    onChange={(value) =>
-                      handleSetBenefitsChange(value, i, "desc")
-                    }
+                    value={highlights}
+                    onChange={handleSetHighlightsChange}
                     required
                   />
-                </>
-              );
-            })}
-            </div>
-            <label>Highlights:</label>
-            <ReactQuill
-              value={highlights}
-              onChange={handleSetHighlightsChange}
-              required
-            />
                 </div>
                 <input
                   type="number"
@@ -791,35 +791,37 @@ console.log(data,"edited")
                   onChange={handleChange}
                   placeholder="Stock"
                 />
-            <label>Products display on product section:</label>
-            <input
+                <label>Products display on product section:</label>
+                <input
                   type="checkbox"
                   name="productDisplay"
                   defaultChecked={editData.productDisplay || false}
-                  onChange={(e) => handleChange({target : {
-                    name : "productDisplay",
-                    value : e?.target?.checked
-                  }})}
+                  onChange={(e) => handleChange({
+                    target: {
+                      name: "productDisplay",
+                      value: e?.target?.checked
+                    }
+                  })}
                   placeholder="Stock"
                 />
-            <label>Upload Images:</label>
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={handleImageChange}
-              required
-            />
+                <label>Upload Images:</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleImageChange}
+                  required
+                />
 
-            {imagesrc?.map((item,index) => {
-              return(
-                <div className='d-flex flex-column'>
-                  <img src = {item}/>
-                  <button type = "button" onClick={() => RemoveOriginalImg(index)}> Remove</button>
-                </div>
-                
-              )
-            }) }
+                {imagesrc?.map((item, index) => {
+                  return (
+                    <div className='d-flex flex-column'>
+                      <img src={item} />
+                      <button type="button" onClick={() => RemoveOriginalImg(index)}> Remove</button>
+                    </div>
+
+                  )
+                })}
                 {editData.category === 'kit' && editData.kitItems.map((item, index) => (
                   <div key={index} className="kit-item">
                     {!item.isManual ? (
@@ -877,7 +879,7 @@ console.log(data,"edited")
               <div className="view-mode">
                 <h3>{product?.name}</h3>
                 <p>Price: ₹{product?.price}</p>
-              
+
                 <p>Category: {product?.kit.length > 0 ? 'Kit' : 'Single Product'}</p>
                 {product?.kit.length > 0 && (
                   <ul>
@@ -895,31 +897,33 @@ console.log(data,"edited")
         ))}
       </div>
 
-      <div className="reactPagination" style={{display: "flex",
-    justifyContent: "end"}}>
-          <ReactPaginate
-            breakLabel="..."
-            nextLabel=" >"
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={10}
-            pageCount={pageCount}
-            // forcePage={selectedPage} 
-            previousLabel="<"
-            renderOnZeroPageCount={null}
-            breakClassName={"page-item"}
-            breakLinkClassName={"page-link"}
-            containerClassName={"pagination"}
-            pageClassName={"page-item"}
-            pageLinkClassName={"page-link"}
-            previousClassName={"page-item"}
-            previousLinkClassName={"page-link"}
-            nextClassName={"page-item"}
-            nextLinkClassName={"page-link"}
-            activeClassName={"active"}
-          />
-        </div>
-        <ToastContainer position="bottom-right"/>
-       </AdminNavbar>
+      <div className="reactPagination" style={{
+        display: "flex",
+        justifyContent: "end"
+      }}>
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel=" >"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={10}
+          pageCount={pageCount}
+          // forcePage={selectedPage} 
+          previousLabel="<"
+          renderOnZeroPageCount={null}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          containerClassName={"pagination"}
+          pageClassName={"page-item"}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          activeClassName={"active"}
+        />
+      </div>
+      <ToastContainer position="bottom-right" />
+    </AdminNavbar>
   );
 }
 

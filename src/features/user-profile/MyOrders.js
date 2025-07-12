@@ -190,7 +190,7 @@ export default function MyOrders(props) {
                       {/* <li key={order.id} className="order"> */}
                       <div className="d-flex" style={{ justifyContent: "space-between" }}>
                         <div className="d-flex flex-column" style={{ wordBreak: "break-word" }}>
-                          <p> <strong>Total: </strong> ₹ {order?.amount}</p>
+                          <p> <strong>Total: </strong> ₹ {order?.totalAmount}</p>
                           <p> <strong>Status: </strong>{order?.status}</p>
                           <p> <strong>Payment Mode: </strong>{order?.mode == "cash" ? "Cash on delivery" : "Paid Online"}</p>
                           <p> <strong>Address: </strong>{order?.addressId?.fullAdress + " - " + order?.addressId?.city + " - " + order?.addressId?.state + " - " + order?.addressId?.pin}</p>

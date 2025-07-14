@@ -1378,7 +1378,7 @@ function ProductDetail(props) {
                 <div className="buyNow-product-name">
                   ₹{" "}
                   {(parseFloat(product?.price || 0) -
-                    parseFloat(product?.discount || 0))?.toFixed(0)}
+                    (parseFloat(product?.price || 0) * parseFloat(product?.discount || 0) / 100))?.toFixed(0)}
                 </div>
 
                 <div className="cout-cont">

@@ -160,8 +160,10 @@ function App() {
       route.exact ? route.path === window.location.pathname : window.location.pathname.startsWith(route.path)
     );
     
+    // Update document title
     document.title = currentRoute?.title || title || "hairsncares";
 
+    // Update meta description
     const metaDescription = document.querySelector("meta[name='description']");
     if (metaDescription) {
       metaDescription.setAttribute("content", currentRoute?.desc || desc || y);
@@ -172,6 +174,7 @@ function App() {
       document.head.appendChild(meta);
     }
 
+    // Update meta keywords
     const metaKeywords = document.querySelector("meta[name='keywords']");
     if (metaKeywords) {
       metaKeywords.setAttribute("content", currentRoute?.keywords || z);
@@ -181,6 +184,41 @@ function App() {
       meta.content = currentRoute?.keywords || z;
       document.head.appendChild(meta);
     }
+
+    // Update Open Graph meta tags
+    const updateMetaTag = (property, content) => {
+      let meta = document.querySelector(`meta[property="${property}"]`);
+      if (meta) {
+        meta.setAttribute("content", content);
+      } else {
+        meta = document.createElement("meta");
+        meta.setAttribute("property", property);
+        meta.setAttribute("content", content);
+        document.head.appendChild(meta);
+      }
+    };
+
+    // Update Twitter Card meta tags
+    const updateTwitterTag = (name, content) => {
+      let meta = document.querySelector(`meta[name="${name}"]`);
+      if (meta) {
+        meta.setAttribute("content", content);
+      } else {
+        meta = document.createElement("meta");
+        meta.setAttribute("name", name);
+        meta.setAttribute("content", content);
+        document.head.appendChild(meta);
+      }
+    };
+
+    // Update Open Graph tags
+    updateMetaTag("og:title", currentRoute?.title || title || "HairsnCares");
+    updateMetaTag("og:description", currentRoute?.desc || desc || y);
+    updateMetaTag("og:url", window.location.href);
+
+    // Update Twitter Card tags
+    updateTwitterTag("twitter:title", currentRoute?.title || title || "HairsnCares");
+    updateTwitterTag("twitter:description", currentRoute?.desc || desc || y);
     
   }, [title,desc]);
   // Set document title based on the route

@@ -28,6 +28,8 @@ import Analysis from '../features/doctor-dashboard/Analysis'
 import { useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import DoctorHomepage from '../features/DoctorHomePage'
+import { generateOrganizationSchema } from '../utils/seoUtils'
+
 function HomePage(props) {
 
   let {cart,
@@ -65,13 +67,17 @@ function HomePage(props) {
     }
   }, []);
 
-  
+  // Generate organization schema
+  const organizationSchema = generateOrganizationSchema();
 
   return (
 
     <Navbar>
-           <Helmet>
+      <Helmet>
         <link rel="canonical" href="https://hairsncares.com" />
+        <script type="application/ld+json">
+          {JSON.stringify(organizationSchema)}
+        </script>
       </Helmet>
       {content ? <>
         <Hero />

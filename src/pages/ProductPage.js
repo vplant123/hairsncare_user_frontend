@@ -7,6 +7,7 @@ import Footer from '../features/footer/Footer'
 import { ToastContainer } from 'react-toastify'
 import MiniCart from './MiniCart'
 import { Helmet } from 'react-helmet'
+import Breadcrumb from '../components/Breadcrumb'
 
 function ProductPage(props) {
 

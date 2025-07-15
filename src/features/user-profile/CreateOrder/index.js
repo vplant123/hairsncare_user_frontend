@@ -425,7 +425,50 @@ export default function CreateOrder(props) {
   const [couponData, setCouponData] = useState("");
   const [discount, setDiscount] = useState("");
 
-  const applyCoupon = async () => {
+  // Update applyCoupon to handle minOrderAmount, fixed and percent discounts
+  const applyCoupon = (subtotal, coupon) => {
+    let finalTotal = subtotal;
+    let discountValue = 0;
+    let discountPercent = 0;
+    let message = "No discount applied.";
+    let applied = false;
+
+    if (!coupon) {
+      return { applied: false, message: "No coupon data.", finalTotal: subtotal, discountValue: 0, discountPercent: 0 };
+    }
+
+    // Check minOrderAmount
+    if (subtotal < (coupon.minOrderAmount || 0)) {
+      message = `Minimum order amount for this coupon is ₹${coupon.minOrderAmount}`;
+      return { applied: false, message, finalTotal: subtotal, discountValue: 0, discountPercent: 0 };
+    }
+
+    if (coupon.discountType === "percent" || coupon.discountType === "percent") {
+      discountPercent = coupon.percent;
+      discountValue = (subtotal * discountPercent) / 100;
+      finalTotal = subtotal - discountValue;
+      message = `${discountPercent} discount applied.`;
+      applied = true;
+    } else if (coupon.discountType === "fixed") {
+      discountValue = coupon.fixedAmount || 0;
+      finalTotal = subtotal - discountValue;
+      message = `₹${discountValue} discount applied.`;
+      applied = true;
+    } else if (coupon.discountType === "free_delivery") {
+      // No discount, but free delivery
+      message = "Free delivery applied.";
+      applied = true;
+    }
+
+    // Add ₹200 delivery charge if total after coupon is less than ₹2000
+    if (finalTotal < 2000) {
+      finalTotal = finalTotal + 200;
+    }
+
+    return { applied, message, finalTotal, discountValue, discountPercent };
+  };
+
+  const applyCouponHandler = async () => {
     fetch(`${BASE_URL}/users/applyCoupon`, {
       method: "POST",
       headers: {
@@ -436,20 +479,30 @@ export default function CreateOrder(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("sjkorjf", data);
         if (data?.statusCode == 200) {
-          setDiscount(data?.data?.percent);
-          getTotalAmount(data?.data?.percent);
-          setCouponData(data?.data);
-          toast.success("coupon applied successfully");
+          // data.data is the coupon object
+          const subtotal = parseFloat(getSubTotalAmount());
+          const couponResult = applyCoupon(subtotal, data.data);
+
+          if (!couponResult.applied) {
+            toast.error(couponResult.message);
+            setDiscount(0);
+            setCouponData("");
+            setTotal(subtotal < 2000 ? subtotal + 200 : subtotal);
+            return;
+          }
+
+          setDiscount(couponResult.discountValue || couponResult.discountPercent);
+          setTotal(couponResult.finalTotal); // if you track this
+          setCouponData(data.data);
+          toast.success(couponResult.message);
         } else {
           toast.error(data?.message || "error");
         }
-        // setAddresses(addresses.filter(addr => addr._id !== id));
       })
       .catch((error) => {
-        toast.error("Somethin want wrong try again");
-        console.error("Error deleting address:", error);
+        toast.error("Something went wrong, try again");
+        console.error("Error applying coupon:", error);
       });
   };
   return (
@@ -481,7 +534,7 @@ export default function CreateOrder(props) {
                   onClick={() => {
                     if (code == couponData?.code) {
                       toast.error("Coupon already applied");
-                    } else applyCoupon();
+                    } else applyCouponHandler();
                   }}
                 >
                   Apply Coupon
@@ -605,28 +658,37 @@ export default function CreateOrder(props) {
                         <div>SUBTOTAL</div>
                         <div>₹ {subtotal?.toFixed(0)}</div>
                       </div>
-                      {discount ? (
+                      {discount && couponData ? (
                         <div
                           className="total-section"
-                          style={{ color: "#28a745" }}
+                          style={{ color: "#28a745", flexDirection: "column", alignItems: "flex-end", textAlign: "right" }}
                         >
-                          <div>DISCOUNT</div>
-                          <div>- {discount} %</div>
+                          <div style={{ fontWeight: 500, color: "#333", fontSize: "0.95rem" }}>
+                            Coupon Applied: <span style={{ color: "#e31e24" }}>{couponData.code}</span>
+                          </div>
+                          <div>
+                            {couponData.discountType === "fixed"
+                              ? `- ₹${couponData.fixedAmount || couponData.percent || 0}`
+                              : couponData.discountType === "percent" || couponData.discountType === "percentage"
+                              ? `- ${couponData.percent}%`
+                              : null}
+                          </div>
                         </div>
                       ) : null}
 
                       <div className="total-section">
-
-                        <div>Delivery : </div>
+                        <div>Delivery :</div>
                         <div
                           style={{
                             color:
-                              getAmountAfterDiscount(discount) < 2000
+                              (couponData && applyCoupon(subtotal, couponData).finalTotal - 200 < 2000) ||
+                              (!couponData && subtotal < 2000)
                                 ? "#e31e24"
                                 : "#28a745",
                           }}
                         >
-                          {getAmountAfterDiscount(discount) < 2000
+                          {(couponData && applyCoupon(subtotal, couponData).finalTotal - 200 < 2000) ||
+                          (!couponData && subtotal < 2000)
                             ? "₹ 200"
                             : "Free Delivery"}
                         </div>

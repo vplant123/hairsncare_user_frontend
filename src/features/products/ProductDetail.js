@@ -57,6 +57,9 @@ function ProductDetail(props) {
 
   const content = useSelector((state) => state.content.customerVideos);
   const content1 = useSelector((state) => state.content.config);
+  
+  console.log("Content API Data:", content);
+  console.log("Content Config Data:", content1);
 
   const [isVisible, setIsVisible] = useState(false);
   const componentRef = useRef(null);
@@ -287,9 +290,23 @@ function ProductDetail(props) {
   }
   const [yurl, setYurl] = useState('');
   const [showPopup, setShowPopup] = useState(false);
-  const handlePlay = (ud) => {
-    console.log("smrfj", ud)
-    setYurl(ud);
+  
+  // Function to extract YouTube video ID and get thumbnail
+  const getYouTubeThumbnail = (videoUrl) => {
+    if (!videoUrl) return null;
+    
+    // Extract video ID from various YouTube URL formats
+    const videoId = videoUrl.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+    
+    if (videoId && videoId[1]) {
+      return `https://img.youtube.com/vi/${videoId[1]}/maxresdefault.jpg`;
+    }
+    return null;
+  };
+  
+  const handlePlay = (videoUrl) => {
+    console.log("Playing video:", videoUrl);
+    setYurl(videoUrl);
     setShowPopup(true);
   }
 
@@ -1202,103 +1219,118 @@ function ProductDetail(props) {
       </div> */}
 
       <div className="container">
-        <div
-          class="story-slider slick-current slick-active happy-customer"
-          ref={el}
-        >
-          {content?.section1?.map((it, index) => {
-            return (
-              <>
-                {cur1 == index ? (
-                  <div class="row">
-                    <div class="col-md-6 col-12">
-                      <h2>
-                        <span>Stories by our</span> Happy Customers
-                      </h2>
-
-                      <h4>{it?.name}</h4>
-                      <p>{it?.title}</p>
-                    </div>
-                    <div
-                      class="col-md-6 col-12"
-                      style={{ position: "relative" }}
-                    >
-                      <div
-                        onClick={() => target(index)}
-                        key={index}
-                        style={{
-                          backgroundImage: `url(${it.url})`,
-                          position: "relative",
-                          height: "300px",
-                        }}
-                        className="coverflow-item-1 cust-video"
-                      >
-                        <div
-                          className="play-button"
-                          onClick={() => handlePlay(it?.videoUrl)}
-                        >
-                          <FaPlayCircle size={50} />
-                        </div>
-                        {showPopup && (
-                          <div style={{ position: "absolute" }}>
-                            <iframe
-                              title="YouTube Video"
-                              width="500"
-                              height="300"
-                              src={yurl}
-                              frameBorder="0"
-                              allowFullScreen
-                            ></iframe>
-                            <h2
-                              onClick={() => setShowPopup(false)}
-                              style={{
-                                position: "absolute",
-                                top: 0,
-                                right: 0,
-                                cursor: "pointer",
-                              }}
-                            >
-                              X
-                            </h2>
-                          </div>
-                        )}
-                      </div>
-                    </div>
+        <div className="story-slider happy-customer">
+          <div className="row">
+            <div className="col-md-6 col-12">
+              <h2>
+                <span>Stories by our</span> Happy Customers
+              </h2>
+              {content?.section1?.[cur1] && (
+                <>
+                  <h4>{content.section1[cur1]?.name}</h4>
+                  <p>{content.section1[cur1]?.title}</p>
+                </>
+              )}
+            </div>
+            <div className="col-md-6 col-12" style={{ position: "relative" }}>
+              {content?.section1?.[cur1] && (
+                <div
+                  className="cust-video"
+                  style={{
+                    backgroundImage: `url(${getYouTubeThumbnail(content.section1[cur1]?.videoUrl) || content.section1[cur1]?.url})`,
+                    position: "relative",
+                    height: "300px",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: "8px",
+                    cursor: "pointer"
+                  }}
+                  onClick={() => handlePlay(content.section1[cur1]?.videoUrl)}
+                >
+                  <div
+                    className="play-button"
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      color: "white",
+                      cursor: "pointer"
+                    }}
+                  >
+                    <FaPlayCircle size={50} />
                   </div>
-                ) : (
-                  <></>
-                )}
-              </>
-            );
-          })}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
-        <ul class="slick-dots" role="tablist" style={{ marginTop: "30px" }}>
-          {content?.section1
-            ?.slice(0, content?.section3?.length)
-            .map((e, ind) => {
-              return (
-                <li
-                  class={cur1 == ind ? "slick-active" : ""}
-                  aria-hidden="false"
-                  role="presentation"
-                  aria-selected={cur1 == ind}
-                  aria-controls={cur1}
-                  id={cur1}
-                  onClick={() => setCur1(ind)}
-                >
-                  <button
-                    type="button"
-                    data-role="none"
-                    role="button"
-                    tabindex="0"
-                  >
-                    {ind}
-                  </button>
-                </li>
-              );
-            })}
-        </ul>
+        {/* Video Popup */}
+        {showPopup && (
+          <div 
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0,0,0,0.8)",
+              zIndex: 1000,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+            onClick={() => setShowPopup(false)}
+          >
+            <div style={{ position: "relative" }}>
+              <iframe
+                title="YouTube Video"
+                width="560"
+                height="315"
+                src={yurl}
+                frameBorder="0"
+                allowFullScreen
+              ></iframe>
+              <button
+                onClick={() => setShowPopup(false)}
+                style={{
+                  position: "absolute",
+                  top: "-40px",
+                  right: "0",
+                  background: "white",
+                  border: "none",
+                  fontSize: "24px",
+                  cursor: "pointer",
+                  width: "30px",
+                  height: "30px",
+                  borderRadius: "50%"
+                }}
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Navigation Dots */}
+        <div style={{ display: "flex", justifyContent: "center", marginTop: "20px", gap: "10px" }}>
+          {content?.section1?.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCur1(index)}
+              style={{
+                width: "12px",
+                height: "12px",
+                borderRadius: "50%",
+                border: "none",
+                backgroundColor: cur1 === index ? "#ffa500" : "#ccc",
+                cursor: "pointer"
+              }}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
       </div>
       <div
         className="buyNow-main-div"
@@ -1376,9 +1408,14 @@ function ProductDetail(props) {
                   ₹ {parseFloat(product?.price || 0)?.toFixed(0)}
                 </div>
                 <div className="buyNow-product-name">
-                  ₹{" "}
-                  {(parseFloat(product?.price || 0) -
-                    parseFloat(product?.discount || 0))?.toFixed(0)}
+                    <h2>
+                     
+                      {(
+                        parseFloat(product?.price || 0) -
+                        (parseFloat(product?.price || 0) * (parseFloat(product?.discount || 0) / 100))
+                      )?.toFixed(0)}
+                    </h2>
+                  
                 </div>
 
                 <div className="cout-cont">
@@ -1411,9 +1448,12 @@ function ProductDetail(props) {
                   </div>
                 </div>
                 <div
-                  className="d-flex shop-btn1 btn-33"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => handleBuyNow()}
+                  className={`d-flex shop-btn1 btn-33 ${product?.stock === 0 ? 'disabled' : ''}`}
+                  style={{ 
+                    cursor: product?.stock === 0 ? "not-allowed" : "pointer",
+                    opacity: product?.stock === 0 ? 0.6 : 1
+                  }}
+                  onClick={() => product?.stock > 0 && handleBuyNow()}
                 >
                   <img
                     src="/assets/img/cart-icon.png"
@@ -1423,9 +1463,9 @@ function ProductDetail(props) {
                       margin: "5px 0 0 10px",
                     }}
                   />
-                  <div className="" style={{ margin: "8px 0 0 17px" }}>
-                    Add to cart
-                  </div>
+                    <div className="" style={{ margin: "8px 0 0 17px" }}>
+                      {product?.stock === 0 ? "Out of Stock" : "Add to cart"}
+                    </div>
                 </div>
               </div>
             </div>

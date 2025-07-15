@@ -64,9 +64,8 @@ function TermsOfService(props) {
               <div>
                 These Terms constitute a binding legal agreement between Vplant
                 Speciality Clinic (operating under the brand name
-                “Hairsncares”), located at 101, Kane Plaza, Chincholi Bunder Rd,
-                above Union Bank, near Carters Blue Hotel, Malad, Mindspace,
-                Malad West, Mumbai, Maharashtra 400064, and you, the end-user of
+                “Hairsncares”), located at First Floor, Solitaire 1, A-102, New Link Rd, Opposite Infinity Mall, Malad West, Mumbai, Maharashtra 400064
+                , and you, the end-user of
                 our Products or Services (“you”). By agreeing to these Terms,
                 you confirm that you (i) have the legal capacity and authority
                 to enter into this agreement, and (ii) are of the age of

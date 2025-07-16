@@ -32,7 +32,7 @@ export default function InvoiceView() {
 
         const jsonData = await response.json();
         setData(jsonData?.data);
-        console.log("order invoice",jsonData?.data);
+       console.log("order invoice",jsonData?.data);
         setPatientData(jsonData.data?.items);
       } catch (error) {
         toast.error("Error fetching data: " + error.message);
@@ -75,10 +75,10 @@ export default function InvoiceView() {
             <div className="font-bold text-sm py-2">SOLD BY:</div>
             <div className="font-bold text-sm py-2">VPLANT CHEMIST</div>
             <div className="max-w-xs text-xs leading-relaxed">
-              <b>Email :</b> infor@hairsncares.com<br />
+              <b>Email :</b> info@hairsncares.com<br />
               <b>Website:</b> www.hairsncares.com<br />
               <b>LICENSE No. :</b> MH-MZ6-537527<br />
-              <b>Doctor Name:</b> {data?.doctor?.name || "-"}
+              <b>Doctor Name:</b> {data?.doctor?.name || "Dr. Amit Agarkar"}
             </div>
             <div>
               <div className="font-bold text-sm py-2">Registered Address:</div>
@@ -101,9 +101,9 @@ export default function InvoiceView() {
           <div>
             <div className="font-bold text-sm py-2">TAX INVOICE</div>
             <div className="mt-1 space-y-0.5 leading-relaxed pt-7">
-              <div className="text-xs">
+              {/* <div className="text-xs">
                 <b>INVOICE No.</b> {data?.invoiceNo}
-              </div>
+              </div> */}
               <div className="text-xs">
                 <b>Order ID:</b> {data?.orderId}
               </div>
@@ -135,7 +135,7 @@ export default function InvoiceView() {
                 <th className="px-2 py-2 border font-semibold whitespace-nowrap">TAXABLE AMT.(₹)</th>
                 <th className="px-2 py-2 border font-semibold whitespace-nowrap">QTY</th>
                 <th className="px-2 py-2 border font-semibold whitespace-nowrap">GST(%)</th>
-                <th className="px-2 py-2 border font-semibold whitespace-nowrap">GST AMT.(₹)</th>
+                {/* <th className="px-2 py-2 border font-semibold whitespace-nowrap">GST AMT.(₹)</th> */}
                 <th className="px-2 py-2 border font-semibold whitespace-nowrap">FINAL AMT.(₹)</th>
               </tr>
             </thead>
@@ -159,8 +159,8 @@ export default function InvoiceView() {
                     <td className="border px-2 py-2 whitespace-nowrap">{taxableAmount.toFixed(2)}</td>
                     <td className="border px-2 py-2 whitespace-nowrap">{Number(item.quantity)}</td>
                     <td className="border px-2 py-2 whitespace-nowrap">{Number(item.gst || 0).toFixed(2)}%</td>
-                    <td className="border px-2 py-2 whitespace-nowrap">{(gstAmount * item.quantity).toFixed(2)}</td>
-                    <td className="border px-2 py-2 whitespace-nowrap">{Number(item.total).toFixed(2)}</td>
+                    {/* <td className="border px-2 py-2 whitespace-nowrap">{(gstAmount * item.quantity).toFixed(2)}</td> */}
+                    <td className="border px-2 py-2 whitespace-nowrap">{Number(taxableAmount).toFixed(2)}</td>
                   </tr>
                 );
               })}
@@ -196,7 +196,7 @@ export default function InvoiceView() {
             <div className="flex justify-between py-1">
               <span className="font-medium">After Discount Amount</span>
               <span className="font-bold">
-                ₹ {Number(data?.totalAmount).toFixed(2)}
+                ₹ {(Number(data?.total || 0) - Number(data?.couponDiscount || 0)).toFixed(2)}
               </span>
             </div>
             <div className="flex justify-between py-1">
@@ -208,10 +208,7 @@ export default function InvoiceView() {
             <div className="flex justify-between py-1 border-t border-gray-200 mt-1 pt-1">
               <span className="font-medium">Total Invoice Amount</span>
               <span className="font-bold">
-                ₹ {(
-                  Number(data?.totalAmount || 0) + 
-                  (Number(data?.totalAmount || 0) < 2000 ? 200 : 0)
-                ).toFixed(2)}
+                ₹ {Number(data?.totalAmount).toFixed(2)}
               </span>
             </div>
           </div>
@@ -219,7 +216,8 @@ export default function InvoiceView() {
 
         {/* Thank you note */}
         <div className="mt-20 text-center font-semibold text-xs md:text-sm">
-          Thank you very much for choosing us.
+          This is a computer generated invoice
+          <p>Thank you very much for choosing us.</p>
         </div>
       </div>
       <ToastContainer position="bottom-right" />

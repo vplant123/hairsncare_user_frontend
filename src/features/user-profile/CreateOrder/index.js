@@ -700,7 +700,7 @@ export default function CreateOrder(props) {
                       >
                         <div style={{ fontWeight: "600" }}>TOTAL</div>
                         <div style={{ fontWeight: "700", color: "black" }}>
-                          ₹ {total?.toFixed(0)}
+                          ₹ {total?.toFixed(2)}
                         </div>
                       </div>
                       <div className="checkout-style-regular d-flex flex-column">

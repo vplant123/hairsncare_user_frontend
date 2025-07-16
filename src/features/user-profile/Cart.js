@@ -185,7 +185,7 @@ export default function Cart(props) {
     return cartItemsNew.reduce((total, item) => {
       const discountedPrice = item?.item?.price * (1 - parseFloat(item?.item?.discount || 0) / 100);
       return total + discountedPrice * (item?.quantity || 1);
-    }, 0).toFixed(0);
+    }, 0).toFixed(2);
   };
 
   const handleAddToCart = async () => {

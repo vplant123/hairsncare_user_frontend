@@ -173,7 +173,7 @@ function MiniCart({ isOpen, onClose,cart,setCart }) {
                 const discount = parseFloat(item?.item?.discount || 0);
                 const discountedPrice = originalPrice - (originalPrice * (discount / 100));
                 const finalPrice = discountedPrice;
-                return finalPrice.toFixed(2);
+                return Math.round(finalPrice);
               })()}</div>
               </div>
             </div>

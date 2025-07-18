@@ -448,7 +448,7 @@ function ProductList(props) {
                     >
                       <div style={{ fontWeight: "600" }}>
                         ₹{" "}
-                        {(parseFloat(product.price) * (1 - parseFloat(product.discount || 0) / 100))?.toFixed(0)}
+                        {Math.round(parseFloat(product.price) * (1 - parseFloat(product.discount || 0) / 100))}
                       </div>
                       {product.discount ? (
                         <div
@@ -458,7 +458,7 @@ function ProductList(props) {
                             fontWeight: "600",
                           }}
                         >
-                          ₹{parseFloat(product.price)?.toFixed(0)}
+                          ₹{Math.round(parseFloat(product.price))}
                         </div>
                       ) : (
                         <></>

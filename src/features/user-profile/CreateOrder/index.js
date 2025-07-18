@@ -120,16 +120,16 @@ export default function CreateOrder(props) {
       },
       0
     );
-    
+
     let p = parseFloat(tot || 0) - (parseFloat(tot || 0) * (dist || 0)) / 100;
-    
+
     // Add ₹200 delivery charge if total after coupon is less than ₹2000
     if (p < 2000) {
       p = p + 200;
     }
-    
-    setTotal(p);
-    return p.toFixed(2);
+
+    setTotal(Math.round(p));
+    return Math.round(p);
   };
 
   const getSubTotalAmount = () => {
@@ -141,8 +141,8 @@ export default function CreateOrder(props) {
       },
       0
     );
-    setSubTotal(sub);
-    return sub.toFixed(2);
+    setSubTotal(Math.round(sub));
+    return Math.round(sub);
   };
 
   // Calculate amount after discount (before delivery charge)
@@ -155,9 +155,9 @@ export default function CreateOrder(props) {
       },
       0
     );
-    
+
     let p = parseFloat(tot || 0) - (parseFloat(tot || 0) * (dist || 0)) / 100;
-    return p;
+    return Math.round(p);
   };
 
 
@@ -281,18 +281,27 @@ export default function CreateOrder(props) {
                   console.log("cancelled");
                   toast.error("Payment Unsuccessful!! Try again");
                   setSetLoading(false);
+                  if (responseData && responseData.data) {
+                    deleteOrderAndPayments(responseData.data);
+                  }
                 }
                 // Reason 2 - When modal is auto closed because of time out
                 else if (reason === "timeout") {
                   console.log("timedout");
                   toast.error("Too slow, timeout.");
                   setSetLoading(false);
+                  if (responseData && responseData.data) {
+                    deleteOrderAndPayments(responseData.data);
+                  }
                 }
                 // Reason 3 - When payment gets failed.
                 else {
                   console.log("failed");
                   toast.error("failed ,try again.");
                   setSetLoading(false);
+                  if (responseData && responseData.data) {
+                    deleteOrderAndPayments(responseData.data);
+                  }
                 }
               },
             },
@@ -310,6 +319,10 @@ export default function CreateOrder(props) {
           rzp1.on("payment.failed", function (response) {
             toast.error("Payent failed due to some reasons , Try again.");
             setSetLoading(false);
+            // Call deleteOrderAndPayments with the orderId
+            if (responseData && responseData.data) {
+              deleteOrderAndPayments(responseData.data);
+            }
             throw new Error("Payment failed");
           });
 
@@ -505,6 +518,30 @@ export default function CreateOrder(props) {
         console.error("Error applying coupon:", error);
       });
   };
+
+  // After payment is finalized (inside your payment success handler)
+  const deleteOrderAndPayments = async (orderId) => {
+    try {
+      const response = await fetch(`${BASE_URL}/payment/delete-order-and-payments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: storedUserData.logedInUser.accessToken,
+        },
+        body: JSON.stringify({ orderId }), // send orderId in body
+      });
+      const data = await response.json();
+      if (response.ok) {
+        // Handle success (optional)
+        console.log("Order and payments deleted:", data);
+      } else {
+        // Handle error
+        console.error("Failed to delete order and payments:", data.message);
+      }
+    } catch (error) {
+      console.error("Error calling delete-order-and-payments:", error);
+    }
+  };
   return (
     <Navbar>
       <div className="d-flex flex-column container" ref={contentRef}>
@@ -645,9 +682,9 @@ export default function CreateOrder(props) {
                                   style={{ fontWeight: "600", color: "black" }}
                                 >
                                   ₹{" "}
-                                  {(
+                                  {Math.round(
                                     e.item?.price * (1 - parseFloat(e.item?.discount || 0) / 100)
-                                  )?.toFixed(0)}
+                                  )}
                                 </div>
                               </div>
                             </div>
@@ -656,7 +693,7 @@ export default function CreateOrder(props) {
                       </div>
                       <div className="total-section">
                         <div>SUBTOTAL</div>
-                        <div>₹ {subtotal?.toFixed(0)}</div>
+                        <div>₹ {Math.round(subtotal)}</div>
                       </div>
                       {discount && couponData ? (
                         <div
@@ -670,8 +707,8 @@ export default function CreateOrder(props) {
                             {couponData.discountType === "fixed"
                               ? `- ₹${couponData.fixedAmount || couponData.percent || 0}`
                               : couponData.discountType === "percent" || couponData.discountType === "percentage"
-                              ? `- ${couponData.percent}%`
-                              : null}
+                                ? `- ${couponData.percent}%`
+                                : null}
                           </div>
                         </div>
                       ) : null}
@@ -682,13 +719,13 @@ export default function CreateOrder(props) {
                           style={{
                             color:
                               (couponData && applyCoupon(subtotal, couponData).finalTotal - 200 < 2000) ||
-                              (!couponData && subtotal < 2000)
+                                (!couponData && subtotal < 2000)
                                 ? "#e31e24"
                                 : "#28a745",
                           }}
                         >
                           {(couponData && applyCoupon(subtotal, couponData).finalTotal - 200 < 2000) ||
-                          (!couponData && subtotal < 2000)
+                            (!couponData && subtotal < 2000)
                             ? "₹ 200"
                             : "Free Delivery"}
                         </div>
@@ -700,7 +737,7 @@ export default function CreateOrder(props) {
                       >
                         <div style={{ fontWeight: "600" }}>TOTAL</div>
                         <div style={{ fontWeight: "700", color: "black" }}>
-                          ₹ {total?.toFixed(2)}
+                          ₹ {Math.round(total)}
                         </div>
                       </div>
                       <div className="checkout-style-regular d-flex flex-column">

@@ -154,13 +154,13 @@ export default function InvoiceView() {
                       {item?.item?.expiryDate ? moment(item?.item?.expiryDate).format("DD-MM-YYYY") : ""}
                     </td>
                     <td className="border px-2 py-2 whitespace-nowrap">{item?.item?.hsn || ""}</td>
-                    <td className="border px-2 py-2 whitespace-nowrap">{Number(item.rate).toFixed(2)}</td>
-                    <td className="border px-2 py-2 whitespace-nowrap">{Number(item.discount || 0).toFixed(2)}%</td>
-                    <td className="border px-2 py-2 whitespace-nowrap">{taxableAmount.toFixed(2)}</td>
-                    <td className="border px-2 py-2 whitespace-nowrap">{Number(item.quantity)}</td>
-                    <td className="border px-2 py-2 whitespace-nowrap">{Number(item.gst || 0).toFixed(2)}%</td>
+                    <td className="border px-2 py-2 whitespace-nowrap">{Math.round(item.rate)}</td>
+                    <td className="border px-2 py-2 whitespace-nowrap">{Math.round(item.discount || 0)}%</td>
+                    <td className="border px-2 py-2 whitespace-nowrap">{Math.round(taxableAmount)}</td>
+                    <td className="border px-2 py-2 whitespace-nowrap">{Math.round(item.quantity)}</td>
+                    <td className="border px-2 py-2 whitespace-nowrap">{Math.round(item.gst || 0)}%</td>
                     {/* <td className="border px-2 py-2 whitespace-nowrap">{(gstAmount * item.quantity).toFixed(2)}</td> */}
-                    <td className="border px-2 py-2 whitespace-nowrap">{Number(taxableAmount).toFixed(2)}</td>
+                    <td className="border px-2 py-2 whitespace-nowrap">{Math.round(taxableAmount)}</td>
                   </tr>
                 );
               })}
@@ -187,28 +187,28 @@ export default function InvoiceView() {
           <div className="bg-gray-50 p-2 rounded-md w-full md:w-64 mt-2 md:mt-0 text-xs">
             <div className="flex justify-between py-1">
               <span className="font-medium">Product Total (Final Amount)</span>
-              <span className="font-bold">₹ {Number(data?.total || 0).toFixed(2)}</span>
+              <span className="font-bold">₹ {Math.round(data?.total || 0)}</span>
             </div>
             <div className="flex justify-between py-1">
               <span className="font-medium">Coupon Discount (₹)</span>
-              <span className="font-bold">₹ {Number(data?.couponDiscount || 0).toFixed(2)}</span>
+              <span className="font-bold">₹ {Math.round(data?.couponDiscount || 0)}</span>
             </div>
             <div className="flex justify-between py-1">
               <span className="font-medium">After Discount Amount</span>
               <span className="font-bold">
-                ₹ {(Number(data?.total || 0) - Number(data?.couponDiscount || 0)).toFixed(2)}
+                ₹ {Math.round(data?.total || 0) - Math.round(data?.couponDiscount || 0)}
               </span>
             </div>
             <div className="flex justify-between py-1">
               <span className="font-medium">Shipping Charges</span>
               <span className="font-bold">
-                ₹ {Number(data?.totalAmount || 0) < 2000 ? "200.00" : "0.00"}
+                ₹ {Math.round(data?.totalAmount || 0) < 2000 ? "200" : "0"}
               </span>
             </div>
             <div className="flex justify-between py-1 border-t border-gray-200 mt-1 pt-1">
               <span className="font-medium">Total Invoice Amount</span>
               <span className="font-bold">
-                ₹ {Number(data?.totalAmount).toFixed(2)}
+                      ₹ {Math.round(data?.totalAmount)}
               </span>
             </div>
           </div>

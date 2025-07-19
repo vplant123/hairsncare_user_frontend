@@ -160,7 +160,7 @@ export default function InvoiceView() {
                     <td className="border px-2 py-2 whitespace-nowrap">{Math.round(item.quantity)}</td>
                     <td className="border px-2 py-2 whitespace-nowrap">{Math.round(item.gst || 0)}%</td>
                     {/* <td className="border px-2 py-2 whitespace-nowrap">{(gstAmount * item.quantity).toFixed(2)}</td> */}
-                    <td className="border px-2 py-2 whitespace-nowrap">{Math.round(taxableAmount)}</td>
+                    <td className="border px-2 py-2 whitespace-nowrap">{Math.round(item.total)}</td>
                   </tr>
                 );
               })}
@@ -187,7 +187,7 @@ export default function InvoiceView() {
           <div className="bg-gray-50 p-2 rounded-md w-full md:w-64 mt-2 md:mt-0 text-xs">
             <div className="flex justify-between py-1">
               <span className="font-medium">Product Total (Final Amount)</span>
-              <span className="font-bold">₹ {Math.round(data?.total || 0)}</span>
+              <span className="font-bold">₹ {Math.round(data?.subtotal || 0)}</span>
             </div>
             <div className="flex justify-between py-1">
               <span className="font-medium">Coupon Discount (₹)</span>
@@ -196,7 +196,7 @@ export default function InvoiceView() {
             <div className="flex justify-between py-1">
               <span className="font-medium">After Discount Amount</span>
               <span className="font-bold">
-                ₹ {Math.round(data?.total || 0) - Math.round(data?.couponDiscount || 0)}
+                ₹ {Math.round(data?.total)}
               </span>
             </div>
             <div className="flex justify-between py-1">

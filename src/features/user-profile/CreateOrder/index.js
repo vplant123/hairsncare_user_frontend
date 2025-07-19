@@ -81,6 +81,7 @@ export default function CreateOrder(props) {
   let storedUserData = JSON.parse(localStorage.getItem("User343"));
   const dispatch = useDispatch();
   const content = useSelector((state) => state.content.config);
+  console.log("storedUserData", content);
   console.log("smkjir", content);
   useEffect(() => {
     dispatch(getCartItems(storedUserData?.logedInUser?.user?._id));
@@ -112,55 +113,61 @@ export default function CreateOrder(props) {
   };
 
   const getTotalAmount = (dist) => {
+    // Calculate total discounted price
     let tot = cartItems?.reduce(
       (total, item) => {
         // Calculate discounted price
-        const discountedPrice = item?.item?.price * (1 - parseFloat(item?.item?.discount || 0) / 100);
+        const discountedPrice = Math.round(item?.item?.price * (1 - Number(item?.item?.discount || 0) / 100));
         return total + discountedPrice * (item?.quantity || 1);
       },
       0
     );
 
-    let p = parseFloat(tot || 0) - (parseFloat(tot || 0) * (dist || 0)) / 100;
+    // Apply discount to the total after applying discounts
+    let p = Number(tot || 0) - (Number(tot || 0) * (dist || 0)) / 100;
 
     // Add ₹200 delivery charge if total after coupon is less than ₹2000
     if (p < 2000) {
-      p = p + 200;
+      p = p + 200; // Add delivery charge
     }
 
     setTotal(Math.round(p));
     return Math.round(p);
   };
 
+
   const getSubTotalAmount = () => {
     let sub = cartItems?.reduce(
       (total, item) => {
         // Calculate discounted price
-        const discountedPrice = item?.item?.price * (1 - parseFloat(item?.item?.discount || 0) / 100);
+        const discountedPrice = Math.round(item?.item?.price * (1 - Number(item?.item?.discount || 0) / 100));
         return total + discountedPrice * (item?.quantity || 1);
       },
       0
     );
     setSubTotal(Math.round(sub));
+    console.log("sub", sub);
     return Math.round(sub);
   };
 
   // Calculate amount after discount (before delivery charge)
   const getAmountAfterDiscount = (dist) => {
+    console.log("dist", dist);
     let tot = cartItems?.reduce(
       (total, item) => {
         // Calculate discounted price
-        const discountedPrice = item?.item?.price * (1 - parseFloat(item?.item?.discount || 0) / 100);
+        const discountedPrice = Math.round(item?.item?.price * (1 - Number(item?.item?.discount || 0) / 100));
         return total + discountedPrice * (item?.quantity || 1);
       },
       0
     );
 
-    let p = parseFloat(tot || 0) - (parseFloat(tot || 0) * (dist || 0)) / 100;
+    let p = Number(tot || 0) - (Number(tot || 0) * (dist || 0)) / 100;
     return Math.round(p);
   };
 
 
+  
   const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
     '& .MuiAutocomplete-option[data-focus="true"]': {
       backgroundColor: theme.palette.action.hover,
@@ -234,11 +241,11 @@ export default function CreateOrder(props) {
             window.location.reload();
           }, 100); // 2 seconds delay to ensure navigation completes
         } else {
-          console.log("jsoejoj", Math.round(total * 100));
+          console.log("jsoejoj...........", Math.round(Number(total) * 100));
           const responseData = await response.json();
           const options = {
             key: "rzp_live_mArtCmiYqSB4nm",
-            amount: Math.round(parseFloat(total) * 100),
+            amount: Math.round(Number(total) * 100),
             currency: "INR",
             name: "Hairs N Cares",
             image: "/assets/img/logo.png",
@@ -460,7 +467,7 @@ export default function CreateOrder(props) {
       discountPercent = coupon.percent;
       discountValue = (subtotal * discountPercent) / 100;
       finalTotal = subtotal - discountValue;
-      message = `${discountPercent} discount applied.`;
+      message = `${discountPercent}% discount applied.`;
       applied = true;
     } else if (coupon.discountType === "fixed") {
       discountValue = coupon.fixedAmount || 0;
@@ -473,13 +480,18 @@ export default function CreateOrder(props) {
       applied = true;
     }
 
+    // Ensure finalTotal is non-negative
+    finalTotal = Math.max(finalTotal, 0);
+
     // Add ₹200 delivery charge if total after coupon is less than ₹2000
-    if (finalTotal < 2000) {
-      finalTotal = finalTotal + 200;
+    if (finalTotal < parseInt(content?.deliveryAmt)) {
+      finalTotal = finalTotal + parseInt(content?.deliveryCharge);
+      message = `${message} + ₹${parseInt(content?.deliveryCharge)} delivery charge`;
     }
 
     return { applied, message, finalTotal, discountValue, discountPercent };
   };
+
 
   const applyCouponHandler = async () => {
     fetch(`${BASE_URL}/users/applyCoupon`, {
@@ -494,19 +506,19 @@ export default function CreateOrder(props) {
       .then((data) => {
         if (data?.statusCode == 200) {
           // data.data is the coupon object
-          const subtotal = parseFloat(getSubTotalAmount());
+          const subtotal = Number(getSubTotalAmount());
           const couponResult = applyCoupon(subtotal, data.data);
 
           if (!couponResult.applied) {
             toast.error(couponResult.message);
             setDiscount(0);
             setCouponData("");
-            setTotal(subtotal < 2000 ? subtotal + 200 : subtotal);
+            setTotal(couponResult.finalTotal);
             return;
           }
 
           setDiscount(couponResult.discountValue || couponResult.discountPercent);
-          setTotal(couponResult.finalTotal); // if you track this
+          setTotal(Math.round(couponResult.finalTotal)); // if you track this
           setCouponData(data.data);
           toast.success(couponResult.message);
         } else {
@@ -683,7 +695,7 @@ export default function CreateOrder(props) {
                                 >
                                   ₹{" "}
                                   {Math.round(
-                                    e.item?.price * (1 - parseFloat(e.item?.discount || 0) / 100)
+                                    e.item?.price * (1 - Number(e.item?.discount || 0) / 100)
                                   )}
                                 </div>
                               </div>
@@ -713,20 +725,25 @@ export default function CreateOrder(props) {
                         </div>
                       ) : null}
 
+                      {/* <div className="total-section">
+                        <div>After Coupon Discount</div>
+                        <div>₹ {Math.max(0, Math.round(getAmountAfterDiscount(discount)))}</div>
+                      </div> */}
+
                       <div className="total-section">
                         <div>Delivery :</div>
                         <div
                           style={{
                             color:
-                              (couponData && applyCoupon(subtotal, couponData).finalTotal - 200 < 2000) ||
-                                (!couponData && subtotal < 2000)
+                              (couponData && applyCoupon(subtotal, couponData).finalTotal - parseInt(content?.deliveryCharge) < parseInt(content?.deliveryAmt)) ||
+                                (!couponData && subtotal < parseInt(content?.deliveryAmt))
                                 ? "#e31e24"
                                 : "#28a745",
                           }}
                         >
                           {(couponData && applyCoupon(subtotal, couponData).finalTotal - 200 < 2000) ||
-                            (!couponData && subtotal < 2000)
-                            ? "₹ 200"
+                            (!couponData && subtotal < content?.deliveryAmt)
+                            ? `₹ ${content?.deliveryCharge}`
                             : "Free Delivery"}
                         </div>
                       </div>
@@ -737,9 +754,19 @@ export default function CreateOrder(props) {
                       >
                         <div style={{ fontWeight: "600" }}>TOTAL</div>
                         <div style={{ fontWeight: "700", color: "black" }}>
-                          ₹ {Math.round(total)}
+                          {(() => {
+                            // If no coupon is applied and subtotal is less than 2000, add delivery charge
+                            if (!couponData && subtotal < parseInt(content?.deliveryAmt)) {
+                              return Math.max(0, Math.round(subtotal + parseInt(content?.deliveryCharge)));
+                            } else {
+                              const couponResult = applyCoupon(Math.round(subtotal), couponData);
+                              const afterCouponDiscount = Math.round(couponResult.finalTotal);
+                              return Math.max(0, Math.round(afterCouponDiscount));
+                            }
+                          })()}
                         </div>
                       </div>
+
                       <div className="checkout-style-regular d-flex flex-column">
                         <div
                           className="payment-option"

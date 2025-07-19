@@ -459,6 +459,7 @@ function ProductList(props) {
                           }}
                         >
                           ₹{Math.round(parseFloat(product.price))}
+                          
                         </div>
                       ) : (
                         <></>

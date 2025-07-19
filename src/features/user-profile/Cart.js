@@ -117,7 +117,7 @@ export default function Cart(props) {
         for (let index = 0; index < p?.length; index++) {
           const element = p[index];
           let f = tmp?.findIndex((e) => e?.item?._id == element?.item?._id)
-          if (f != -1) tmp[f].quantity = parseFloat(tmp[f]?.quantity) + parseFloat(element?.quantity)
+          if (f != -1) tmp[f].quantity = Number(tmp[f]?.quantity) + Number(element?.quantity)
           else tmp.push({
             quantity: element?.quantity, item: element?.item
           })
@@ -183,7 +183,7 @@ export default function Cart(props) {
 
   const getTotalAmount = () => {
     return cartItemsNew.reduce((total, item) => {
-      const discountedPrice = item?.item?.price *  (1 - parseFloat(item?.item?.discount || 0) / 100);
+      const discountedPrice = Math.round(item?.item?.price *  (1 - Number(item?.item?.discount || 0) / 100));
       return Math.round(total + discountedPrice * (item?.quantity || 1));
     }, 0);
   };
@@ -251,7 +251,7 @@ export default function Cart(props) {
                           <h3 onClick={() => navigate('/product-detail/' + item?.item.metaSlug ?? item.item._id, { id: item?.item._id })} style={{ cursor: "pointer" }}>{item?.item?.name}</h3>
                       
                           <p>GST: {item?.item?.gst}%</p>
-                          <p>Price:₹{Math.round(item?.item?.price - (item?.item?.price * parseFloat(item?.item?.discount || 0) / 100))}</p>
+                          <p>Price:₹{Math.round(item?.item?.price - (item?.item?.price * Number(item?.item?.discount || 0) / 100))}</p>
                         </div>
                         <div className="cart-item-actions">
                           <input
@@ -289,7 +289,7 @@ export default function Cart(props) {
                   })}
                 </ul>
                 <div className="cart-summary">
-                <p>Total Amount: ₹{getTotalAmount()}</p>
+                <p>Total Amount: ₹{Math.round(getTotalAmount())}</p>
                   <button onClick={() => {
                     handleAddToCart()
                   }}>Buy</button>

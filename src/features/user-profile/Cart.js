@@ -228,7 +228,7 @@ export default function Cart(props) {
     <Navbar cart={cart}
       setCart={setCart}>
     
-        <div className="cart">
+        {/* <div className="cart">
           {
             cartItemsNew?.length == 0 ? <div className='d-flex flex-column'>
               <div style={{ fontSize: "25px", fontWeight: "600" }}>Your Cart is Empty</div>
@@ -325,7 +325,7 @@ export default function Cart(props) {
           }
 
 
-        </div>
+        </div> */}
         <ToastContainer position="bottom-right" />
       
       {/* <Footer/> */}

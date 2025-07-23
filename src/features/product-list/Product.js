@@ -408,6 +408,7 @@ function Product(props) {
 
   const paginatedProducts = useMemo(() => products?.slice((cur - 1) * slide, cur * slide), [cur, products, slide])
 
+
   return (
     <div>
       <h2

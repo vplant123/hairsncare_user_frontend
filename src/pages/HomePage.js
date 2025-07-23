@@ -90,7 +90,7 @@ function HomePage(props) {
         <GrowthTransition />
         <RxBlueprint />
         <DoctorHomepage />
-        <Product cart={cart} setCart={setCart}/>
+        {/* <Product cart={cart} setCart={setCart}/> */}
         <ShoppingFeature />
         <BeforeAfter />
 

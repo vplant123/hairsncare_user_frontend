@@ -233,14 +233,14 @@ export default function About() {
             }
 
           </div>
-          <div className="hero-btn-about">
+          {/* <div className="hero-btn-about">
             <button
               onClick={() => navigate("/best-hair-care-products-hair-loss-scalp-health")}
               className="btn primary"
             >
               VIEW PRODUCT RANGE
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

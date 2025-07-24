@@ -82,7 +82,7 @@ const Footer = () => {
           >
             Terms of Service
           </h5>
-          <h5
+          {/* <h5
             onClick={() => {
               scrollToTop()
               navigate("/returnPolicy")
@@ -90,7 +90,7 @@ const Footer = () => {
             style={{ cursor: "pointer" }}
           >
             Cancellation/Refund Policy
-          </h5>
+          </h5> */}
         </div>
         <div className="footer-item">
           <h3>COMPANY</h3>

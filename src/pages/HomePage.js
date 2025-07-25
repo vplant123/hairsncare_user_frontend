@@ -32,8 +32,8 @@ import { generateOrganizationSchema } from '../utils/seoUtils'
 
 function HomePage(props) {
 
-  let {cart,
-    setCart} = props;
+  let { cart,
+    setCart } = props;
 
   useEffect(() => {
     if (props?.setTitle) props?.setTitle(window.location.pathname)
@@ -44,7 +44,7 @@ function HomePage(props) {
   useEffect(() => {
     console.log("ojwoejorf")
     // Check if the script is already present
-    console.log('AiSensy Widget loaded',document.getElementById('aisensy-wa-widget'));
+    console.log('AiSensy Widget loaded', document.getElementById('aisensy-wa-widget'));
     if (!document.getElementById('aisensy-wa-widget')) {
       // Create the script element
       const script = document.createElement('script');
@@ -82,7 +82,7 @@ function HomePage(props) {
       {content ? <>
         <Hero />
         <Trust />
-        <Review />
+        {/* <Review /> */}
         <WhyTrustHairCare />
         <Media />
         <CorePrincipleSection />

@@ -78,7 +78,7 @@ function GrowthTransition() {
       </div>
       <div className='growth-btn'>
         <button className='btn primary' onClick={() => navigate("/take-hair-test")} style={{ padding: "12px" }}>
-          TAKE A HAIR TEST
+          TAKE A HAIR TEST @Rs.300
         </button>
       </div>
     </div>

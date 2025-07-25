@@ -190,13 +190,13 @@ export default function HairTreatmentWomen() {
 
         <div className="d-flex flex-column main-section-2-htw container main-div-resp">
           <div
-          className="text-1-section-2-htw"
-                  dangerouslySetInnerHTML={{ __html: content?.section2?.title }}
-                />
+            className="text-1-section-2-htw"
+            dangerouslySetInnerHTML={{ __html: content?.section2?.title }}
+          />
           <ZoomInDiv2 className="text-2-section-2-htw">
             <div
-                  dangerouslySetInnerHTML={{ __html: content?.section2?.subTitle }}
-                />
+              dangerouslySetInnerHTML={{ __html: content?.section2?.subTitle }}
+            />
           </ZoomInDiv2>
           <div className="desktop-view">
             <LeftAnimatedDiv className="main-section-2-htw-left">
@@ -217,15 +217,15 @@ export default function HairTreatmentWomen() {
         <div className="main-section-3-htw main-div-resp">
           <div className="d-flex flex-column container" style={{ padding: "3% 0 3% 0" }}>
             <div className="text-1-section-3-htw">
-            <div
-              dangerouslySetInnerHTML={{ __html: content?.section3?.title }}
-            />
+              <div
+                dangerouslySetInnerHTML={{ __html: content?.section3?.title }}
+              />
             </div>
             <ZoomInDiv2 style={{ display: "flex", justifyContent: "center" }}>
               <div className="text-2-section-3-htw width-for-text-heading-80" >
                 <div
-              dangerouslySetInnerHTML={{ __html: content?.section3?.subTitle }}
-            />
+                  dangerouslySetInnerHTML={{ __html: content?.section3?.subTitle }}
+                />
               </div>
             </ZoomInDiv2>
             <div style={{ display: "flex", justifyContent: "center" }}>
@@ -253,8 +253,8 @@ export default function HairTreatmentWomen() {
                       }}
                       className="d-flex flex-column horizontal-card-text div2"
                     >
-                      <h5 className="mfs-2 sub-text-1-section-3-htw"><div dangerouslySetInnerHTML={{ __html: item.description}} /></h5>
-                      <div className="sub-text-2-section-3-htw mfs-1"><div dangerouslySetInnerHTML={{ __html: item.title}} /></div>
+                      <h5 className="mfs-2 sub-text-1-section-3-htw"><div dangerouslySetInnerHTML={{ __html: item.description }} /></h5>
+                      <div className="sub-text-2-section-3-htw mfs-1"><div dangerouslySetInnerHTML={{ __html: item.title }} /></div>
                     </div>
                   </ZoomInDiv>
                 );
@@ -292,21 +292,21 @@ export default function HairTreatmentWomen() {
           <div className="d-flex flex-column container" style={{ padding: "3% 0 3% 0" }}>
             <div className="text-1-section-4-htw">
               <div
-                  dangerouslySetInnerHTML={{ __html: content?.section4?.title }}
+                dangerouslySetInnerHTML={{ __html: content?.section4?.title }}
               />
             </div>
             <LeftAnimatedDiv style={{ display: "flex", justifyContent: "center" }}>
               <div className="text-2-section-4-htw width-for-text-heading-80" >
                 <div
                   dangerouslySetInnerHTML={{ __html: content?.section4?.subTitle }}
-              />
+                />
               </div>
             </LeftAnimatedDiv>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <div className="text-3-section-4-htw width-for-text-heading-75 m-text-left">
-              <div
+                <div
                   dangerouslySetInnerHTML={{ __html: content?.section4?.desc }}
-              />
+                />
               </div>
             </div>
 
@@ -328,8 +328,8 @@ export default function HairTreatmentWomen() {
                       }}
                       className="d-flex flex-column horizontal-card-text"
                     >
-                      <div className="sub-text-1-section-4-htw"><h5 className="mfs-1 new-section4-htw"><div dangerouslySetInnerHTML={{ __html: item?.description}} /></h5></div>
-                      <div className="sub-text-2-section-4-htw"><div dangerouslySetInnerHTML={{ __html: item?.title}} /></div>
+                      <div className="sub-text-1-section-4-htw"><h5 className="mfs-1 new-section4-htw"><div dangerouslySetInnerHTML={{ __html: item?.description }} /></h5></div>
+                      <div className="sub-text-2-section-4-htw"><div dangerouslySetInnerHTML={{ __html: item?.title }} /></div>
                     </div>
                   </ZoomInDiv>
                 );
@@ -349,31 +349,31 @@ export default function HairTreatmentWomen() {
               >
                 <div
                   dangerouslySetInnerHTML={{ __html: content?.section4?.footerText }}
-              />
+                />
               </div>
             </div>
           </div>
         </div>
 
-        <div className="main-section-5-htw main-div-resp">
+        {/* <div className="main-section-5-htw main-div-resp">
           <div className="d-flex flex-column container" style={{ padding: "3% 0 3% 0" }}>
             <div className="text-1-section-5-htw mt-3">
               <div
-                  dangerouslySetInnerHTML={{ __html: content?.section5?.title }}
+                dangerouslySetInnerHTML={{ __html: content?.section5?.title }}
               />
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <RightAnimatedDiv className="text-2-section-5-htw width-for-text-heading-80">
                 <div
                   dangerouslySetInnerHTML={{ __html: content?.section5?.subTitle }}
-              />
+                />
               </RightAnimatedDiv>
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <div className="text-3-section-5-htw width-for-text-heading-75">
                 <div
                   dangerouslySetInnerHTML={{ __html: content?.section5?.desc }}
-              />
+                />
               </div>
             </div>
 
@@ -408,7 +408,7 @@ export default function HairTreatmentWomen() {
                         color: section5Sel == indx ? "#FFFFFF" : "black",
                       }}
                     >
-                      <h3><div dangerouslySetInnerHTML={{ __html: item?.title}} /></h3>
+                      <h3><div dangerouslySetInnerHTML={{ __html: item?.title }} /></h3>
                     </div>
                     <div
                       className="mini-card-text-2-section-4-htw"
@@ -416,7 +416,7 @@ export default function HairTreatmentWomen() {
                         color: section5Sel == indx ? "#FFFFFF" : "rgba(97, 97, 97, 1)",
                       }}
                     >
-                      <div dangerouslySetInnerHTML={{ __html: item?.description}} />
+                      <div dangerouslySetInnerHTML={{ __html: item?.description }} />
                     </div>
                   </ZoomInDiv>
                 );
@@ -436,7 +436,7 @@ export default function HairTreatmentWomen() {
               >
                 <div
                   dangerouslySetInnerHTML={{ __html: content?.section5?.footerText }}
-              />
+                />
               </div>
             </div>
 
@@ -449,12 +449,12 @@ export default function HairTreatmentWomen() {
               </button>
             </RightAnimatedDiv>
           </div>
-        </div>
+        </div> */}
 
         <div className="d-flex flex-column main-section-2-htw container main-div-resp">
           <div className="desktop-view">
             <LeftAnimatedDiv className="main-section-2-htw-left">
-            
+
               <img
                 src={content?.section6?.image}
                 style={{ height: "100%", width: "100%" }}
@@ -468,7 +468,7 @@ export default function HairTreatmentWomen() {
               >
                 <div
                   dangerouslySetInnerHTML={{ __html: content?.section6?.title }}
-              />
+                />
               </div>
               <ZoomInDiv2
                 className="text-2-section-2-htw"
@@ -476,26 +476,26 @@ export default function HairTreatmentWomen() {
               >
                 <div
                   dangerouslySetInnerHTML={{ __html: content?.section6?.subTitle }}
-              />
+                />
               </ZoomInDiv2>
               <div className="text-3-section-2-htw">
                 <div
                   dangerouslySetInnerHTML={{ __html: content?.section6?.desc }}
-                  style={{lineHeight: "25px"}}
-              />
+                  style={{ lineHeight: "25px" }}
+                />
                 <br />
                 <br />
                 <div
                   dangerouslySetInnerHTML={{ __html: content?.section6?.footerText }}
-                  style={{lineHeight: "25px"}}
-              />
+                  style={{ lineHeight: "25px" }}
+                />
               </div>
               <div className="">
                 <button
                   onClick={() => navigate("/take-hair-test")}
                   className="btn sub-button-section-3-op"
                 >
-                  Take A Hair Test
+                  Take A Hair Test @Rs.300
                 </button>
               </div>
             </div>
@@ -509,14 +509,14 @@ export default function HairTreatmentWomen() {
               <div className="text-3-section-1-htw-left">
                 <div
                   dangerouslySetInnerHTML={{ __html: content?.section7?.desc }}
-                  style={{lineHeight: "25px"}}
-              />
+                  style={{ lineHeight: "25px" }}
+                />
                 <br />
                 <br />
                 <div
                   dangerouslySetInnerHTML={{ __html: content?.section7?.footerText }}
-                  style={{lineHeight: "25px"}}
-              />
+                  style={{ lineHeight: "25px" }}
+                />
               </div>
               <ZoomInDiv className="">
                 <button

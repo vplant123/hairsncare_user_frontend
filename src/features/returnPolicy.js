@@ -8,7 +8,7 @@ const ReturnPolicy = () => {
     <>    <Navbar>
       <Container>
         <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif', lineHeight: '1.6' }}>
-          <h1>Refund, Return, and Cancellation Policy</h1>
+          {/* <h1>Refund, Return, and Cancellation Policy</h1>
 
           <p>At Vplant Speciality Clinic ("Hairsncares"), we prioritize customer satisfaction and aim to provide a smooth and hassle-free experience. Our Refund Policy allows for full refunds under specific conditions outlined below:</p>
 
@@ -44,7 +44,7 @@ const ReturnPolicy = () => {
             <li><strong>Email:</strong> hairsncares@gmail.com</li>
             <li><strong>WhatsApp:</strong> +91 9136028327</li>
           </ul>
-          <p>If our courier partner attempts delivery for orders canceled before delivery, please decline acceptance. If delivery is accepted, we will arrange a reverse pickup, ensuring the products remain sealed and unused.</p>
+          <p>If our courier partner attempts delivery for orders canceled before delivery, please decline acceptance. If delivery is accepted, we will arrange a reverse pickup, ensuring the products remain sealed and unused.</p> */}
 
           <h2>Processing of Refunds</h2>
           <p>Refund processing times depend on the original payment method:<br></br>

@@ -23,7 +23,7 @@ function Policy(props) {
           }}
         >
           Welcome to our website and mobile application accessible at
-          www.hairsncares.com ("Hairsncares.com"). This privacy policy ("Privacy
+          www.hairsncares.com ("HAIRSNCARES WELLNESS CENTER"). This privacy policy ("Privacy
           Policy") outlines the policies and procedures of Vplant Speciality
           Clinics ("we," "our," or "us") regarding the collection, usage,
           maintenance, protection, and disclosure of information, including your
@@ -38,7 +38,7 @@ function Policy(props) {
           }}
         >
           By clicking "Continue" during the sign-up process, using
-          Hairsncares.com, or utilizing the Services, you confirm that you have
+          HAIRSNCARES WELLNESS CENTER, or utilizing the Services, you confirm that you have
           read, comprehended, and consent to the privacy practices detailed in
           this Privacy Policy. You also acknowledge the collection, processing,
           transfer, manipulation, storage, disclosure, and other uses of your
@@ -98,7 +98,7 @@ function Policy(props) {
             fontSize: "20px",
           }}
         >
-          By accessing or using the Hairsncares.com or the Services, or by
+          By accessing or using the HAIRSNCARES WELLNESS CENTER or the Services, or by
           providing us with your information, you confirm that you have the
           legal capacity to enter into a binding contract under Indian law,
           specifically the Indian Contract Act, 1872. You also confirm that you
@@ -146,7 +146,7 @@ function Policy(props) {
           Services further..{" "}
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </Navbar>
   );
 }

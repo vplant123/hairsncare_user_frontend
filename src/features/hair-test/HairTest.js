@@ -8,7 +8,10 @@ import Stress from './components/Stress';
 import HairAndScalp from './components/HairAndScalp';
 import UploadImage from './components/UploadImage';
 import ThankYou from './components/ThankYou';
-import Checkout from './components/Checkout';
+// import Checkout from './components/Checkout';
+import Checkout from './components/CheckoutCopy';
+
+
 import { useNavigate } from 'react-router-dom';
 import BASE_URL from '../../Config';
 import SignByhairTestUp from '../SignByhairTestUp';

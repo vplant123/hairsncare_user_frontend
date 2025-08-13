@@ -13,12 +13,12 @@ import moment from "moment/moment";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleLogin } from "../login/LoginSlice";
 import { FaPlayCircle } from "react-icons/fa";
-import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { Button } from "reactstrap";
 import { getCartItems } from "./CartSlice";
-import ReactImageMagnify from 'react-image-magnify';
-import zIndex from "@mui/material/styles/zIndex";
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import ReactImageMagnify from "react-image-magnify";
+// import zIndex from "@mui/material/styles/zIndex";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { useMediaQuery } from "@mui/material";
 import ReactPaginate from "react-paginate";
 import { Helmet } from "react-helmet";
@@ -45,17 +45,13 @@ const findNearestWhitespace = (str, index) => {
   }
 };
 
-
 function ProductDetail(props) {
-
   // useEffect(() => {
   //   if(props?.setTitle) props?.setTitle(window.location.pathname)
   // },[])
 
-  let { cart,
-    setCart } = props;
+  let { cart, setCart } = props;
   const isMobile = useMediaQuery("(max-width: 768px)");
-
 
   const content = useSelector((state) => state.content.customerVideos);
   const content1 = useSelector((state) => state.content.config);
@@ -70,18 +66,22 @@ function ProductDetail(props) {
     if (typeof window !== "undefined") {
       window.onscroll = () => {
         let currentScrollPos = window.pageYOffset - 700;
-        let maxScroll = (document.body.scrollHeight - window.innerHeight);
-        console.log("nmkmsen", document.body.scrollHeight, window.innerHeight, currentScrollPos)
+        let maxScroll = document.body.scrollHeight - window.innerHeight;
+        console.log(
+          "nmkmsen",
+          document.body.scrollHeight,
+          window.innerHeight,
+          currentScrollPos
+        );
         if (currentScrollPos > 0 && currentScrollPos < maxScroll) {
-          setIsVisible(true)
+          setIsVisible(true);
           // console.log(currentScrollPos)
         } else {
-          setIsVisible(false)
+          setIsVisible(false);
         }
-      }
+      };
     }
   }, [window.pageYOffset]);
-
 
   const [select, setSelect] = useState("0");
   const targetDivRef = useRef(null);
@@ -104,19 +104,18 @@ function ProductDetail(props) {
   //     );
   //   }
 
-
   //   return () => {
   //     clearTimeout(timeout);
   //   };
   // }, [select]);
-  const [readMore, setReadMore] = useState(-1)
+  const [readMore, setReadMore] = useState(-1);
   const [product, setProduct] = useState(null);
   // const params = useParams();
   const query = useSearchParams()[0].get("id");
   const params = {
-    id: query
-  }
-  console.log("query", query)
+    id: query,
+  };
+  console.log("query", query);
   const [quantity, setQuantity] = useState(1);
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState({
@@ -125,7 +124,7 @@ function ProductDetail(props) {
     comment: "",
   });
 
-  console.log("product", query)
+  console.log("product", query);
 
   const [loader, setLoader] = useState(false); // New state for discount
   const [openReview, setOpenReview] = useState(false);
@@ -149,7 +148,6 @@ function ProductDetail(props) {
     setOpenSection2(openSection2 === section ? null : section);
   };
 
-
   const [cur, setCur] = useState(0);
 
   // const [slide1,setSlide1] = useState(0)
@@ -170,7 +168,7 @@ function ProductDetail(props) {
       ? reviews?.length / 5
       : Math.floor(reviews?.length / 5) + 1;
 
-  console.log("srjie", pageCount, reviews)
+  console.log("srjie", pageCount, reviews);
 
   const handleLoginClick = () => {
     dispatch(toggleLogin());
@@ -186,8 +184,8 @@ function ProductDetail(props) {
         const response = await fetch(`${BASE_URL}/admin/product/${params.id}`);
         const data = await response.json();
         const productData = data.message[0];
-        props.setTitle(productData?.metaTitle)
-        props.setDesc(productData?.metaDesc)
+        props.setTitle(productData?.metaTitle);
+        props.setDesc(productData?.metaDesc);
         setProduct(productData);
         setSelect(0);
         // setReviews(productData.userReview);
@@ -207,9 +205,8 @@ function ProductDetail(props) {
       [name]: value,
     });
   };
-  console.log("jkcoiejro", reviews?.length)
+  console.log("jkcoiejro", reviews?.length);
   const [cur1, setCur1] = useState(0);
-
 
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
@@ -262,7 +259,6 @@ function ProductDetail(props) {
     }
   };
 
-
   function setTransform(el, xpos, zpos, yAngle) {
     el.style.transform = `translateX(${xpos}px) translateZ(${zpos}px) rotateY(${yAngle}deg)`;
   }
@@ -279,18 +275,27 @@ function ProductDetail(props) {
       const item = items[i];
 
       // Center item position and angle
-      if (i === index)
-        setTransform(item, 0, CENTER_ITEM_POP, 0);
+      if (i === index) setTransform(item, 0, CENTER_ITEM_POP, 0);
       // Left items position and angle
       else if (i < index) {
-        setTransform(item, (i - index) * ITEM_DISTANCE - CENTER_ITEM_DISTANCE, 0, -ITEM_ANGLE);
+        setTransform(
+          item,
+          (i - index) * ITEM_DISTANCE - CENTER_ITEM_DISTANCE,
+          0,
+          -ITEM_ANGLE
+        );
       }
       // Right items position and angle
       else
-        setTransform(item, (i - index) * ITEM_DISTANCE + CENTER_ITEM_DISTANCE, 0, ITEM_ANGLE);
+        setTransform(
+          item,
+          (i - index) * ITEM_DISTANCE + CENTER_ITEM_DISTANCE,
+          0,
+          ITEM_ANGLE
+        );
     }
   }
-  const [yurl, setYurl] = useState('');
+  const [yurl, setYurl] = useState("");
   const [showPopup, setShowPopup] = useState(false);
 
   // Function to extract YouTube video ID and get thumbnail
@@ -298,7 +303,9 @@ function ProductDetail(props) {
     if (!videoUrl) return null;
 
     // Extract video ID from various YouTube URL formats
-    const videoId = videoUrl.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+    const videoId = videoUrl.match(
+      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
+    );
 
     if (videoId && videoId[1]) {
       return `https://img.youtube.com/vi/${videoId[1]}/maxresdefault.jpg`;
@@ -310,7 +317,7 @@ function ProductDetail(props) {
     console.log("Playing video:", videoUrl);
     setYurl(videoUrl);
     setShowPopup(true);
-  }
+  };
 
   const incrementQuantity = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
@@ -326,10 +333,7 @@ function ProductDetail(props) {
     return <div>Loading...</div>;
   }
 
-
-
-
-  console.log("momvoer", cur, cur + 4)
+  console.log("momvoer", cur, cur + 4);
 
   const handleBuyNow = async () => {
     let data = {
@@ -337,13 +341,11 @@ function ProductDetail(props) {
       quantity: quantity,
     };
     if (!storedUserData?.logedInUser) {
-
-      let c = cart
+      let c = cart;
       let f = c?.findIndex((w) => w?.item?._id == product?._id);
       if (f != -1) {
         c[f].quantity = c[f]?.quantity + 1;
-      }
-      else {
+      } else {
         c.push(data);
       }
       setCart(c);
@@ -369,7 +371,7 @@ function ProductDetail(props) {
       if (response.ok) {
         const result = await response.json();
         dispatch(getCartItems(storedUserData.logedInUser.user._id));
-        navigate("/cart")
+        navigate("/cart");
         console.log("review created successfully:", result);
         // navigate("/cart");
       } else {
@@ -387,13 +389,11 @@ function ProductDetail(props) {
       quantity: quantity,
     };
     if (!storedUserData?.logedInUser) {
-
-      let c = cart
+      let c = cart;
       let f = c?.findIndex((w) => w?.item?._id == product?._id);
       if (f != -1) {
         c[f].quantity = c[f]?.quantity + 1;
-      }
-      else {
+      } else {
         c.push(data);
       }
       setCart(c);
@@ -419,7 +419,7 @@ function ProductDetail(props) {
       if (response.ok) {
         const result = await response.json();
         dispatch(getCartItems(storedUserData.logedInUser.user._id));
-        navigate("/create-order")
+        navigate("/create-order");
         console.log("review created successfully:", result);
         // navigate("/cart");
       } else {
@@ -431,7 +431,6 @@ function ProductDetail(props) {
     }
   };
 
-
   const handleMouseEnter = () => {
     setIsZoomed(true);
   };
@@ -440,21 +439,29 @@ function ProductDetail(props) {
     setIsZoomed(false);
   };
 
-  let disPercent = ((parseFloat(product?.discount || 0) / parseFloat(product?.price)) * 100)?.toFixed(0)
+  let disPercent = (
+    (parseFloat(product?.discount || 0) / parseFloat(product?.price)) *
+    100
+  )?.toFixed(0);
 
   // Generate product schema
-  const productSchema = product ? generateProductSchema({
-    name: product.name,
-    description: product.shortDes,
-    image: product.src?.[0] || '',
-    price: product.price,
-    discount: product.discount
-  }) : null;
+  const productSchema = product
+    ? generateProductSchema({
+        name: product.name,
+        description: product.shortDes,
+        image: product.src?.[0] || "",
+        price: product.price,
+        discount: product.discount,
+      })
+    : null;
 
   return (
     <>
       <Helmet>
-        <link rel="canonical" href={`${window.location.origin}/${product?.metaCanonical}`} />
+        <link
+          rel="canonical"
+          href={`${window.location.origin}/${product?.metaCanonical}`}
+        />
         {productSchema && (
           <script type="application/ld+json">
             {JSON.stringify(productSchema)}
@@ -462,14 +469,17 @@ function ProductDetail(props) {
         )}
       </Helmet>
       <Navbar cart={cart} setCart={setCart} />
-      
+
       <div className="container" style={{ marginTop: "20px" }}>
         <Breadcrumb />
       </div>
-      
+
       <div className="container">
         <div className="product-section row">
-          <div className="product-image col-12 col-md-6" style={{ position: "relative" }}>
+          <div
+            className="product-image col-12 col-md-6"
+            style={{ position: "relative" }}
+          >
             {/* <TransformWrapper
       defaultScale={1}
       defaultPositionX={100}
@@ -519,19 +529,33 @@ function ProductDetail(props) {
                 },
               }}
               imageClassName="img-magnify"
-              enlargedImageContainerStyle={{ zIndex: 10, width: "100%", height: "100%" }}
-            // imageStyle={{ maxWidth: "100%", height: "400px" }} 
+              enlargedImageContainerStyle={{
+                zIndex: 10,
+                width: "100%",
+                height: "100%",
+              }}
+              // imageStyle={{ maxWidth: "100%", height: "400px" }}
             />
             {disPercent && disPercent != "0" ? (
-              <div style={{
-                position: "absolute", top: 0, width: "71px",
-                height: "40px"
-              }}>
-                <span class="tc nt_labels pa pe_none cw" style={{
-                  height: "100%",
-                  display: "flex"
-                }}>
-                  <span class="onsale nt_label" style={{ width: "100%", fontSize: "18px" }}>
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  width: "71px",
+                  height: "40px",
+                }}
+              >
+                <span
+                  class="tc nt_labels pa pe_none cw"
+                  style={{
+                    height: "100%",
+                    display: "flex",
+                  }}
+                >
+                  <span
+                    class="onsale nt_label"
+                    style={{ width: "100%", fontSize: "18px" }}
+                  >
                     <span>-{product?.discount + "%"}</span>
                   </span>
                 </span>
@@ -686,7 +710,7 @@ function ProductDetail(props) {
                   style={{
                     margin: "0px 0 0 10px",
                     fontWeight: "700",
-                    cursor: "pointer "
+                    cursor: "pointer ",
                   }}
                   onClick={scrollToDiv}
                 >
@@ -700,7 +724,8 @@ function ProductDetail(props) {
                 Price ₹{" "}
                 {(
                   parseFloat(product?.price || 0) -
-                  (parseFloat(product?.price || 0) * (parseFloat(product?.discount || 0) / 100))
+                  parseFloat(product?.price || 0) *
+                    (parseFloat(product?.discount || 0) / 100)
                 )?.toFixed(0)}
               </h2>
 
@@ -739,8 +764,13 @@ function ProductDetail(props) {
             </div>
             <div className="d-flex .shop-btn1">
               <div
-                className={`d-flex shop-btn1 btn-222 ${product?.stock === 0 ? 'disabled' : ''}`}
-                style={{ cursor: product?.stock === 0 ? "not-allowed" : "pointer", opacity: product?.stock === 0 ? 0.6 : 1 }}
+                className={`d-flex shop-btn1 btn-222 ${
+                  product?.stock === 0 ? "disabled" : ""
+                }`}
+                style={{
+                  cursor: product?.stock === 0 ? "not-allowed" : "pointer",
+                  opacity: product?.stock === 0 ? 0.6 : 1,
+                }}
                 onClick={() => product?.stock > 0 && handleAddToCart()}
               >
                 <img
@@ -757,8 +787,13 @@ function ProductDetail(props) {
               </div>
 
               <div
-                className={`d-flex shop-btn1 btn-33 ${product?.stock === 0 ? 'disabled' : ''}`}
-                style={{ cursor: product?.stock === 0 ? "not-allowed" : "pointer", opacity: product?.stock === 0 ? 0.6 : 1 }}
+                className={`d-flex shop-btn1 btn-33 ${
+                  product?.stock === 0 ? "disabled" : ""
+                }`}
+                style={{
+                  cursor: product?.stock === 0 ? "not-allowed" : "pointer",
+                  opacity: product?.stock === 0 ? 0.6 : 1,
+                }}
                 onClick={() => product?.stock > 0 && handleBuyNow()}
               >
                 <img
@@ -774,20 +809,37 @@ function ProductDetail(props) {
                 </div>
               </div>
             </div>
-            {
-              (parseFloat(product?.price || 0) -
-                parseFloat(product?.discount || 0))?.toFixed(0) < content1?.deliveryAmt ?
-                <div className="d-flex" style={{ padding: "10px 0 10px 0", gap: "10px" }}>
-                  < LocalShippingIcon style={{ fontSize: "30px" }} />
-                  <strong style={{ fontSize: "18px" }}>Delivery Fee : </strong>
-                  <div style={{ fontSize: "18px" }}>&nbsp;₹ {content1?.deliveryCharge}</div>
-                </div> : <div className="d-flex" style={{ padding: "10px 0 10px 0", gap: "10px" }}>
-                  < LocalShippingIcon style={{ fontSize: "30px" }} />
-
-                  <strong style={{ color: "green", fontSize: "18px" }}>FREE Delivery&nbsp;&nbsp; </strong>
-                  <div style={{ textDecoration: "line-through", fontSize: "18px" }}>₹ {content1?.deliveryCharge}</div>
+            {(
+              parseFloat(product?.price || 0) -
+              parseFloat(product?.discount || 0)
+            )?.toFixed(0) < content1?.deliveryAmt ? (
+              <div
+                className="d-flex"
+                style={{ padding: "10px 0 10px 0", gap: "10px" }}
+              >
+                <LocalShippingIcon style={{ fontSize: "30px" }} />
+                <strong style={{ fontSize: "18px" }}>Delivery Fee : </strong>
+                <div style={{ fontSize: "18px" }}>
+                  &nbsp;₹ {content1?.deliveryCharge}
                 </div>
-            }
+              </div>
+            ) : (
+              <div
+                className="d-flex"
+                style={{ padding: "10px 0 10px 0", gap: "10px" }}
+              >
+                <LocalShippingIcon style={{ fontSize: "30px" }} />
+
+                <strong style={{ color: "green", fontSize: "18px" }}>
+                  FREE Delivery&nbsp;&nbsp;{" "}
+                </strong>
+                <div
+                  style={{ textDecoration: "line-through", fontSize: "18px" }}
+                >
+                  ₹ {content1?.deliveryCharge}
+                </div>
+              </div>
+            )}
             <div className="d-flex flex-column">
               <div className="hilight">Highlights:</div>
               <div
@@ -862,10 +914,11 @@ function ProductDetail(props) {
                                   <span></span>
                                   <div
                                     id={e?._id}
-                                    className={`accordion-collapse collapse ${openSection === e?._id ? "show" : ""
-                                      }`}
+                                    className={`accordion-collapse collapse ${
+                                      openSection === e?._id ? "show" : ""
+                                    }`}
                                     data-bs-parent="#accordion_2"
-                                  //
+                                    //
                                   >
                                     <div class="card-body">
                                       <div
@@ -923,10 +976,11 @@ function ProductDetail(props) {
                       <span></span>
                       <div
                         id={e?._id}
-                        className={`accordion-collapse collapse ${openSection2 === e?._id ? "show" : ""
-                          }`}
+                        className={`accordion-collapse collapse ${
+                          openSection2 === e?._id ? "show" : ""
+                        }`}
                         data-bs-parent="#accordion_2"
-                      //
+                        //
                       >
                         <div class="card-body">
                           <div dangerouslySetInnerHTML={{ __html: e?.desc }} />
@@ -942,7 +996,7 @@ function ProductDetail(props) {
 
         <div
           style={{ margin: "50px 0 50px 0" }}
-        // dangerouslySetInnerHTML={{ __html: product.longDes }}
+          // dangerouslySetInnerHTML={{ __html: product.longDes }}
         />
       </div>
 
@@ -1064,12 +1118,20 @@ function ProductDetail(props) {
                               </h6>
                             </div>
                           </div>
-                          <div style={{ fontSize: "17px" }}>{e?.comment?.length > 50 ?
-                            <div className="d-flex">{readMore == i ? e?.comment : e?.comment?.substring(0, 50)}
-                              <div onClick={() => setReadMore(i)}>
-                                &nbsp; &nbsp;...Read More
+                          <div style={{ fontSize: "17px" }}>
+                            {e?.comment?.length > 50 ? (
+                              <div className="d-flex">
+                                {readMore == i
+                                  ? e?.comment
+                                  : e?.comment?.substring(0, 50)}
+                                <div onClick={() => setReadMore(i)}>
+                                  &nbsp; &nbsp;...Read More
+                                </div>
                               </div>
-                            </div> : e?.comment}</div>
+                            ) : (
+                              e?.comment
+                            )}
+                          </div>
                         </li>
                       );
                     })}
@@ -1105,22 +1167,24 @@ function ProductDetail(props) {
                         );
                       })} */}
 
-                    <div className="reactPagination" style={{
-                      display: "flex",
-                      justifyContent: "center"
-                    }}>
+                    <div
+                      className="reactPagination"
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                    >
                       <ReactPaginate
                         breakLabel="..."
                         nextLabel=" >"
                         onPageChange={(event) => {
-                          setCur(event.selected * 5)
+                          setCur(event.selected * 5);
                           // console.log("sjiorjfre",event.selected)
                           // setSelectedPage(event.selected)
-
                         }}
                         pageRangeDisplayed={5}
                         pageCount={pageCount}
-                        // forcePage={selectedPage} 
+                        // forcePage={selectedPage}
                         previousLabel="<"
                         renderOnZeroPageCount={null}
                         breakClassName={"page-item"}
@@ -1180,7 +1244,7 @@ function ProductDetail(props) {
             <button
               type="submit"
               className="submit-review-btn"
-            // disabled={userId ? false : true}
+              // disabled={userId ? false : true}
             >
               {loader ? "Loading" : "Submit Review"}
             </button>
@@ -1220,13 +1284,16 @@ function ProductDetail(props) {
                 <div
                   className="cust-video"
                   style={{
-                    backgroundImage: `url(${getYouTubeThumbnail(content.section1[cur1]?.videoUrl) || content.section1[cur1]?.url})`,
+                    backgroundImage: `url(${
+                      getYouTubeThumbnail(content.section1[cur1]?.videoUrl) ||
+                      content.section1[cur1]?.url
+                    })`,
                     position: "relative",
                     height: "300px",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     borderRadius: "8px",
-                    cursor: "pointer"
+                    cursor: "pointer",
                   }}
                   onClick={() => handlePlay(content.section1[cur1]?.videoUrl)}
                 >
@@ -1238,7 +1305,7 @@ function ProductDetail(props) {
                       left: "50%",
                       transform: "translate(-50%, -50%)",
                       color: "white",
-                      cursor: "pointer"
+                      cursor: "pointer",
                     }}
                   >
                     <FaPlayCircle size={50} />
@@ -1262,7 +1329,7 @@ function ProductDetail(props) {
               zIndex: 1000,
               display: "flex",
               justifyContent: "center",
-              alignItems: "center"
+              alignItems: "center",
             }}
             onClick={() => setShowPopup(false)}
           >
@@ -1287,7 +1354,7 @@ function ProductDetail(props) {
                   cursor: "pointer",
                   width: "30px",
                   height: "30px",
-                  borderRadius: "50%"
+                  borderRadius: "50%",
                 }}
               >
                 ×
@@ -1297,7 +1364,14 @@ function ProductDetail(props) {
         )}
 
         {/* Navigation Dots */}
-        <div style={{ display: "flex", justifyContent: "center", marginTop: "20px", gap: "10px" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20px",
+            gap: "10px",
+          }}
+        >
           {content?.section1?.map((_, index) => (
             <button
               key={index}
@@ -1308,7 +1382,7 @@ function ProductDetail(props) {
                 borderRadius: "50%",
                 border: "none",
                 backgroundColor: cur1 === index ? "#ffa500" : "#ccc",
-                cursor: "pointer"
+                cursor: "pointer",
               }}
               aria-label={`Go to slide ${index + 1}`}
             />
@@ -1322,7 +1396,14 @@ function ProductDetail(props) {
       >
         <div className="container">
           {isMobile ? (
-            <div className="d-flex" style={{ justifyContent: "end", margin: "12px 0 12px 0", gap: "10px" }}>
+            <div
+              className="d-flex"
+              style={{
+                justifyContent: "end",
+                margin: "12px 0 12px 0",
+                gap: "10px",
+              }}
+            >
               <div className="cout-cont">
                 <div
                   style={{
@@ -1353,8 +1434,14 @@ function ProductDetail(props) {
                 </div>
               </div>
               <div
-                className={`d-flex shop-btn1 btn-33 ${product?.stock === 0 ? 'disabled' : ''}`}
-                style={{ cursor: product?.stock === 0 ? "not-allowed" : "pointer", marginTop: 0, opacity: product?.stock === 0 ? 0.6 : 1 }}
+                className={`d-flex shop-btn1 btn-33 ${
+                  product?.stock === 0 ? "disabled" : ""
+                }`}
+                style={{
+                  cursor: product?.stock === 0 ? "not-allowed" : "pointer",
+                  marginTop: 0,
+                  opacity: product?.stock === 0 ? 0.6 : 1,
+                }}
                 onClick={() => product?.stock > 0 && handleBuyNow()}
               >
                 <img
@@ -1392,8 +1479,12 @@ function ProductDetail(props) {
                 </div>
                 <div className="buyNow-product-name">
                   ₹{" "}
-                  {(parseFloat(product?.price || 0) -
-                    (parseFloat(product?.price || 0) * parseFloat(product?.discount || 0) / 100))?.toFixed(0)}
+                  {(
+                    parseFloat(product?.price || 0) -
+                    (parseFloat(product?.price || 0) *
+                      parseFloat(product?.discount || 0)) /
+                      100
+                  )?.toFixed(0)}
                 </div>
 
                 <div className="cout-cont">
@@ -1426,10 +1517,12 @@ function ProductDetail(props) {
                   </div>
                 </div>
                 <div
-                  className={`d-flex shop-btn1 btn-33 ${product?.stock === 0 ? 'disabled' : ''}`}
+                  className={`d-flex shop-btn1 btn-33 ${
+                    product?.stock === 0 ? "disabled" : ""
+                  }`}
                   style={{
                     cursor: product?.stock === 0 ? "not-allowed" : "pointer",
-                    opacity: product?.stock === 0 ? 0.6 : 1
+                    opacity: product?.stock === 0 ? 0.6 : 1,
                   }}
                   onClick={() => product?.stock > 0 && handleBuyNow()}
                 >

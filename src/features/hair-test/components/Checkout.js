@@ -3,7 +3,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import BASE_URL from "../../../Config";
 import { toast } from "react-toastify";
+
 import useRazorpay from "react-razorpay";
+
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import ReactLoading from 'react-loading';
@@ -119,6 +121,7 @@ function PrescriptionOption({ label, planId, price, onSelect, selected, testId, 
   const handleTimeSlotChange = (slot) => {
     setSelectedTimeSlot(slot);
   };
+  
   const handleCheckout = async () => {
     let data;
     let amount;

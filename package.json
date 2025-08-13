@@ -10,8 +10,9 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@mui/icons-material": "^5.15.20",
-    "@mui/material": "^5.15.20",
-    "@mui/x-date-pickers": "^7.7.1",
+    "@mui/material": "^7.3.0",
+    "@mui/system": "^7.3.0",
+    "@mui/x-date-pickers": "^8.9.2",
     "@react-email/components": "^0.0.22",
     "@reduxjs/toolkit": "^1.9.7",
     "@testing-library/jest-dom": "^5.17.0",
@@ -85,5 +86,4 @@
       "last 1 safari version"
     ]
   }
-  
 }

@@ -1,0 +1,78 @@
+/* Center the content and add padding */
+.message-box {
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Failure-specific styling */
+.message-box._failure {
+  background-color: white; /* Light red background */
+  border: 1px solid #a12834; /* Red border */
+}
+
+/* Icon styling */
+.message-box._failure i.fa-times-circle {
+  color: #dc3545; /* Red icon */
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+/* Heading styling */
+.message-box h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #721c24; /* Dark red for text */
+  margin-bottom: 20px;
+}
+
+/* Paragraph styling */
+.failure-1 {
+  font-size: 16px;
+  color: #721c24; /* Dark red for text */
+  line-height: 1.6;
+}
+
+/* Button styling */
+.failure-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #dc3545; /* Red button */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.failure-button:hover {
+  background-color: #c82333; /* Darker red on hover */
+}
+
+.failure-button:focus {
+  outline: 2px solid #721c24; /* Focus outline for accessibility */
+  outline-offset: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .message-box {
+    padding: 15px;
+  }
+
+  .message-box h2 {
+    font-size: 20px;
+  }
+
+  .failure-1 {
+    font-size: 14px;
+  }
+
+  .failure-button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}

@@ -426,6 +426,7 @@ export default function CreateOrder(props) {
           orderId,
           userId,
           redirectUrl: `https://hairsncares.com/status/${orderId}`,
+          // redirectUrl: `http://localhost:3000/payment-status/${orderId}`,
           callbackUrl: `${BASE_URL}/payment/phonepay/callback`,
         }),
       });

@@ -19,7 +19,7 @@ import HairAnalysis from '../features/hair-analysis/HairAnalysis'
 import HairTestPage from '../pages/HairTestPage'
 // import Login from '../features/login/Login'
 // import SignUp from '../features/signup/SignUp'
-// import ProductPage from './ProductPage'
+import ProductPage from './ProductPage'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AboutUsEdit from '../features/admin-dashboard/manage-website/AboutUsEdit'
@@ -90,7 +90,7 @@ function HomePage(props) {
         <GrowthTransition />
         <RxBlueprint />
         <DoctorHomepage />
-        {/* <Product cart={cart} setCart={setCart}/> */}
+        <Product cart={cart} setCart={setCart}/>
         <ShoppingFeature />
         <BeforeAfter />
 

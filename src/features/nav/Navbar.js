@@ -126,11 +126,11 @@ function Navbar({ children, cart, setCart }) {
                 <p onClick={() => navigate('/advanced-hair-loss-solutions-prp-smp-cloning-systems')} style={{ fontSize: "17px" }}>Other Procedures</p>
               </div>
             </a>
-            {/* <a>
+            <a>
               <NavLink to="/best-hair-care-products-hair-loss-scalp-health" activeClassName="active">
                 PRODUCTS
               </NavLink>
-            </a> */}
+            </a>
             <a>
               <NavLink to="/contact-hair-experts" activeClassName="active">
                 CONTACT US
@@ -215,7 +215,7 @@ function Navbar({ children, cart, setCart }) {
           <div className="nav-right">
             {!location.pathname.includes("/take-hair-test") && <button onClick={handleTestHair} className="btn-test">TAKE A HAIR TEST</button>}
             <div className="nav-icons">
-              {/* <div className="user-svg">
+              <div className="user-svg">
                 {showSearch ? (
                   <SearchProduct isOpen={showSearch} onClose={() => setShowSearch(!showSearch)} cart={cart}
                     setCart={setCart} />
@@ -225,13 +225,13 @@ function Navbar({ children, cart, setCart }) {
                     size={20}
                   />
                 )}
-              </div> */}
+              </div>
               <div className="cart-icon" onClick={goToDash}>
-                {/* <Badge color="secondary" badgeContent={cartItems?.length > 0 || cart?.length > 0 ? cartItems?.length || cart?.length : 0} max={99}>
+                <Badge color="secondary" badgeContent={cartItems?.length > 0 || cart?.length > 0 ? cartItems?.length || cart?.length : 0} max={99}>
                   <ShoppingCartIcon />
-                </Badge> */}
+                </Badge>
                 {/* <FaShoppingCart onClick={goToDash} size={20} /> */}
-                {/* {(cartItems?.length > 0 || cart?.length > 0) && <span className="cart-count">{cartItems?.length || cart?.length}</span>} */}
+                {(cartItems?.length > 0 || cart?.length > 0) && <span className="cart-count">{cartItems?.length || cart?.length}</span>}
               </div>
               <div className="user-svg">
                 <FaRegUser size={20} />

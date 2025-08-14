@@ -86,7 +86,7 @@ useEffect(() => {
         <div className='tab-color' onClick={()=>navigate('/user-profile')} >My Reports </div>
       
         <div className='tab-color' onClick={()=>navigate('/my-orders')}>My Order </div>
-        {/* <div className='tab-color' onClick={()=>navigate('/cart')}>My Cart </div> */}
+        <div className='tab-color' onClick={()=>navigate('/cart')}>My Cart </div>
         <div className='tab-color' onClick={()=>navigate('/address')}>My Profile </div>
         {/* <div className='tab-color' onClick={()=>navigate('/coupon')}>Coupons </div> */}
 

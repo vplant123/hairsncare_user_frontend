@@ -114,14 +114,13 @@ export default function CreateOrder(props) {
 
   const getTotalAmount = (dist) => {
     // Calculate total discounted price
-    let tot = cartItems?.reduce(
-      (total, item) => {
-        // Calculate discounted price
-        const discountedPrice = Math.round(item?.item?.price * (1 - Number(item?.item?.discount || 0) / 100));
-        return total + discountedPrice * (item?.quantity || 1);
-      },
-      0
-    );
+    let tot = cartItems?.reduce((total, item) => {
+      // Calculate discounted price
+      const discountedPrice = Math.round(
+        item?.item?.price * (1 - Number(item?.item?.discount || 0) / 100)
+      );
+      return total + discountedPrice * (item?.quantity || 1);
+    }, 0);
 
     // Apply discount to the total after applying discounts
     let p = Number(tot || 0) - (Number(tot || 0) * (dist || 0)) / 100;
@@ -135,16 +134,14 @@ export default function CreateOrder(props) {
     return Math.round(p);
   };
 
-
   const getSubTotalAmount = () => {
-    let sub = cartItems?.reduce(
-      (total, item) => {
-        // Calculate discounted price
-        const discountedPrice = Math.round(item?.item?.price * (1 - Number(item?.item?.discount || 0) / 100));
-        return total + discountedPrice * (item?.quantity || 1);
-      },
-      0
-    );
+    let sub = cartItems?.reduce((total, item) => {
+      // Calculate discounted price
+      const discountedPrice = Math.round(
+        item?.item?.price * (1 - Number(item?.item?.discount || 0) / 100)
+      );
+      return total + discountedPrice * (item?.quantity || 1);
+    }, 0);
     setSubTotal(Math.round(sub));
     console.log("sub", sub);
     return Math.round(sub);
@@ -153,21 +150,18 @@ export default function CreateOrder(props) {
   // Calculate amount after discount (before delivery charge)
   const getAmountAfterDiscount = (dist) => {
     console.log("dist", dist);
-    let tot = cartItems?.reduce(
-      (total, item) => {
-        // Calculate discounted price
-        const discountedPrice = Math.round(item?.item?.price * (1 - Number(item?.item?.discount || 0) / 100));
-        return total + discountedPrice * (item?.quantity || 1);
-      },
-      0
-    );
+    let tot = cartItems?.reduce((total, item) => {
+      // Calculate discounted price
+      const discountedPrice = Math.round(
+        item?.item?.price * (1 - Number(item?.item?.discount || 0) / 100)
+      );
+      return total + discountedPrice * (item?.quantity || 1);
+    }, 0);
 
     let p = Number(tot || 0) - (Number(tot || 0) * (dist || 0)) / 100;
     return Math.round(p);
   };
 
-
-  
   const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
     '& .MuiAutocomplete-option[data-focus="true"]': {
       backgroundColor: theme.palette.action.hover,
@@ -179,172 +173,293 @@ export default function CreateOrder(props) {
     },
   }));
 
+  // const handleCheckout = async (values) => {
+  //   console.log("smrgiioer", values);
+  //   if (!total || !values?.products || !values?.addressId || !values?.mode) {
+  //     toast.error("Please fill all details");
+  //     return false;
+  //   }
+  //   const emailHtml = renderWelcomeEmail(
+  //     {
+  //       amount: total,
+  //       products: values?.products,
+  //       addressId: values?.addressId,
+  //       mode: values?.mode,
+  //       address: values?.address?.fullAdress,
+  //     },
+  //     1,
+  //     ""
+  //   );
+  //   console.log("sjofje", emailHtml);
+
+  //   let data = {
+  //     amount: total,
+  //     products: values?.products,
+  //     addressId: values?.addressId,
+  //     mode: values?.mode,
+  //     htmls: emailHtml,
+  //     couponId: couponData?._id,
+  //   };
+
+  //   setSetLoading(true);
+  //   console.log(data, "test");
+  //   try {
+  //     const token = storedUserData.logedInUser.accessToken;
+  //     console.log(token, "token");
+  //     const response = await fetch(`${BASE_URL}/payment/place-order`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: token,
+  //       },
+  //       body: JSON.stringify(data),
+  //     });
+  //     console.log("result", response);
+
+  //     if (!response.ok) {
+  //       const responseData = await response.json();
+  //       console.log("data", responseData.data);
+
+  //       toast.error(responseData.message);
+
+  //       setSetLoading(false);
+  //       throw new Error("Network response was not ok");
+  //     } else {
+  //       if (data?.mode == "cash") {
+  //         const responseData = await response.json();
+  //         console.log("wemskfiew", responseData.data);
+  //         toast.success("Order placed successfully");
+  //         setSetLoading(false);
+  //         navigate("/success/2");
+  //         setTimeout(() => {
+  //           window.location.reload();
+  //         }, 100); // 2 seconds delay to ensure navigation completes
+  //       } else {
+  //         console.log("jsoejoj...........", Math.round(Number(total) * 100));
+  //         const responseData = await response.json();
+  //         const options = {
+  //           key: "rzp_live_mArtCmiYqSB4nm",
+  //           amount: Math.round(Number(total) * 100),
+  //           currency: "INR",
+  //           name: "Hairs N Cares",
+  //           image: "/assets/img/logo.png",
+  //           accept_partial: false,
+  //           reference_id: responseData.data,
+  //           description: storedUserData.logedInUser?.user?._id,
+  //           handler: async function (response) {
+  //             const data = {
+  //               orderId: responseData.data,
+  //             };
+  //             const res = await fetch(
+  //               `${BASE_URL}/bookAppointment/update-payment-order`,
+  //               {
+  //                 method: "POST",
+  //                 headers: {
+  //                   "Content-Type": "application/json",
+  //                   Authorization: token,
+  //                 },
+  //                 body: JSON.stringify(data),
+  //               }
+  //             );
+
+  //             console.log(await res.json());
+  //             // window.location = "https://hairsncares.com/success/2";
+  //             navigate("/success/2");
+  //           },
+  //           modal: {
+  //             confirm_close: true, // this is set to true, if we want confirmation when clicked on cross button.
+  //             // This function is executed when checkout modal is closed
+  //             // There can be 3 reasons when this modal is closed.
+  //             ondismiss: async (reason) => {
+  //               const {
+  //                 reason: paymentReason,
+  //                 field,
+  //                 step,
+  //                 code,
+  //               } = reason && reason.error ? reason.error : {};
+  //               // Reason 1 - when payment is cancelled. It can happend when we click cross icon or cancel any payment explicitly.
+  //               if (reason === undefined) {
+  //                 console.log("cancelled");
+  //                 toast.error("Payment Unsuccessful!! Try again");
+  //                 setSetLoading(false);
+  //                 if (responseData && responseData.data) {
+  //                   deleteOrderAndPayments(responseData.data);
+  //                 }
+  //               }
+  //               // Reason 2 - When modal is auto closed because of time out
+  //               else if (reason === "timeout") {
+  //                 console.log("timedout");
+  //                 toast.error("Too slow, timeout.");
+  //                 setSetLoading(false);
+  //                 if (responseData && responseData.data) {
+  //                   deleteOrderAndPayments(responseData.data);
+  //                 }
+  //               }
+  //               // Reason 3 - When payment gets failed.
+  //               else {
+  //                 console.log("failed");
+  //                 toast.error("failed ,try again.");
+  //                 setSetLoading(false);
+  //                 if (responseData && responseData.data) {
+  //                   deleteOrderAndPayments(responseData.data);
+  //                 }
+  //               }
+  //             },
+  //           },
+  //           notes: {
+  //             address: "HairsNcare Corporate Office",
+  //           },
+  //           theme: {
+  //             color: "#3399cc",
+  //           },
+  //           redirect: true,
+  //         };
+
+  //         const rzp1 = new Razorpay(options);
+
+  //         rzp1.on("payment.failed", function (response) {
+  //           toast.error("Payent failed due to some reasons , Try again.");
+  //           setSetLoading(false);
+  //           // Call deleteOrderAndPayments with the orderId
+  //           if (responseData && responseData.data) {
+  //             deleteOrderAndPayments(responseData.data);
+  //           }
+  //           throw new Error("Payment failed");
+  //         });
+
+  //         const res = rzp1.open();
+  //       }
+  //     }
+
+  //     // Handle the response data as needed
+  //   } catch (error) {
+  //     console.error(
+  //       "There was a problem with the fetch operation:",
+  //       error.message
+  //     );
+  //   }
+  // };
+
   const handleCheckout = async (values) => {
     console.log("smrgiioer", values);
     if (!total || !values?.products || !values?.addressId || !values?.mode) {
       toast.error("Please fill all details");
       return false;
     }
-    const emailHtml = renderWelcomeEmail(
-      {
-        amount: total,
-        products: values?.products,
-        addressId: values?.addressId,
-        mode: values?.mode,
-        address: values?.address?.fullAdress,
-      },
-      1,
-      ""
-    );
-    console.log("sjofje", emailHtml);
 
-    let data = {
-      amount: total,
-      products: values?.products,
-      addressId: values?.addressId,
-      mode: values?.mode,
-      htmls: emailHtml,
-      couponId: couponData?._id,
-    };
+    console.log("Checkout values:", values);
 
+    let orderId; // Declare orderId at function scope
     setSetLoading(true);
-    console.log(data, "test");
+
     try {
       const token = storedUserData.logedInUser.accessToken;
-      console.log(token, "token");
+
+      // First fetch request to place order
       const response = await fetch(`${BASE_URL}/payment/place-order`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: token,
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          amount: total,
+          products: values?.products,
+          addressId: values?.addressId,
+          mode: values?.mode,
+          htmls: renderWelcomeEmail(
+            {
+              amount: total,
+              products: values?.products,
+              addressId: values?.addressId,
+              mode: values?.mode,
+              address: values?.address?.fullAdress,
+            },
+            1,
+            ""
+          ),
+          couponId: couponData?._id,
+        }),
       });
-      console.log("result", response);
 
+      // Check if the first fetch request is successful
       if (!response.ok) {
         const responseData = await response.json();
-        console.log("data", responseData.data);
-
         toast.error(responseData.message);
-
         setSetLoading(false);
         throw new Error("Network response was not ok");
-      } else {
-        if (data?.mode == "cash") {
-          const responseData = await response.json();
-          console.log("wemskfiew", responseData.data);
-          toast.success("Order placed successfully");
-          setSetLoading(false);
-          navigate("/success/2");
-          setTimeout(() => {
-            window.location.reload();
-          }, 100); // 2 seconds delay to ensure navigation completes
-        } else {
-          console.log("jsoejoj...........", Math.round(Number(total) * 100));
-          const responseData = await response.json();
-          const options = {
-            key: "rzp_live_mArtCmiYqSB4nm",
-            amount: Math.round(Number(total) * 100),
-            currency: "INR",
-            name: "Hairs N Cares",
-            image: "/assets/img/logo.png",
-            accept_partial: false,
-            reference_id: responseData.data,
-            description: storedUserData.logedInUser?.user?._id,
-            handler: async function (response) {
-              const data = {
-                orderId: responseData.data,
-              };
-              const res = await fetch(
-                `${BASE_URL}/bookAppointment/update-payment-order`,
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                    Authorization: token,
-                  },
-                  body: JSON.stringify(data),
-                }
-              );
-
-              console.log(await res.json());
-              // window.location = "https://hairsncares.com/success/2";
-              navigate("/success/2");
-            },
-            modal: {
-              confirm_close: true, // this is set to true, if we want confirmation when clicked on cross button.
-              // This function is executed when checkout modal is closed
-              // There can be 3 reasons when this modal is closed.
-              ondismiss: async (reason) => {
-                const {
-                  reason: paymentReason,
-                  field,
-                  step,
-                  code,
-                } = reason && reason.error ? reason.error : {};
-                // Reason 1 - when payment is cancelled. It can happend when we click cross icon or cancel any payment explicitly.
-                if (reason === undefined) {
-                  console.log("cancelled");
-                  toast.error("Payment Unsuccessful!! Try again");
-                  setSetLoading(false);
-                  if (responseData && responseData.data) {
-                    deleteOrderAndPayments(responseData.data);
-                  }
-                }
-                // Reason 2 - When modal is auto closed because of time out
-                else if (reason === "timeout") {
-                  console.log("timedout");
-                  toast.error("Too slow, timeout.");
-                  setSetLoading(false);
-                  if (responseData && responseData.data) {
-                    deleteOrderAndPayments(responseData.data);
-                  }
-                }
-                // Reason 3 - When payment gets failed.
-                else {
-                  console.log("failed");
-                  toast.error("failed ,try again.");
-                  setSetLoading(false);
-                  if (responseData && responseData.data) {
-                    deleteOrderAndPayments(responseData.data);
-                  }
-                }
-              },
-            },
-            notes: {
-              address: "HairsNcare Corporate Office",
-            },
-            theme: {
-              color: "#3399cc",
-            },
-            redirect: true,
-          };
-
-          const rzp1 = new Razorpay(options);
-
-          rzp1.on("payment.failed", function (response) {
-            toast.error("Payent failed due to some reasons , Try again.");
-            setSetLoading(false);
-            // Call deleteOrderAndPayments with the orderId
-            if (responseData && responseData.data) {
-              deleteOrderAndPayments(responseData.data);
-            }
-            throw new Error("Payment failed");
-          });
-
-          const res = rzp1.open();
-        }
       }
 
-      // Handle the response data as needed
+      const responseData = await response.json();
+      orderId = responseData.data?.orderId; // Assign to scoped variable
+      const userId = responseData.data?.userId;
+      const totalAmount = responseData.data?.totalAmount;
+
+      // Validate orderId, userId, and totalAmount
+      if (!orderId || !userId || totalAmount == null) {
+        console.error("Invalid booking response:", responseData);
+        throw new Error(
+          "Invalid booking response (missing orderId/userId/totalAmount)"
+        );
+      }
+
+      // Handle cash payment
+      if (values?.mode === "cash") {
+        toast.success("Order placed successfully");
+        setSetLoading(false);
+        navigate("/success/2");
+        setTimeout(() => {
+          window.location.reload();
+        }, 100);
+        return;
+      }
+
+      // Handle online payment via PhonePe
+      const payRes = await fetch(`${BASE_URL}/payment/phonepay`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          amount: Number(totalAmount),
+          orderId,
+          userId,
+          redirectUrl: `https://hairsncares.com/status/${orderId}`,
+          callbackUrl: `${BASE_URL}/payment/phonepay/callback`,
+        }),
+      });
+
+      const pay = await payRes.json();
+      console.log("pay response", pay);
+
+      // Check if the payment initiation was successful
+      if (!pay.success) {
+        await deleteOrderAndPayments(orderId); // Delete order if payment fails
+        throw new Error(pay?.error || "Payment initiation failed");
+      }
+
+      const redirectUrl = pay?.redirectUrl;
+      if (!redirectUrl) {
+        console.error("Payment response had no redirectUrl:", pay);
+        throw new Error("Payment gateway did not return a redirectUrl");
+      }
+      window.location.assign(redirectUrl);
     } catch (error) {
       console.error(
         "There was a problem with the fetch operation:",
         error.message
       );
+      if (orderId) {
+        await deleteOrderAndPayments(orderId);
+      }
+      toast.error(error?.message || "Something went wrong, try again");
+      setSetLoading(false);
     }
   };
+
+  // PhonePe Callback (success/failure)
+
   const [address, setAddress] = useState(null);
 
   const handleInputChange = (e, values, setFieldValue) => {
@@ -454,16 +569,31 @@ export default function CreateOrder(props) {
     let applied = false;
 
     if (!coupon) {
-      return { applied: false, message: "No coupon data.", finalTotal: subtotal, discountValue: 0, discountPercent: 0 };
+      return {
+        applied: false,
+        message: "No coupon data.",
+        finalTotal: subtotal,
+        discountValue: 0,
+        discountPercent: 0,
+      };
     }
 
     // Check minOrderAmount
     if (subtotal < (coupon.minOrderAmount || 0)) {
       message = `Minimum order amount for this coupon is ₹${coupon.minOrderAmount}`;
-      return { applied: false, message, finalTotal: subtotal, discountValue: 0, discountPercent: 0 };
+      return {
+        applied: false,
+        message,
+        finalTotal: subtotal,
+        discountValue: 0,
+        discountPercent: 0,
+      };
     }
 
-    if (coupon.discountType === "percent" || coupon.discountType === "percent") {
+    if (
+      coupon.discountType === "percent" ||
+      coupon.discountType === "percent"
+    ) {
       discountPercent = coupon.percent;
       discountValue = (subtotal * discountPercent) / 100;
       finalTotal = subtotal - discountValue;
@@ -486,12 +616,13 @@ export default function CreateOrder(props) {
     // Add ₹200 delivery charge if total after coupon is less than ₹2000
     if (finalTotal < parseInt(content?.deliveryAmt)) {
       finalTotal = finalTotal + parseInt(content?.deliveryCharge);
-      message = `${message} + ₹${parseInt(content?.deliveryCharge)} delivery charge`;
+      message = `${message} + ₹${parseInt(
+        content?.deliveryCharge
+      )} delivery charge`;
     }
 
     return { applied, message, finalTotal, discountValue, discountPercent };
   };
-
 
   const applyCouponHandler = async () => {
     fetch(`${BASE_URL}/users/applyCoupon`, {
@@ -517,7 +648,9 @@ export default function CreateOrder(props) {
             return;
           }
 
-          setDiscount(couponResult.discountValue || couponResult.discountPercent);
+          setDiscount(
+            couponResult.discountValue || couponResult.discountPercent
+          );
           setTotal(Math.round(couponResult.finalTotal)); // if you track this
           setCouponData(data.data);
           toast.success(couponResult.message);
@@ -534,14 +667,18 @@ export default function CreateOrder(props) {
   // After payment is finalized (inside your payment success handler)
   const deleteOrderAndPayments = async (orderId) => {
     try {
-      const response = await fetch(`${BASE_URL}/payment/delete-order-and-payments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: storedUserData.logedInUser.accessToken,
-        },
-        body: JSON.stringify({ orderId }), // send orderId in body
-      });
+      console.log("Deleting order and payments for orderId:", orderId);
+      const response = await fetch(
+        `${BASE_URL}/payment/delete-order-and-payments`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: storedUserData.logedInUser.accessToken,
+          },
+          body: JSON.stringify({ orderId }), // send orderId in body
+        }
+      );
       const data = await response.json();
       if (response.ok) {
         // Handle success (optional)
@@ -605,7 +742,7 @@ export default function CreateOrder(props) {
               mode: "",
               agree: false,
             }}
-            onSubmit={(values, actions) => { }}
+            onSubmit={(values, actions) => {}}
           >
             {({
               handleBlur,
@@ -695,7 +832,8 @@ export default function CreateOrder(props) {
                                 >
                                   ₹{" "}
                                   {Math.round(
-                                    e.item?.price * (1 - Number(e.item?.discount || 0) / 100)
+                                    e.item?.price *
+                                      (1 - Number(e.item?.discount || 0) / 100)
                                   )}
                                 </div>
                               </div>
@@ -710,17 +848,36 @@ export default function CreateOrder(props) {
                       {discount && couponData ? (
                         <div
                           className="total-section"
-                          style={{ color: "#28a745", flexDirection: "column", alignItems: "flex-end", textAlign: "right" }}
+                          style={{
+                            color: "#28a745",
+                            flexDirection: "column",
+                            alignItems: "flex-end",
+                            textAlign: "right",
+                          }}
                         >
-                          <div style={{ fontWeight: 500, color: "#333", fontSize: "0.95rem" }}>
-                            Coupon Applied: <span style={{ color: "#e31e24" }}>{couponData.code}</span>
+                          <div
+                            style={{
+                              fontWeight: 500,
+                              color: "#333",
+                              fontSize: "0.95rem",
+                            }}
+                          >
+                            Coupon Applied:{" "}
+                            <span style={{ color: "#e31e24" }}>
+                              {couponData.code}
+                            </span>
                           </div>
                           <div>
                             {couponData.discountType === "fixed"
-                              ? `- ₹${couponData.fixedAmount || couponData.percent || 0}`
-                              : couponData.discountType === "percent" || couponData.discountType === "percentage"
-                                ? `- ${couponData.percent}%`
-                                : null}
+                              ? `- ₹${
+                                  couponData.fixedAmount ||
+                                  couponData.percent ||
+                                  0
+                                }`
+                              : couponData.discountType === "percent" ||
+                                couponData.discountType === "percentage"
+                              ? `- ${couponData.percent}%`
+                              : null}
                           </div>
                         </div>
                       ) : null}
@@ -735,14 +892,20 @@ export default function CreateOrder(props) {
                         <div
                           style={{
                             color:
-                              (couponData && applyCoupon(subtotal, couponData).finalTotal - parseInt(content?.deliveryCharge) < parseInt(content?.deliveryAmt)) ||
-                                (!couponData && subtotal < parseInt(content?.deliveryAmt))
+                              (couponData &&
+                                applyCoupon(subtotal, couponData).finalTotal -
+                                  parseInt(content?.deliveryCharge) <
+                                  parseInt(content?.deliveryAmt)) ||
+                              (!couponData &&
+                                subtotal < parseInt(content?.deliveryAmt))
                                 ? "#e31e24"
                                 : "#28a745",
                           }}
                         >
-                          {(couponData && applyCoupon(subtotal, couponData).finalTotal - 200 < 2000) ||
-                            (!couponData && subtotal < content?.deliveryAmt)
+                          {(couponData &&
+                            applyCoupon(subtotal, couponData).finalTotal - 200 <
+                              2000) ||
+                          (!couponData && subtotal < content?.deliveryAmt)
                             ? `₹ ${content?.deliveryCharge}`
                             : "Free Delivery"}
                         </div>
@@ -756,12 +919,28 @@ export default function CreateOrder(props) {
                         <div style={{ fontWeight: "700", color: "black" }}>
                           {(() => {
                             // If no coupon is applied and subtotal is less than 2000, add delivery charge
-                            if (!couponData && subtotal < parseInt(content?.deliveryAmt)) {
-                              return Math.max(0, Math.round(subtotal + parseInt(content?.deliveryCharge)));
+                            if (
+                              !couponData &&
+                              subtotal < parseInt(content?.deliveryAmt)
+                            ) {
+                              return Math.max(
+                                0,
+                                Math.round(
+                                  subtotal + parseInt(content?.deliveryCharge)
+                                )
+                              );
                             } else {
-                              const couponResult = applyCoupon(Math.round(subtotal), couponData);
-                              const afterCouponDiscount = Math.round(couponResult.finalTotal);
-                              return Math.max(0, Math.round(afterCouponDiscount));
+                              const couponResult = applyCoupon(
+                                Math.round(subtotal),
+                                couponData
+                              );
+                              const afterCouponDiscount = Math.round(
+                                couponResult.finalTotal
+                              );
+                              return Math.max(
+                                0,
+                                Math.round(afterCouponDiscount)
+                              );
                             }
                           })()}
                         </div>

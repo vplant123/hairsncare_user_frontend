@@ -76,7 +76,6 @@ import Dermatologist from "./features/Dermatologist";
 import InvoiceView from "./features/user-profile/InvoiceView";
 import AllBlogs from "./features/Blogs/AllBlogs";
 import Blog from "./features/Blogs/Blog";
-// import Status from "./features/payment/Status";
 
 import PaymentStatus from "./features/payment/paymentstatus";
 
@@ -339,7 +338,7 @@ function App() {
               <HomePage setTitle={setTitle} cart={cart} setCart={setCart} />
             }
           />
-          {/* <Route path="/status/:id" element={<Status />} /> */}
+          <Route path="/status/:slug" element={<Status />} />
 
           <Route path="/payment-status/:slug" element={<PaymentStatus />} />
           <Route path="/success/:id" element={<Success />} />

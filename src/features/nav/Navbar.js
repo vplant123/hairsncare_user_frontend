@@ -231,7 +231,7 @@ function Navbar({ children, cart, setCart }) {
                   <ShoppingCartIcon />
                 </Badge>
                 {/* <FaShoppingCart onClick={goToDash} size={20} /> */}
-                {(cartItems?.length > 0 || cart?.length > 0) && <span className="cart-count">{cartItems?.length || cart?.length}</span>}
+                {/* {(cartItems?.length > 0 || cart?.length > 0) && <span className="cart-count">{cartItems?.length || cart?.length}</span>} */}
               </div>
               <div className="user-svg">
                 <FaRegUser size={20} />

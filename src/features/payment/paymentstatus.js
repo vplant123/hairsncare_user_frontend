@@ -9,54 +9,44 @@ function PaymentStatus() {
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [retryCount, setRetryCount] = useState(0);
+  const maxRetries = 1;
 
-  const pathSegments = window.location.pathname.split("/");
-  const orderId = pathSegments[pathSegments.length - 1];
+  const orderId = window.location.pathname.split("/").pop();
 
   const checkStatus = async () => {
+    if (retryCount > maxRetries) {
+      setErrorMessage("Payment status update failed after multiple attempts.");
+      setLoading(false);
+      navigate(`/failure/${orderId || "1"}`);
+      return;
+    }
+
     setLoading(true);
     setErrorMessage("");
 
     try {
-      if (!orderId) {
-        throw new Error("No order ID provided");
-      }
+      if (!orderId) throw new Error("No order ID provided");
 
       // Fetch payment status
       const response = await fetch(
         `${BASE_URL}/payment/phonepay/status/${encodeURIComponent(orderId)}`
       );
       const data = await response.json();
-      console.log("Payment status data:", data);
-
       const paymentState = data.status;
       setStatus(paymentState);
 
       if (data.success && paymentState === "completed") {
-        // Retrieve planId from localStorage (set during checkout)
         const planId = localStorage.getItem("CheckoutPlanId");
-        console.log("Retrieved planId from localStorage:", planId);
-        console.log("All localStorage items:", Object.keys(localStorage));
-        console.log("Full localStorage content:", {
-          CheckoutPlanId: localStorage.getItem("CheckoutPlanId"),
-          User343: localStorage.getItem("User343"),
-        });
-        // Continue even if planId is not found, it might not be required for all payments
-
-        // Get auth token
         const storedUserData = JSON.parse(localStorage.getItem("User343"));
         const token = storedUserData?.logedInUser?.accessToken;
-        if (!token) {
-          throw new Error("Missing auth token");
-        }
+
+        if (!token) throw new Error("Missing auth token");
 
         // Prepare request body
-        const requestBody = { id: orderId };
-        if (planId) {
-          requestBody.planId = planId;
-        }
+        const requestBody = { id: orderId, ...(planId && { planId }) };
 
-        // Call update-payment API
+        // Update payment status
         const updateResponse = await fetch(
           `${BASE_URL}/bookAppointment/update-payment`,
           {
@@ -70,7 +60,6 @@ function PaymentStatus() {
         );
 
         const updateData = await updateResponse.json();
-        console.log("updateddata", updateData);
 
         if (!updateResponse.ok || updateData?.statusCode !== 200) {
           throw new Error(
@@ -78,83 +67,65 @@ function PaymentStatus() {
           );
         }
 
-        console.log("Payment completed successfully");
         toast.success("Payment successful!");
         navigate(`/success/${orderId}`);
       } else {
         switch (paymentState) {
           case "pending":
-            console.log("Payment is still pending");
             setStatus("Payment is still pending. Please wait.");
-            navigate(`/pending/${orderId}`);
+            navigate(`/payment-status/${orderId}`);
             break;
           case "failed":
-            console.log("Payment failed");
-            setStatus("Payment failed. Please try again.");
-            navigate(`/failure/${orderId}`);
+          case "error":
+            setRetryCount((prev) => prev + 1);
+            setTimeout(checkStatus, 2000);
             break;
           case "cancelled":
-            console.log("Payment was cancelled");
             setStatus("Payment was cancelled.");
             navigate(`/failure/${orderId}`);
             break;
-          case "error":
-            console.log("There was an error processing the payment");
-            setStatus("There was an error processing the payment.");
-            navigate(`/failure/${orderId}`);
-            break;
           default:
-            console.log("Unknown payment state");
             setStatus("Unknown payment status.");
             navigate(`/failure/${orderId}`);
             break;
         }
       }
     } catch (error) {
-      setErrorMessage(
-        error.message ||
-          "Network issue: Unable to check payment status. Please try again later."
-      );
-      console.error("Error fetching payment status:", error);
-      navigate(`/failure/${orderId || "1"}`);
+      if (retryCount < maxRetries) {
+        setRetryCount((prev) => prev + 1);
+        setTimeout(checkStatus, 2000);
+      } else {
+        setErrorMessage(
+          error.message || "Unable to check payment status. Please try again."
+        );
+        navigate(`/failure/${orderId || "1"}`);
+      }
     } finally {
-      setLoading(false);
+      if (retryCount >= maxRetries || status === "completed") {
+        setLoading(false);
+      }
     }
   };
 
-  // Cleanup function to remove planId from localStorage
   const cleanup = () => {
-    const planIdBeforeCleanup = localStorage.getItem("CheckoutPlanId");
-    console.log("Cleaning up, planId before removal:", planIdBeforeCleanup);
     localStorage.removeItem("CheckoutPlanId");
-    console.log(
-      "PlanId after removal:",
-      localStorage.getItem("CheckoutPlanId")
-    );
   };
 
   useEffect(() => {
-    // Log localStorage state when component mounts
-    console.log("Component mounted, checking localStorage:");
-    console.log("CheckoutPlanId:", localStorage.getItem("CheckoutPlanId"));
-    console.log("OrderId:", orderId);
-
     checkStatus();
-    // Cleanup when component unmounts
-    return () => {
-      console.log("Component unmounting, cleaning up planId");
-      cleanup();
-    };
+    return cleanup;
   }, [orderId]);
 
   return (
     <div className="payment-status-container">
       <div className="status-card">
         <h1 className="status-heading">Payment Status Check</h1>
-
         <button
           className="check-button"
-          onClick={checkStatus}
+          onClick={() => {
+            setRetryCount(0);
+            checkStatus();
+          }}
           disabled={loading}
         >
           {loading ? (
@@ -166,11 +137,9 @@ function PaymentStatus() {
             "Check PhonePe Payment Status"
           )}
         </button>
-
         {status && !errorMessage && (
           <div className="status-message">{status}</div>
         )}
-
         {errorMessage && (
           <div className="error-container">
             <i className="fa fa-times-circle error-icon"></i>
@@ -180,6 +149,7 @@ function PaymentStatus() {
               className="retry-button"
               onClick={() => {
                 setErrorMessage("");
+                setRetryCount(0);
                 checkStatus();
               }}
             >

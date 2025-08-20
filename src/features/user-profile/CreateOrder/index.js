@@ -987,8 +987,8 @@ export default function CreateOrder(props) {
                           >
                             <span>Pay Online</span>
                             <img
-                              src="https://cdn.razorpay.com/static/assets/logo/rzp_payment_icon.svg"
-                              alt="Payment methods"
+                              src="https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2023/06/phonepe-1686727535.jpg"
+                              alt="PhonePe payment method"
                               style={{
                                 maxWidth: "100%",
                                 height: "auto",

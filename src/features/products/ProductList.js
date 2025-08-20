@@ -1,14 +1,11 @@
 // import React,{useEffect} from 'react';
 // import './productList.css';
 
-// import { selectAllProducts,fetchAllProductAsync } from './productSlice'; 
+// import { selectAllProducts,fetchAllProductAsync } from './productSlice';
 
 // import {  useDispatch,useSelector } from 'react-redux';
 // import {Hourglass} from 'react-loader-spinner';
 // import { Link,Navigate, useNavigate } from 'react-router-dom';
-
-
-
 
 // function ProductList() {
 // const navigate=useNavigate()
@@ -97,39 +94,37 @@
 
 // export default ProductList;
 
-import React, { useEffect, useState } from 'react';
-import './productList.css';
-import { Hourglass } from 'react-loader-spinner';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import React, { useEffect, useState } from "react";
+import "./productList.css";
+import { Hourglass } from "react-loader-spinner";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
-import BASE_URL from '../../Config'; // Replace with your actual base URL
-import { addProductToCart, getCartItems } from './CartSlice';
-import Review from '../review-section/Review';
-import ReactPaginate from 'react-paginate';
-import ReactImageMagnify from 'react-image-magnify';
-import { useMediaQuery } from '@mui/material';
-import useNavigateParams from '../../utils/hookUseNavigateParam';
+import BASE_URL from "../../Config"; // Replace with your actual base URL
+import { addProductToCart, getCartItems } from "./CartSlice";
+import Review from "../review-section/Review";
+import ReactPaginate from "react-paginate";
+import ReactImageMagnify from "react-image-magnify";
+import { useMediaQuery } from "@mui/material";
+import useNavigateParams from "../../utils/hookUseNavigateParam";
 
 function ProductList(props) {
-  let { cart,
-    setCart } = props;
+  let { cart, setCart } = props;
 
-  console.log("smmfr", cart, setCart)
+  console.log("smmfr", cart, setCart);
 
   useEffect(() => {
-    console.log("sfoerjore")
-  }, [cart])
-
+    console.log("sfoerjore");
+  }, [cart]);
 
   const navigate = useNavigateParams();
   const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
-  const [status, setStatus] = useState('idle');
+  const [status, setStatus] = useState("idle");
   const [slide, setSlide] = useState(2);
-  const isLargeScreen = useMediaQuery('(min-width:1200px)');
-  const isMobile = useMediaQuery('(max-width: 768px)');
+  const isLargeScreen = useMediaQuery("(min-width:1200px)");
+  const isMobile = useMediaQuery("(max-width: 768px)");
   useEffect(() => {
     if (isLargeScreen) {
       setSlide(9);
@@ -138,13 +133,8 @@ function ProductList(props) {
     }
   }, [isMobile, isLargeScreen]);
 
-  const [loader, setLoader] = useState(false);  // New state for discount
-  let {
-    minValue,
-    maxValue,
-    rating,
-    type, filter
-  } = props
+  const [loader, setLoader] = useState(false); // New state for discount
+  let { minValue, maxValue, rating, type, filter } = props;
   let storedUserData = JSON.parse(localStorage.getItem("User343"));
   const userId = storedUserData?.logedInUser.user._id;
   const [cur, setCur] = useState(0);
@@ -154,33 +144,31 @@ function ProductList(props) {
       ? products?.length / slide
       : Math.floor(products?.length / slide) + 1;
 
-
   const handlePageClick = (event) => {
-    setCur(event.selected)
+    setCur(event.selected);
     // console.log("sjiorjfre",event.selected)
     // setSelectedPage(event.selected)
-
   };
-  console.log(storedUserData)
+  console.log(storedUserData);
   useEffect(() => {
     const fetchProducts = async () => {
-      setStatus('loading');
+      setStatus("loading");
       try {
-        const response = await fetch(`${BASE_URL}/admin/product?review=${rating}&lessPrice=${minValue}&morePrice=${maxValue}&type=${type}&filter=${filter}&display=1`);
+        const response = await fetch(
+          `${BASE_URL}/admin/product?review=${rating}&lessPrice=${minValue}&morePrice=${maxValue}&type=${type}&filter=${filter}&display=1`
+        );
         const data = await response.json();
         setProducts(data.message); // Adjust according to your API response structure
-        setStatus('idle');
+        setStatus("idle");
       } catch (error) {
-        console.error('Error fetching products:', error);
-        setStatus('error');
+        console.error("Error fetching products:", error);
+        setStatus("error");
       }
     };
 
     fetchProducts();
   }, [minValue, maxValue, rating, type, filter]);
-  console.log(products, "products")
-
-
+  console.log(products, "products");
 
   const handleAddToCart = async (product) => {
     let data = {
@@ -189,48 +177,48 @@ function ProductList(props) {
     };
     try {
       if (!storedUserData?.logedInUser) {
-
         let c = cart.map((e) => ({ ...e }));
         let f = c?.findIndex((w) => w?.item?._id == product?._id);
         if ((f || f == "0") && f != -1) {
           c[f].quantity = c[f]?.quantity + 1;
-        }
-        else {
+        } else {
           c.push(data);
         }
         setCart(c);
-        console.log("jreijf", f, c)
+        console.log("jreijf", f, c);
         localStorage.setItem("cart", JSON.stringify(c));
         toast.success("product added to cart");
         return;
         // toast.error(`Please Login First`);
       }
 
-      setLoader(true)
-      const response = await fetch(`${BASE_URL}/cart/add-cart?userId=${userId}`, {
-        method: 'POST',
-        headers: {
-          'Authorization': storedUserData.logedInUser.accessToken,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data),
-      });
-      setLoader(false)
+      setLoader(true);
+      const response = await fetch(
+        `${BASE_URL}/cart/add-cart?userId=${userId}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: storedUserData.logedInUser.accessToken,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+      setLoader(false);
       if (response.ok) {
         const result = await response.json();
         dispatch(getCartItems(storedUserData.logedInUser.user._id));
         toast.success("product added to cart");
-        console.log('review created successfully:', result);
+        console.log("review created successfully:", result);
         // navigate("/cart")
       } else {
-        console.error('Failed to create review:', response.statusText);
+        console.error("Failed to create review:", response.statusText);
       }
     } catch (error) {
-      setLoader(false)
-      console.error('Error:', error);
+      setLoader(false);
+      console.error("Error:", error);
     }
   };
-
 
   return (
     <div className="product-list-container row">
@@ -242,9 +230,14 @@ function ProductList(props) {
         <div>Error loading products</div>
       ) : (
         <>
-          {
-            products?.slice(cur * slide, (cur + 1) * slide)?.map((product, index) => {
-              let disPercent = ((parseFloat(product?.discount || 0) / parseFloat(product?.price)) * 100)?.toFixed(0)
+          {products
+            ?.slice(cur * slide, (cur + 1) * slide)
+            ?.map((product, index) => {
+              let disPercent = (
+                (parseFloat(product?.discount || 0) /
+                  parseFloat(product?.price)) *
+                100
+              )?.toFixed(0);
               return (
                 <div
                   className="product-item d-flex flex-column col-6 col-md-3"
@@ -268,14 +261,19 @@ function ProductList(props) {
                     <></>
                   )}{" "}
                   <div
-                    style={{
-                      // padding: "40px",
-                    }}
+                    style={
+                      {
+                        // padding: "40px",
+                      }
+                    }
                     onClick={() =>
-                      navigate('/product-detail/' + product?.metaSlug ?? product._id, { id: product?._id })
+                      navigate(
+                        "/product-detail/" + product?.metaSlug ?? product._id,
+                        { id: product?._id }
+                      )
                     }
                     title={product?.name}
-                    className='image-container-product-all'
+                    className="image-container-product-all"
                   >
                     {" "}
                     {/* <img
@@ -286,18 +284,17 @@ function ProductList(props) {
                               transition: "all 3.5s ease 0s",
                             }}
                           /> */}
-
                     <ReactImageMagnify
                       smallImage={{
                         alt: `${product?.name} by HairsnCares. Effective solution for ${product?.description}`,
                         isFluidWidth: true,
                         src: product?.src[0], // Replace with your image URL
-                        title: product?.name
+                        title: product?.name,
                       }}
                       largeImage={{
                         alt: `${product?.name} by HairsnCares. Effective solution for ${product?.description}.`,
                         src: product?.src[0], // Replace with high-res image URL
-                        width: 500,  // Smaller width reduces zoom level
+                        width: 500, // Smaller width reduces zoom level
                         height: 500,
                       }}
                       enlargedImagePosition="over" // "over", "beside", etc.
@@ -313,7 +310,10 @@ function ProductList(props) {
                     <div
                       style={{ textAlign: "left", paddingBottom: "8px" }}
                       onClick={() =>
-                        navigate('/product-detail/' + product?.metaSlug ?? product._id, { id: product?._id })
+                        navigate(
+                          "/product-detail/" + product?.metaSlug ?? product._id,
+                          { id: product?._id }
+                        )
                       }
                     >
                       {product.name}
@@ -435,7 +435,9 @@ function ProductList(props) {
                         </div>
                       </ul>
                       <div>
-                        {product?.reviews > 0 ? "(" + product?.reviews + ")" : ""}
+                        {product?.reviews > 0
+                          ? "(" + product?.reviews + ")"
+                          : ""}
                       </div>
                     </div>
 
@@ -443,12 +445,18 @@ function ProductList(props) {
                       style={{ textAlign: "left", paddingBottom: "8px" }}
                       className="d-flex"
                       onClick={() =>
-                        navigate('/product-detail/' + product?.metaSlug ?? product._id, { id: product?._id })
+                        navigate(
+                          "/product-detail/" + product?.metaSlug ?? product._id,
+                          { id: product?._id }
+                        )
                       }
                     >
                       <div style={{ fontWeight: "600" }}>
                         ₹{" "}
-                        {Math.round(parseFloat(product.price) * (1 - parseFloat(product.discount || 0) / 100))}
+                        {Math.round(
+                          parseFloat(product.price) *
+                            (1 - parseFloat(product.discount || 0) / 100)
+                        )}
                       </div>
                       {product.discount ? (
                         <div
@@ -458,8 +466,7 @@ function ProductList(props) {
                             fontWeight: "600",
                           }}
                         >
-                          ₹{Math.round(parseFloat(product.price))}
-                          
+                          ₹{Math.max(0, Math.round(parseFloat(product.price)))}
                         </div>
                       ) : (
                         <></>
@@ -470,27 +477,35 @@ function ProductList(props) {
                         props?.toggleCart();
                         handleAddToCart(product);
                       }}
-                      className={`btn primary ${product.stock === 0 ? 'disabled' : 'theme-btn-2'}`}
+                      className={`btn primary ${
+                        product.stock === 0 ? "disabled" : "theme-btn-2"
+                      }`}
                       disabled={product.stock === 0}
                     >
-                      {loader ? "Loading" : product.stock === 0 ? "OUT OF STOCK" : "ADD TO CART"}
+                      {loader
+                        ? "Loading"
+                        : product.stock === 0
+                        ? "OUT OF STOCK"
+                        : "ADD TO CART"}
                     </button>
                   </div>
                 </div>
               );
-            })
-          }
-          <div className="reactPagination" style={{
-            display: "flex",
-            justifyContent: "end"
-          }}>
+            })}
+          <div
+            className="reactPagination"
+            style={{
+              display: "flex",
+              justifyContent: "end",
+            }}
+          >
             <ReactPaginate
               breakLabel="..."
               nextLabel=" >"
               onPageChange={handlePageClick}
               pageRangeDisplayed={slide}
               pageCount={pageCount}
-              // forcePage={selectedPage} 
+              // forcePage={selectedPage}
               previousLabel="<"
               renderOnZeroPageCount={null}
               breakClassName={"page-item"}
@@ -506,7 +521,6 @@ function ProductList(props) {
             />
           </div>
         </>
-
       )}
     </div>
   );

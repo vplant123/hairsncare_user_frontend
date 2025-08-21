@@ -68,7 +68,7 @@ function PaymentStatus() {
         }
 
         toast.success("Payment successful!");
-        navigate(`/success/${orderId}`);
+        navigate(`/success/1`);
       } else {
         switch (paymentState) {
           case "pending":

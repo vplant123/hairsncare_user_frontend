@@ -61,8 +61,8 @@ import EditDoctor from "./features/admin-dashboard/manage-website/EditDoctor";
 import ErrorPage from "./features/ErrorPage";
 import Disclaimer from "./features/disclaimer";
 import Policy from "./features/policy";
-import ReturnPolicy from "./features/return-policy";
-import TermsOfService from "./features/terms-of-service";
+import ReturnPolicy from "./features/returnPolicy";
+import TermsOfService from "./features/termsOfService";
 import AllCoupons from "./features/admin-dashboard/AllCoupons";
 import Coupons from "./features/user-profile/Coupons";
 import AllReviews from "./features/admin-dashboard/AllReviews";
@@ -346,7 +346,7 @@ function App() {
 
           <Route path="/login" element={<Login />} />
           <Route path="/disclaimer" element={<Disclaimer />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/termsOfService" element={<TermsOfService />} />
           <Route path="/return-policy" element={<ReturnPolicy />} />
           <Route path="/policy" element={<Policy />} />
           <Route

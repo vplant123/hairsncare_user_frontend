@@ -75,7 +75,7 @@ const Footer = () => {
           <h5
             onClick={() => {
               scrollToTop()
-              navigate("/termsOfService")
+              navigate("/terms-of-service")
             }}
             style={{ cursor: "pointer" }}
             className="com-con"
@@ -85,7 +85,7 @@ const Footer = () => {
           <h5
             onClick={() => {
               scrollToTop()
-              navigate("/returnPolicy")
+              navigate("/return-policy")
             }}
             style={{ cursor: "pointer" }}
           >

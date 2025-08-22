@@ -205,7 +205,7 @@ function Navbar({ children, cart, setCart }) {
 
             {
               isMobile && <a>
-                <NavLink to="/termsOfService" activeClassName="active">
+                <NavLink to="/terms-of-service" activeClassName="active">
                   Terms of Service
                 </NavLink>
               </a>

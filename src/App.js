@@ -346,8 +346,8 @@ function App() {
 
           <Route path="/login" element={<Login />} />
           <Route path="/disclaimer" element={<Disclaimer />} />
-          <Route path="/termsOfService" element={<TermsOfService />} />
-          <Route path="/returnPolicy" element={<ReturnPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/return-policy" element={<ReturnPolicy />} />
           <Route path="/policy" element={<Policy />} />
           <Route
             path="/best-hair-care-products-hair-loss-scalp-health"

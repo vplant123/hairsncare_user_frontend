@@ -23,9 +23,9 @@ export const generateSitemapXML = (routes, products = [], blogs = []) => {
     { path: '/dr-amit-agarkar-hair-restoration-expert', priority: '0.8', changefreq: 'monthly' },
     { path: '/hair-care-blogs', priority: '0.8', changefreq: 'daily' },
     { path: '/policy', priority: '0.3', changefreq: 'yearly' },
-    { path: '/termsOfService', priority: '0.3', changefreq: 'yearly' },
+    { path: '/terms-of-service', priority: '0.3', changefreq: 'yearly' },
     { path: '/disclaimer', priority: '0.3', changefreq: 'yearly' },
-    { path: '/returnPolicy', priority: '0.3', changefreq: 'yearly' }
+    { path: '/return-policy', priority: '0.3', changefreq: 'yearly' }
   ];
 
   // Add static routes to sitemap

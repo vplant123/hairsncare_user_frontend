@@ -300,7 +300,7 @@ function ProductPage(props) {
                       else setSelectedQ(indx + 1);
                     }}
                   >
-                    <img
+                    <img loading="lazy"
                     className='faq-dropDown'
                       src={"/assets/img/hairTreatmentWomen/image-16.png"}
                       alt="Faqs icon"

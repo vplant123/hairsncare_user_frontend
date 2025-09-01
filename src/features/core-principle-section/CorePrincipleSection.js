@@ -41,7 +41,7 @@ function Principle({ imageSrc, description, animationClass, isLeft = false,index
       }}
       className={animationClass}
     >
-      <img className="principle-img" src={imageSrc} alt={dd[index]?.alt} title={dd[index]?.title} />
+      <img loading="lazy" className="principle-img" src={imageSrc} alt={dd[index]?.alt} title={dd[index]?.title} />
       <p>{description}</p>
     </motion.div>
   );
@@ -61,7 +61,7 @@ function Principle1({ imageSrc, description, animationClass, isLeft = false,inde
       }}
       className={animationClass}
     >
-      <img className="principle-img" src={imageSrc} alt={dd1[index]?.alt} title={dd1[index]?.title} />
+      <img loading="lazy" className="principle-img" src={imageSrc} alt={dd1[index]?.alt} title={dd1[index]?.title} />
       <p>{description}</p>
     </motion.div>
   );

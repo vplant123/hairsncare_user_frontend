@@ -4,7 +4,7 @@ export default function UploadSuccess() {
   return (
     <div className="successicon text-center">
     <div className="text-center">
-        <img alt='hair' src="https://hairsncares.com/assets/img/like.png" alt="like icon" />
+        <img loading="lazy" alt='hair' src="https://hairsncares.com/assets/img/like.png" alt="like icon" />
     </div>
     <p>
         <b>Once again, thank you for your participation.</b>

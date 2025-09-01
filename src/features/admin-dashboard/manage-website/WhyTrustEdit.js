@@ -53,7 +53,7 @@ const CareItem = ({ imgSrc, text, opacity, setSection4, section4, ind }) => (
       height : "170px"
     }}
   >
-    <img
+    <img loading="lazy"
       src={imgSrc}
       width={"50px"}
       height={"50px"}

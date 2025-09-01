@@ -253,7 +253,7 @@ export default function PersonalProfile({
                   >
                     {op.src ? (
                       <div className="image-container4">
-                        <img alt="hair" src={op.src} />
+                        <img loading="lazy" alt="hair" src={op.src} />
                       </div>
                     ) : (
                       <div className="circle-01">{op}</div>

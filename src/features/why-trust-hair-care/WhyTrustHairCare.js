@@ -46,7 +46,7 @@ const CareItem = ({ imgSrc, text, opacity,index }) => {
     initial="hidden"
     variants={RIGHT_VARIANTS}
     transition={{ duration: 1, delay: .25 }} style={{ display: "flex", flexDirection: "column", borderRadius: "100%", alignItems: "center", justifyContent: "center" }}>
-    <img
+    <img loading="lazy"
       src={imgSrc}
       width={"50px"}
       height={"50px"}
@@ -69,7 +69,7 @@ const CareItem1 = ({ imgSrc, text, opacity,index }) => {
     initial="hidden"
     variants={RIGHT_VARIANTS}
     transition={{ duration: 1, delay: .25 }} style={{ display: "flex", flexDirection: "column", borderRadius: "100%", alignItems: "center", justifyContent: "center" }}>
-    <img
+    <img loading="lazy"
       src={imgSrc}
       width={"50px"}
       height={"50px"}

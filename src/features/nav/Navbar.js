@@ -96,7 +96,7 @@ function Navbar({ children, cart, setCart }) {
       >
         <div className="nav-container container">
           <div>
-            <img
+            <img loading="lazy"
               alt="Hairsncares"
               className="nav-logo"
               src="/assets/img/logo.png"

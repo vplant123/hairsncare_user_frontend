@@ -40,7 +40,7 @@ export default function Page2({data}) {
       <div className=''>
         <div className='d-flex flex-column' style={{justifyContent : "space-between"}}>
           {/* <div className="head-managereport d-flex" style={{ justifyContent: "space-between" }}>
-              <img src="/assets/img/logo.png" className="head-managereport-logo" />
+              <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
               <div className="head-managereport-text1">Treatment Plan </div>
               <div className="text-flex-line-center-veritcal" style={{ color: "rgba(84, 84, 84, 1)" }}>
                   Smart Report
@@ -48,7 +48,7 @@ export default function Page2({data}) {
           </div> */}
 
           <div className="head-managereportN">
-            <img src="/assets/img/logo.png" className="head-managereport-logo" />
+            <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
             <h2>Treatment Plan</h2>
             <p>Smart Report</p>
           </div>
@@ -62,7 +62,7 @@ export default function Page2({data}) {
               <p>In conclusion, modern medicine offers reliable, evidence-based treatments for hair loss, making it a preferable option for many seeking effective solutions.</p>
 
               <div>
-                  <img src="/assets/img/reports/management/page2/modernmedicine1339-x8a3-800w.png" className='page2-sec-1-img mBpage2-sec-1-img' />
+                  <img loading="lazy" src="/assets/img/reports/management/page2/modernmedicine1339-x8a3-800w.png" className='page2-sec-1-img mBpage2-sec-1-img' />
               </div>
           </div>
 
@@ -74,14 +74,14 @@ export default function Page2({data}) {
         </div>
         <div className='d-flex flex-column mt-3' style={{justifyContent : "space-between"}}>
           {/* <div className="head-managereport d-flex" style={{ justifyContent: "space-between" }}>
-              <img src="/assets/img/logo.png" className="head-managereport-logo" />
+              <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
               <div className="head-managereport-text1">Treatment Plan </div>
               <div className="text-flex-line-center-veritcal" style={{ color: "rgba(84, 84, 84, 1)" }}>
                   Smart Report
               </div>
           </div> */}
           <div className="head-managereportN">
-            <img src="/assets/img/logo.png" className="head-managereport-logo" />
+            <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
             <h2>Treatment Plan</h2>
             <p>Smart Report</p>
           </div>
@@ -97,7 +97,7 @@ export default function Page2({data}) {
                         </div>
                     </div>
                     <div style={{width : "50%"}}>
-                        <img src="/assets/img/reports/management/page2/diagnosissynopsis1340-zch-700h.png" className='objectFitrMB' style={{width : "100%",height : "100%"}}/>
+                        <img loading="lazy" src="/assets/img/reports/management/page2/diagnosissynopsis1340-zch-700h.png" className='objectFitrMB' style={{width : "100%",height : "100%"}}/>
                     </div>
                     <div style={{width : "25%",display: "flex",alignItems : "center"}}>
                         <div style={{background : "rgba(0, 160, 227, 1)",height : "60px",width : "100%"}}>

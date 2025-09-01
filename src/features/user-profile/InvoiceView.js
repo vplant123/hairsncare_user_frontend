@@ -66,7 +66,7 @@ export default function InvoiceView() {
       <div id="invoice-pdf-content" ref={contentRef} className="bg-white p-8 rounded shadow text-xs md:text-sm border">
         {/* Header */}
         <div className="mt-2">
-          <img src="/assets/img/logo.png" alt="Logo" className="h-12 inline-block mr-2" />
+          <img loading="lazy" src="/assets/img/logo.png" alt="Logo" className="h-12 inline-block mr-2" />
         </div>
         <div className="font-bold text-lg py-2">Hairncares Wellness Center</div>
         

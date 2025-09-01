@@ -180,7 +180,7 @@
 //       <div className="edit-delete-product-container">
 //         {products.length > 0 && products.map((product, index) => (
 //           <div className="product-item" key={index}>
-//             <img src={editMode === index ? (editData.image ? URL.createObjectURL(editData.image) : product?.src) : product?.src} alt={product?.name} /> {/* Added optional chaining */}
+//             <img loading="lazy" src={editMode === index ? (editData.image ? URL.createObjectURL(editData.image) : product?.src) : product?.src} alt={product?.name} /> {/* Added optional chaining */}
 //             {editMode === index ? (
 //               <div className="edit-mode">
 //                 <input
@@ -596,7 +596,7 @@ function EditDeleteProduct() {
       <div className="edit-delete-product-container">
         {products.length > 0 && products?.slice(cur * 10, (cur + 1) * 10)?.map((product, index) => (
           <div className="product-item" key={index}>
-            <img src={editMode === index ? (editData.image ? URL.createObjectURL(editData.image) : product?.src) : product?.src?.[0]} alt={product?.name} />
+            <img loading="lazy" src={editMode === index ? (editData.image ? URL.createObjectURL(editData.image) : product?.src) : product?.src?.[0]} alt={product?.name} />
             {editMode === index ? (
               <div className="edit-mode">
                 <input
@@ -816,7 +816,7 @@ function EditDeleteProduct() {
                 {imagesrc?.map((item, index) => {
                   return (
                     <div className='d-flex flex-column'>
-                      <img src={item} />
+                      <img loading="lazy" src={item} />
                       <button type="button" onClick={() => RemoveOriginalImg(index)}> Remove</button>
                     </div>
 

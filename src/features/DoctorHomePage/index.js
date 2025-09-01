@@ -117,7 +117,7 @@ function DoctorHomepage() {
     //             return(
     //               <div className="col-12 col-sm-6 col-md-4" style={{fontWeight : "600"}}>
     //               <div style={{    padding: "10px"}} className="d-flex flex-column">
-    //               <img class="team-member-image" src={e?.image}/>
+    //               <img loading="lazy" class="team-member-image" src={e?.image}/>
     //               <p class="text-blk">
     //                   {e?.name}
     //                 </p>
@@ -133,7 +133,7 @@ function DoctorHomepage() {
 
     //         {/* <div className="col-12 col-sm-6 col-md-4">
     //         <div style={{    padding: "10px"}} className="d-flex flex-column">
-    //           <img class="team-member-image" src="https://workik-widget-assets.s3.amazonaws.com/widget-assets/images/ET3.jpg"/>
+    //           <img loading="lazy" class="team-member-image" src="https://workik-widget-assets.s3.amazonaws.com/widget-assets/images/ET3.jpg"/>
     //           <p class="text-blk">
     //               Gustavo Workman
     //             </p>
@@ -145,7 +145,7 @@ function DoctorHomepage() {
     //         </div>
     //         <div className="col-12 col-sm-6 col-md-4">
     //         <div style={{    padding: "10px"}} className="d-flex flex-column">
-    //           <img class="team-member-image" src="https://workik-widget-assets.s3.amazonaws.com/widget-assets/images/ET3.jpg"/>
+    //           <img loading="lazy" class="team-member-image" src="https://workik-widget-assets.s3.amazonaws.com/widget-assets/images/ET3.jpg"/>
     //           <p class="text-blk">
     //               Gustavo Workman
     //             </p>
@@ -210,7 +210,7 @@ function DoctorHomepage() {
                 >
                   <div className="icon-doctor-num">
                     <div className="icon-doctor-inner">
-                      <img src = "https://res.cloudinary.com/drkpwvnun/image/upload/v1735636941/hair-assessment/dr-amit-agarkar-qualifications.png.png"  style={{
+                      <img loading="lazy" src = "https://res.cloudinary.com/drkpwvnun/image/upload/v1735636941/hair-assessment/dr-amit-agarkar-qualifications.png.png"  style={{
                         height : "100%",
                         width:"100%"
                       }}
@@ -235,7 +235,7 @@ function DoctorHomepage() {
                 >
                   <div className="icon-doctor-num">
                     <div className="icon-doctor-inner">
-                      <img src = "https://res.cloudinary.com/drkpwvnun/image/upload/v1730146214/hair-assessment/v9eoecvuj8jphbor4gr0.png"  style={{
+                      <img loading="lazy" src = "https://res.cloudinary.com/drkpwvnun/image/upload/v1730146214/hair-assessment/v9eoecvuj8jphbor4gr0.png"  style={{
                         height : "100%",
                         width:"100%"
                       }}
@@ -260,7 +260,7 @@ function DoctorHomepage() {
                 >
                   <div className="icon-doctor-num">
                     <div className="icon-doctor-inner">
-                      <img src = "https://res.cloudinary.com/drkpwvnun/image/upload/v1730146606/hair-assessment/em5gumnojyxkneoxgsnp.png"  style={{
+                      <img loading="lazy" src = "https://res.cloudinary.com/drkpwvnun/image/upload/v1730146606/hair-assessment/em5gumnojyxkneoxgsnp.png"  style={{
                         height : "100%",
                         width:"100%"
                       }}
@@ -291,7 +291,7 @@ function DoctorHomepage() {
             <ZoomInDiv2
               className="main-section-2-htw-left"
             >
-              <img
+              <img loading="lazy"
                 src="/assets/img/hairTreatmentWomen/dr-amit-agarkar-hair-care-expert.png"
                 alt="Dr. Amit Agarkar, expert in Hair Loss and Hair Care Treatments, known for his personalized approach to hair health and growth."
                 title="Dr. Amit Agarkar – Hair Specialist."

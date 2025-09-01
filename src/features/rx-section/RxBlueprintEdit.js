@@ -52,7 +52,7 @@ function RxBlueprintEdit({section8,
         // style={{width : "75px"}}
       />
       </h2>
-        <img alt='hair' className="animate__animated animate__fadeInLeft" src={section8?.img} />
+        <img loading="lazy" alt='hair' className="animate__animated animate__fadeInLeft" src={section8?.img} />
         <input
       type="file"
       accept="image/*"
@@ -60,7 +60,7 @@ function RxBlueprintEdit({section8,
       style={{width : "95px"}}
     />
       </div>
-      <div className='animate__backInRight'><img alt='hair' src={section8?.subImg} />
+      <div className='animate__backInRight'><img loading="lazy" alt='hair' src={section8?.subImg} />
       <input
       type="file"
       accept="image/*"

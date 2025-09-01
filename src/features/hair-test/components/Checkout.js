@@ -261,7 +261,7 @@ function PrescriptionOption({ label, planId, price, onSelect, selected, testId, 
           </h1>
           <span>{label}</span>
           <em>
-            <img src="assets/img/checkout/rx.svg" alt="#" />
+            <img loading="lazy" src="assets/img/checkout/rx.svg" alt="#" />
           </em>
         </label>
         <h4 className="readmore">

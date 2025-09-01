@@ -154,7 +154,7 @@ function MiniCart({ isOpen, onClose,cart,setCart }) {
         {cartItemsNew?.length > 0 ? (
           cartItemsNew?.map((item, index) => (
             <div key={index} className="mini-cart-item">
-              <img src={item?.item?.src?.[0]} alt={item?.item?.name} />
+              <img loading="lazy" src={item?.item?.src?.[0]} alt={item?.item?.name} />
               <div>
                 <div>{item?.item?.name}</div>
                 <div className="cart-item-actions">

@@ -488,7 +488,7 @@ function ProductDetail(props) {
       {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
         <React.Fragment>
                     <TransformComponent>
-          <img 
+          <img loading="lazy" 
               style={{ maxWidth: "100%", height: "400px" }}
               src={product?.src[select]}
               alt={product?.name}
@@ -507,7 +507,7 @@ function ProductDetail(props) {
         </React.Fragment>
       )}
     </TransformWrapper> */}
-            {/* <img 
+            {/* <img loading="lazy" 
               style={{ maxWidth: "100%", height: "400px" }}
               src={product?.src[select]}
               alt={product?.name}
@@ -590,7 +590,7 @@ function ProductDetail(props) {
             </ul>
             <div style={{ display: "flex", alignItems: "center" }}>
               {product?.src.map((item, index) => (
-                <img
+                <img loading="lazy"
                   key={index}
                   onClick={() => setSelect(index)}
                   style={{
@@ -773,7 +773,7 @@ function ProductDetail(props) {
                 }}
                 onClick={() => product?.stock > 0 && handleAddToCart()}
               >
-                <img
+                <img loading="lazy"
                   src="/assets/img/buy-icon.png"
                   style={{
                     width: "28px",
@@ -796,7 +796,7 @@ function ProductDetail(props) {
                 }}
                 onClick={() => product?.stock > 0 && handleBuyNow()}
               >
-                <img
+                <img loading="lazy"
                   src="/assets/img/cart-icon.png"
                   style={{
                     width: "28px",
@@ -866,7 +866,7 @@ function ProductDetail(props) {
           }}
         />
         <div style={{ textAlign: "center", margin: "2rem 0 2rem 0" }}>
-          <img
+          <img loading="lazy"
             style={{ width: "100%" }}
             src="/assets/img/banner/Product Page - Static Banner.png"
           />
@@ -939,7 +939,7 @@ function ProductDetail(props) {
                 </div>
               </div>
               <div class="col-lg-6 col-md-6">
-                <img
+                <img loading="lazy"
                   src="/assets/img/Ingredient-pic.jpg"
                   alt=""
                   style={{ width: "100%" }}
@@ -1007,7 +1007,7 @@ function ProductDetail(props) {
             style={{ margin: "0 0 50px 0" }}
             onClick={handleTestHair}
           >
-            <img
+            <img loading="lazy"
               src="/assets/img/product-details--banner-doctor-recommend.png"
               alt=""
               style={{
@@ -1254,7 +1254,7 @@ function ProductDetail(props) {
         <></>
       )}
       {/* <div>
-        <img
+        <img loading="lazy"
           style={{
             height: "100%",
             width: "100%",
@@ -1444,7 +1444,7 @@ function ProductDetail(props) {
                 }}
                 onClick={() => product?.stock > 0 && handleBuyNow()}
               >
-                <img
+                <img loading="lazy"
                   src="/assets/img/cart-icon.png"
                   style={{
                     width: "28px",
@@ -1460,7 +1460,7 @@ function ProductDetail(props) {
           ) : (
             <div className="d-flex" style={{ justifyContent: "space-between" }}>
               <div className="d-flex" style={{ gap: "10px" }}>
-                <img
+                <img loading="lazy"
                   style={{ width: "70px", height: "70px" }}
                   src={product?.src?.[0]}
                 />
@@ -1526,7 +1526,7 @@ function ProductDetail(props) {
                   }}
                   onClick={() => product?.stock > 0 && handleBuyNow()}
                 >
-                  <img
+                  <img loading="lazy"
                     src="/assets/img/cart-icon.png"
                     style={{
                       width: "28px",

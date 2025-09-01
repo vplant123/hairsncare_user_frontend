@@ -43,7 +43,7 @@ export default function Page2({data}) {
       className="head-managereport d-flex"
       style={{ justifyContent: "space-between" }}
     >
-      <img src="/assets/img/logo.png" className="head-managereport-logo" />
+      <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
       <div className="head-managereport-text1">Treatment Plan </div>
       <div
         className="text-flex-line-center-veritcal"
@@ -76,7 +76,7 @@ evidence-based methods and scientifically backed treatments.
       </div>
 
       <div>
-        <img src="/assets/img/reports/management/page2/modernmedicine1339-x8a3-800w.png" className='page2-sec-1-img'/>
+        <img loading="lazy" src="/assets/img/reports/management/page2/modernmedicine1339-x8a3-800w.png" className='page2-sec-1-img'/>
       </div>
 
     </div>
@@ -99,7 +99,7 @@ evidence-based methods and scientifically backed treatments.
       className="head-managereport d-flex"
       style={{ justifyContent: "space-between" }}
     >
-      <img src="/assets/img/logo.png" className="head-managereport-logo" />
+      <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
       <div className="head-managereport-text1">Treatment Plan </div>
       <div
         className="text-flex-line-center-veritcal"
@@ -122,7 +122,7 @@ evidence-based methods and scientifically backed treatments.
         </div>
       </div>
       <div style={{width :"50%"}}>
-        <img src="/assets/img/reports/management/page2/diagnosissynopsis1340-zch-700h.png" style={{width : "100%",height : "100%"}}/>
+        <img loading="lazy" src="/assets/img/reports/management/page2/diagnosissynopsis1340-zch-700h.png" style={{width : "100%",height : "100%"}}/>
       </div>
       <div style={{width : "25%",display:"flex",alignItems :"center"}}>
       <div style={{background : "rgba(0, 160, 227, 1)",height : "60px",width : "100%"}}>
@@ -288,7 +288,7 @@ evidence-based methods and scientifically backed treatments.
           <div class="management-report-pg2-treatment-plan-container" style={{marginTop : "200px"}}>
     <div class="management-report-pg2-treatment-plan-rectangle34624510">
       <div class="management-report-pg2-treatment-plan-rectangle34624522">
-        <img src="/assets/img/reports/management/page2/hairsn111336-te9g-200h.png" alt="HAIRSN111336"
+        <img loading="lazy" src="/assets/img/reports/management/page2/hairsn111336-te9g-200h.png" alt="HAIRSN111336"
           class="management-report-pg2-treatment-plan-hairsn11" />
       </div>
       <div class="treat-txt"><span class="management-report-pg2-treatment-plan-text36">Treatment Plan</span></div>
@@ -345,7 +345,7 @@ evidence-based methods and scientifically backed treatments.
       </span>
     </div>
     <div class="flex2">
-      <img src="/assets/img/reports/management/page2/modernmedicine1339-x8a3-800w.png" alt=""
+      <img loading="lazy" src="/assets/img/reports/management/page2/modernmedicine1339-x8a3-800w.png" alt=""
         class="management-report-pg2-treatment-plan-modernmedicine" />
       <div class="background"></div>
     </div>
@@ -357,7 +357,7 @@ evidence-based methods and scientifically backed treatments.
       <br />
     </div>
     <div class="management-report-pg2-treatment-plan-rectangle34624511">
-      <img src="/assets/img/reports/management/page2/diagnosissynopsis1340-zch-700h.png" alt=""
+      <img loading="lazy" src="/assets/img/reports/management/page2/diagnosissynopsis1340-zch-700h.png" alt=""
         class="management-report-pg2-treatment-plan-diagnosissynopsis" style={{display : "flex"}} />
       <div class="background1"></div>
     </div>

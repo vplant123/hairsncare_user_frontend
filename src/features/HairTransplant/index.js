@@ -155,7 +155,7 @@ export default function HairTransplant() {
               </div>
             </ZoomInDiv>
             <RightAnimatedDiv className="d-flex flex-column main-section-1-htw-right">
-              <img
+              <img loading="lazy"
                 alt={content?.section1?.alt}
                 title="Hair Transplant Comparison"
                 src={content?.section1?.image}
@@ -174,7 +174,7 @@ export default function HairTransplant() {
           </ZoomInDiv2>
           <div className="desktop-view" style={{ gap: "5%" }}>
             <LeftAnimatedDiv className="main-section-2-htw-left">
-              <img
+              <img loading="lazy"
                 alt={content?.section2?.alt}
                 src={content?.section2?.image}
                 style={{ height: "90%", width: "98%" }}
@@ -246,7 +246,7 @@ export default function HairTransplant() {
                     style={{ height: "100%" }}
                   >
                     <div>
-                      <img
+                      <img loading="lazy"
                         src={item.image}
                         style={{ height: "100%", width: "100%" }}
                         alt={item.alt}
@@ -475,7 +475,7 @@ export default function HairTransplant() {
                 return (
                   <ZoomInDiv className="sub-section-4-htw d-flex">
                     <div className="sub-img-section-4-htw">
-                      <img
+                      <img loading="lazy"
                         src={item.image}
                         style={{ height: "100%", width: "100%" }}
                         alt={item.title}
@@ -543,7 +543,7 @@ export default function HairTransplant() {
               </ZoomInDiv>
             </div>
             <RightAnimatedDiv className="d-flex flex-column main-section-1-htw-right">
-              <img
+              <img loading="lazy"
                 src={content?.section7?.image}
                 alt={content?.section7?.alt}
               />
@@ -581,7 +581,7 @@ export default function HairTransplant() {
                       }}
                       className=" faq-icon"
                     >
-                      <img
+                      <img loading="lazy"
                         src={"/assets/img/hairTreatmentWomen/image-16.png"}
                         className="faq-dropDown"
                         alt="Hair transplant Faqs icon"

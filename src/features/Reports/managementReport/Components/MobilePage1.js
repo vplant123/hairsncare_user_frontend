@@ -37,7 +37,7 @@ export default function Page1({data}) {
       <div className='mobileView'>
         <div className="" style={{padding : "10px",position: "relative"}}>
           <div className="head-managereportN">
-            <img src="/assets/img/logo.png" className="head-managereport-logo" />
+            <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
             <h2>Management Report</h2>
             <p>Smart Report</p>
           </div>
@@ -71,7 +71,7 @@ export default function Page1({data}) {
                 <p>Fellowship in Hair Transplant</p>
                 <p>Reg. No,- 06/07/2868</p>
               </div>
-              <img className="doctor-img" src="https://res.cloudinary.com/drkpwvnun/image/upload/v1731256157/hair-assessment/a6jo0qrxvq61phbr9ywt.png" />
+              <img loading="lazy" className="doctor-img" src="https://res.cloudinary.com/drkpwvnun/image/upload/v1731256157/hair-assessment/a6jo0qrxvq61phbr9ywt.png" />
             </div>
           </div>
           <div className='expartSec'>
@@ -126,7 +126,7 @@ export default function Page1({data}) {
                           Reg. No,- 06/07/2868
                       </div>
                   </div>
-                  <img className="doctor-img" src="https://res.cloudinary.com/drkpwvnun/image/upload/v1731256157/hair-assessment/a6jo0qrxvq61phbr9ywt.png" />
+                  <img loading="lazy" className="doctor-img" src="https://res.cloudinary.com/drkpwvnun/image/upload/v1731256157/hair-assessment/a6jo0qrxvq61phbr9ywt.png" />
               </div>
           </div> */}
 
@@ -162,7 +162,7 @@ export default function Page1({data}) {
                       {e?.text}
                   </div>
                   <div style={{height : "65%",padding : "10px"}} className='treatPlanTham'>
-                      <img src={ e?.img} style={{width : "100%",height : "100%"}}/>
+                      <img loading="lazy" src={ e?.img} style={{width : "100%",height : "100%"}}/>
                   </div>
               </div>
               ) })}
@@ -181,7 +181,7 @@ export default function Page1({data}) {
   //   <div class="management-report1ignore-management-report1ignore">
   //     <div class="management-report1ignore-rectangle34624510">
   //       <div class="management-report1ignore-rectangle34624522">
-  //         <img src="/assets/img/reports/management/page1/hairsn111425-5y7-200h.png" alt="" class="management-report1ignore-hairsn11" />
+  //         <img loading="lazy" src="/assets/img/reports/management/page1/hairsn111425-5y7-200h.png" alt="" class="management-report1ignore-hairsn11" />
   //       </div>
   //       <span class="management-report1ignore-text11">Management Report</span>
   //       <div class="header-text"> <span class="management-report1ignore-text10">Smart Report</span></div>
@@ -217,10 +217,10 @@ export default function Page1({data}) {
   //       </div>
   //     </div>
   //     <div class="management-report1ignore-group1707485965">
-  //       <img src="/assets/img/reports/management/page1/rectangle59441412-owg8-1400w.png" alt="Rectangle59441412"
+  //       <img loading="lazy" src="/assets/img/reports/management/page1/rectangle59441412-owg8-1400w.png" alt="Rectangle59441412"
   //         class="management-report1ignore-rectangle5944" />
 
-  //       <img src="/assets/img/reports/management/page1/image45dramit111417-7o3f-300w.png" alt="IMAGE45drAmit111417"
+  //       <img loading="lazy" src="/assets/img/reports/management/page1/image45dramit111417-7o3f-300w.png" alt="IMAGE45drAmit111417"
   //         class="management-report1ignore-image45dr-amit11" />
   //       <div class="management-report1ignore-frame1000004465">
   //         <span class="management-report1ignore-text33">
@@ -269,7 +269,7 @@ export default function Page1({data}) {
   //       <div class="management-report1ignore-text37">
   //         <p>Treatment Plan</p>
   //       </div>
-  //       <img src="/assets/img/reports/management/page1/grade2baldnesspatienttreatmentplan1427-3wi-300h.png"
+  //       <img loading="lazy" src="/assets/img/reports/management/page1/grade2baldnesspatienttreatmentplan1427-3wi-300h.png"
   //         alt="grade2baldnesspatienttreatmentplan1427"
   //         class="management-report1ignore-grade2baldnesspatienttreatmentplan" />
   //     </div>
@@ -277,21 +277,21 @@ export default function Page1({data}) {
   //       <div class="management-report1ignore-text38">
   //         <p>Treatment Plan Hair &amp; Scalp Treatment Management</p>
   //       </div>
-  //       <img src="/assets/img/reports/management/page1/hairandscalpanalysis11428-9whh-300h.png" alt="HairandScalpanalysis11428"
+  //       <img loading="lazy" src="/assets/img/reports/management/page1/hairandscalpanalysis11428-9whh-300h.png" alt="HairandScalpanalysis11428"
   //         class="management-report1ignore-hairand-scalpanalysis1" />
   //     </div>
   //     <div class="box3">
   //       <div class="management-report1ignore-text39">
   //         <p>Nutritional Management</p>
   //       </div>
-  //       <img src="/assets/img/reports/management/page1/nutritional11429-nkz-300h.png" alt="nutritional11429"
+  //       <img loading="lazy" src="/assets/img/reports/management/page1/nutritional11429-nkz-300h.png" alt="nutritional11429"
   //         class="management-report1ignore-nutritional1" />
   //     </div>
   //     <div class="box4">
   //       <div class="management-report1ignore-text40">
   //         <p>Lifestyle Management</p>
   //       </div>
-  //       <img src="/assets/img/reports/management/page1/lifestyle41430-5azi-300h.png" alt="lifestyle41430"
+  //       <img loading="lazy" src="/assets/img/reports/management/page1/lifestyle41430-5azi-300h.png" alt="lifestyle41430"
   //         class="management-report1ignore-lifestyle4" />
   //     </div>
   //     <div class="box5">
@@ -301,7 +301,7 @@ export default function Page1({data}) {
   //       <span class="management-report1ignore-text41">
 
   //       </span>
-  //       <img src="/assets/img/reports/management/page1/doctorstressmanagementposter21431-vnz-300w.png"
+  //       <img loading="lazy" src="/assets/img/reports/management/page1/doctorstressmanagementposter21431-vnz-300w.png"
   //         alt="doctorstressmanagementposter21431" class="management-report1ignore-doctorstressmanagementposter2" />
   //     </div>
 

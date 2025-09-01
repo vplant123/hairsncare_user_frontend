@@ -11,7 +11,7 @@ export default function Page7({data}) {
         className="head-managereport d-flex"
         style={{ justifyContent: "space-between" }}
       >
-        <img src="/assets/img/logo.png" className="head-managereport-logo" />
+        <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
         <div className="head-managereport-text1">Stress Management</div>
         <div
           className="text-flex-line-center-veritcal"
@@ -22,7 +22,7 @@ export default function Page7({data}) {
       </div> */}
 
       <div className="head-managereportN">
-        <img src="/assets/img/logo.png" className="head-managereport-logo" />
+        <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
         <h2 className="">Stress Management</h2>
         <p>Smart Report</p>
       </div>
@@ -38,7 +38,7 @@ export default function Page7({data}) {
 
       <div class="content"> 
         <div class="image">
-          <img src = "/assets/img/reports/management/page7/image1.png" style={{width : "100%",height : "100%"}} />
+          <img loading="lazy" src = "/assets/img/reports/management/page7/image1.png" style={{width : "100%",height : "100%"}} />
         </div>
         <div class="content-body">
           <ul style={{paddingLeft : "13px"}}>
@@ -58,13 +58,13 @@ export default function Page7({data}) {
           </ul>
         </div>
         <div class="image-reverse">
-        <img src = "/assets/img/reports/management/page7/image2.png" style={{width : "100%",height : "100%"}} />
+        <img loading="lazy" src = "/assets/img/reports/management/page7/image2.png" style={{width : "100%",height : "100%"}} />
         </div>
       </div>
 
       <div class="content">
         <div class="image" >
-        <img src = "/assets/img/reports/management/page7/image3.png" style={{width : "100%",height : "100%"}} />
+        <img loading="lazy" src = "/assets/img/reports/management/page7/image3.png" style={{width : "100%",height : "100%"}} />
         </div>
         <div class="content-body">
           <ul style={{paddingLeft : "13px"}}>
@@ -83,13 +83,13 @@ export default function Page7({data}) {
           </ul>
         </div>
         <div class="image-reverse">
-        <img src = "/assets/img/reports/management/page7/image4.png" style={{width : "100%",height : "100%"}} />
+        <img loading="lazy" src = "/assets/img/reports/management/page7/image4.png" style={{width : "100%",height : "100%"}} />
         </div>
       </div>
 
       <div class="content">
         <div class="image" >
-        <img src = "/assets/img/reports/management/page7/image5.png" style={{width : "100%",height : "100%"}} />
+        <img loading="lazy" src = "/assets/img/reports/management/page7/image5.png" style={{width : "100%",height : "100%"}} />
         </div>
         <div class="content-body">
           <ul style={{paddingLeft : "13px"}}>
@@ -108,13 +108,13 @@ export default function Page7({data}) {
           </ul>
         </div>
         <div class="image-reverse">
-        <img src = "/assets/img/reports/management/page7/image6.png" style={{width : "100%",height : "100%"}} />
+        <img loading="lazy" src = "/assets/img/reports/management/page7/image6.png" style={{width : "100%",height : "100%"}} />
         </div>
       </div>
 
         <div class="content">
           <div class="image" >
-          <img src = "/assets/img/reports/management/page7/image7.png" style={{width : "100%",height : "100%"}} />
+          <img loading="lazy" src = "/assets/img/reports/management/page7/image7.png" style={{width : "100%",height : "100%"}} />
           </div>
           <div class="content-body">
             <ul style={{paddingLeft : "13px"}}>
@@ -134,7 +134,7 @@ export default function Page7({data}) {
             </ul>
           </div>
           <div class="image-reverse">
-          <img src = "/assets/img/reports/management/page7/image8.png" style={{width : "100%",height : "100%"}} />
+          <img loading="lazy" src = "/assets/img/reports/management/page7/image8.png" style={{width : "100%",height : "100%"}} />
           </div>
         </div>
 

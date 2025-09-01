@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./nav/Navbar";
 import Footer from "./footer/Footer";
+import { useNavigate } from "react-router-dom";
 function Disclaimer(props) {
+  const navigate = useNavigate();
   return (
     <Navbar>
       <div className="container">
@@ -127,7 +129,7 @@ function Disclaimer(props) {
           While we strive to provide valuable insights and support, it is
           essential to acknowledge the following regarding results:
         </div>
-        <ul style={{    margin: "10px 0 0 0"}}>
+        <ul style={{ margin: "10px 0 0 0" }}>
           <li>
             Individual Variation:
             <div>
@@ -236,7 +238,26 @@ function Disclaimer(props) {
           with any part of this disclaimer, please refrain from using our
           services.
         </div>
+        <div style={{ margin: "40px 0 20px 0", textAlign: "center" }}>
+          <button
+            style={{
+              padding: "8px 16px",
+              fontSize: "16px",
+              borderRadius: "4px",
+              border: "none",
+              background: "#007bff",
+              color: "#fff",
+              cursor: "pointer",
+            }}
+            onClick={() =>
+              navigate("/best-hair-care-products-hair-loss-scalp-health")
+            }
+          >
+            &#8592; Buy Products
+          </button>
+        </div>
       </div>
+
       <Footer />
     </Navbar>
   );

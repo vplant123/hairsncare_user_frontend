@@ -314,7 +314,7 @@ const [loading,setLoading] = useState(false)
               }}
             >
 
-          <img src={data?.nutrition?.src} />
+          <img src={data?.nutrition?.src} loading="lazy" alt="Nutritional Assessment" />
           <h2>{data?.nutrition?.value}</h2>
             </div>
 
@@ -354,7 +354,7 @@ const [loading,setLoading] = useState(false)
               }}
             >
 
-          <img src={data?.lifeStyle?.src} />
+          <img src={data?.lifeStyle?.src} loading="lazy" alt="Lifestyle Assessment" />
           <h2>{data?.lifeStyle?.value}</h2>
             </div>
           <p>
@@ -399,7 +399,7 @@ const [loading,setLoading] = useState(false)
                 justifyContent: "center",
               }}
             >
- <img src={data?.stress?.src} />
+ <img src={data?.stress?.src} loading="lazy" alt="Stress Assessment" />
  <h2>{data?.stress?.value}</h2>
             </div>
 
@@ -418,7 +418,7 @@ const [loading,setLoading] = useState(false)
             <p>Disclaimer</p>
           </div>
           <div>
-            <img className="img-sign" src="/Amit-Sir---Signature.png" alt="Doctor's Image" style={{maxWidth : "60%"}} />
+            <img className="img-sign" src="/Amit-Sir---Signature.png" alt="Doctor's Image" style={{maxWidth : "60%"}} loading="lazy"/>
             <h2>Dr Amit Agarkar</h2>
             <p>MBBS, MD, FCPS,DDV</p>
             <p>Fellowship in Hair Transplant</p>

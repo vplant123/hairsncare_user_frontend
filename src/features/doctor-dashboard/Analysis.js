@@ -329,7 +329,7 @@ console.log({
                 style={{ backgroundColor: ExaminationColor }}
                 className="color-diva"
               >
-                <img src="\scalp-examination.png" />
+                <img loading="lazy" src="\scalp-examination.png" />
                 <h2 style={{fontSize : "16px"}}>Scalp Examination</h2>
               </div>
               <div className="custom-color-buttons">
@@ -346,7 +346,7 @@ console.log({
                 style={{ backgroundColor: DensityColor }}
                 className="color-diva"
               >
-                <img src="\Hair-Density.png" /> <h2 style={{fontSize : "16px"}}>Hair Density</h2>
+                <img loading="lazy" src="\Hair-Density.png" /> <h2 style={{fontSize : "16px"}}>Hair Density</h2>
               </div>
               <div className="custom-color-buttons">
                 <button
@@ -362,7 +362,7 @@ console.log({
                 style={{ backgroundColor: MoistureColor }}
                 className="color-diva"
               >
-                <img src="\moisture-&-hydration-of-hair.png" />
+                <img loading="lazy" src="\moisture-&-hydration-of-hair.png" />
                 <h2 style={{fontSize : "16px"}}>Moisture & Hydration of Hair</h2>
               </div>
               <div className="custom-color-buttons">
@@ -400,7 +400,7 @@ console.log({
                 className="color-diva"
               >
                 {" "}
-                <img src="\Hair-Quality.png" />
+                <img loading="lazy" src="\Hair-Quality.png" />
                 <h2 style={{fontSize : "16px"}}>Hair Quality Texture</h2>
               </div>
               <div className="custom-color-buttons">
@@ -414,7 +414,7 @@ console.log({
                 ></button>
               </div>
               <div style={{ backgroundColor: vibrancy }} className="color-diva">
-                <img src="\color-vibrancy.png" />
+                <img loading="lazy" src="\color-vibrancy.png" />
                 <h2 style={{fontSize : "16px"}}>Color Vibrancy</h2>
               </div>
               <div className="custom-color-buttons">
@@ -431,7 +431,7 @@ console.log({
                 style={{ backgroundColor: breakageColor }}
                 className="color-diva"
               >
-                <img src="/Hair-Breakage.png" />
+                <img loading="lazy" src="/Hair-Breakage.png" />
                 <h2 style={{fontSize : "16px"}}>Hair Breakage</h2>
               </div>
               <div className="custom-color-buttons">

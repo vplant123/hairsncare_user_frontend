@@ -40,7 +40,7 @@ const ShoppingItem = ({ item,index }) => {
           delay: 0.2 * parseInt(item?.index),
         }}
       >
-        <img alt={dd[index]?.alt} src={item?.img} title={dd[index]?.title}  />
+        <img loading="lazy" alt={dd[index]?.alt} src={item?.img} title={dd[index]?.title}  />
         <div>
           <h4 className="feature-heading" style={{color : "black"}}>{item?.name}</h4>
           <p>{item?.desc}</p>

@@ -145,7 +145,7 @@ const ProductCard = ({ product, index, cart, setCart }) => {
           ) : (
             <></>
           )}{" "}
-          <img
+          <img loading="lazy"
             src={product.src?.[0]}
             alt={product.name}
             title={product.name}

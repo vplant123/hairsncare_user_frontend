@@ -6,7 +6,7 @@ export default function ThankYou({nextStep,prevStep}) {
       <div className="modal-content">
         <div className="successicon">
           <div className="text-center">
-            <img  src="/assets/img/like.png" alt="Thumb Icon" />
+            <img loading="lazy"  src="/assets/img/like.png" alt="Thumb Icon" />
           </div>
           <p className='pcenter'>
             <b>Once again, thank you for your participation.</b>

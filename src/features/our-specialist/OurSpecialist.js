@@ -347,7 +347,7 @@ export default function OurSpecialist() {
                 window.open("https://x.com/hairsncare")
               }
             }} style={{ cursor: "pointer" }}>
-              <img src={e} style={{ width: "25px", height: "25px" }} alt={alt} title={title} />
+              <img loading="lazy" src={e} style={{ width: "25px", height: "25px" }} alt={alt} title={title} />
             </div>
           )
         })}
@@ -368,7 +368,7 @@ export default function OurSpecialist() {
 
           return (
             <ZoomInDiv className="section-item">
-              <img src={src} alt={dd[i]?.alt} title={e?.title} />
+              <img loading="lazy" src={src} alt={dd[i]?.alt} title={e?.title} />
               <div className="sec-item">
                 <h2>{e?.title}</h2>
                 <p>{e?.desc}</p>
@@ -379,7 +379,7 @@ export default function OurSpecialist() {
       </div>
       <div className="specialist-section-3 container">
         <ZoomInDiv className="sec-3 ">
-          <img alt="Dr. Amit Agarkar, expert hair loss treatment specialist and dermatologist & Hair Transplant surgeon at HairsnCares, providing advanced hair care solutions and personalized treatments"
+          <img loading="lazy" alt="Dr. Amit Agarkar, expert hair loss treatment specialist and dermatologist & Hair Transplant surgeon at HairsnCares, providing advanced hair care solutions and personalized treatments"
             src={content?.section3?.img} title="Dr. Amit Agarkar - Leading Hair Specialist" />
         </ZoomInDiv>
         <RightAnimatedDiv className="sec-3 sec-pad ">
@@ -421,7 +421,7 @@ export default function OurSpecialist() {
           <div className="col-lg-3">
             <h6>Awards</h6>
           </div>
-          <img alt="Awards and certificates received by HairsnCares, showcasing recognition for excellence in hair loss treatment and services by top hair experts and dermatologists"
+          <img loading="lazy" alt="Awards and certificates received by HairsnCares, showcasing recognition for excellence in hair loss treatment and services by top hair experts and dermatologists"
             src={content?.section3?.awards}
             title="hairsncares-awards-recognition-hair-loss-treatment"
           />
@@ -445,7 +445,7 @@ export default function OurSpecialist() {
                   style={{ cursor: "pointer" }}
                 >
                   <div className="doc-image">
-                    <img src={item?.image} className="doc-img-1" alt={f?.alt} title={f?.title} />
+                    <img loading="lazy" src={item?.image} className="doc-img-1" alt={f?.alt} title={f?.title} />
                   </div>
                   <div className="doc-detail">
                     <h2>{item?.name}</h2>
@@ -468,7 +468,7 @@ export default function OurSpecialist() {
                   ...TRANSITION,
                   delay: 0.2 * parseInt(index),
                 }}>
-                  <img src={e?.img} alt={section5Data[index]?.alt} title={section5Data[index]?.title} />
+                  <img loading="lazy" src={e?.img} alt={section5Data[index]?.alt} title={section5Data[index]?.title} />
                   <p>{e?.desc}</p>
                 </RightAnimatedDiv>
               );
@@ -488,7 +488,7 @@ export default function OurSpecialist() {
               </button>
               <div className="specialist-section-3 container">
                 <div className="sec-3">
-                  <img alt="hair" src={data?.image} />
+                  <img loading="lazy" alt="hair" src={data?.image} />
                 </div>
                 <div className="sec-3 sec-pad">
                   <h3>{data?.name}</h3>
@@ -543,7 +543,7 @@ export default function OurSpecialist() {
                   <div className="col-lg-3">
                     <h6>Awards</h6>
                   </div>
-                  <img alt="hair" src="/assets/img/specialists/award.png" />
+                  <img loading="lazy" alt="hair" src="/assets/img/specialists/award.png" />
                 </div>
               </div>
             </div>

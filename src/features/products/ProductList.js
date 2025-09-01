@@ -24,7 +24,7 @@
 //       products?.map((product, index) => (
 //         <div className="product-item" key={index}>
 //           {/* <Link to={`/product-detail/${product.id}`} key={product.id}></Link> */}
-//           <img src={product.src} alt={product.name} />
+//           <img loading="lazy" src={product.src} alt={product.name} />
 //           <p>{product.name}</p>
 //           <p>${product.price}</p>
 //           <button onClick={()=>navigate(`/product-detail/${product.id}`)} className="btn primary prod-button">ADD TO CART</button>
@@ -76,7 +76,7 @@
 //       ) : (
 //         products?.map((product, index) => (
 //           <div className="product-item" key={index}>
-//             <img src={product.src} alt={product.name} />
+//             <img loading="lazy" src={product.src} alt={product.name} />
 //             <p>{product.name}</p>
 //             <p>${product.price}</p>
 //             <button
@@ -276,7 +276,7 @@ function ProductList(props) {
                     className="image-container-product-all"
                   >
                     {" "}
-                    {/* <img
+                    {/* <img loading="lazy"
                             src={product?.src[0]}
                             alt={product.name}
                             style={{

@@ -300,7 +300,7 @@ export default function HairTest() {
           {stepContent}
         </div>
         <div className='test-image'>
-          <img src={banner} alt="Banner" style={{ zIndex: 0 }} />
+          <img loading="lazy" src={banner} alt="Banner" style={{ zIndex: 0 }} />
         </div>
         <a id="scrollUp" href="#top" style={{ position: "fixed", zIndex: "2147483647" }} onClick={scrollToTop}><i class="fa fa-angle-up"></i></a>
       </div>

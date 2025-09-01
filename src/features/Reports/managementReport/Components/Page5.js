@@ -11,7 +11,7 @@ export default function Page5({data}) {
         className="head-managereport d-flex"
         style={{ justifyContent: "space-between" }}
       >
-        <img src="/assets/img/logo.png" className="head-managereport-logo" />
+        <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
         <div className="head-managereport-text1">Nutrition Management</div>
         <div
           className="text-flex-line-center-veritcal"
@@ -24,7 +24,7 @@ export default function Page5({data}) {
       <div class="foodhair-box" style={{gap : "3%",padding : "30px"}}>
         <div class="foodcard-img teijsie-2" >
             <div class="hairloss-img">
-              <img src="/assets/img/reports/management/page5/Group 1707485989.png" alt="" class="hairloss-img1" />
+              <img loading="lazy" src="/assets/img/reports/management/page5/Group 1707485989.png" alt="" class="hairloss-img1" />
             </div>
             <div class="food-text">
               <h4 class="food-subtxt">
@@ -128,7 +128,7 @@ export default function Page5({data}) {
         </div>
           <div class="foodcard-img2 teijsie-2" >
             <div class="hairloss-img">
-              <img src="/assets/img/reports/management/page5/Group 1707485988.png" alt="" class="hairloss-img1" />
+              <img loading="lazy" src="/assets/img/reports/management/page5/Group 1707485988.png" alt="" class="hairloss-img1" />
             </div>
             <div class="food-text">
               <h4 class="food-subtxt">
@@ -246,7 +246,7 @@ export default function Page5({data}) {
         className="head-managereport d-flex"
         style={{ justifyContent: "space-between" }}
       >
-        <img src="/assets/img/logo.png" className="head-managereport-logo" />
+        <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
         <div className="head-managereport-text1">Nutrition Management</div>
         <div
           className="text-flex-line-center-veritcal"

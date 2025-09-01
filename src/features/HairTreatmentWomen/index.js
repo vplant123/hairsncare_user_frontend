@@ -181,7 +181,7 @@ export default function HairTreatmentWomen() {
               </div>
             </ZoomInDiv>
             <RightAnimatedDiv className="d-flex flex-column main-section-1-htw-right">
-              <img src="/assets/img/hairTreatmentWomen/dr-amit-agarkar-hair-care-expert.png" alt="Dr. Amit Agarkar, expert in Hair Loss and Hair Care Treatments, known for his personalized approach to hair health and growth."
+              <img loading="lazy" src="/assets/img/hairTreatmentWomen/dr-amit-agarkar-hair-care-expert.png" alt="Dr. Amit Agarkar, expert in Hair Loss and Hair Care Treatments, known for his personalized approach to hair health and growth."
                 title="Dr. Amit Agarkar – Hair Specialist"
               />
             </RightAnimatedDiv>
@@ -200,7 +200,7 @@ export default function HairTreatmentWomen() {
           </ZoomInDiv2>
           <div className="desktop-view">
             <LeftAnimatedDiv className="main-section-2-htw-left">
-              <img
+              <img loading="lazy"
                 src={content?.section2?.image}
                 style={{ height: "90%", width: "98%" }}
                 alt={content?.section2?.alt}
@@ -241,7 +241,7 @@ export default function HairTreatmentWomen() {
                 return (
                   <ZoomInDiv className="sub-section-3-htw d-flex">
                     <div className="sub-img-section-3-htw div1">
-                      <img
+                      <img loading="lazy"
                         src={item?.image}
                         style={{ height: "100%", width: "100%" }}
                         alt={item?.image}
@@ -315,7 +315,7 @@ export default function HairTreatmentWomen() {
                 return (
                   <ZoomInDiv className="sub-section-4-htw d-flex">
                     <div className="sub-img-section-4-htw">
-                      <img
+                      <img loading="lazy"
                         src={item?.image}
                         style={{ height: "100%", width: "100%" }}
                         alt={item?.image}
@@ -455,7 +455,7 @@ export default function HairTreatmentWomen() {
           <div className="desktop-view">
             <LeftAnimatedDiv className="main-section-2-htw-left">
 
-              <img
+              <img loading="lazy"
                 src={content?.section6?.image}
                 style={{ height: "100%", width: "100%" }}
                 alt={content?.section6?.alt}
@@ -528,7 +528,7 @@ export default function HairTreatmentWomen() {
               </ZoomInDiv>
             </div>
             <RightAnimatedDiv className="d-flex flex-column main-section-1-htw-right">
-              <img
+              <img loading="lazy"
                 src={content?.section7?.image}
                 alt={content?.section7?.alt}
               />
@@ -566,7 +566,7 @@ export default function HairTreatmentWomen() {
                       }}
                       className="faq-icon"
                     >
-                      <img
+                      <img loading="lazy"
                         src={"/assets/img/hairTreatmentWomen/image-16.png"}
                         className='faq-dropDown'
                         alt="Hair loss men faqs"

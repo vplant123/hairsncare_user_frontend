@@ -460,7 +460,7 @@ const handleImageUploadSection6 = async (e,type,ind) => {
               />
             </div>
             <div>
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src={uploadedImages["section1-0"] || section1?.image}
               />
@@ -486,7 +486,7 @@ const handleImageUploadSection6 = async (e,type,ind) => {
       {section2?.map((e,ind) => {
         return(
           <div className="section-item">
-          <img alt="hair" src="/uploads/admprsp-icon1.png" />
+          <img loading="lazy" alt="hair" src="/uploads/admprsp-icon1.png" />
           <div className="sec-item">
             <input
             type="text"
@@ -513,7 +513,7 @@ const handleImageUploadSection6 = async (e,type,ind) => {
       <div className="specialist-section-3 container">
         <div className="sec-3 animate__backInLeft">
 
-          <img alt='hair' src={section3?.img} />
+          <img loading="lazy" alt='hair' src={section3?.img} />
 
         </div>
         <div className="sec-3 sec-pad animate__backInRight">
@@ -591,7 +591,7 @@ const handleImageUploadSection6 = async (e,type,ind) => {
           <div className="col-lg-3">
             <h6>Awards</h6>
           </div>
-          <img alt="hair" src={section3?.awards} />
+          <img loading="lazy" alt="hair" src={section3?.awards} />
           <input
                 type="file"
                 onChange={(e) => handleImageUploadSection3(e,"awards",0)}
@@ -634,7 +634,7 @@ const handleImageUploadSection6 = async (e,type,ind) => {
 
           {section5?.data?.map((item, index) => (
             <div key={index} className="container-4-item">
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src={item?.img}
               />

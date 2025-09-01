@@ -61,7 +61,7 @@ function MediaEdit({section5,
               section5?.map((item,index)=> {
                 return (
                   <div>
-                     <img alt='hair' src={item?.img} />
+                     <img loading="lazy" alt='hair' src={item?.img} />
                      <input
       type="file"
       accept="image/*"

@@ -12,19 +12,19 @@ const trustItems = [
     delay: 0,
   },
   {
-    icon: <img alt='Hairsncares is Published in more that 5000 + channels' src='/uploads/r-icon2.png' title='Published in' />,
+    icon: <img loading="lazy" alt='Hairsncares is Published in more that 5000 + channels' src='/uploads/r-icon2.png' title='Published in' />,
     text: 'Published in',
     count: '5000+ Channels',
     delay: 0.2,
   },
   {
-    icon: <img alt='Happy with hair loss treatment clients' src='/uploads/r-icon3.png' title='Happy Clients'/>,
+    icon: <img loading="lazy" alt='Happy with hair loss treatment clients' src='/uploads/r-icon3.png' title='Happy Clients'/>,
     text: 'Happy Clients',
     count: '1000+',
     delay: 0.4,
   },
   {
-    icon: <img alt='Hairs N Cares guaranteed results for effective hair growth and hair care treatments.' src='/uploads/r-icon4.png' title='Guaranteed Results' />,
+    icon: <img loading="lazy" alt='Hairs N Cares guaranteed results for effective hair growth and hair care treatments.' src='/uploads/r-icon4.png' title='Guaranteed Results' />,
     text: 'Guaranteed Result',
     count: '100+',
     delay: 0.6,

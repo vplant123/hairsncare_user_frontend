@@ -55,17 +55,17 @@ export default function HairReport({data,data1}) {
         <div className="custom-container">
         <div className="custom-side-panel custom-left-panel">
           <div style={{backgroundColor:data1?.ExaminationColor}} className="color-diva-1 diva1">
-            <img src="\scalp-examination.png" />
+            <img loading="lazy" src="\scalp-examination.png" />
             <h2 style={{fontSize : "16px"}}>Scalp Examination</h2>
           </div>
           <div className="custom-color-buttons"></div>
           <div style={{backgroundColor:data1?.DensityColor}} className="color-diva-1 diva1">
-            <img src="\Hair-Density.png" /> <h2 style={{fontSize : "16px"}}>Hair Density</h2>
+            <img loading="lazy" src="\Hair-Density.png" /> <h2 style={{fontSize : "16px"}}>Hair Density</h2>
           </div>
           <div className="custom-color-buttons"></div>
 
           <div style={{backgroundColor:data1?.MoistureColor}} className="color-diva-1 diva1">
-            <img src="\moisture-&-hydration-of-hair.png" />
+            <img loading="lazy" src="\moisture-&-hydration-of-hair.png" />
             <h2 style={{fontSize : "16px"}}>Moisture & Hydration of Hair</h2>
           </div>
           <div className="custom-color-buttons"></div>
@@ -82,20 +82,20 @@ export default function HairReport({data,data1}) {
         </div>
         <div className="custom-side-panel custom-right-panel">
           <div style={{backgroundColor:data1?.qualityColor}} className="color-diva-1 diva1">
-            <img src="\Hair-Quality.png" />
+            <img loading="lazy" src="\Hair-Quality.png" />
             <h2 style={{fontSize : "16px"}}>Hair Quality Texture</h2>
           </div>
           <div className="custom-color-buttons"></div>
 
           <div style={{backgroundColor:data1?.vibrancy
 }} className="color-diva-1 diva1">
-            <img src="\color-vibrancy.png" />
+            <img loading="lazy" src="\color-vibrancy.png" />
             <h2 style={{fontSize : "16px"}}>Color Vibrancy</h2>
           </div>
           <div className="custom-color-buttons"></div>
           
           <div style={{backgroundColor:data1?.breakageColor}} className="color-diva-1 diva1">
-            <img src="/Hair-Breakage.png" />
+            <img loading="lazy" src="/Hair-Breakage.png" />
             <h2 style={{fontSize : "16px"}}>Hair Breakage</h2>
           </div>
         </div>
@@ -154,7 +154,7 @@ export default function HairReport({data,data1}) {
                 justifyContent: "center",
               }}
             >
-        <img src={data?.selectedOption?.src} />
+        <img loading="lazy" src={data?.selectedOption?.src} />
 
         <h2>{data?.selectedOption?.value} </h2>
             </div>

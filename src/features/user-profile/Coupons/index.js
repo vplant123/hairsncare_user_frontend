@@ -58,7 +58,7 @@ export default function Coupons(props) {
               <>
                 {ind + 1 == selectedHero ? (
                   <div class="coupon-card">
-                    <img
+                    <img loading="lazy"
                       src="https://res.cloudinary.com/drkpwvnun/image/upload/v1725596233/hair-assessment/bhwlkkh2ul9dig5hnelp.png"
                       class="logo-coupon"
                     />

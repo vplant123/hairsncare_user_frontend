@@ -58,8 +58,8 @@
 //               </div>
 //             ) : (
 //               <label>
-//                 {/* <img alt='hair' src={option.src} alt={option.name} /> */}
-//                 {option.src?<img alt='hair' src={option.src} alt={option.name} />:<div className='circle no-image option'>{option.name}</div>}
+//                 {/* <img loading="lazy" alt='hair' src={option.src} alt={option.name} /> */}
+//                 {option.src?<img loading="lazy" alt='hair' src={option.src} alt={option.name} />:<div className='circle no-image option'>{option.name}</div>}
 //                 <p>{option.name}</p>
 //               </label>
 //             )}
@@ -212,7 +212,7 @@
 //               </div>
 //             ) : (
 //               <label>
-//                 {option.src ? <img className='circle' src={option.src} alt={option.name} /> : <div className='circle no-image option'>{option.name}</div>}
+//                 {option.src ? <img loading="lazy" className='circle' src={option.src} alt={option.name} /> : <div className='circle no-image option'>{option.name}</div>}
 //                 <p>{option.name}</p>
 //               </label>
 //             )}
@@ -233,7 +233,7 @@
 //                     </div>
 //                   ) : (
 //                     <label>
-//                       {option.src ? <img className='circle'  src={option.src} alt={option.name} /> : <div className='circle no-image option'>{option.name}</div>}
+//                       {option.src ? <img loading="lazy" className='circle'  src={option.src} alt={option.name} /> : <div className='circle no-image option'>{option.name}</div>}
 //                       <p>{option.name}</p>
 //                     </label>
 //                   )}
@@ -475,7 +475,7 @@ export default function LifeStyle({
             ) : (
               <label>
                 {option.src ? (
-                  <img className="circle" src={option.src} alt={option.name} />
+                  <img loading="lazy" className="circle" src={option.src} alt={option.name} />
                 ) : (
                   <div className="circle no-image option">{option.name}</div>
                 )}
@@ -504,7 +504,7 @@ export default function LifeStyle({
                   ) : (
                     <label>
                       {option.src ? (
-                        <img className="circle" src={option.src} alt={option.name} />
+                        <img loading="lazy" className="circle" src={option.src} alt={option.name} />
                       ) : (
                         <div className="circle no-image option">{option.name}</div>
                       )}

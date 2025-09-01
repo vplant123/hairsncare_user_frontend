@@ -7,7 +7,7 @@ export default function Page6({data}) {
     <>
       <div className='page-6'>
         <div className="head-managereport d-flex" style={{ justifyContent: "space-between" }}>
-          <img src="/assets/img/logo.png" className="head-managereport-logo" />
+          <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
           <div className="head-managereport-text1">Lifestyle Management</div>
           <div className="text-flex-line-center-veritcal" style={{ color: "rgba(84, 84, 84, 1)" }}>
             Smart Report
@@ -19,11 +19,11 @@ export default function Page6({data}) {
             <div class="card do-card">
               <div class="do-header">
                 <div class="image" style={{width : "12%",height : "48px",padding : "10px"}}>
-                  <img src="/assets/img/reports/management/page6/Group (1).png" alt="Thumbs Up Icon" class="icon" style={{height : "100%",width : "100%"}} />
+                  <img loading="lazy" src="/assets/img/reports/management/page6/Group (1).png" alt="Thumbs Up Icon" class="icon" style={{height : "100%",width : "100%"}} />
                 </div>
                 <h2 class="image-header" style={{fontSize : "22px"}}>DO</h2>
               </div>
-              <img
+              <img loading="lazy"
                 src="/assets/img/reports/management/page6/lifestyle advice png 2.png"
                 alt="Illustration for Do"
                 class="illustration"
@@ -31,7 +31,7 @@ export default function Page6({data}) {
               <ul className='mt-2'>
                 <li>
                   <div class="right">
-                    <img src="/assets/img/reports/management/page6/Vector.png" alt="Right Icon" class="right-icon" />
+                    <img loading="lazy" src="/assets/img/reports/management/page6/Vector.png" alt="Right Icon" class="right-icon" />
                   </div>
                   <div class="description">
                     <strong>Balanced Diet:</strong>Eat nutrient-rich foods,
@@ -40,7 +40,7 @@ export default function Page6({data}) {
                 </li>
                 <li>
                   <div class="right">
-                    <img src="/assets/img/reports/management/page6/Vector.png" alt="Right Icon" class="right-icon" />
+                    <img loading="lazy" src="/assets/img/reports/management/page6/Vector.png" alt="Right Icon" class="right-icon" />
                   </div>
                   <div class="description">
                     <strong>Stay Hydrated:</strong>Drink enough water daily.
@@ -48,7 +48,7 @@ export default function Page6({data}) {
                 </li>
                 <li>
                   <div class="right">
-                    <img src="/assets/img/reports/management/page6/Vector.png" alt="Right Icon" class="right-icon" />
+                    <img loading="lazy" src="/assets/img/reports/management/page6/Vector.png" alt="Right Icon" class="right-icon" />
                   </div>
                   <div class="description">
                     <strong>Regular Exercise:</strong>Engage in physical activity to
@@ -57,7 +57,7 @@ export default function Page6({data}) {
                 </li>
                 <li>
                   <div class="right">
-                    <img src="/assets/img/reports/management/page6/Vector.png" alt="Right Icon" class="right-icon" />
+                    <img loading="lazy" src="/assets/img/reports/management/page6/Vector.png" alt="Right Icon" class="right-icon" />
                   </div>
                   <div class="description">
                     <strong>Manage Stress:</strong>Practice relaxation activities
@@ -66,7 +66,7 @@ export default function Page6({data}) {
                 </li>
                 <li>
                   <div class="right">
-                    <img src="/assets/img/reports/management/page6/Vector.png" alt="Right Icon" class="right-icon" />
+                    <img loading="lazy" src="/assets/img/reports/management/page6/Vector.png" alt="Right Icon" class="right-icon" />
                   </div>
                   <div class="description">
                     <strong>Gentle Hair Care:</strong>Use mild, sulfate-free
@@ -75,7 +75,7 @@ export default function Page6({data}) {
                 </li>
                 <li>
                   <div class="right">
-                    <img src="/assets/img/reports/management/page6/Vector.png" alt="Right Icon" class="right-icon" />
+                    <img loading="lazy" src="/assets/img/reports/management/page6/Vector.png" alt="Right Icon" class="right-icon" />
                   </div>
                   <div class="description">
                     <strong>Scalp Care:</strong>Keep your scalp clean and free from
@@ -84,7 +84,7 @@ export default function Page6({data}) {
                 </li>
                 <li>
                   <div class="right">
-                    <img src="/assets/img/reports/management/page6/Vector.png" alt="Right Icon" class="right-icon" />
+                    <img loading="lazy" src="/assets/img/reports/management/page6/Vector.png" alt="Right Icon" class="right-icon" />
                   </div>
                   <div class="description">
                     <strong>Protect Hair:</strong>Use hats or UV protection products
@@ -93,7 +93,7 @@ export default function Page6({data}) {
                 </li>
                 <li>
                   <div class="right">
-                    <img src="/assets/img/reports/management/page6/Vector.png" alt="Right Icon" class="right-icon" />
+                    <img loading="lazy" src="/assets/img/reports/management/page6/Vector.png" alt="Right Icon" class="right-icon" />
                   </div>
                   <div class="description">
                     <strong>Get Enough Sleep:</strong>Aim for 7-9 hours of quality
@@ -102,7 +102,7 @@ export default function Page6({data}) {
                 </li>
                 <li>
                   <div class="right">
-                    <img src="/assets/img/reports/management/page6/Vector.png" alt="Right Icon" class="right-icon" />
+                    <img loading="lazy" src="/assets/img/reports/management/page6/Vector.png" alt="Right Icon" class="right-icon" />
                   </div>
                   <div class="description">
                     <strong>Regular Trims:</strong> Trim hair regularly to remove
@@ -115,11 +115,11 @@ export default function Page6({data}) {
             <div class="card dont-card">
               <div class="dont-header">
                 <div class="image" style={{width : "12%",height : "48px",padding : "10px"}}>
-                  <img src="/assets/img/reports/management/page6/Group (2).png" alt="Thumbs Down Icon" class="icon" style={{height : "100%",width : "100%"}} />
+                  <img loading="lazy" src="/assets/img/reports/management/page6/Group (2).png" alt="Thumbs Down Icon" class="icon" style={{height : "100%",width : "100%"}} />
                 </div>
                 <h2 class="image-header" style={{fontSize : "22px"}}>DON'T</h2>
               </div>
-              <img
+              <img loading="lazy"
                 src="/assets/img/reports/management/page6/dont.png"
                 alt="Illustration for Don't"
                 class="illustration"
@@ -127,7 +127,7 @@ export default function Page6({data}) {
               <ul className='mt-2'>
                 <li>
                   <div class="right cross">
-                    <img src="/assets/img/reports/management/page6/Cross.png" alt="Right Icon" class="right-icon" />
+                    <img loading="lazy" src="/assets/img/reports/management/page6/Cross.png" alt="Right Icon" class="right-icon" />
                   </div>
                   <div class="description">
                     <strong>Avoid Overstyling:</strong>Limit heat styling, tight
@@ -136,7 +136,7 @@ export default function Page6({data}) {
                 </li>
                 <li>
                   <div class="cross">
-                    <img src="/assets/img/reports/management/page6/Cross.png" alt="Right Icon" class="right-icon" />
+                    <img loading="lazy" src="/assets/img/reports/management/page6/Cross.png" alt="Right Icon" class="right-icon" />
                   </div>
                   <div class="description">
                     <strong>Avoid Smoking and Limit Alcohol:</strong>Both can
@@ -145,7 +145,7 @@ export default function Page6({data}) {
                 </li>
                 <li>
                   <div class="cross">
-                    <img src="/assets/img/reports/management/page6/Cross.png" alt="Right Icon" class="right-icon" />
+                    <img loading="lazy" src="/assets/img/reports/management/page6/Cross.png" alt="Right Icon" class="right-icon" />
                   </div>
                   <div class="description">
                     <strong>Avoid Tight Hair Accessories:</strong>Choose looser
@@ -154,7 +154,7 @@ export default function Page6({data}) {
                 </li>
                 <li>
                   <div class="cross">
-                    <img src="/assets/img/reports/management/page6/Cross.png" alt="Right Icon" class="right-icon" />
+                    <img loading="lazy" src="/assets/img/reports/management/page6/Cross.png" alt="Right Icon" class="right-icon" />
                   </div>
                   <div class="description">
                     <strong>Avoid Crash Diets:</strong> Maintain a balanced diet to
@@ -163,7 +163,7 @@ export default function Page6({data}) {
                 </li>
                 <li>
                   <div class="cross">
-                    <img src="/assets/img/reports/management/page6/Cross.png" alt="Right Icon" class="right-icon" />
+                    <img loading="lazy" src="/assets/img/reports/management/page6/Cross.png" alt="Right Icon" class="right-icon" />
                   </div>
                   <div class="description">
                     <strong>Avoid Excessive Stress:</strong>Manage stress with
@@ -172,7 +172,7 @@ export default function Page6({data}) {
                 </li>
                 <li>
                   <div class="cross">
-                    <img src="/assets/img/reports/management/page6/Cross.png" alt="Right Icon" class="right-icon" />
+                    <img loading="lazy" src="/assets/img/reports/management/page6/Cross.png" alt="Right Icon" class="right-icon" />
                   </div>
                   <div class="description">
                     <strong>Don't Neglect Scalp Health:</strong>Keep your scalp
@@ -224,7 +224,7 @@ export default function Page6({data}) {
               <li>High Intensity Interval Training (HIIT) Workouts</li>
             </ul>
             <div class="helpful-tips-container page-helpful-tips">
-              <img src="/assets/img/reports/management/page6/helpful-tips.png" alt="Helpful Tips" class="helpful-tips" />
+              <img loading="lazy" src="/assets/img/reports/management/page6/helpful-tips.png" alt="Helpful Tips" class="helpful-tips" />
             </div>
           </div>
         </div>

@@ -19,7 +19,7 @@ function RxBlueprint() {
         variants={LEFT_VARIANTS}
         transition={TRANSITION}
       ><h2 style={{ fontSize: "2rem", fontWeight: "700" }}>{content?.section8?.mainTitle}</h2>
-        <img alt='Doctor with stethoscope representing the Hair Rx Blueprint for personalized Hair Loss and Hair Care Treatments.'
+        <img loading="lazy" alt='Doctor with stethoscope representing the Hair Rx Blueprint for personalized Hair Loss and Hair Care Treatments.'
           src={content?.section8?.img}
           title='Customized Hair Rx Blueprint'
           />
@@ -30,7 +30,7 @@ function RxBlueprint() {
         animate={control2}
         variants={RIGHT_VARIANTS}
         transition={TRANSITION}
-      ><img alt='Hair Rx Blueprint detailing Hair Health Analysis and HairsNCare Recommendation Plan for personalized hair loss and hair care treatments.' 
+      ><img loading="lazy" alt='Hair Rx Blueprint detailing Hair Health Analysis and HairsNCare Recommendation Plan for personalized hair loss and hair care treatments.' 
       src={content?.section8?.subImg}
       title='Hair Blueprint.'
       /></motion.div>

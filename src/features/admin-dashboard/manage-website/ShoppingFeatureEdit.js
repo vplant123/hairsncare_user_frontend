@@ -56,7 +56,7 @@ function ShoppingFeatureEdit({section9,
     <div className='shopping-feature container'>
       {section9?.map((feature, index) => (
         <div key={index}>
-          <img alt='icon' src={feature?.img} />
+          <img loading="lazy" alt='icon' src={feature?.img} />
           <input
       type="file"
       accept="image/*"

@@ -106,7 +106,7 @@ import {
             {order?.products?.map(ele => (
               <Row>
                 <Column style={{ width: '64px' }}>
-                  <Img
+                  <img loading="lazy"
                     src={`${ele?.item?.src[0]}`}
                     width="64"
                     height="64"
@@ -218,7 +218,7 @@ import {
                     href="https://wa.link/fx1qa0"
                     style={{ display: 'inline' }}
                   >
-                    <Img
+                    <img loading="lazy"
                       src={`${baseUrl}/static/images/whatapp.png`}
                       style={{
                         cursor: 'pointer',

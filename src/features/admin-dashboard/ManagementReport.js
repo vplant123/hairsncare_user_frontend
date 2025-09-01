@@ -190,7 +190,7 @@ export default function ManagementReport(props) {
             <p>Disclaimer</p>
           </div>
           <div>
-            <img className="img-sign" src="/Amit-Sir---Signature.png" alt="Doctor's Image" style={{maxWidth : "55%"}} />
+            <img loading="lazy" className="img-sign" src="/Amit-Sir---Signature.png" alt="Doctor's Image" style={{maxWidth : "55%"}} />
             <h2>Dr Amit Agarkar</h2>
             <p>MBBS, MD, FCPS,DDV</p>
             <p>Fellowship in Hair Transplant</p>

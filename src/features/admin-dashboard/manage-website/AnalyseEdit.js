@@ -47,7 +47,7 @@ export default function AnalyseEdit({ section7,
     <div className='hair-analysis container'>
       <div className='ana anakkk'>
 
-        <img alt='hair' src={section7?.img} />
+        <img loading="lazy" alt='hair' src={section7?.img} />
         <input type='file' accept='image/*' onChange={handleImageUpload} />
         <button onClick={() => document.querySelector('input[type="file"]').click()} className='btn'>UPLOAD</button>
       </div>

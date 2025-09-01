@@ -174,8 +174,8 @@ console.log("smrfkmer",data)
       >
         <div className="heading-container2">
           <div className="image-container" style={{    width: "30%"}}>
-            {/* <img className="rx-logo" src="/medical-prescription-pharmaceutical-drug-pharmacy-symbol-clip-art-rx-logo-image-b7b1ba0f952be8c1872ae92a48af3874.png" alt="RX Logo" /> */}
-            <img
+            {/* <img loading="lazy" className="rx-logo" src="/medical-prescription-pharmaceutical-drug-pharmacy-symbol-clip-art-rx-logo-image-b7b1ba0f952be8c1872ae92a48af3874.png" alt="RX Logo" /> */}
+            <img loading="lazy"
               className="logo-main"
               src="/assets/img/logo.png"
               alt="Main Logo"
@@ -190,7 +190,7 @@ console.log("smrfkmer",data)
           </div>
         </div>
         <div className="mobile-ui-img-div" style={{textAlign : "center"}}>
-          <img src = "/assets/img/Report Image (1).png" className="mobile-ui-img" style={{maxWidth : "60%"}}/>
+          <img loading="lazy" src = "/assets/img/Report Image (1).png" className="mobile-ui-img" style={{maxWidth : "60%"}}/>
         </div>
         <div className="intro-report">
           <h1 style={{color:"#008bff"}}>Welcome to the hairsncares.com – YOUR HAIR EXPERT!</h1>
@@ -248,7 +248,7 @@ console.log("smrfkmer",data)
                 justifyContent: "center",
               }}
             >
-              <img src="\2.png" />
+              <img loading="lazy" src="\2.png" />
               
               <div className='diag'>
                 {data?.dianosis?.map((item)=>{
@@ -316,7 +316,7 @@ console.log("smrfkmer",data)
               }}
             >
 
-          <img src={data?.nutrition?.src} />
+          <img loading="lazy" src={data?.nutrition?.src} />
           <h2>{data?.nutrition?.value}</h2>
             </div>
 
@@ -356,7 +356,7 @@ console.log("smrfkmer",data)
               }}
             >
 
-          <img src={data?.lifeStyle?.src} />
+          <img loading="lazy" src={data?.lifeStyle?.src} />
           <h2>{data?.lifeStyle?.value}</h2>
             </div>
           <p>
@@ -401,7 +401,7 @@ console.log("smrfkmer",data)
                 justifyContent: "center",
               }}
             >
- <img src={data?.stress?.src} />
+ <img loading="lazy" src={data?.stress?.src} />
  <h2>{data?.stress?.value}</h2>
             </div>
 
@@ -420,7 +420,7 @@ console.log("smrfkmer",data)
             <p>Disclaimer</p>
           </div>
           <div>
-            <img className="img-sign" src="/Amit-Sir---Signature.png" alt="Doctor's Image" style={{maxWidth : "60%"}} />
+            <img loading="lazy" className="img-sign" src="/Amit-Sir---Signature.png" alt="Doctor's Image" style={{maxWidth : "60%"}} />
             <h2>Dr Amit Agarkar</h2>
             <p>MBBS, MD, FCPS,DDV</p>
             <p>Fellowship in Hair Transplant</p>

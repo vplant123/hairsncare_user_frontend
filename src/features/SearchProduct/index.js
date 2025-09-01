@@ -157,7 +157,7 @@ function SearchProduct({ isOpen, onClose, cart, setCart }) {
           products?.map((item, index) => (
             <div className="d-flex" style={{ gap: "10px", margin: "25px 0 25px 0", cursor: "pointer" }} onClick={(it) => navigate('/product-detail/' + item?.metaSlug ?? item._id, { id: item?._id })}>
               <div className="d-flex">
-                <img
+                <img loading="lazy"
                   style={{ width: "70px", height: "70px" }}
                   src={item?.src?.[0]}
                 />

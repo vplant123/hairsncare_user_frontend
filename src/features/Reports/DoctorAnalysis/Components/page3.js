@@ -38,7 +38,7 @@ export default function Page3({ data }) {
       className="head-managereport d-flex"
       style={{ justifyContent: "space-between" }}
     >
-      <img src="/assets/img/logo.png" className="head-managereport-logo" />
+      <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
       <div className="head-managereport-text1">Doctors  Analysis Report</div>
       <div
         className="text-flex-line-center-veritcal"
@@ -64,7 +64,7 @@ export default function Page3({ data }) {
 
     <div className="d-flex" style={{gap : "3%"}}>
         <div style={{width:"30%"}}>
-        <img
+        <img loading="lazy"
         src="/assets/img/reports/doctorAnalysis/page3/hairdiagnosishighres11369-rgaw-400h.png"
         style={{width : "100%",height : "100%"}}
       />
@@ -74,7 +74,7 @@ export default function Page3({ data }) {
     display: "flex",
     alignItems: "center",
     padding: "29px 0",height: "100%"}}>
-        <img
+        <img loading="lazy"
         src="/assets/img/reports/doctorAnalysis/page3/whatsappimage20241007at62119pm11219-g2ga-200h.png"
         style={{height : "100%",width : "100%"}}
       />        </div>
@@ -143,7 +143,7 @@ export default function Page3({ data }) {
         justifyContent: "center",
         alignItems: "center"
     }}>
-        <img src = "/assets/img/reports/doctorAnalysis/page3/Screenshot 2024-11-15 at 12.47.37 AM.png" style={{width  : "400px",height : "200px"}} />
+        <img loading="lazy" src = "/assets/img/reports/doctorAnalysis/page3/Screenshot 2024-11-15 at 12.47.37 AM.png" style={{width  : "400px",height : "200px"}} />
     </div> */}
 
 
@@ -157,14 +157,14 @@ export default function Page3({ data }) {
         justifyContent: "center",
         alignItems: "center",padding : "20px 0 ",position : "relative",flexDirection:"column",gap : "18px"}} className="man-page-3-color-main">
         <div style={{width : "35%"}} >
-        <img src = "/assets/img/reports/doctorAnalysis/page3/image.png" style={{width : "100%",height : "100%"}} />
+        <img loading="lazy" src = "/assets/img/reports/doctorAnalysis/page3/image.png" style={{width : "100%",height : "100%"}} />
         </div>
         <div className="man-page-3-color-text" style={{    position: "absolute",
     left: "8%", 
     top: "7%",background :data?.overall?.["ExaminationColor"] || "#28EB28"}}>
           <div style={{width : "30%",display :"flex",justifyContent : "center",alignItems :"center"}}>
             <div style={{borderRadius: "69px",background : "#FFFFFF",height: "85%",padding : "5px"}}>
-            <img src="/assets/img/reports/doctorAnalysis/page3/isolationmode1258-injk.svg" style={{width : "100%",height : "100%"}}/> 
+            <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page3/isolationmode1258-injk.svg" style={{width : "100%",height : "100%"}}/> 
             </div>
           </div>
           <div className="man-page-3-color-text-sec">
@@ -179,7 +179,7 @@ export default function Page3({ data }) {
     top: "33%",background :data?.overall?.["DensityColor"] || "#28EB28"}}>
           <div style={{width : "30%",display :"flex",justifyContent : "center",alignItems :"center"}}>
             <div style={{borderRadius: "69px",background : "#FFFFFF",height: "85%",padding : "5px"}}>
-            <img           src="/assets/img/reports/doctorAnalysis/page3/objects1279-291a.svg"
+            <img loading="lazy"           src="/assets/img/reports/doctorAnalysis/page3/objects1279-291a.svg"
  style={{width : "100%",height : "100%"}}/> 
             </div>
           </div>
@@ -193,7 +193,7 @@ export default function Page3({ data }) {
     bottom: "24%",background :data?.overall?.["MoistureColor"] || "#28EB28"}}>
           <div style={{width : "30%",display :"flex",justifyContent : "center",alignItems :"center"}}>
             <div style={{borderRadius: "69px",background : "#FFFFFF",height: "85%",padding : "5px"}}>
-            <img src="/assets/img/reports/doctorAnalysis/page3/objects1299-bec2.svg" style={{width : "100%",height : "100%"}}/> 
+            <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page3/objects1299-bec2.svg" style={{width : "100%",height : "100%"}}/> 
             </div>
           </div>
           <div className="man-page-3-color-text-sec">
@@ -208,7 +208,7 @@ export default function Page3({ data }) {
     bottom: "24%",background :data?.overall?.["breakageColor"] || "#28EB28"}}>
           <div style={{width : "30%",display :"flex",justifyContent : "center",alignItems :"center"}}>
             <div style={{borderRadius: "69px",background : "#FFFFFF",height: "85%",padding : "5px"}}>
-            <img src="/assets/img/reports/doctorAnalysis/page3/isolationmode1287-w6ih.svg" style={{width : "100%",height : "100%"}}/> 
+            <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page3/isolationmode1287-w6ih.svg" style={{width : "100%",height : "100%"}}/> 
             </div>
           </div>
           <div className="man-page-3-color-text-sec">
@@ -222,7 +222,7 @@ export default function Page3({ data }) {
     top: "33%",background :data?.overall?.["vibrancy"] || "#28EB28"}}>
           <div style={{width : "30%",display :"flex",justifyContent : "center",alignItems :"center"}}>
             <div style={{borderRadius: "69px",background : "#FFFFFF",height: "85%",padding : "5px"}}>
-            <img src="/assets/img/reports/doctorAnalysis/page3/isolationmode1292-uqpj.svg" style={{width : "100%",height : "100%"}}/> 
+            <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page3/isolationmode1292-uqpj.svg" style={{width : "100%",height : "100%"}}/> 
             </div>
           </div>
           <div className="man-page-3-color-text-sec">
@@ -235,7 +235,7 @@ export default function Page3({ data }) {
     top: "7%",background :data?.overall?.["qualityColor"] || "#28EB28"}}>
           <div style={{width : "30%",display :"flex",justifyContent : "center",alignItems :"center"}}>
             <div style={{borderRadius: "69px",background : "#FFFFFF",height: "85%",padding : "5px"}}>
-            <img src="/assets/img/reports/doctorAnalysis/page3/objects1294-96jg.svg" style={{width : "100%",height : "100%"}}/> 
+            <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page3/objects1294-96jg.svg" style={{width : "100%",height : "100%"}}/> 
             </div>
           </div>
           <div className="man-page-3-color-text-sec">
@@ -270,7 +270,7 @@ export default function Page3({ data }) {
 
     <div className="d-flex page-break-2" style={{gap : "5%",marginTop : "1%"}}>
         <div style={{width : "50%"}}>
-        <img src = "/assets/img/reports/doctorAnalysis/page3/Screenshot 2024-11-15 at 12.50.37 AM.png" style={{width  : "100%",height : "100%"}} />
+        <img loading="lazy" src = "/assets/img/reports/doctorAnalysis/page3/Screenshot 2024-11-15 at 12.50.37 AM.png" style={{width  : "100%",height : "100%"}} />
         </div>
 
         <div style={{width : "45%",gap : "5%"}} className="d-flex flex-column">
@@ -284,7 +284,7 @@ export default function Page3({ data }) {
                 <div style={{width : "40%",        display: "flex",
         justifyContent: "center",
         alignItems: "center"}}>
-                <img
+                <img loading="lazy"
         src="/assets/img/reports/doctorAnalysis/page3/image59627111367-5sgk-200w.png"
         style={{width : "65%",height : "100%"}}
       />

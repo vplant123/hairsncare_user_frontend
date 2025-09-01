@@ -216,9 +216,9 @@ export default function Page7({value}) {
         <h2 style={{textAlign:'center'}}>{data.question4}</h2>
         <div className=' nut-highlight'>
         {data.answer5.map((item,index)=>{
-          return    <div className='tick-con1'><img className='tick1' src='/question mark.jpg'/><div>
+          return    <div className='tick-con1'><img loading="lazy" className='tick1' src='/question mark.jpg'/><div>
           <strong className='nut-head'>{item.strong}</strong>
-          <p>{item.text}</p><img className='tick-mark' src='/tick mark.jpg'/>
+          <p>{item.text}</p><img loading="lazy" className='tick-mark' src='/tick mark.jpg'/>
         </div></div>
         })}
         </div>

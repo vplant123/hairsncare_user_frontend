@@ -25,7 +25,7 @@ export default function HairAnalysis() {
         initial="hidden"
         variants={LEFT_VARIANTS}
         transition={TRANSITION}
-        className="ana anakkk " ><img alt='Smiling woman with thick, healthy hair representing results from AI-driven Hair & Scalp Analysis for personalized hair care solutions.'
+        className="ana anakkk " ><img loading="lazy" alt='Smiling woman with thick, healthy hair representing results from AI-driven Hair & Scalp Analysis for personalized hair care solutions.'
           src={content?.section7?.img} style={{ maxWidth: "80%" }}
           title='AI-Driven Hair & Scalp Analysis.'
         /></motion.div>

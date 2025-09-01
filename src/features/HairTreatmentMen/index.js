@@ -149,7 +149,7 @@ export default function HairTreatmentMen() {
               </div>
             </ZoomInDiv>
             <RightAnimatedDiv className="d-flex flex-column main-section-1-op-right">
-              <img 
+              <img loading="lazy" 
                 src={content?.section1?.image}
                 alt={content?.section1?.alt}
               />
@@ -162,7 +162,7 @@ export default function HairTreatmentMen() {
             <LeftAnimatedDiv
               className="main-section-2-htw-left"
             >
-              <img
+              <img loading="lazy"
                 src={content?.section2?.image1}
                 style={{ height: 650, width: "100%" }}
                 alt={content?.section2?.alt1}
@@ -217,7 +217,7 @@ export default function HairTreatmentMen() {
             <RightAnimatedDiv
               className="main-section-2-htw-left"
             >
-              <img
+              <img loading="lazy"
                 src={content?.section2?.image2}
                 style={{ height: "100%", width: "100%" }}
                 alt={content?.section2?.alt2}
@@ -296,7 +296,7 @@ export default function HairTreatmentMen() {
               className="main-section-2-htw-left"
             // style={{ height: "100vh" }}
             >
-              <img
+              <img loading="lazy"
                 src={content?.section4?.image1}
                 style={{ height: "100%", width: "100%" }}
                 alt={content?.section4?.alt1}
@@ -344,7 +344,7 @@ export default function HairTreatmentMen() {
             <RightAnimatedDiv
               className="main-section-2-htw-left"
             >
-              <img
+              <img loading="lazy"
                 src={content?.section4?.image2}
                 style={{ height: "100%", width: "100%" }}
                 alt={content?.section4?.alt2}
@@ -384,7 +384,7 @@ export default function HairTreatmentMen() {
                       // className="mini-card-num-div-section-4-htw"
                       style={{ width: "100%" }}
                     >
-                      <img src={item.image} style={{ width: "100%" }}
+                      <img loading="lazy" src={item.image} style={{ width: "100%" }}
                         alt={item.title}
                         title={item.title}
                       />
@@ -444,7 +444,7 @@ export default function HairTreatmentMen() {
                       }}
                       className="faq-icon"
                     >
-                      <img
+                      <img loading="lazy"
                         src={"/assets/img/hairTreatmentWomen/image-16.png"}
                         className='faq-dropDown'
                         alt="Hairsncares Faqs icon"

@@ -422,7 +422,7 @@ const handleImageUploadSection6 = async (e,type,ind) => {
               />
             </div>
             <div>
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src={uploadedImages["section1-0"] || section1?.image}
               />
@@ -466,7 +466,7 @@ const handleImageUploadSection6 = async (e,type,ind) => {
           />
         </div>
         <div className="image-2">
-          <img alt="hair" src={uploadedImages["section2-0"] || section2?.img} />
+          <img loading="lazy" alt="hair" src={uploadedImages["section2-0"] || section2?.img} />
           <input type="file" onChange={(e) => handleImageUploadSection2(e)} />
         </div>
       </div>
@@ -484,7 +484,7 @@ const handleImageUploadSection6 = async (e,type,ind) => {
           </div>
           <div className="content-3">
             <div className="content-container">
-              <img alt="hair" src={section3?.img} />
+              <img loading="lazy" alt="hair" src={section3?.img} />
               <input
                 type="file"
                 onChange={(e) => handleImageUploadSection3(e, "img", 0)}
@@ -519,7 +519,7 @@ const handleImageUploadSection6 = async (e,type,ind) => {
       </div>
       <div className="about-container-3 container">
         <div className="container-3-item">
-          <img alt="hair" src={section4.img} />
+          <img loading="lazy" alt="hair" src={section4.img} />
           <input type="file" onChange={(e) => handleImageUploadSection4(e)} />
           <input
             type="text"
@@ -545,7 +545,7 @@ const handleImageUploadSection6 = async (e,type,ind) => {
           />
           {section5?.data?.map((item, index) => (
             <div key={index} className="container-4-item">
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src={item?.img}
               />
@@ -585,7 +585,7 @@ const handleImageUploadSection6 = async (e,type,ind) => {
           />
           {section6?.data?.map((item, index) => (
             <div key={index} className="container-5-item">
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src={item?.icon}
                 style={{    background: "black"}}

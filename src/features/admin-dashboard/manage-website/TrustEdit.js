@@ -27,7 +27,7 @@ function TrustEdit({section2,setSection2}) {
           </div>
         </div>
         <div className='trust'>
-          <div><img alt='hair' src='/uploads/r-icon2.png' /></div>
+          <div><img loading="lazy" alt='hair' src='/uploads/r-icon2.png' /></div>
           <div>
             <div>
               <input 
@@ -41,7 +41,7 @@ function TrustEdit({section2,setSection2}) {
           </div>
         </div>
         <div className='trust'>
-          <div><img alt='hair' src='/uploads/r-icon3.png' /></div>
+          <div><img loading="lazy" alt='hair' src='/uploads/r-icon3.png' /></div>
           <div>
             <div>
               <input 
@@ -55,7 +55,7 @@ function TrustEdit({section2,setSection2}) {
           </div>
         </div>
         <div className='trust'>
-          <div><img alt='hair' src='/uploads/r-icon4.png' /></div>
+          <div><img loading="lazy" alt='hair' src='/uploads/r-icon4.png' /></div>
           <div>
             <div>              <input 
                 type="text" 

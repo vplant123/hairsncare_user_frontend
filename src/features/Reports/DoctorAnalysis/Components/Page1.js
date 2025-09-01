@@ -12,7 +12,7 @@ export default function Page1({ data }) {
         className="head-managereport d-flex"
         style={{ justifyContent: "space-between" }}
       >
-        <img src="/assets/img/logo.png" className="head-managereport-logo" />
+        <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
         <div className="head-managereport-text1">Doctors  Analysis Report</div>
         <div
           className="text-flex-line-center-veritcal"
@@ -84,7 +84,7 @@ export default function Page1({ data }) {
               Reg. No,- 06/07/2868
             </div>
           </div>
-          <img
+          <img loading="lazy"
             className="doctor-img"
             src="https://res.cloudinary.com/drkpwvnun/image/upload/v1731256157/hair-assessment/a6jo0qrxvq61phbr9ywt.png"
           />
@@ -113,7 +113,7 @@ export default function Page1({ data }) {
             className="col-4 d-flex flex-column"
             style={{ padding: "10px", height: "70px", alignItems: "center",textAlign : "center",gap : "7px" }}
           >
-            <img
+            <img loading="lazy"
               src="/assets/img/reports/doctorAnalysis/page1/isolationmode167-alsy.svg"
               alt="IsolationMode167"
               style={{ height: "100%" }}
@@ -125,7 +125,7 @@ export default function Page1({ data }) {
             className="col-4 d-flex flex-column"
             style={{ padding: "10px", height: "70px", alignItems: "center",textAlign : "center",gap : "7px" }}
           >
-            <img
+            <img loading="lazy"
                     src="/assets/img/reports/doctorAnalysis/page1/isolationmode178-0ogs.svg"
               style={{ height: "100%" }}
             />
@@ -136,7 +136,7 @@ export default function Page1({ data }) {
             className="col-4 d-flex flex-column"
             style={{ padding: "10px", height: "70px", alignItems: "center",textAlign : "center",gap : "7px" }}
           >
-            <img
+            <img loading="lazy"
                   src="/assets/img/reports/doctorAnalysis/page1/layer11117-b27.svg"
                   alt="IsolationMode167"
               style={{ height: "100%" }}
@@ -149,7 +149,7 @@ export default function Page1({ data }) {
             className="col-4 d-flex flex-column"
             style={{ padding: "10px", height: "70px", alignItems: "center",textAlign : "center",gap : "7px" }}
           >
-            <img
+            <img loading="lazy"
                     src="/assets/img/reports/doctorAnalysis/page1/isolationmode167-alsy.svg"
                     alt="IsolationMode167"
               style={{ height: "100%" }}
@@ -162,7 +162,7 @@ export default function Page1({ data }) {
             className="col-4 d-flex flex-column"
             style={{ padding: "10px", height: "70px", alignItems: "center",textAlign : "center",gap : "7px" }}
           >
-            <img
+            <img loading="lazy"
                     src="/assets/img/reports/doctorAnalysis/page1/isolationmode153-p23.svg"
                     alt="IsolationMode167"
               style={{ height: "100%" }}
@@ -175,7 +175,7 @@ export default function Page1({ data }) {
             className="col-4 d-flex flex-column"
             style={{ padding: "10px", height: "70px", alignItems: "center",textAlign : "center",gap : "7px" }}
           >
-            <img
+            <img loading="lazy"
                     src="/assets/img/reports/doctorAnalysis/page1/isolationmode187-pw16.svg"
                     alt="IsolationMode167"
               style={{ height: "100%" }}
@@ -223,7 +223,7 @@ export default function Page1({ data }) {
         <div className="col-4" style={{padding : "0 30px"}}>
           <div className="sec-4-main row">
           <div className="col-4" style={{marginTop: "5%",position: "relative"}}>
-            <img
+            <img loading="lazy"
             src="/assets/img/reports/doctorAnalysis/page1/isolationmode1137-n7jv.svg"
             style={{width : "100%"}}
           />
@@ -236,7 +236,7 @@ export default function Page1({ data }) {
           </div>
             </div>
             <div className="col-4" style={{marginTop: "30%",position: "relative"}}>
-            <img
+            <img loading="lazy"
             src="/assets/img/reports/doctorAnalysis/page1/isolationmode1137-n7jv.svg"
             style={{width : "100%"}}
 
@@ -250,7 +250,7 @@ export default function Page1({ data }) {
           </div>
             </div>
             <div className="col-4" style={{marginTop: "15%",position: "relative"}}>
-            <img
+            <img loading="lazy"
             src="/assets/img/reports/doctorAnalysis/page1/isolationmode1137-n7jv.svg"
             style={{width : "100%"}}
 
@@ -269,7 +269,7 @@ export default function Page1({ data }) {
         <div className="col-4" style={{padding : "0 30px"}}>
           <div className="sec-4-main" style={{    display: "flex",
     justifyContent: "center",alignItems : "center"}}>
-          <img
+          <img loading="lazy"
             src="/assets/img/reports/doctorAnalysis/page1/image2361165-7n1-300w.png"
             style={{height : "85%"}}
           />
@@ -279,7 +279,7 @@ export default function Page1({ data }) {
         <div className="col-4" style={{padding : "0 30px"}}>
           <div className="sec-4-main row" style={{    display: "flex",
     justifyContent: "center",alignItems : "center"}}>
-          <img
+          <img loading="lazy"
             src="/assets/img/reports/doctorAnalysis/page1/image2351164-ija-400w.png"
             style={{height : "85%",width : "75%"}}
           />

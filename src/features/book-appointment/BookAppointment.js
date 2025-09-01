@@ -83,7 +83,7 @@ function BookAppointment() {
             </div>
           </LeftAnimatedDiv>
           <ZoomInDiv className="contact-img">
-            <img
+            <img loading="lazy"
               title="Contact Experts"
               alt='Smiling woman holding a laptop, symbolizing easy online access to contact HairsnCares for expert advice on hair care, hair loss, and personalized solutions.' src={content?.section1?.image} style={{ height: "100%" }} />
           </ZoomInDiv>
@@ -118,7 +118,7 @@ function BookAppointment() {
                   window.open("https://x.com/hairsncare")
                 }
               }} style={{ cursor: "pointer" }}>
-                <img src={e} style={{ width: "25px", height: "25px" }} alt={alt} title={title} />
+                <img loading="lazy" src={e} style={{ width: "25px", height: "25px" }} alt={alt} title={title} />
               </div>
             )
           })}
@@ -143,7 +143,7 @@ function BookAppointment() {
               }}>Get in touch</h2>
               <div className="touch-container">
                 <div className="touch">
-                  <img src="/assets/img/icons/location.png" alt="Location icon indicating HairsnCares' contact information for finding expert hair care and hair loss treatment support."
+                  <img loading="lazy" src="/assets/img/icons/location.png" alt="Location icon indicating HairsnCares' contact information for finding expert hair care and hair loss treatment support."
 
                     title="Location" />
                   <div className="c-content">
@@ -157,7 +157,7 @@ function BookAppointment() {
                   </div>
                 </div>
                 <div className="touch">
-                  <img src="/assets/img/icons/contact-icon.png"
+                  <img loading="lazy" src="/assets/img/icons/contact-icon.png"
                     alt="Phone icon representing HairsnCares contact support for expert hair care inquiries and personalized hair solutions."
                     title="Phone Support"
                   />
@@ -173,7 +173,7 @@ function BookAppointment() {
                   </div>
                 </div>
                 <div className="touch">
-                  <img alt='Clock icon indicating operating hours for HairsnCares hair care and hair loss treatment services.'
+                  <img loading="lazy" alt='Clock icon indicating operating hours for HairsnCares hair care and hair loss treatment services.'
                     title="Operating Hours"
                     src="/assets/img/icons/time.png" />
                   <div className="c-content">
@@ -228,7 +228,7 @@ function BookAppointment() {
         <RightAnimatedDiv>
           <h2>{content?.section3?.title}</h2>
           <figure className="text-center">
-            <img alt='Laptop displaying a virtual consultation with a doctor, highlighting HairsnCares easy online access to expert hair care and scalp health advice.'
+            <img loading="lazy" alt='Laptop displaying a virtual consultation with a doctor, highlighting HairsnCares easy online access to expert hair care and scalp health advice.'
               title="Virtual Consultation"
               src={content?.section3?.img} />
           </figure>

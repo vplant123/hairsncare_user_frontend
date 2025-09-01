@@ -12,7 +12,7 @@ export default function Page4({data}) {
       className="head-managereport d-flex"
       style={{ justifyContent: "space-between" }}
     >
-      <img src="/assets/img/logo.png" className="head-managereport-logo" />
+      <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
       <div className="head-managereport-text1">Nutrition Management</div>
       <div
         className="text-flex-line-center-veritcal"
@@ -54,7 +54,7 @@ export default function Page4({data}) {
          <br />
        </div>
        <div class="div-img" style={{width : "40%"}}>
-         <img src="/assets/img/reports/management/page4/importance of diet.png" alt="" class="diet-img" style={{height : "100%",width : "100%"}}/>
+         <img loading="lazy" src="/assets/img/reports/management/page4/importance of diet.png" alt="" class="diet-img" style={{height : "100%",width : "100%"}}/>
        </div>
       </div>
       <div class="diet-plan">
@@ -102,7 +102,7 @@ export default function Page4({data}) {
       className="head-managereport d-flex"
       style={{ justifyContent: "space-between" }}
     >
-      <img src="/assets/img/logo.png" className="head-managereport-logo" />
+      <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
       <div className="head-managereport-text1">Nutrition Management</div>
       <div
         className="text-flex-line-center-veritcal"
@@ -121,7 +121,7 @@ fontWeight: "700"}}>
       Breakfast
     </div>
     <div style={{    width: "40%"}}>
-    <img src="/assets/img/reports/management/page4/61964734-cbe4-4379-bd05-bac4d4d054f7.png" alt="" class="breakfast-img"
+    <img loading="lazy" src="/assets/img/reports/management/page4/61964734-cbe4-4379-bd05-bac4d4d054f7.png" alt="" class="breakfast-img"
         style={{    width: "100%",height : "100%"}}
       />
     </div>
@@ -133,8 +133,8 @@ fontWeight: "700"}}>
   <div class="breakfast-flex mt-5" style={{    padding: "14px",gap : "3%"}}>
     <div class="bordered-container teijsie ">
       <div class="labels">
-        <img src="/assets/img/reports/management/page4/img.png" alt="image" class="label" />
-        <img src="/assets/img/reports/management/page4/img2.png" alt="images" class="label" />
+        <img loading="lazy" src="/assets/img/reports/management/page4/img.png" alt="image" class="label" />
+        <img loading="lazy" src="/assets/img/reports/management/page4/img2.png" alt="images" class="label" />
       </div>
       <h1 class="box-text" style={{margin : 0}}>Choose Any One</h1>
       <div class="breakfast-content mt-2">
@@ -198,8 +198,8 @@ fontWeight: "700"}}>
 
     <div class="bordered-container2 teijsie">
       <div class="labels">
-        <img src="/assets/img/reports/management/page4/img.png" alt="image" class="label" />
-        <img src="/assets/img/reports/management/page4/img2.png" alt="images" class="label" />
+        <img loading="lazy" src="/assets/img/reports/management/page4/img.png" alt="image" class="label" />
+        <img loading="lazy" src="/assets/img/reports/management/page4/img2.png" alt="images" class="label" />
       </div>
       <h1 class="box-text" style={{margin : 0}}>Choose Any One</h1>
       <div class="breakfast-content  mt-2">
@@ -269,7 +269,7 @@ fontWeight: "700"}}>
       className="head-managereport d-flex"
       style={{ justifyContent: "space-between" }}
     >
-      <img src="/assets/img/logo.png" className="head-managereport-logo" />
+      <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
       <div className="head-managereport-text1">Nutrition Management</div>
       <div
         className="text-flex-line-center-veritcal"
@@ -287,7 +287,7 @@ fontWeight: "700"}}>
           Lunch 
         </div>
         <div style={{    width: "40%"}}>
-        <img src="/assets/img/reports/management/page4/23f0c079-7a00-4697-922c-cd9f8342b8d2.png" alt="" class="breakfast-img"
+        <img loading="lazy" src="/assets/img/reports/management/page4/23f0c079-7a00-4697-922c-cd9f8342b8d2.png" alt="" class="breakfast-img"
             style={{    width: "100%",height : "100%"}}
           />
         </div>
@@ -299,8 +299,8 @@ fontWeight: "700"}}>
       <div class="breakfast-flex mt-5" style={{    padding: "14px",gap : "3%"}}>
         <div class="bordered-container teijsie">
           <div class="labels">
-            <img src="/assets/img/reports/management/page4/img.png" alt="image" class="label" />
-            <img src="/assets/img/reports/management/page4/img2.png" alt="images" class="label" />
+            <img loading="lazy" src="/assets/img/reports/management/page4/img.png" alt="image" class="label" />
+            <img loading="lazy" src="/assets/img/reports/management/page4/img2.png" alt="images" class="label" />
           </div>
           <h1 class="box-text" style={{margin : 0}}>Choose Any One</h1>
           <div class="breakfast-content mt-2">
@@ -356,7 +356,7 @@ fontWeight: "700"}}>
 
         <div class="bordered-container teijsie">
           <div class="labels">
-            <img src="/assets/img/reports/management/page4/img.png" alt="image" class="label" />
+            <img loading="lazy" src="/assets/img/reports/management/page4/img.png" alt="image" class="label" />
           </div>
           <h1 class="box-text" style={{margin : 0}}>Choose Any One</h1>
           <div class="breakfast-content mt-2">
@@ -428,7 +428,7 @@ fontWeight: "700"}}>
       className="head-managereport d-flex"
       style={{ justifyContent: "space-between" }}
     >
-      <img src="/assets/img/logo.png" className="head-managereport-logo" />
+      <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
       <div className="head-managereport-text1">Nutrition Management</div>
       <div
         className="text-flex-line-center-veritcal"
@@ -446,7 +446,7 @@ fontWeight: "700"}}>
           Snacks
         </div>
         <div style={{    width: "40%"}}>
-        <img src="/assets/img/reports/management/page4/585.png" alt="" class="breakfast-img"
+        <img loading="lazy" src="/assets/img/reports/management/page4/585.png" alt="" class="breakfast-img"
             style={{    width: "100%",height : "100%"}}
           />
         </div>
@@ -458,8 +458,8 @@ fontWeight: "700"}}>
       <div class="breakfast-flex mt-5" style={{    padding: "14px",gap : "3%"}}>
         <div class="bordered-container teijsie">
           <div class="labels">
-            <img src="/assets/img/reports/management/page4/img.png" alt="image" class="label" />
-            <img src="/assets/img/reports/management/page4/img2.png" alt="images" class="label" />
+            <img loading="lazy" src="/assets/img/reports/management/page4/img.png" alt="image" class="label" />
+            <img loading="lazy" src="/assets/img/reports/management/page4/img2.png" alt="images" class="label" />
           </div>
           <h1 class="box-text" style={{margin : 0}}>Choose Any One</h1>
           <div class="breakfast-content">
@@ -501,7 +501,7 @@ fontWeight: "700"}}>
 
         <div class="bordered-container teijsie">
           <div class="labels">
-            <img src="/assets/img/reports/management/page4/img.png" alt="image" class="label" />
+            <img loading="lazy" src="/assets/img/reports/management/page4/img.png" alt="image" class="label" />
           </div>
           <h1 class="box-text" style={{margin : 0}}>Choose Any One</h1>
           <div class="breakfast-content mt-2">
@@ -560,7 +560,7 @@ fontWeight: "700"}}>
       className="head-managereport d-flex"
       style={{ justifyContent: "space-between" }}
     >
-      <img src="/assets/img/logo.png" className="head-managereport-logo" />
+      <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
       <div className="head-managereport-text1">Nutrition Management</div>
       <div
         className="text-flex-line-center-veritcal"
@@ -578,7 +578,7 @@ fontWeight: "700"}}>
           Dinner
         </div>
         <div style={{    width: "40%"}}>
-        <img src="/assets/img/reports/management/page4/57f0d0f4-347f-40f7-ae31-417227dada88.png" alt="" class="breakfast-img"
+        <img loading="lazy" src="/assets/img/reports/management/page4/57f0d0f4-347f-40f7-ae31-417227dada88.png" alt="" class="breakfast-img"
             style={{    width: "100%",height : "100%"}}
           />
         </div>
@@ -590,8 +590,8 @@ fontWeight: "700"}}>
       <div class="breakfast-flex mt-5" style={{    padding: "14px",gap : "3%"}}>
         <div class="bordered-container teijsie">
           <div class="labels">
-            <img src="/assets/img/reports/management/page4/img.png" alt="image" class="label" />
-            <img src="/assets/img/reports/management/page4/img2.png" alt="images" class="label" />
+            <img loading="lazy" src="/assets/img/reports/management/page4/img.png" alt="image" class="label" />
+            <img loading="lazy" src="/assets/img/reports/management/page4/img2.png" alt="images" class="label" />
           </div>
           <h1 class="box-text" style={{margin : 0}}>Choose Any One</h1>
           <div class="breakfast-content mt-2">
@@ -651,7 +651,7 @@ fontWeight: "700"}}>
 
         <div class="bordered-container teijsie">
           <div class="labels">
-            <img src="/assets/img/reports/management/page4/img.png" alt="image" class="label" />
+            <img loading="lazy" src="/assets/img/reports/management/page4/img.png" alt="image" class="label" />
           </div>
           <h1 class="box-text" style={{margin : 0}}>Choose Any One</h1>
           <div class="breakfast-content mt-2">

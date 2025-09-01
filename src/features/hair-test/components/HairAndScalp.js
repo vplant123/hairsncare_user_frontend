@@ -88,7 +88,7 @@
 //             ) : (
 //               <label >
 //                 {option.src ? (
-//                   <img alt='hair' src={option.src} alt={option.name} />
+//                   <img loading="lazy" alt='hair' src={option.src} alt={option.name} />
 //                 ) : (
 //                   <div className="circle no-image option">{option.name}</div>
 //                 )}
@@ -199,7 +199,7 @@
 //               ) : (
 //                 <label>
 //                   {option.src ? (
-//                     <img alt='hair' src={option.src} alt={option.name} />
+//                     <img loading="lazy" alt='hair' src={option.src} alt={option.name} />
 //                   ) : (
 //                     <div className="circle no-image option">{option.name}</div>
 //                   )}
@@ -257,7 +257,7 @@
 //                             ) : (
 //                               <label>
 //                                 {subOption.src ? (
-//                                   <img alt='hair' src={subOption.src} alt={subOption.name} />
+//                                   <img loading="lazy" alt='hair' src={subOption.src} alt={subOption.name} />
 //                                 ) : (
 //                                   <div className="circle no-image option">{subOption.name}</div>
 //                                 )}
@@ -424,7 +424,7 @@
 //                     ) : (
 //                       <label >
 //                         {option.src ? (
-//                           <img className='circle-01'  src={option.src} alt={option.name} />
+//                           <img loading="lazy" className='circle-01'  src={option.src} alt={option.name} />
 //                         ) : (
 //                           <div className="circle-01 no-image option">{option.name}</div>
 //                         )}
@@ -484,7 +484,7 @@
 //             ) : (
 //               <label>
 //                 {subOption.src ? (
-//                   <img className='circle-01' src={subOption.src} alt={subOption.name} />
+//                   <img loading="lazy" className='circle-01' src={subOption.src} alt={subOption.name} />
 //                 ) : (
 //                   <div className="circle no-image option">{subOption.name}</div>
 //                 )}
@@ -637,7 +637,7 @@
 //                     ) : (
 //                       <label>
 //                         {option.src ? (
-//                           <img className='circle-01' src={option.src} alt={option.name} />
+//                           <img loading="lazy" className='circle-01' src={option.src} alt={option.name} />
 //                         ) : (
 //                           <div className="circle-01 no-image option">{option.name}</div>
 //                         )}
@@ -695,7 +695,7 @@
 //                                   ) : (
 //                                     <label>
 //                                       {subOption.src ? (
-//                                         <img className='circle-01' src={subOption.src} alt={subOption.name} />
+//                                         <img loading="lazy" className='circle-01' src={subOption.src} alt={subOption.name} />
 //                                       ) : (
 //                                         <div className="circle no-image option">{subOption.name}</div>
 //                                       )}
@@ -865,7 +865,7 @@
 //                     ) : (
 //                       <label>
 //                         {option.src ? (
-//                           <img className='circle-01' src={option.src} alt={option.name} />
+//                           <img loading="lazy" className='circle-01' src={option.src} alt={option.name} />
 //                         ) : (
 //                           <div className="circle-01 no-image option">{option.name}</div>
 //                         )}
@@ -926,7 +926,7 @@
 //                                     ) : (
 //                                       <label>
 //                                         {subOption.src ? (
-//                                           <img className='circle-01' src={subOption.src} alt={subOption.name} />
+//                                           <img loading="lazy" className='circle-01' src={subOption.src} alt={subOption.name} />
 //                                         ) : (
 //                                           <div className="circle no-image option">{subOption.name}</div>
 //                                         )}
@@ -1105,7 +1105,7 @@
 //                     ) : (
 //                       <label>
 //                         {option.src ? (
-//                           <img className='circle-01' src={option.src} alt={option.name} />
+//                           <img loading="lazy" className='circle-01' src={option.src} alt={option.name} />
 //                         ) : (
 //                           <div className="circle-01 no-image option">{option.name}</div>
 //                         )}
@@ -1166,7 +1166,7 @@
 //                                     ) : (
 //                                       <label>
 //                                         {subOption.src ? (
-//                                           <img className='circle-01' src={subOption.src} alt={subOption.name} />
+//                                           <img loading="lazy" className='circle-01' src={subOption.src} alt={subOption.name} />
 //                                         ) : (
 //                                           <div className="circle no-image option">{subOption.name}</div>
 //                                         )}
@@ -1343,7 +1343,7 @@
 //                     ) : (
 //                       <label>
 //                         {option.src ? (
-//                           <img className='circle-01' src={option.src} alt={option.name} />
+//                           <img loading="lazy" className='circle-01' src={option.src} alt={option.name} />
 //                         ) : (
 //                           <div className="circle-01 no-image option">{option.name}</div>
 //                         )}
@@ -1404,7 +1404,7 @@
 //                                     ) : (
 //                                       <label>
 //                                         {subOption.src ? (
-//                                           <img className='circle-01' src={subOption.src} alt={subOption.name} />
+//                                           <img loading="lazy" className='circle-01' src={subOption.src} alt={subOption.name} />
 //                                         ) : (
 //                                           <div className="circle no-image option">{subOption.name}</div>
 //                                         )}
@@ -1594,7 +1594,7 @@
 //                     ) : (
 //                       <label>
 //                         {option.src ? (
-//                           <img className='circle-01' src={option.src} alt={option.name} />
+//                           <img loading="lazy" className='circle-01' src={option.src} alt={option.name} />
 //                         ) : (
 //                           <div className="circle-01 no-image option">{option.name}</div>
 //                         )}
@@ -1655,7 +1655,7 @@
 //                                     ) : (
 //                                       <label>
 //                                         {subOption.src ? (
-//                                           <img className='circle-01' src={subOption.src} alt={subOption.name} />
+//                                           <img loading="lazy" className='circle-01' src={subOption.src} alt={subOption.name} />
 //                                         ) : (
 //                                           <div className="circle no-image option">{subOption.name}</div>
 //                                         )}
@@ -1953,7 +1953,7 @@ export default function HairAndScalp({male,scrollToTop,data,testId, selectedOpti
                           <Tooltip title=                              {question?.title
                                 ? question?.title[optionIndex]
                                 : ""}>
-                          <img
+                          <img loading="lazy"
                               className={`${
                                 option?.name == "Not Sure" ||
                                 option?.name == "None" ||
@@ -2113,7 +2113,7 @@ export default function HairAndScalp({male,scrollToTop,data,testId, selectedOpti
                                               : ""
                                           }
                                         >
-                                            <img
+                                            <img loading="lazy"
                                               className={`${
                                                 subOption?.name == "Not Sure" ||
                                                 subOption?.name == "None" ||

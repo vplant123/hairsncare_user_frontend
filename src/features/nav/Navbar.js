@@ -9,14 +9,14 @@ import Login from "../login/Login";
 import Signup from "../signup/SignUp";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getCartItems } from '../products/CartSlice';
-import Badge from '@mui/material/Badge';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { getCartItems } from "../products/CartSlice";
+import Badge from "@mui/material/Badge";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchProduct from "../SearchProduct";
 import { useMediaQuery } from "@mui/material";
 
 function Navbar({ children, cart, setCart }) {
-  console.log("jofewjpoe", cart, setCart)
+  console.log("jofewjpoe", cart, setCart);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ function Navbar({ children, cart, setCart }) {
   const navigate = useNavigate();
 
   const handleMobileMenuToggle = () => {
-    console.log("jojeojfer", showMobileMenu)
+    console.log("jojeojfer", showMobileMenu);
     setShowMobileMenu(!showMobileMenu);
   };
 
@@ -39,12 +39,12 @@ function Navbar({ children, cart, setCart }) {
     toast("Logout Successfully");
     dispatch(getCartItems());
     // setCart([])
-    navigate('/');
+    navigate("/");
     window.location.reload();
   };
 
   const goToDash = () => {
-    navigate('/cart');
+    navigate("/cart");
   };
 
   const handleLoginClick = () => {
@@ -52,7 +52,7 @@ function Navbar({ children, cart, setCart }) {
   };
 
   const handleTestHair = () => {
-    navigate('/take-hair-test')
+    navigate("/take-hair-test");
   };
 
   const handleSignupClick = () => {
@@ -63,7 +63,7 @@ function Navbar({ children, cart, setCart }) {
   // console.log(storedUserData, "userData");
 
   useEffect(() => {
-    console.log("ksorkjoer", cart?.length)
+    console.log("ksorkjoer", cart?.length);
     if (storedUserData) {
       setShowLogout(true);
       dispatch(getCartItems(storedUserData.logedInUser.user._id));
@@ -73,24 +73,31 @@ function Navbar({ children, cart, setCart }) {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
       /* you can also use 'auto' behaviour 
          in place of 'smooth' */
     });
   };
 
-  const isLargeScreen = useMediaQuery('(min-width:1200px)');
-  const isMobile = useMediaQuery('(max-width: 768px)');
-
-
+  const isLargeScreen = useMediaQuery("(min-width:1200px)");
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
     <>
-      <div style={{ position: "fixed", zIndex: 100, top: 0, width: "100vw", background: "#FFFFFF" }} onClick={scrollToTop}>
-        <div className="nav-container container"  >
-
+      <div
+        style={{
+          position: "fixed",
+          zIndex: 100,
+          top: 0,
+          width: "100vw",
+          background: "#FFFFFF",
+        }}
+        onClick={scrollToTop}
+      >
+        <div className="nav-container container">
           <div>
             <img
+              loading="lazy"
               alt="Hairsncares"
               className="nav-logo"
               src="/assets/img/logo.png"
@@ -99,35 +106,91 @@ function Navbar({ children, cart, setCart }) {
               title="Hairsncares Brand Logo"
             />
           </div>
-          <div className={`nav-link ${showMobileMenu ? "show" : ""}`} style={{ zIndex: showMobileMenu ? 1 : "" }}>
+          <div
+            className={`nav-link ${showMobileMenu ? "show" : ""}`}
+            style={{ zIndex: showMobileMenu ? 1 : "" }}
+          >
             <a>
               <NavLink to="/" activeClassName="active">
                 HOME
               </NavLink>
             </a>
             <a className="who-we-link">
-              <NavLink to="/about-us-quality-hair-loss-scalp-care" activeClassName="active">
+              <NavLink
+                to="/about-us-quality-hair-loss-scalp-care"
+                activeClassName="active"
+              >
                 WHO WE ARE+
               </NavLink>
               <div className="sub-link-2">
-                <p onClick={() => navigate('/about-us-quality-hair-loss-scalp-care')}>About Us</p>
-                <p onClick={() => navigate('/hair-loss-treatment-experts-dermatologists')} style={{ fontSize: "17px" }}>Our specialists</p>
+                <p
+                  onClick={() =>
+                    navigate("/about-us-quality-hair-loss-scalp-care")
+                  }
+                >
+                  About Us
+                </p>
+                <p
+                  onClick={() =>
+                    navigate("/hair-loss-treatment-experts-dermatologists")
+                  }
+                  style={{ fontSize: "17px" }}
+                >
+                  Our specialists
+                </p>
               </div>
-
             </a>
             <a className="who-we-link-1">
-              <NavLink activeClassName="active" onClick={() => setActive(!active)}>
+              <NavLink
+                activeClassName="active"
+                onClick={() => setActive(!active)}
+              >
                 OUR EXPERTISE
               </NavLink>
-              <div className="sub-link-3" style={{ display: active ? "block" : "none" }}>
-                <p onClick={() => navigate('/effective-hair-loss-treatment-men')}>Hair Loss in Men</p>
-                <p onClick={() => navigate('/hair-loss-women-causes-treatments-remedies')} style={{ fontSize: "17px" }}>Hair Loss in Women</p>
-                <p onClick={() => navigate('/hair-transplants-fue-dhi-mhi-natural-restoration')} style={{ fontSize: "17px" }}>Hair Transplant</p>
-                <p onClick={() => navigate('/advanced-hair-loss-solutions-prp-smp-cloning-systems')} style={{ fontSize: "17px" }}>Other Procedures</p>
+              <div
+                className="sub-link-3"
+                style={{ display: active ? "block" : "none" }}
+              >
+                <p
+                  onClick={() => navigate("/effective-hair-loss-treatment-men")}
+                >
+                  Hair Loss in Men
+                </p>
+                <p
+                  onClick={() =>
+                    navigate("/hair-loss-women-causes-treatments-remedies")
+                  }
+                  style={{ fontSize: "17px" }}
+                >
+                  Hair Loss in Women
+                </p>
+                <p
+                  onClick={() =>
+                    navigate(
+                      "/hair-transplants-fue-dhi-mhi-natural-restoration"
+                    )
+                  }
+                  style={{ fontSize: "17px" }}
+                >
+                  Hair Transplant
+                </p>
+                <p
+                  onClick={() =>
+                    navigate(
+                      "/advanced-hair-loss-solutions-prp-smp-cloning-systems"
+                    )
+                  }
+                  style={{ fontSize: "17px" }}
+                >
+                  Other Procedures
+                </p>
               </div>
             </a>
             <a>
-              <NavLink to="/best-hair-care-products-hair-loss-scalp-health" activeClassName="active">
+              <NavLink
+                to="/best-hair-care-products-hair-loss-scalp-health"
+                activeClassName="active"
+              >
                 PRODUCTS
               </NavLink>
             </a>
@@ -137,88 +200,111 @@ function Navbar({ children, cart, setCart }) {
               </NavLink>
             </a>
 
-            {
-              isMobile && <a>
-                <NavLink to="/effective-hair-loss-treatment-men" activeClassName="active">
+            {isMobile && (
+              <a>
+                <NavLink
+                  to="/effective-hair-loss-treatment-men"
+                  activeClassName="active"
+                >
                   Hair Loss in Men
                 </NavLink>
               </a>
-            }
+            )}
 
-            {
-              isMobile && <a>
-                <NavLink to="/hair-loss-women-causes-treatments-remedies" activeClassName="active">
+            {isMobile && (
+              <a>
+                <NavLink
+                  to="/hair-loss-women-causes-treatments-remedies"
+                  activeClassName="active"
+                >
                   Hair Loss in Women
                 </NavLink>
               </a>
-            }
+            )}
 
-            {
-              isMobile && <a>
-                <NavLink to="/hair-transplants-fue-dhi-mhi-natural-restoration" activeClassName="active">
+            {isMobile && (
+              <a>
+                <NavLink
+                  to="/hair-transplants-fue-dhi-mhi-natural-restoration"
+                  activeClassName="active"
+                >
                   Hair Transplant
                 </NavLink>
               </a>
-            }
+            )}
 
-            {
-              isMobile && <a>
-                <NavLink to="/advanced-hair-loss-solutions-prp-smp-cloning-systems" activeClassName="active">
+            {isMobile && (
+              <a>
+                <NavLink
+                  to="/advanced-hair-loss-solutions-prp-smp-cloning-systems"
+                  activeClassName="active"
+                >
                   Other Procedures
                 </NavLink>
               </a>
-            }
+            )}
 
-            {
-              isMobile && <a>
-                <NavLink to="/online-hair-loss-test-diagnosis-treatment" activeClassName="active">
+            {isMobile && (
+              <a>
+                <NavLink
+                  to="/online-hair-loss-test-diagnosis-treatment"
+                  activeClassName="active"
+                >
                   Hair Loss Test
                 </NavLink>
               </a>
-            }
+            )}
 
-            {
-              isMobile && <a>
-                <NavLink to="/dr-amit-agarkar-hair-restoration-expert" activeClassName="active">
+            {isMobile && (
+              <a>
+                <NavLink
+                  to="/dr-amit-agarkar-hair-restoration-expert"
+                  activeClassName="active"
+                >
                   Dermatologist
                 </NavLink>
               </a>
-            }
+            )}
 
-            {
-              isMobile && <a>
+            {isMobile && (
+              <a>
                 <NavLink to="/hair-care-blogs" activeClassName="active">
                   Blogs
                 </NavLink>
               </a>
-            }
+            )}
 
-
-            {
-              isMobile && <a>
+            {isMobile && (
+              <a>
                 <NavLink to="/policy" activeClassName="active">
                   Privacy Policy
                 </NavLink>
               </a>
-            }
+            )}
 
-
-            {
-              isMobile && <a>
+            {isMobile && (
+              <a>
                 <NavLink to="/terms-of-service" activeClassName="active">
                   Terms of Service
                 </NavLink>
               </a>
-            }
-
+            )}
           </div>
           <div className="nav-right">
-            {!location.pathname.includes("/take-hair-test") && <button onClick={handleTestHair} className="btn-test">TAKE A HAIR TEST</button>}
+            {!location.pathname.includes("/take-hair-test") && (
+              <button onClick={handleTestHair} className="btn-test">
+                TAKE A HAIR TEST
+              </button>
+            )}
             <div className="nav-icons">
               <div className="user-svg">
                 {showSearch ? (
-                  <SearchProduct isOpen={showSearch} onClose={() => setShowSearch(!showSearch)} cart={cart}
-                    setCart={setCart} />
+                  <SearchProduct
+                    isOpen={showSearch}
+                    onClose={() => setShowSearch(!showSearch)}
+                    cart={cart}
+                    setCart={setCart}
+                  />
                 ) : (
                   <FaSearch
                     onClick={() => setShowSearch(!showSearch)}
@@ -227,7 +313,15 @@ function Navbar({ children, cart, setCart }) {
                 )}
               </div>
               <div className="cart-icon" onClick={goToDash}>
-                <Badge color="secondary" badgeContent={cartItems?.length > 0 || cart?.length > 0 ? cartItems?.length || cart?.length : 0} max={99}>
+                <Badge
+                  color="secondary"
+                  badgeContent={
+                    cartItems?.length > 0 || cart?.length > 0
+                      ? cartItems?.length || cart?.length
+                      : 0
+                  }
+                  max={99}
+                >
                   <ShoppingCartIcon />
                 </Badge>
                 {/* <FaShoppingCart onClick={goToDash} size={20} /> */}
@@ -235,16 +329,39 @@ function Navbar({ children, cart, setCart }) {
               </div>
               <div className="user-svg">
                 <FaRegUser size={20} />
-                <div className="sub-link" style={{ width: "135px", padding: "1rem" }}>
+                <div
+                  className="sub-link"
+                  style={{ width: "135px", padding: "1rem" }}
+                >
                   {showLogout ? (
                     <div>
-                      <p style={{ fontSize: "17px" }} onClick={() => navigate('/user-profile')}>My Account</p>
-                      <p onClick={handleLogout} style={{ textAlign: "center", fontSize: "17px" }}>Logout</p>
+                      <p
+                        style={{ fontSize: "17px" }}
+                        onClick={() => navigate("/user-profile")}
+                      >
+                        My Account
+                      </p>
+                      <p
+                        onClick={handleLogout}
+                        style={{ textAlign: "center", fontSize: "17px" }}
+                      >
+                        Logout
+                      </p>
                     </div>
                   ) : (
                     <div>
-                      <p onClick={handleLoginClick} style={{ textAlign: "center" }}>Login</p>
-                      <p onClick={handleSignupClick} style={{ textAlign: "center" }}>Signup</p>
+                      <p
+                        onClick={handleLoginClick}
+                        style={{ textAlign: "center" }}
+                      >
+                        Login
+                      </p>
+                      <p
+                        onClick={handleSignupClick}
+                        style={{ textAlign: "center" }}
+                      >
+                        Signup
+                      </p>
                     </div>
                   )}
                 </div>
@@ -252,15 +369,24 @@ function Navbar({ children, cart, setCart }) {
               <div className="menubar" onClick={handleMobileMenuToggle}>
                 <FiMenu />
               </div>
-              {showLogin && <Login onClose={handleLoginClick} showSignup={showSignup} setShowSignup={setShowSignup} />}
-              {showSignup && <Signup onClose={handleSignupClick} handleLoginClick={handleLoginClick} />}
+              {showLogin && (
+                <Login
+                  onClose={handleLoginClick}
+                  showSignup={showSignup}
+                  setShowSignup={setShowSignup}
+                />
+              )}
+              {showSignup && (
+                <Signup
+                  onClose={handleSignupClick}
+                  handleLoginClick={handleLoginClick}
+                />
+              )}
             </div>
           </div>
         </div>
       </div>
-      <div className="main">
-        {children}
-      </div>
+      <div className="main">{children}</div>
     </>
   );
 }

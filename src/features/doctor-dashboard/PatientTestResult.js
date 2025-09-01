@@ -65,7 +65,7 @@ return (<DoctorNavbar>
         <div className="options-container">
           {typeof question.option === 'object' ? (
             <label>
-              <img  src={question.option.src} alt={question.option.name} />
+              <img loading="lazy"  src={question.option.src} alt={question.option.name} />
               <p>{question.option.name}</p>
             </label>
           ) : (
@@ -85,7 +85,7 @@ return (<DoctorNavbar>
                   <div className="options-container">
                     {typeof subQuestion.option === 'object' ? (
                       <label>
-                        <img  src={subQuestion.option.src} alt={subQuestion.option.name} />
+                        <img loading="lazy"  src={subQuestion.option.src} alt={subQuestion.option.name} />
                         <p>{subQuestion.option.name}</p>
                       </label>
                     ) : (
@@ -106,7 +106,7 @@ return (<DoctorNavbar>
               <div className="options-container">
                 {typeof question?.suboption == 'object' ? (
                   <label>
-                    <img  src={question?.suboption.src} alt={question.suboption.name} />
+                    <img loading="lazy"  src={question?.suboption.src} alt={question.suboption.name} />
                     <p>{question?.suboption.name}</p>
                   </label>
                 ) : (
@@ -133,7 +133,7 @@ return (<DoctorNavbar>
         <div className="options-container">
           {typeof question.option === 'object' ? (
             <label>
-              <img  src={question.option.src} alt={question.option.name} />
+              <img loading="lazy"  src={question.option.src} alt={question.option.name} />
               <p>{question.option.name}</p>
             </label>
           ) : (
@@ -153,7 +153,7 @@ return (<DoctorNavbar>
                 <div className="options-container">
                   {typeof subQuestion.option === 'object' ? (
                     <label>
-                      <img  src={subQuestion.option.src} alt={subQuestion.option.name} />
+                      <img loading="lazy"  src={subQuestion.option.src} alt={subQuestion.option.name} />
                       <p>{subQuestion.option.name}</p>
                     </label>
                   ) : (
@@ -181,7 +181,7 @@ return (<DoctorNavbar>
         <div className="options-container">
           {typeof question.option === 'object' ? (
             <label>
-              <img  src={question.option.src} alt={question.option.name} />
+              <img loading="lazy"  src={question.option.src} alt={question.option.name} />
               <p>{question.option.name}</p>
             </label>
           ) : (
@@ -201,7 +201,7 @@ return (<DoctorNavbar>
                 <div className="options-container">
                   {typeof subQuestion.option === 'object' ? (
                     <label>
-                      <img  src={subQuestion.option.src} alt={subQuestion.option.name} />
+                      <img loading="lazy"  src={subQuestion.option.src} alt={subQuestion.option.name} />
                       <p>{subQuestion.option.name}</p>
                     </label>
                   ) : (
@@ -233,14 +233,14 @@ return (<DoctorNavbar>
                 return(
                   <>
                   {typeof e == 'object' ?  <label>
-                  <img  src={e?.src} alt={e?.name} />
+                  <img loading="lazy"  src={e?.src} alt={e?.name} />
                   <p>{e?.name}</p>
                 </label>  : <label>{e}</label>}
                   </>
                  
                 )
               })       :            <label>
-              <img  src={question.option.src} alt={question.option.name} />
+              <img loading="lazy"  src={question.option.src} alt={question.option.name} />
               <p>{question.option.name}</p>
             </label>
 
@@ -266,13 +266,13 @@ return (<DoctorNavbar>
                         return(
                           <>
                                             {typeof e == 'object' ?  <label>
-                  <img  src={e?.src} alt={e?.name} />
+                  <img loading="lazy"  src={e?.src} alt={e?.name} />
                   <p>{e?.name}</p>
                 </label>  : <label>{e}</label>}
                           </>
                         )
                       })       :            <label>
-                        <img  src={subQuestion.option.src} alt={subQuestion.option.name} />
+                        <img loading="lazy"  src={subQuestion.option.src} alt={subQuestion.option.name} />
                         <p>{subQuestion.option.name}</p>
                       </label>
                     ) : (
@@ -294,7 +294,7 @@ return (<DoctorNavbar>
 {
 selectedTab === 'uploadedImages' &&<div>{data1?.UploadedImage?.map((e)=>{
   return(
-    <img style={{width:'400px',cursor:"pointer"}} src={e?.imageUrl} onClick={() => window.open(e?.imageUrl)}/>
+    <img loading="lazy" style={{width:'400px',cursor:"pointer"}} src={e?.imageUrl} onClick={() => window.open(e?.imageUrl)}/>
   )
 })}</div>
 }

@@ -79,7 +79,7 @@ export default function OtherProcedure() {
                 </div>
               </ZoomInDiv2>
               <RightAnimatedDiv className="d-flex flex-column main-section-1-op-right">
-                <img
+                <img loading="lazy"
                   src={content?.section1?.image}
                   alt={content?.section1?.alt}
                 />
@@ -95,7 +95,7 @@ export default function OtherProcedure() {
           </ZoomInDiv2>
           <div className="desktop-view" style={{ gap: "20px" }}>
             <LeftAnimatedDiv className="main-section-2-htw-left">
-              <img
+              <img loading="lazy"
                 src={content?.section2?.image}
                 alt={content?.section2?.alt}
                 width={"100%"}
@@ -161,7 +161,7 @@ export default function OtherProcedure() {
                 </div>
               </LeftAnimatedDiv>
               <RightAnimatedDiv className="d-flex flex-column main-section-1-op-right">
-                <img
+                <img loading="lazy"
                   src={content?.section3?.image}
                   alt={content?.section3?.alt}
                 />
@@ -178,7 +178,7 @@ export default function OtherProcedure() {
           </ZoomInDiv>
           <div className="desktop-view">
             <LeftAnimatedDiv className="main-section-2-htw-left">
-              <img
+              <img loading="lazy"
                 src={content?.section4?.image}
                 alt={content?.section4?.alt}
               />

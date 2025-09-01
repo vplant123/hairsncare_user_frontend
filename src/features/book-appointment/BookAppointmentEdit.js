@@ -153,7 +153,7 @@ function BookAppointmentEdit({
             />
           </div>
           <div className="d-flex flex-column">
-            <img
+            <img loading="lazy"
               alt="hair"
               src={section1?.image}
               style={{ height: "100%", width: "100%" }}
@@ -202,7 +202,7 @@ function BookAppointmentEdit({
             }}>Get in touch</h2>
             <div className="touch-container">
               <div className="touch">
-                <img alt='hair' src="/assets/img/icons/location.png" />
+                <img loading="lazy" alt='hair' src="/assets/img/icons/location.png" />
                 <div className="c-content">
                   <input
                     type="text"
@@ -225,7 +225,7 @@ function BookAppointmentEdit({
                 </div>
               </div>
               <div className="touch">
-                <img alt='hair' src="/assets/img/icons/contact-icon.png" />
+                <img loading="lazy" alt='hair' src="/assets/img/icons/contact-icon.png" />
                 <div className="c-content">
                   <input
                     type="text"
@@ -248,7 +248,7 @@ function BookAppointmentEdit({
                 </div>
               </div>
               <div className="touch">
-                <img alt='hair' src="/assets/img/icons/time.png" />
+                <img loading="lazy" alt='hair' src="/assets/img/icons/time.png" />
                 <div className="c-content">
                   <input
                     type="text"
@@ -291,7 +291,7 @@ function BookAppointmentEdit({
             style={{ color: "black" }}
           />
           <div className="d-flex flex-column">
-            <img
+            <img loading="lazy"
               alt="hair"
               src={section3?.img}
               style={{ height: "100%", width: "100%" }}

@@ -9,7 +9,7 @@ export default function Page2({ data }) {
     <div className="page-avoid-1" style={{padding : "10px 0"}}>
 
     <div className="head-managereportN">
-        <img src="/assets/img/logo.png" className="head-managereport-logo" />
+        <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
         <h2>Doctors  Analysis Report</h2>
         <p>Smart Report</p>
     </div>
@@ -22,7 +22,7 @@ export default function Page2({ data }) {
 
     <div className="d-flex darpanel" style={{gap : "3%"}}>
         <div style={{width: "35%",height : "180px"}} className="darcol">
-            <img src="/assets/img/reports/doctorAnalysis/page2/image2371177-pzv-500w.png" style={{width : "100%",height : "100%"}} />
+            <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page2/image2371177-pzv-500w.png" style={{width : "100%",height : "100%"}} />
         </div>
 
         <div style={{width: "30%",fontSize: "9px"}} className="darcol">
@@ -30,7 +30,7 @@ export default function Page2({ data }) {
             instance, iron deficiency can weaken hair follicles, while inadequate zinc may lead to thinning. Our expert dermatologists have assessed your inputs and provided the following nutritional assessment.
         </div>
         <div style={{width: "30%",background : "rgba(190, 206, 55, 0.2)",borderRadius : "5%",display: "flex",flexDirection : "column",justifyContent : "center",alignItems: "center"}} className="darcol">
-            <img src="/assets/img/reports/doctorAnalysis/page2/image59627101182-iwz-200w.png" style={{ width : "100px" }} />
+            <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page2/image59627101182-iwz-200w.png" style={{ width : "100px" }} />
             <div style={{padding : "0 25%",fontSize : "10px",fontWeight : "600",textAlign: "center"}}>
                 {data?.nutrition?.value || ""}
             </div>
@@ -53,7 +53,7 @@ export default function Page2({ data }) {
 
     <div className="d-flex darpanel" style={{gap : "3%"}}>
         <div style={{width: "35%",height : "180px"}} className="darcol">
-            <img src="/assets/img/reports/doctorAnalysis/page2/image2391189-qw7o-500h.png" style={{ height : "100%", width : "100%" }} />
+            <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page2/image2391189-qw7o-500h.png" style={{ height : "100%", width : "100%" }} />
         </div>
 
         <div style={{width: "30%",fontSize: "9px"}} className="darcol">
@@ -61,7 +61,7 @@ export default function Page2({ data }) {
             These factors disrupt hair growth cycles and affect circulation. Addressing these issues involves adopting healthier lifestyle practices. Our expert dermatologists have reviewed your inputs and provided a tailored nutritional assessment to
             support your hair health </div>
         <div style={{width: "30%",background : "rgba(190, 206, 55, 0.2)",borderRadius : "5%",display: "flex",flexDirection : "column",justifyContent : "center",alignItems: "center"}} className="darcol">
-            <img src="/assets/img/reports/doctorAnalysis/page2/image74795591194-o6xo-200h.png" style={{ width : "100px" }} />
+            <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page2/image74795591194-o6xo-200h.png" style={{ width : "100px" }} />
             <div style={{padding : "0 25%",fontSize : "10px",fontWeight : "600",textAlign: "center"}}>
                 {data?.lifeStyle?.value || ""}
             </div>
@@ -84,7 +84,7 @@ export default function Page2({ data }) {
 
     <div className="d-flex darpanel" style={{gap : "3%"}}>
         <div style={{width: "35%",height : "100%",border : "1px solid",padding : "5px"}} className="darcol">
-            {/* <img src="/assets/img/reports/doctorAnalysis/page2/stressometer111199-dwan-300h.png" style={{ height : "100%", width : "100%" }} /> */}
+            {/* <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page2/stressometer111199-dwan-300h.png" style={{ height : "100%", width : "100%" }} /> */}
             <SpeedoMeter data={data?.stress?.value}/>
         </div>
 
@@ -92,7 +92,7 @@ export default function Page2({ data }) {
             Stress-induced hair loss occurs when hair follicles shift from the active growth phase to the resting phase, resulting in increased shedding. Elevated cortisol levels disrupt follicle function and restrict blood flow to the scalp, affecting hair health.
             Managing stress through relaxation and support can help mitigate this impact. Finding: Your Stress Indicator score is 21. </div>
         <div style={{width: "30%",background : "rgba(190, 206, 55, 0.2)",borderRadius : "5%",display: "flex",flexDirection : "column",justifyContent : "center",alignItems: "center"}} className="darcol">
-            <img src={`/assets/img/reports/doctorAnalysis/page2/${data?.stress?.src}`} style={{ width : "100px" }} />
+            <img loading="lazy" src={`/assets/img/reports/doctorAnalysis/page2/${data?.stress?.src}`} style={{ width : "100px" }} />
             <div style={{padding : "0 25%",fontSize : "10px",fontWeight : "600",textAlign: "center"}}>
                 {data?.stress?.value || ""}
             </div>
@@ -129,12 +129,12 @@ export default function Page2({ data }) {
     {/*
     <div class="frame3-container">
         <div class="frame3-frame3">
-            <img alt="Rectangle346245101167" src="/assets/img/reports/doctorAnalysis/page2/rectangle346245101167-amos-200h.png" class="frame3-rectangle34624510" />
+            <img loading="lazy" alt="Rectangle346245101167" src="/assets/img/reports/doctorAnalysis/page2/rectangle346245101167-amos-200h.png" class="frame3-rectangle34624510" />
             <div class="frame3-frame1261153115">
                 <span class="frame3-text10">Nutritional Assessment Lifestyle</span>
             </div>
             <span class="frame3-text11">Smart Report</span>
-            <img alt="Rectangle346245111171" src="/assets/img/reports/doctorAnalysis/page2/rectangle346245111171-d1e-200h.png" class="frame3-rectangle34624511" />
+            <img loading="lazy" alt="Rectangle346245111171" src="/assets/img/reports/doctorAnalysis/page2/rectangle346245111171-d1e-200h.png" class="frame3-rectangle34624511" />
             <span class="frame3-text12">
         <span class="frame3-text13">Legal Disclaimer</span>
             <span>
@@ -155,11 +155,11 @@ export default function Page2({ data }) {
         </span>
             </span>
             <div class="frame3-group1707485983">
-                <img alt="Rectangle346245221174" src="/assets/img/reports/doctorAnalysis/page2/rectangle346245221174-5htn-200h.png" class="frame3-rectangle34624522" />
-                <img alt="HAIRSN111175" src="/assets/img/reports/doctorAnalysis/page2/hairsn111175-29q4-200h.png" class="frame3hairsn11" />
+                <img loading="lazy" alt="Rectangle346245221174" src="/assets/img/reports/doctorAnalysis/page2/rectangle346245221174-5htn-200h.png" class="frame3-rectangle34624522" />
+                <img loading="lazy" alt="HAIRSN111175" src="/assets/img/reports/doctorAnalysis/page2/hairsn111175-29q4-200h.png" class="frame3hairsn11" />
             </div>
             <span class="frame3-text15">Doctors Analysis Report</span>
-            <img alt="image2371177" src="/assets/img/reports/doctorAnalysis/page2/image2371177-pzv-500w.png" class="frame3-image237" />
+            <img loading="lazy" alt="image2371177" src="/assets/img/reports/doctorAnalysis/page2/image2371177-pzv-500w.png" class="frame3-image237" />
             <span class="frame3-text16">
         Hair loss and thinning can arise from various factors, with
         nutritional deficiencies being a significant contributor. Essential
@@ -189,8 +189,8 @@ export default function Page2({ data }) {
         stress through relaxation and support can help mitigate this impact.
         Finding: Your Stress Indicator score is 21.
       </span>
-            <img alt="Rectangle346245301181" src="/assets/img/reports/doctorAnalysis/page2/rectangle346245301181-b95nj-400w.png" class="frame3-rectangle34624530" />
-            <img alt="IMAGE59627101182" src="/assets/img/reports/doctorAnalysis/page2/image59627101182-iwz-200w.png" class="frame3image5962710" />
+            <img loading="lazy" alt="Rectangle346245301181" src="/assets/img/reports/doctorAnalysis/page2/rectangle346245301181-b95nj-400w.png" class="frame3-rectangle34624530" />
+            <img loading="lazy" alt="IMAGE59627101182" src="/assets/img/reports/doctorAnalysis/page2/image59627101182-iwz-200w.png" class="frame3image5962710" />
             <span class="frame3-text19">
         Adequate Nutritional Condition but needs improvement
       </span>
@@ -214,26 +214,26 @@ export default function Page2({ data }) {
             </div>
             <div className="page-break-1">
 
-                <img alt="image2391189" src="/assets/img/reports/doctorAnalysis/page2/image2391189-qw7o-500h.png" class="frame3-image239 page-avoid-1" />
+                <img loading="lazy" alt="image2391189" src="/assets/img/reports/doctorAnalysis/page2/image2391189-qw7o-500h.png" class="frame3-image239 page-avoid-1" />
                 <div class="frame3-group1707485989 page-avoid-1">
                     <div class="frame3-group1707485988">
                         <span class="frame3-text24 page-avoid-1">
             Unhealthy Lifestyle &amp; needs improvement
           </span>
-                        <img alt="IMAGE74795591194" src="/assets/img/reports/doctorAnalysis/page2/image74795591194-o6xo-200h.png" class="frame3image7479559 page-avoid-1" />
+                        <img loading="lazy" alt="IMAGE74795591194" src="/assets/img/reports/doctorAnalysis/page2/image74795591194-o6xo-200h.png" class="frame3image7479559 page-avoid-1" />
                     </div>
                 </div>
             </div>
 
 
 
-            <img alt="Rectangle346245311195" src="/assets/img/reports/doctorAnalysis/page2/rectangle346245311195-8tfs-300h.png" class="frame3-rectangle34624531" />
+            <img loading="lazy" alt="Rectangle346245311195" src="/assets/img/reports/doctorAnalysis/page2/rectangle346245311195-8tfs-300h.png" class="frame3-rectangle34624531" />
             <span class="frame3-text25">Mild to Moderate Level</span>
             <div class="frame3-frame1261153117">
                 <span class="frame3-text26">Stress Analysis</span>
             </div>
-            <img alt="Stressometer111199" src="/assets/img/reports/doctorAnalysis/page2/stressometer111199-dwan-300h.png" class="frame3-stressometer11" />
-            <img alt="IMAGE23951200" src="/assets/img/reports/doctorAnalysis/page2/image23951200-qaeb-200w.png" class="frame3image2395" />
+            <img loading="lazy" alt="Stressometer111199" src="/assets/img/reports/doctorAnalysis/page2/stressometer111199-dwan-300h.png" class="frame3-stressometer11" />
+            <img loading="lazy" alt="IMAGE23951200" src="/assets/img/reports/doctorAnalysis/page2/image23951200-qaeb-200w.png" class="frame3image2395" />
             <div class="frame3-frame1261153145"></div>
         </div>
     </div> */}

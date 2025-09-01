@@ -12,8 +12,8 @@ export default function Page1({data}) {
       >
         <div className="heading-container2">
           <div className="image-container" style={{    width: "30%"}}>
-            {/* <img className="rx-logo" src="/medical-prescription-pharmaceutical-drug-pharmacy-symbol-clip-art-rx-logo-image-b7b1ba0f952be8c1872ae92a48af3874.png" alt="RX Logo" /> */}
-            <img
+            {/* <img loading="lazy" className="rx-logo" src="/medical-prescription-pharmaceutical-drug-pharmacy-symbol-clip-art-rx-logo-image-b7b1ba0f952be8c1872ae92a48af3874.png" alt="RX Logo" /> */}
+            <img loading="lazy"
               className="logo-main"
               src="/assets/img/logo.png"
               alt="Main Logo"

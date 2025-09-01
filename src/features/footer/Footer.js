@@ -22,7 +22,7 @@ const Footer = () => {
     <div>
       <footer className="footer-container container">
         <div className="footer-item">
-          <img alt="Hairsncares Footer Logo" src="/assets/img/footer-logo.png" title="Hairsncares Footer Logo" />
+          <img loading="lazy" alt="Hairsncares Footer Logo" src="/assets/img/footer-logo.png" title="Hairsncares Footer Logo" />
           <div className="icon-footer">
             <FaMapMarkerAlt size={35} />
             <p>

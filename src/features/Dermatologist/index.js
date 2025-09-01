@@ -164,7 +164,7 @@ export default function Dermatologist() {
                 </HashLink>
               </ZoomInDiv>
               <RightAnimatedDiv className="d-flex flex-column main-section-1-op-right">
-                <img src="/assets/img/hairTreatmentWomen/dr-amit-agarkar-hair-care-expert.png"
+                <img loading="lazy" src="/assets/img/hairTreatmentWomen/dr-amit-agarkar-hair-care-expert.png"
                   alt="Dr. Amit Agarkar, leading expert in hair restoration, trichology, and dermatology, known for advanced hair loss treatments at HairsnCares."
                   title="Dr. Amit Agarkar – Hair Restoration Expert"
                 />
@@ -183,7 +183,7 @@ export default function Dermatologist() {
                 className="main-section-2-htw-left"
               //   style={{ height: "100vh" }}
               >
-                <img
+                <img loading="lazy"
                   src="https://res.cloudinary.com/drkpwvnun/image/upload/v1729424606/hair-assessment/kh2b9nblfx8ven7gtqbl.png"
                   style={{ width: "100%", maxHeight: "682px" }}
                   alt="Dr. Amit Agarkar, renowned specialist in hair restoration and advanced hair loss treatments, seated in his office at HairsnCares."
@@ -218,14 +218,14 @@ export default function Dermatologist() {
           >
             <div className="desktop-view-1" style={{ gap: "2%" }}>
               <LeftAnimatedDiv className="left-div-11">
-                <img
+                <img loading="lazy"
                   src={content?.section1?.image1}
                   style={{ width: "100%", height: "400px" }}
                   alt={content?.section1?.alt1}
                 />
               </LeftAnimatedDiv>
               <RightAnimatedDiv className="right-div-11">
-                <img
+                <img loading="lazy"
                   src={content?.section1?.image2}
                   style={{ width: "100%", height: "400px" }}
                   alt={content?.section1?.alt2}
@@ -233,7 +233,7 @@ export default function Dermatologist() {
               </RightAnimatedDiv>
             </div>
             <ZoomInDiv>
-              <img
+              <img loading="lazy"
                 src={content?.section1?.image3}
                 style={{ width: "100%", height: "400px" }}
                 alt={content?.section1?.alt3}
@@ -289,7 +289,7 @@ export default function Dermatologist() {
                 </div>
               </ZoomInDiv>
               <RightAnimatedDiv className="d-flex flex-column main-section-1-op-right">
-              <img
+              <img loading="lazy"
                 src={content?.section2?.image}
                 alt={content?.section2?.alt}
               />
@@ -434,7 +434,7 @@ export default function Dermatologist() {
                 className="main-section-2-htw-left mp-2 "
               // style={{ height: "750px" }}
               >
-                <img
+                <img loading="lazy"
                   src={content?.section4?.image}
                   style={{ height: "100%", width: "100%" }}
                   alt={content?.section4?.alt}
@@ -460,7 +460,7 @@ export default function Dermatologist() {
               className="main-section-2-htw-left"
             //   style={{ height: "100vh" }}
             >
-              <img
+              <img loading="lazy"
                   src={content?.section5?.image}
                   style={{ height: "100%", width: "100%" }}
                   alt={content?.section5?.alt}
@@ -527,7 +527,7 @@ export default function Dermatologist() {
                 </div>
               </div>
               <RightAnimatedDiv className="d-flex flex-column main-section-1-op-right">
-              <img
+              <img loading="lazy"
                   src={content?.section6?.image1}
                   style={{ height: "100%", width: "100%" }}
                   alt={content?.section6?.alt1}
@@ -543,7 +543,7 @@ export default function Dermatologist() {
                 className="d-flex flex-column main-section-1-op-right"
               // style={{ height: "90vh" }}
               >
-                <img
+                <img loading="lazy"
                   src={content?.section6?.image2}
                   style={{ height: "100%", width: "100%" }}
                   alt={content?.section6?.alt2}
@@ -690,7 +690,7 @@ export default function Dermatologist() {
               </div>
 
               <div className="cup-icon">
-                <img
+                <img loading="lazy"
                   src="https://res.cloudinary.com/drkpwvnun/image/upload/v1729446172/hair-assessment/jxqtmhrlmpnhbhis8utq.png"
                   style={{ width:"100%", height: "100%" }}
                   alt="Awards and honors received by Dr. Amit Agarkar, a leading expert in hair restoration and advanced hair loss treatments, recognizing excellence."
@@ -787,7 +787,7 @@ export default function Dermatologist() {
             // variants={RIGHT_VARIANTS}
             // transition={TRANSITION}
             >
-                <img
+                <img loading="lazy"
                   src={content?.section7?.image}
                   style={{ height: "100%", width: "100%" }}
                   alt={content?.section7?.alt}

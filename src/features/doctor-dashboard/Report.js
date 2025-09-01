@@ -52,8 +52,8 @@
 // //               <div className="report-container">
 // //                 <div className="heading-container">
 // //                   <div className="image-container">
-// //                     <img className="rx-logo" src="/medical-prescription-pharmaceutical-drug-pharmacy-symbol-clip-art-rx-logo-image-b7b1ba0f952be8c1872ae92a48af3874.png" alt="RX Logo" />
-// //                     <img className="logo-main" src="/assets/img/logo.png" alt="Main Logo" />
+// //                     <img loading="lazy" className="rx-logo" src="/medical-prescription-pharmaceutical-drug-pharmacy-symbol-clip-art-rx-logo-image-b7b1ba0f952be8c1872ae92a48af3874.png" alt="RX Logo" />
+// //                     <img loading="lazy" className="logo-main" src="/assets/img/logo.png" alt="Main Logo" />
 // //                   </div>
 // //                   <div>
 // //                     <h2>Dr Amit Agarkar</h2>
@@ -118,7 +118,7 @@
 // //                     <p>Disclaimer</p>
 // //                   </div>
 // //                   <div>
-// //                     <img className="img-sign" src="/pngwing.com.png" alt="Doctor's Image" />
+// //                     <img loading="lazy" className="img-sign" src="/pngwing.com.png" alt="Doctor's Image" />
 // //                     <h2>Dr Amit Agarkar</h2>
 // //                     <p>MBBS, MD, FCPS,DDV</p>
 // //                     <p>Fellowship in Hair Transplant</p>
@@ -203,8 +203,8 @@
 //       <div id="report" className="report-container">
 //         <div className="heading-container">
 //           <div className="image-container">
-//             <img className="rx-logo" src="/medical-prescription-pharmaceutical-drug-pharmacy-symbol-clip-art-rx-logo-image-b7b1ba0f952be8c1872ae92a48af3874.png" alt="RX Logo" />
-//             <img className="logo-main" src="/assets/img/logo.png" alt="Main Logo" />
+//             <img loading="lazy" className="rx-logo" src="/medical-prescription-pharmaceutical-drug-pharmacy-symbol-clip-art-rx-logo-image-b7b1ba0f952be8c1872ae92a48af3874.png" alt="RX Logo" />
+//             <img loading="lazy" className="logo-main" src="/assets/img/logo.png" alt="Main Logo" />
 //           </div>
 //           <div>
 //             <h2>Dr Amit Agarkar</h2>
@@ -257,7 +257,7 @@
 //             <p>Disclaimer</p>
 //           </div>
 //           <div>
-//             <img className="img-sign" src="/pngwing.com.png" alt="Doctor's Image" />
+//             <img loading="lazy" className="img-sign" src="/pngwing.com.png" alt="Doctor's Image" />
 //             <h2>Dr Amit Agarkar</h2>
 //             <p>MBBS, MD, FCPS,DDV</p>
 //             <p>Fellowship in Hair Transplant</p>
@@ -393,8 +393,8 @@ export default function Report(props) {
       <div id="report" className="report-container page-break-2"  ref={contentRef}>
         <div className="heading-container">
           <div className="image-container">
-            <img className="rx-logo" src="/RX.png" alt="RX Logo" />
-            <img
+            <img loading="lazy" className="rx-logo" src="/RX.png" alt="RX Logo" />
+            <img loading="lazy"
               className="logo-main"
               src="/assets/img/logo.png"
               alt="Main Logo"
@@ -539,7 +539,7 @@ export default function Report(props) {
                 style={{ display: "flex", justifyContent: "end" }}
               >
                 <div sty>
-                  <img
+                  <img loading="lazy"
                     className="img-sign"
                     src="/Amit-Sir---Signature.png"
                     alt="Doctor's Image"

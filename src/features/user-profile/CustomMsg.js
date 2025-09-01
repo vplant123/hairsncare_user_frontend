@@ -50,7 +50,7 @@ import {
                     href="https://wa.link/fx1qa0"
                     style={{ display: 'inline' }}
                   >
-                    <Img
+                    <img loading="lazy"
                       src={`${baseUrl}/static/images/whatapp.png`}
                       style={{
                         cursor: 'pointer',

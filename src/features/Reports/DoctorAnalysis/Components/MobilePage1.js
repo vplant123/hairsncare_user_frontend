@@ -6,7 +6,7 @@ export default function Page1({ data }) {
   return (
       <div className="">
         <div className="head-managereportN">
-          <img src="/assets/img/logo.png" className="head-managereport-logo" />
+          <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
           <h2>Doctors  Analysis Report</h2>
           <p>
             Smart Report
@@ -44,7 +44,7 @@ export default function Page1({ data }) {
               <p>Fellowship in Hair Transplant</p>
               <p>Reg. No,- 06/07/2868</p>
             </div>
-            <img className="doctor-img" src="https://res.cloudinary.com/drkpwvnun/image/upload/v1731256157/hair-assessment/a6jo0qrxvq61phbr9ywt.png"/>
+            <img loading="lazy" className="doctor-img" src="https://res.cloudinary.com/drkpwvnun/image/upload/v1731256157/hair-assessment/a6jo0qrxvq61phbr9ywt.png"/>
           </div>
         </div>
 
@@ -67,27 +67,27 @@ export default function Page1({ data }) {
           <div className="row sec-2-right expartList">
             <div className="col-4">
                 <div className="expartListBox">
-                    <img src="/assets/img/reports/doctorAnalysis/page1/isolationmode167-alsy.svg" alt="IsolationMode167" style={{ height: "100%" }} />
+                    <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page1/isolationmode167-alsy.svg" alt="IsolationMode167" style={{ height: "100%" }} />
                     <span>Expert Dermats</span>
                 </div>
             </div>
 
             <div className="col-4">
               <div className="expartListBox">
-                  <img src="/assets/img/reports/doctorAnalysis/page1/isolationmode178-0ogs.svg" style={{ height: "100%" }}/>
+                  <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page1/isolationmode178-0ogs.svg" style={{ height: "100%" }}/>
                   <span>Total Care Approach</span>
               </div>
             </div>
             <div className="col-4">
               <div className="expartListBox">
-                <img src="/assets/img/reports/doctorAnalysis/page1/layer11117-b27.svg" alt="IsolationMode167" style={{ height: "100%" }} />
+                <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page1/layer11117-b27.svg" alt="IsolationMode167" style={{ height: "100%" }} />
                 <span>Reliability</span>
               </div>
             </div>
 
             <div className="col-4">
               <div className="expartListBox">
-                <img src="/assets/img/reports/doctorAnalysis/page1/isolationmode167-alsy.svg" alt="IsolationMode167" style={{ height: "100%" }} />
+                <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page1/isolationmode167-alsy.svg" alt="IsolationMode167" style={{ height: "100%" }} />
                 <span> 
                   E-monitoring and Support
                 </span>
@@ -96,14 +96,14 @@ export default function Page1({ data }) {
 
             <div className="col-4">
               <div className="expartListBox">
-                <img src="/assets/img/reports/doctorAnalysis/page1/isolationmode153-p23.svg" alt="IsolationMode167" style={{ height: "100%" }} />
+                <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page1/isolationmode153-p23.svg" alt="IsolationMode167" style={{ height: "100%" }} />
                 <span>Proven Therapies</span>
               </div>
             </div>
 
             <div className="col-4">
               <div className="expartListBox">
-                <img src="/assets/img/reports/doctorAnalysis/page1/isolationmode187-pw16.svg" alt="IsolationMode167" style={{ height: "100%" }} />
+                <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page1/isolationmode187-pw16.svg" alt="IsolationMode167" style={{ height: "100%" }} />
                 <span>FDA Appproved Medications</span>
               </div>
             </div>
@@ -156,15 +156,15 @@ export default function Page1({ data }) {
                     <div className="bottomPartWarp">
                       <div className="anaBoxWrap">
                         <div className="anaBox">
-                          <img src="/assets/img/reports/doctorAnalysis/page1/isolationmode1137-n7jv.svg" style={{width : "100%"}} />
+                          <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page1/isolationmode1137-n7jv.svg" style={{width : "100%"}} />
                           <span>Analysis Report</span>
                         </div>
                         <div className="anaBox">
-                          <img src="/assets/img/reports/doctorAnalysis/page1/isolationmode1137-n7jv.svg" style={{width : "100%"}} />
+                          <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page1/isolationmode1137-n7jv.svg" style={{width : "100%"}} />
                             <span>Management Report</span>
                         </div>
                         <div className="anaBox">
-                          <img src="/assets/img/reports/doctorAnalysis/page1/isolationmode1137-n7jv.svg" style={{width : "100%"}} />
+                          <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page1/isolationmode1137-n7jv.svg" style={{width : "100%"}} />
                           <span>Prescription</span>
                         </div>
                       </div>
@@ -182,7 +182,7 @@ export default function Page1({ data }) {
                   <div className="bottomPart">
                     <div className="bottomPartWarp">
                       <div className="thamBox">
-                        <img src="/assets/img/reports/doctorAnalysis/page1/image2361165-7n1-300w.png" style={{height : "85%"}} />
+                        <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page1/image2361165-7n1-300w.png" style={{height : "85%"}} />
                       </div>
                     </div>
                   </div>
@@ -198,7 +198,7 @@ export default function Page1({ data }) {
                   <div className="bottomPart">
                     <div className="bottomPartWarp">
                       <div className="thamBox">
-                        <img src="/assets/img/reports/doctorAnalysis/page1/image2351164-ija-400w.png" style={{height : "85%",width : "75%"}} />
+                        <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page1/image2351164-ija-400w.png" style={{height : "85%",width : "75%"}} />
                       </div>
                     </div>
                   </div>
@@ -211,19 +211,19 @@ export default function Page1({ data }) {
             <div className="col-4" style={{padding : "0 30px"}}>
                 <div className="sec-4-main row">
                     <div className="col-4" style={{marginTop: "5%",position: "relative"}}>
-                        <img src="/assets/img/reports/doctorAnalysis/page1/isolationmode1137-n7jv.svg" style={{width : "100%"}} />
+                        <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page1/isolationmode1137-n7jv.svg" style={{width : "100%"}} />
                         <div className="" style={{fontSize: "8px", position: "absolute", top: "20px", left: "17px", fontWeight: "700"}}>
                             Analysis Report
                         </div>
                     </div>
                     <div className="col-4" style={{marginTop: "30%",position: "relative"}}>
-                        <img src="/assets/img/reports/doctorAnalysis/page1/isolationmode1137-n7jv.svg" style={{width : "100%"}} />
+                        <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page1/isolationmode1137-n7jv.svg" style={{width : "100%"}} />
                         <div className="" style={{fontSize: "5px", position: "absolute", top: "26px", left: "17px", fontWeight: "700"}}>
                             Management Report
                         </div>
                     </div>
                     <div className="col-4" style={{marginTop: "15%",position: "relative"}}>
-                        <img src="/assets/img/reports/doctorAnalysis/page1/isolationmode1137-n7jv.svg" style={{width : "100%"}} />
+                        <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page1/isolationmode1137-n7jv.svg" style={{width : "100%"}} />
                         <div className="" style={{fontSize: "5px", position: "absolute", top: "30px", left: "19px", fontWeight: "700"}}>
                             Prescription
                         </div>
@@ -233,13 +233,13 @@ export default function Page1({ data }) {
 
             <div className="col-4" style={{padding : "0 30px"}}>
                 <div className="sec-4-main" style={{ display: "flex", justifyContent: "center",alignItems : "center"}}>
-                    <img src="/assets/img/reports/doctorAnalysis/page1/image2361165-7n1-300w.png" style={{height : "85%"}} />
+                    <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page1/image2361165-7n1-300w.png" style={{height : "85%"}} />
                 </div>
             </div>
 
             <div className="col-4" style={{padding : "0 30px"}}>
                 <div className="sec-4-main row" style={{ display: "flex", justifyContent: "center",alignItems : "center"}}>
-                    <img src="/assets/img/reports/doctorAnalysis/page1/image2351164-ija-400w.png" style={{height : "85%",width : "75%"}} />
+                    <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page1/image2351164-ija-400w.png" style={{height : "85%",width : "75%"}} />
                 </div>
             </div>
           </div> */}

@@ -34,7 +34,7 @@ const ViewDiv1 = ({ item }) => {
       transition={TRANSITION}
     >
       <div className="sub-img-section-4-htw">
-        <img src={item.image} style={{ height: "100%", width: "100%" }} alt={item.title} title={item.title} />
+        <img loading="lazy" src={item.image} style={{ height: "100%", width: "100%" }} alt={item.title} title={item.title} />
       </div>
       <div
         className="d-flex flex-column horizontal-card-text"
@@ -239,7 +239,7 @@ export default function OnlineHairTest() {
                 variants={RIGHT_VARIANTS}
                 transition={TRANSITION}
               >
-                <img
+                <img loading="lazy"
                   src={content?.section1?.image}
                   alt={content?.section1?.alt}
                 />
@@ -261,7 +261,7 @@ export default function OnlineHairTest() {
               variants={LEFT_VARIANTS}
               transition={TRANSITION}
             >
-              <img
+              <img loading="lazy"
                 src={content?.section2?.image}
                 alt={content?.section2?.alt}
                 style={{ height: "100%", width: "100%" }}
@@ -358,7 +358,7 @@ export default function OnlineHairTest() {
               variants={RIGHT_VARIANTS}
               transition={TRANSITION}
             >
-              <img
+              <img loading="lazy"
                 src="https://res.cloudinary.com/drkpwvnun/image/upload/v1729420618/hair-assessment/pnjiplhmgyq25atpby6d.png"
                 style={{ height: "100%", width: "100%" }}
                 alt="Young woman using her smartphone to explore key features of the HairsnCares online hair loss test, focusing on personalized hair health solutions."
@@ -396,7 +396,7 @@ export default function OnlineHairTest() {
               transition={{ duration: 1, delay: 0.5 }}
             >
               <div style={{ width: "58px" }}>
-                <img
+                <img loading="lazy"
                   src={
                     "https://res.cloudinary.com/drkpwvnun/image/upload/v1735638420/hair-assessment/hairsncares-online-hair-loss-test-icon.png.png"
                   }
@@ -444,7 +444,7 @@ export default function OnlineHairTest() {
               transition={{ duration: 1, delay: 0.5 }}
             >
               <div style={{ width: "40px" }}>
-                <img
+                <img loading="lazy"
                   src={
                     "https://res.cloudinary.com/drkpwvnun/image/upload/v1729422713/hair-assessment/xz52yyjzubnxi3gezzjy.png"
                   }
@@ -492,7 +492,7 @@ export default function OnlineHairTest() {
               transition={{ duration: 1, delay: 0.5 }}
             >
               <div style={{ width: "58px" }}>
-                <img
+                <img loading="lazy"
                   src={
                    "https://res.cloudinary.com/drkpwvnun/image/upload/v1735638303/hair-assessment/Hairsncares-online-consultation-icon.png.png"
                   }
@@ -540,7 +540,7 @@ export default function OnlineHairTest() {
               transition={{ duration: 1, delay: 0.5 }}
             >
               <div style={{ width: "58px" }}>
-                <img
+                <img loading="lazy"
                   src={
                     "https://res.cloudinary.com/drkpwvnun/image/upload/v1735638053/hair-assessment/hairsncares-detailed-hair-analysis-icon.png.png"
                   }
@@ -588,7 +588,7 @@ export default function OnlineHairTest() {
               transition={{ duration: 1, delay: 0.5 }}
             >
               <div style={{ width: "58px" }}>
-                <img
+                <img loading="lazy"
                   src={
                     "https://res.cloudinary.com/drkpwvnun/image/upload/v1735638176/hair-assessment/Hairsncares-hair-loss-test-report-prescription-icon.png.png"
                   }
@@ -636,7 +636,7 @@ export default function OnlineHairTest() {
               transition={{ duration: 1, delay: 0.5 }}
             >
               <div style={{ width: "58px" }}>
-                <img
+                <img loading="lazy"
                   src={
                     "https://res.cloudinary.com/drkpwvnun/image/upload/v1735638302/hair-assessment/Hairsncares-hair-loss-test-medical-report-icon.png.png"
                   }
@@ -684,7 +684,7 @@ export default function OnlineHairTest() {
               transition={{ duration: 1, delay: 0.5 }}
             >
               <div style={{ width: "58px" }}>
-                <img
+                <img loading="lazy"
                   src={
                     "https://res.cloudinary.com/drkpwvnun/image/upload/v1735638399/hair-assessment/Hairsncares-hair-loss-medicine-delivery-icon.png.png"
                   }
@@ -785,7 +785,7 @@ export default function OnlineHairTest() {
               variants={RIGHT_VARIANTS}
               transition={TRANSITION}
             >
-              <img 
+              <img loading="lazy" 
                 src={content?.section5?.image}
                 alt={content?.section5?.alt}
               />
@@ -845,7 +845,7 @@ export default function OnlineHairTest() {
                         }}
                         className="faq-icon"
                       >
-                        <img
+                        <img loading="lazy"
                           src={"/assets/img/hairTreatmentWomen/image-16.png"}
                           className="faq-dropDown"
                           alt="Hair loss Test Faqs  icon"

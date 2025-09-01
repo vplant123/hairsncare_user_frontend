@@ -339,7 +339,7 @@ const handleImageUploadSection6 = async (e,type,ind) => {
               />
             </div>
             <div className='iman'>
-              <img alt='hair' src={section1?.image} />
+              <img loading="lazy" alt='hair' src={section1?.image} />
               <input
                 type='file'
                 accept='image/*'
@@ -397,7 +397,7 @@ const handleImageUploadSection6 = async (e,type,ind) => {
             {section3?.data.map((item, itemIndex) => (
               <div key={itemIndex} className="item-2 our-ex2">
                 <div className='item-21 animate__backInLeft'>
-                  <img alt='hair' src={item?.img} />
+                  <img loading="lazy" alt='hair' src={item?.img} />
                   <input
                     type='file'
                     accept='image/*'
@@ -440,7 +440,7 @@ const handleImageUploadSection6 = async (e,type,ind) => {
             {section4?.data?.map((item, itemIndex) => (
               <div key={itemIndex} className="item-2 our-ex2">
                 <div className='item-21 animate__backInLeft'>
-                <img alt='hair' src={item?.img} />
+                <img loading="lazy" alt='hair' src={item?.img} />
                   <input
                     type='file'
                     accept='image/*'
@@ -483,7 +483,7 @@ const handleImageUploadSection6 = async (e,type,ind) => {
           {section5?.data?.map((item, itemIndex) => (
               <div key={itemIndex} className="item-2 our-ex2">
                 <div className='item-21 animate__backInLeft'>
-                <img alt='hair' src={item?.img} />
+                <img loading="lazy" alt='hair' src={item?.img} />
                   <input
                     type='file'
                     accept='image/*'
@@ -514,7 +514,7 @@ const handleImageUploadSection6 = async (e,type,ind) => {
       <Faq />
       <Footer /> */}
             <div className="image-coverr">
-        <img alt="hair" src={section6?.img} />
+        <img loading="lazy" alt="hair" src={section6?.img} />
         <input
                     type='file'
                     accept='image/*'

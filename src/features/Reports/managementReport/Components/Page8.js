@@ -10,7 +10,7 @@ export default function Page8({data}) {
       <div>
         <div className='page-8'>
           <div className="head-managereport d-flex" style={{ justifyContent: "space-between" }}>
-            <img src="/assets/img/logo.png" className="head-managereport-logo" />
+            <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
             <div className="head-managereport-text1">Stress Management</div>
               <div
                 className="text-flex-line-center-veritcal"
@@ -31,7 +31,7 @@ export default function Page8({data}) {
 
             <div class="content" style={{height : "6rem"}}>
               <div class="image">
-                  <img src = "/assets/img/reports/management/page8/image7.png" style={{width : "100%",height : "100%"}} />
+                  <img loading="lazy" src = "/assets/img/reports/management/page8/image7.png" style={{width : "100%",height : "100%"}} />
               </div>
               <div class="content-body">
                 <ul>
@@ -94,13 +94,13 @@ export default function Page8({data}) {
                 </ul>
               </div>
               <div class="image-reversee" style={{backgroundColor: "#47a8ef",display:"flex",alignItems : "center"}}>
-                  <img src = "/assets/img/reports/management/page8/image2.png"  style={{width : "100%"}}/>
+                  <img loading="lazy" src = "/assets/img/reports/management/page8/image2.png"  style={{width : "100%"}}/>
               </div>
             </div>
 
             <div class="content" style={{height : "8rem"}}>
               <div class="image2">
-                  <img src= "/assets/img/reports/management/page8/image3.png" style={{width : "100%",height : "100%"}} />
+                  <img loading="lazy" src= "/assets/img/reports/management/page8/image3.png" style={{width : "100%",height : "100%"}} />
               </div>
               <div class="content-body">
                 <ul style={{fontSize : "8px"}}>
@@ -152,13 +152,13 @@ export default function Page8({data}) {
                 </ul>
               </div>
               <div class="image-reverse2">
-                  <img src = "/assets/img/reports/management/page8/image4.png" style={{width : "100%",height : "100%"}} />
+                  <img loading="lazy" src = "/assets/img/reports/management/page8/image4.png" style={{width : "100%",height : "100%"}} />
               </div>
             </div>
 
             <div class="content2" style={{height : "11rem"}}>
               <div class="image3" style={{backgroundColor:"#47a8ef"}}>
-              <img src = "/assets/img/reports/management/page8/image5.png" style={{width : "100%",height : "100%"}} />
+              <img loading="lazy" src = "/assets/img/reports/management/page8/image5.png" style={{width : "100%",height : "100%"}} />
               </div>
               <div class="content-body" style={{width : "60%"}}>
                 <ul>
@@ -222,7 +222,7 @@ export default function Page8({data}) {
                 </ul>
               </div>
               <div class="image-reverse3" style={{backgroundColor:"#47a8ef"}}>
-              <img src = "/assets/img/reports/management/page8/image6.png" style={{width : "100%",height : "100%"}} />
+              <img loading="lazy" src = "/assets/img/reports/management/page8/image6.png" style={{width : "100%",height : "100%"}} />
 
               </div>
             </div>
@@ -230,7 +230,7 @@ export default function Page8({data}) {
             <div class="content" style={{height : "5rem"}}>
               <div class="image4">
               
-              <img src = "/assets/img/reports/management/page8/image7.png" style={{width : "100%",height : "100%"}} />
+              <img loading="lazy" src = "/assets/img/reports/management/page8/image7.png" style={{width : "100%",height : "100%"}} />
 
               </div>
               <div class="content-body">

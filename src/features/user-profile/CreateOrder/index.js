@@ -819,7 +819,7 @@ export default function CreateOrder(props) {
                       <div>
                         {cartItemsNew?.map((e, index) => (
                           <div key={index} className="cart-item">
-                            <img src={e?.item?.src[0]} alt={e?.item?.name} />
+                            <img loading="lazy" src={e?.item?.src[0]} alt={e?.item?.name} />
                             <div className="product-desc">
                               <div className="product-info">
                                 {e?.item?.name}
@@ -986,7 +986,7 @@ export default function CreateOrder(props) {
                             }}
                           >
                             <span>Pay Online</span>
-                            <img
+                            <img loading="lazy"
                               src="https://resize.indiatvnews.com/en/resize/newbucket/1200_-/2023/06/phonepe-1686727535.jpg"
                               alt="PhonePe payment method"
                               style={{

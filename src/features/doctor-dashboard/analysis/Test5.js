@@ -221,7 +221,7 @@ console.log(selectedOption,'kk')
           />
           <div>
             <h2>{option.value}</h2>
-            <img src={option.src} alt={option.value} />
+            <img loading="lazy" src={option.src} alt={option.value} />
             <p>{option.description}</p>
           </div>
         </div>

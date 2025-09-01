@@ -42,7 +42,7 @@ export default function DoctorNavbar({children}) {
     <>
     <div className="nav-container container">
       <div onClick={() => navigate("/")} style={{cursor : "pointer"}}>
-        <img 
+        <img loading="lazy" 
           alt="logo"
           className="nav-logo"
           src="/assets/img/logo.png"

@@ -72,7 +72,7 @@ const View1 = ({ navigate }) => {
                 transition={{ duration: 1, delay: 1.5 }}
               >
 
-                <img alt='Hair Care Products Image' className={`hero-image`} src={"https://res.cloudinary.com/drkpwvnun/image/upload/v1729447074/hair-assessment/qvrwjuzi8aeq176igwlx.png"}
+                <img loading="lazy" alt='Hair Care Products Image' className={`hero-image`} src={"https://res.cloudinary.com/drkpwvnun/image/upload/v1729447074/hair-assessment/qvrwjuzi8aeq176igwlx.png"}
                   style={{ maxWidth: "80%" }} title="Hair Care Products Image" />
               </motion.div>
 
@@ -535,7 +535,7 @@ const Products = (props) => {
               </label>
             </div>} 
             <div className="col-12">
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src="/assets/img/banner-2.png"
                 style={{ width: "100%" }}

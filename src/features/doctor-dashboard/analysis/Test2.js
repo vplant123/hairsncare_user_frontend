@@ -363,7 +363,7 @@
 //           />
 //           <div>
 //             <h2>{index + 1}) {option.value}</h2>
-//             <img src={option.src} alt={option.value} />
+//             <img loading="lazy" src={option.src} alt={option.value} />
 //             <p>{option.description}</p>
 //           </div>
 //         </div>
@@ -692,7 +692,7 @@ export default function Test2({
           />
           <div>
             <h2>{index + 1}) {option.value}</h2>
-            <img src={option.src} alt={option.value} />
+            <img loading="lazy" src={option.src} alt={option.value} />
             <p>{option.description}</p>
           </div>
         </div>

@@ -243,10 +243,10 @@ function ShowPopupImages(props) {
                 }}>
                   {e?.name == "Not Sure" ? (
                     <Tooltip title=" If none of the images match your case, please upload clear scalp photos at the end of the hair test. This will help us assess your condition accurately">
-                      <img src={e?.src} className="popup-Image-layout-1" style={{ border: selected == i ? "5px solid #606a70" : "" }} />
+                      <img loading="lazy" src={e?.src} className="popup-Image-layout-1" style={{ border: selected == i ? "5px solid #606a70" : "" }} />
                     </Tooltip>
                   ) : (
-                    <img src={e?.src} className={`popup-Image-layout ${male ? "width-sm" : ""}`} style={{ border: selected == i ? "5px solid #3BD5E3" : "" }} />
+                    <img loading="lazy" src={e?.src} className={`popup-Image-layout ${male ? "width-sm" : ""}`} style={{ border: selected == i ? "5px solid #3BD5E3" : "" }} />
                   )}
                 </div>
               );

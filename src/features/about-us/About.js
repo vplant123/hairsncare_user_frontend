@@ -41,6 +41,7 @@ export default function About() {
               <img src={content?.section1?.image}
                 alt = "Group of experienced doctors at Hairsncares, led by Dr. Amit Agarkar, specializing in hair loss and scalp care solutions."
                 title="Experienced Team Led by Dr. Amit Agarkar"
+                 loading="lazy"
               />
             </ZoomInDiv>
             <RightAnimatedDiv>
@@ -74,7 +75,7 @@ export default function About() {
                 window.open("https://x.com/hairsncare")
               }
             }} style={{ cursor: "pointer" }}>
-              <img src={e} style={{ width: "25px", height: "25px" }} alt={alt} title={title}/>
+              <img src={e} style={{ width: "25px", height: "25px" }} alt={alt} title={title} loading="lazy"/>
             </div>
           )
         })}
@@ -99,6 +100,7 @@ export default function About() {
         <RightAnimatedDiv className="image-2 ">
           <img alt='Hand holding healthy brown hair, representing the commitment of Hairsncares to quality hair care and scalp health solutions.' src={content?.section2?.img} 
             title="Hairsncares Commitment"
+            loading="lazy"
             />
         </RightAnimatedDiv>
       </div>
@@ -111,6 +113,7 @@ export default function About() {
             <ZoomInDiv className="content-container ">
               <img alt='Doctor at Hairsncares specializing in hair loss and scalp care, symbolizing the journey and expertise in hair health solutions.' src={content?.section3?.img} 
                 title="Hairsncares Journey"
+                loading="lazy"
                 />
             </ZoomInDiv>
             <RightAnimatedDiv className="content-container-2 ">
@@ -142,6 +145,7 @@ export default function About() {
         <LeftAnimatedDiv className="container-3-item ">
           <img alt='Applying hair treatment serum as part of Hairsncares comprehensive approach to hair loss and scalp care solutions' src={content?.section4?.img}
             title="Comprehensive Approach"
+            loading="lazy"
           />
         </LeftAnimatedDiv>
         <LeftAnimatedDiv className="container-3-item">
@@ -167,7 +171,7 @@ export default function About() {
             return (
               <RightAnimatedDiv className="items-con">
                 <div className="circle-4">
-                  <img alt={dd[ind]?.alt} src={e?.img} title={dd[ind]?.title} />
+                  <img alt={dd[ind]?.alt} src={e?.img} title={dd[ind]?.title} loading="lazy"/>
                 </div>
                 <div className="circle-conta">
                   <button className="circle-4"><h3>{e?.title}</h3></button>
@@ -220,7 +224,8 @@ export default function About() {
                       <div className="commit-sub">
                         <img alt={ind == "0" ? "Vision icon" : "Our icon"} 
                           title={ind == "0" ? "Vision icon" : "Our Goal  icon"}
-                        src={e?.icon} />
+                          src={e?.icon} loading="lazy"
+                        />
                         <h3>{e?.title}</h3>
                       </div>
                       <p>

@@ -166,7 +166,7 @@ export default function OurSpecialist() {
 
       <div className="specialist-section-3 container">
         <div className="sec-3">
-          <img alt="hair" src="/uploads/doctor.jpg" />
+          <img loading="lazy" alt="hair" src="/uploads/doctor.jpg" />
         </div>
         <div className="sec-3 sec-pad">
           <h3>Dr Amit Agarkar</h3>
@@ -221,7 +221,7 @@ export default function OurSpecialist() {
           <div className="col-lg-3">
             <h6>Awards</h6>
           </div>
-          <img alt="hair" src="/assets/img/specialists/award.png" />
+          <img loading="lazy" alt="hair" src="/assets/img/specialists/award.png" />
         </div>
       </div>
 
@@ -238,7 +238,7 @@ export default function OurSpecialist() {
           {formData.doctors.map((item, index) => (
             <div className="doctors" key={index}>
               <div className="doc-image">
-                <img alt="hair" src={item.src} />
+                <img loading="lazy" alt="hair" src={item.src} />
                 <input
                   type="file"
                   style={{
@@ -283,7 +283,7 @@ export default function OurSpecialist() {
           <div className="councellor-item">
             {formData.counselors.map((counselor, index) => (
               <div className="coun-item" key={index}>
-                <img alt="hair" src={counselor.img} />
+                <img loading="lazy" alt="hair" src={counselor.img} />
                 <input
                   type="file"
                   onChange={(e) => handleCounselorFileUpload(e, index)}

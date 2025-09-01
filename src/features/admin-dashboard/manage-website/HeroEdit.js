@@ -183,7 +183,7 @@ export default function HeroEdit({ section1,
                               )
                             }
                           />
-                          <img
+                          <img loading="lazy"
                             className="hero-image"
                             src={e?.image}
                             alt="Hair Growth"
@@ -237,7 +237,7 @@ export default function HeroEdit({ section1,
                   </div>
                 </div>
                <div className='Edit-Image'> <input type="file" accept="image/*" />
-                <img  className='hero-image' src='/uploads/admprhero-banner.png' alt='Hair Growth' /></div>
+                <img loading="lazy"  className='hero-image' src='/uploads/admprhero-banner.png' alt='Hair Growth' /></div>
               </div>
             </div>
           </div>
@@ -283,7 +283,7 @@ export default function HeroEdit({ section1,
                   </div>
                 </div>
                 <div className='Edit-Image'> <input type="file" accept="image/*" />
-                <img  className='hero-image' src='/uploads/admprhero-banner-two.png' alt='Hair Growth' /></div>
+                <img loading="lazy"  className='hero-image' src='/uploads/admprhero-banner-two.png' alt='Hair Growth' /></div>
               </div>
             </div>
           </div>
@@ -312,7 +312,7 @@ export default function HeroEdit({ section1,
           {section1?.socialImg?.map((e, ind) => {
             return (
               <div>
-                <img src={e} style={{ width: "25px", height: "25px" }} />
+                <img loading="lazy" src={e} style={{ width: "25px", height: "25px" }} />
                 <input
                   type="file"
                   accept="image/*"

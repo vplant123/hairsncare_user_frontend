@@ -973,7 +973,7 @@ export default function Page3({ data }) {
           className="head-managereport d-flex"
           style={{ justifyContent: "space-between" }}
         >
-          <img src="/assets/img/logo.png" className="head-managereport-logo" />
+          <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
           <div className="head-managereport-text1" style={{fontSize : "22px"}}>
             Hair & Scalp Treatment Recommendation
           </div>
@@ -997,7 +997,7 @@ export default function Page3({ data }) {
               justifyContent : "center"
             }}
           >
-            <img
+            <img loading="lazy"
               src="/assets/img/reports/management/page3/c7cc9b03af574a53b593ed98a32848b011318-xfpb-400h.png"
               style={{ height: "80%", width: "80%" }}
             />
@@ -1066,7 +1066,7 @@ export default function Page3({ data }) {
                   alignItems: "center",
                 }}
               >
-                <img
+                <img loading="lazy"
                   src="/assets/img/reports/management/page3/image4ef437afc3ff436497a997fe97bc675e11319-802c-500w.png"
                   style={{ height: "65%", width: "100%" }}
                 />
@@ -1145,7 +1145,7 @@ export default function Page3({ data }) {
       alignItems: "center",
     }}
   >
-    <img
+    <img loading="lazy"
       src="/assets/img/reports/management/page3/image4ef437afc3ff436497a997fe97bc675e11319-802c-500w.png"
       style={{ height: "65%", width: "100%" }}
     />
@@ -1224,7 +1224,7 @@ export default function Page3({ data }) {
                   alignItems: "center",
                 }}
               >
-                <img
+                <img loading="lazy"
                   src="/assets/img/reports/management/page3/e9144270c9ff437e90fdfe8eeec7a3be11320-yddj-500h.png"
                   style={{ height: "65%", width: "100%" }}
                 />
@@ -1274,7 +1274,7 @@ export default function Page3({ data }) {
                 alignItems: "center",
               }}
             >
-              <img
+              <img loading="lazy"
                 src="/assets/img/reports/management/page3/e9144270c9ff437e90fdfe8eeec7a3be11320-yddj-500h.png"
                 style={{ height: "65%", width: "100%" }}
               />
@@ -1326,7 +1326,7 @@ export default function Page3({ data }) {
           className="head-managereport d-flex"
           style={{ justifyContent: "space-between" }}
         >
-          <img src="/assets/img/logo.png" className="head-managereport-logo" />
+          <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
           <div className="head-managereport-text1" style={{fontSize : "22px"}}>
             Hair & Scalp Treatment Recommendation
           </div>
@@ -1351,7 +1351,7 @@ export default function Page3({ data }) {
           >
             <div className="d-flex" style={{ height: "10%" }}>
               <div style={{ width: "40%" }}>
-                <img
+                <img loading="lazy"
                   src="/assets/img/reports/management/page3/image036c30a210eb409fbc73cc0c7f063ed91316-esg6-200h.png"
                   style={{ height: "100%", width: "100%" }}
                 />
@@ -1435,7 +1435,7 @@ export default function Page3({ data }) {
           >
             <div className="d-flex" style={{ height: "10%" }}>
               <div style={{ width: "40%" }}>
-                <img
+                <img loading="lazy"
                   src="/assets/img/reports/management/page3/af66c2fc84fb4baea3882934afc636091317-iul-300w.png"
                   style={{ height: "100%", width: "100%" }}
                 />
@@ -1533,7 +1533,7 @@ export default function Page3({ data }) {
           className="head-managereport d-flex"
           style={{ justifyContent: "space-between" }}
         >
-          <img src="/assets/img/logo.png" className="head-managereport-logo" />
+          <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
           <div className="head-managereport-text1" style={{fontSize : "22px"}}>
             Hair & Scalp Treatment Recommendation
           </div>
@@ -1557,7 +1557,7 @@ export default function Page3({ data }) {
           >
             <div className="d-flex" style={{ height: "10%" }}>
               <div style={{ width: "40%" }}>
-                <img
+                <img loading="lazy"
                   src="/assets/img/reports/management/page3/a75c4e3480d5497584fceb351389672511314-n0hi-200h.png"
                   style={{ height: "100%", width: "100%" }}
                 />
@@ -1652,7 +1652,7 @@ export default function Page3({ data }) {
           >
             <div className="d-flex" style={{ height: "10%" }}>
               <div style={{ width: "40%" }}>
-                <img
+                <img loading="lazy"
                   src="/assets/img/reports/management/page3/d380146ee98e4ce28d371ad733ff3dc71315-a3m-200h.png"
                   style={{ height: "100%", width: "100%" }}
                 />
@@ -1755,7 +1755,7 @@ export default function Page3({ data }) {
     // >
     //   <div class="management-report-page3-hair-scalp-treatment-recommendat-rectangle34624510">
     //     <div class="management-report-page3-hair-scalp-treatment-recommendat-rectangle34624522">
-    //       <img src="/assets/img/reports/management/page3/hairsn111280-f6t8-200h.png" alt=""class="management-report-page3-hair-scalp-treatment-recommendat-hairsn11"/>
+    //       <img loading="lazy" src="/assets/img/reports/management/page3/hairsn111280-f6t8-200h.png" alt=""class="management-report-page3-hair-scalp-treatment-recommendat-hairsn11"/>
     //     </div>
     //     <div class="management-report-page3-hair-scalp-treatment-recommendat-group1707485987">
     //       <span class="management-report-page3-hair-scalp-treatment-recommendat-text121"> Hair &amp; Scalp Treatment Recommendation </span>
@@ -1765,7 +1765,7 @@ export default function Page3({ data }) {
     //   <div class="guide-sec">
     //     <div class="guide-box1">
     //       <div class="image-guide1">
-    //         <img
+    //         <img loading="lazy"
     //         src="/assets/img/reports/management/page3/c7cc9b03af574a53b593ed98a32848b011318-xfpb-400h.png" alt="" class="management-report-page3-hair-scalp-treatment-recommendat-c7cc9b03af574a53b593ed98a32848b01"/>
     //       </div>
     //       <div class="border-box1"></div>
@@ -1843,7 +1843,7 @@ export default function Page3({ data }) {
     //     </div>
     //     <div class="guide-box2">
     //       <div class="image-guide1">
-    //         <img
+    //         <img loading="lazy"
     //         src="/assets/img/reports/management/page3/image4ef437afc3ff436497a997fe97bc675e11319-802c-500w.png" alt=""
     //         class="management-report-page3-hair-scalp-treatment-recommendat-c7cc9b03af574a53b593ed98a32848b01"/>
     //       </div>
@@ -1935,7 +1935,7 @@ export default function Page3({ data }) {
     //     </div>
     //     <div class="guide-box3">
     //       <div class="image-guide1">
-    //         <img src="/assets/img/reports/management/page3/e9144270c9ff437e90fdfe8eeec7a3be11320-yddj-500h.png" alt=""class="management-report-page3-hair-scalp-treatment-recommendat-e9144270c9ff437e90fdfe8eeec7a3be1"/>
+    //         <img loading="lazy" src="/assets/img/reports/management/page3/e9144270c9ff437e90fdfe8eeec7a3be11320-yddj-500h.png" alt=""class="management-report-page3-hair-scalp-treatment-recommendat-e9144270c9ff437e90fdfe8eeec7a3be1"/>
     //       </div>
     //       <div class="border-box"></div>
     //       <div class="guide-text">
@@ -2032,7 +2032,7 @@ export default function Page3({ data }) {
     //     <div class="last-box1">
     //        <div class="last-flex1">
     //           <div class="last-fleximg">
-    //             <img src="/assets/img/reports/management/page3/image036c30a210eb409fbc73cc0c7f063ed91316-esg6-200h.png" alt=""
+    //             <img loading="lazy" src="/assets/img/reports/management/page3/image036c30a210eb409fbc73cc0c7f063ed91316-esg6-200h.png" alt=""
     //             class="management-report-page3-hair-scalp-treatment-recommendat-image036c30a210eb409fbc73cc0c7f063ed9"/>
     //           </div>
     //          <div class="last-flextxt">
@@ -2127,7 +2127,7 @@ export default function Page3({ data }) {
     //     <div class="last-box2">
     //       <div class="last-flex1">
     //          <div class="last-fleximg">
-    //           <img
+    //           <img loading="lazy"
     //           src="/assets/img/reports/management/page3/af66c2fc84fb4baea3882934afc636091317-iul-300w.png"
     //           alt=""
     //           class="management-report-page3-hair-scalp-treatment-recommendat-af66c2fc84fb4baea3882934afc63609"/>
@@ -2241,7 +2241,7 @@ export default function Page3({ data }) {
     //    <div class="last-box3">
     //     <div class="last-flex2">
     //        <div class="last-fleximg">
-    //         <img
+    //         <img loading="lazy"
     //       src="/assets/img/reports/management/page3/a75c4e3480d5497584fceb351389672511314-n0hi-200h.png"
     //       alt="a75c4e3480d5497584fceb351389672511314"
     //       class="management-report-page3-hair-scalp-treatment-recommendat-a75c4e3480d5497584fceb35138967251"/>
@@ -2355,7 +2355,7 @@ export default function Page3({ data }) {
     //     <div class="last-box4">
     //       <div class="last-flex2">
     //          <div class="last-fleximg">
-    //           <img
+    //           <img loading="lazy"
     //           src="/assets/img/reports/management/page3/d380146ee98e4ce28d371ad733ff3dc71315-a3m-200h.png"
     //           alt="d380146ee98e4ce28d371ad733ff3dc71315"
     //           class="management-report-page3-hair-scalp-treatment-recommendat-d380146ee98e4ce28d371ad733ff3dc7"/>

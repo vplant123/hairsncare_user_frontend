@@ -240,7 +240,7 @@ console.log(selectedOption,'ff')
           />
           <div>
             <h2>{index + 1}) {option.value}</h2>
-            <img src={option.src} alt={option.value} />
+            <img loading="lazy" src={option.src} alt={option.value} />
             <p>{option.description}</p>
           </div>
         </div>

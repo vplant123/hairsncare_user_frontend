@@ -243,7 +243,7 @@ export default function Cart(props) {
                     let q = item?.quantity;
                     return (
                       <li key={item?._id} className="cart-item">
-                        <img src={item?.item?.src?.[0]} alt={item?.item?.name} onClick={() => {
+                        <img loading="lazy" src={item?.item?.src?.[0]} alt={item?.item?.name} onClick={() => {
                           navigate('/product-detail/' + item?.item.metaSlug ?? item.item._id, { id: item?.item._id })
                         }} style={{ cursor: "pointer" }} />
                         <div className="cart-item-details">

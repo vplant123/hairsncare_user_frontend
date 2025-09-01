@@ -99,7 +99,7 @@ function ReviewEdit({section3,setSection3}) {
       {section3?.map?.((item, index) =>
       <div className='animate__animated animate__fadeInUp col-4' >
                 <div key={item?._id} className="review-loop">
-          <img  src={item?.img} alt={item?.name} />
+          <img loading="lazy"  src={item?.img} alt={item?.name} />
           <input
       type="file"
       accept="image/*"
@@ -137,7 +137,7 @@ function ReviewEdit({section3,setSection3}) {
           </div>
 
           <div className="logo-container">
-            <img  src={"/assets/img/google-icon.webp"} alt="Google Logo" style={{    width: "20px"}} />
+            <img loading="lazy"  src={"/assets/img/google-icon.webp"} alt="Google Logo" style={{    width: "20px"}} />
             <span style={{color:"#999999",margin: "0 0 0 10px"}}>{item?.time}
 
             <input 

@@ -65,7 +65,7 @@ const View1 = ({navigate,category,content}) => {
             style={{height:"100%",position:"relative",zIndex:1}}
           >
             
-            <img alt='Man combing hair with white comb, focusing on hair care routine. Ideal for "Hair Care Blogs" top banner section. Hair care' className={`hero-image`} src={category?.img || "https://res.cloudinary.com/drkpwvnun/image/upload/v1730141798/hair-assessment/wk4wn1f8sxtryaweraji.png"} 
+            <img loading="lazy" alt='Man combing hair with white comb, focusing on hair care routine. Ideal for "Hair Care Blogs" top banner section. Hair care' className={`hero-image`} src={category?.img || "https://res.cloudinary.com/drkpwvnun/image/upload/v1730141798/hair-assessment/wk4wn1f8sxtryaweraji.png"} 
             style={{ maxWidth: "80%",height : "100%" }} 
             title="Hair Care Blogs"
             />
@@ -105,7 +105,7 @@ const View1 = ({navigate,category,content}) => {
                 window.open("https://x.com/hairsncare")
               }
             }} style={{ cursor: "pointer" }}>
-              <img src={e} style={{ width: "25px", height: "25px" }} alt={alt} title={title}/>
+              <img loading="lazy" src={e} style={{ width: "25px", height: "25px" }} alt={alt} title={title}/>
               </div>
           )
         })}
@@ -467,7 +467,7 @@ export default function AllBlog(props) {
                     return (
                       <div className="d-flex" style={{gap : "8%"}}>
                       {/* <div style={{width : "30%",height:"64px"}}>
-                          <img src={e?.img} style={{ width: "100%", height: "100%" }} />
+                          <img loading="lazy" src={e?.img} style={{ width: "100%", height: "100%" }} />
                       </div> */}
                       <div style={{width : "100%",fontSize : "14px"}} className="new-des"             dangerouslySetInnerHTML={{ __html: e?.description }}
                       
@@ -509,7 +509,7 @@ export default function AllBlog(props) {
               }
               else navigate("/take-hair-test")
             }}>
-                <img src = {category?.img2 || "https://res.cloudinary.com/drkpwvnun/image/upload/v1731315867/hair-assessment/yxu8ajeb2xumgjp1pcxp.png"}
+                <img loading="lazy" src = {category?.img2 || "https://res.cloudinary.com/drkpwvnun/image/upload/v1731315867/hair-assessment/yxu8ajeb2xumgjp1pcxp.png"}
                   alt="Banner - Click Here"
                   title="Banner - Click Here"
                 />
@@ -517,7 +517,7 @@ export default function AllBlog(props) {
 
             <div className="row d-flex flex-column" style={{margin : 0,gap:"10px",cursor : "pointer"}}>
                 <div>
-                <img
+                <img loading="lazy"
                   src="https://res.cloudinary.com/drkpwvnun/image/upload/v1730046710/hair-assessment/kuyizxppnaldktuzvlbc.png"
                   style={{ height: "100%", width: "100%" }}
                   alt="Professional portrait of Dr. Amit Agarkar, expert dermatologist and trichologist, specializing in skin and hair care"
@@ -525,7 +525,7 @@ export default function AllBlog(props) {
                 />
                 </div>
                 <div>
-                    <img src = "https://res.cloudinary.com/drkpwvnun/image/upload/v1730046748/hair-assessment/n2q5d5ndjktz5keawba2.png"  style={{ height: "100%", width: "100%" }}
+                    <img loading="lazy" src = "https://res.cloudinary.com/drkpwvnun/image/upload/v1730046748/hair-assessment/n2q5d5ndjktz5keawba2.png"  style={{ height: "100%", width: "100%" }}
                       alt="dr amit agarkar logo icon"
                       title="dr amit agarkar logo icon"
                     />
@@ -660,7 +660,7 @@ export default function AllBlog(props) {
                 }} style={{padding : "35px"}}>
                   <div className="d-flex flex-column page-blog-list">
                   <div className="blog-sub-img">
-                    <img src = {item?.img} style={{ width: "100%", height: "100%" }}
+                    <img loading="lazy" src = {item?.img} style={{ width: "100%", height: "100%" }}
                       alt={item?.title}
                       title={item?.title}
                     />

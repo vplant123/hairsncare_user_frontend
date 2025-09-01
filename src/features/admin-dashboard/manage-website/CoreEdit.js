@@ -73,7 +73,7 @@ const handleDescriptionChange = (index, event) => {
         <div className='core-image'>
           {section6?.data?.map((description, index) => (
             <div key={index}>
-              <img 
+              <img loading="lazy" 
                 className='principle-img' 
                 src={description?.img} 
                 alt={`Hair Care Principle ${index + 1}`} 

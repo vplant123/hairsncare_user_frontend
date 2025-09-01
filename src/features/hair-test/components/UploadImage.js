@@ -158,7 +158,7 @@ const ScalpPopup = ({
       <div className="modal-content">
         <div className="successicon">
           <div className="text-center">
-            <img src="/assets/img/thumb.png" alt="Thumb Icon" />
+            <img loading="lazy" src="/assets/img/thumb.png" alt="Thumb Icon" />
           </div>
           <p>
             <b>
@@ -178,7 +178,7 @@ const ScalpPopup = ({
         </div>
         <div className="upload-img text-center" style={{ margin: "15px 0" }}>
           {/* male */}
-          <img
+          <img loading="lazy"
             src={
               male
                 ? "/assets/img/uploadpic.jpg"

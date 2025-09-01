@@ -68,7 +68,7 @@ export default function OurExpertise() {
             </LeftAnimatedDiv>
             <ZoomInDiv className="iman" style={{height : "100%",width: "35%",    display: "flex",
     alignItems: "end"}}>
-              <img
+              <img loading="lazy"
                 className="m-c animate__animated zoomIn_animation"
                 style={{ animationDelay: "1s",height : "65%" }}
                 alt="hair"
@@ -104,7 +104,7 @@ export default function OurExpertise() {
                 window.open("https://x.com/hairsncare")
               }
             }} style={{ cursor: "pointer" }}>
-              <img src={e} style={{ width: "25px", height: "25px" }} alt={alt} title={title}/>
+              <img loading="lazy" src={e} style={{ width: "25px", height: "25px" }} alt={alt} title={title}/>
             </div>
           )
         })}
@@ -131,7 +131,7 @@ export default function OurExpertise() {
         <div className="our-expertise-section container">
           <LeftAnimatedDiv className="item-2 ">
             <div className="item-21-1">
-              <img alt="hair" src={content?.section3?.data?.[0]?.img} />
+              <img loading="lazy" alt="hair" src={content?.section3?.data?.[0]?.img} />
               <h1 className="item-h1">{content?.section3?.data?.[0]?.title}</h1>
               <p
                 style={{
@@ -164,7 +164,7 @@ export default function OurExpertise() {
           <RightAnimatedDiv className="item-2  ">
             <div className="item-21-1">
               {" "}
-              <img alt="hair" src={content?.section3?.data?.[1]?.img} />
+              <img loading="lazy" alt="hair" src={content?.section3?.data?.[1]?.img} />
               <h1 className="item-h1">{content?.section3?.data?.[1]?.title}</h1>
               <p
                 style={{
@@ -198,7 +198,7 @@ export default function OurExpertise() {
         <div className="our-expertise-section container">
           <LeftAnimatedDiv className="item-2 " id="read3">
             <div className="item-21-1">
-              <img alt="hair" src={content?.section4?.data?.[0]?.img} />
+              <img loading="lazy" alt="hair" src={content?.section4?.data?.[0]?.img} />
               <h1 className="item-h1">{content?.section4?.data?.[0]?.title} </h1>
               <p style={{                  height: "150px",
                   maxHeight: "150px",
@@ -221,7 +221,7 @@ export default function OurExpertise() {
           <div className="item-2" id="read4">
             <RightAnimatedDiv className="item-21-1 ">
               {" "}
-              <img alt="hair" src={content?.section4?.data?.[1]?.img} />
+              <img loading="lazy" alt="hair" src={content?.section4?.data?.[1]?.img} />
               <h1 className="item-h1">{content?.section4?.data?.[1]?.title}</h1>
               <p style={{                  height: "150px",
                   maxHeight: "150px",
@@ -245,7 +245,7 @@ export default function OurExpertise() {
         <div className="our-expertise-section container">
           <LeftAnimatedDiv className="item-2 " id="read5">
             <div className="item-21-1">
-              <img alt="hair" src={content?.section4?.data?.[2]?.img} />
+              <img loading="lazy" alt="hair" src={content?.section4?.data?.[2]?.img} />
               <h1 className="item-h1">{content?.section4?.data?.[2]?.title} </h1>
               <p style={{                  height: "150px",
                   maxHeight: "150px",
@@ -269,7 +269,7 @@ export default function OurExpertise() {
           <div className="item-2">
             <RightAnimatedDiv className="item-21-1 " id="read6">
               {" "}
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src={content?.section4?.data?.[3]?.img}
               />
@@ -296,7 +296,7 @@ export default function OurExpertise() {
         <div className="our-expertise-section container">
           <div className="item-2">
             <LeftAnimatedDiv className="item-21-1 " id="read7">
-              <img alt="hair" src={content?.section4?.data?.[4]?.img} />
+              <img loading="lazy" alt="hair" src={content?.section4?.data?.[4]?.img} />
               <h1 className="item-h1">{content?.section4?.data?.[4]?.title} </h1>
               <p style={{                  height: "150px",
                   maxHeight: "150px",
@@ -319,7 +319,7 @@ export default function OurExpertise() {
           <div className="item-2">
             <RightAnimatedDiv className="item-21-1 " id="read8">
               {" "}
-              <img alt="hair" src={content?.section4?.data?.[5]?.img} />
+              <img loading="lazy" alt="hair" src={content?.section4?.data?.[5]?.img} />
               <h1 className="item-h1">{content?.section4?.data?.[5]?.title}</h1>
               <p style={{                  height: "150px",
                   maxHeight: "150px",
@@ -346,7 +346,7 @@ export default function OurExpertise() {
         <div className="our-expertise-section container">
           <LeftAnimatedDiv className="item-2 ">
             <div className="item-21">
-              <img alt="hair" src={content?.section5?.data?.[0]?.img} />
+              <img loading="lazy" alt="hair" src={content?.section5?.data?.[0]?.img} />
               <h1 className="item-h1">{content?.section5?.data?.[0]?.title}</h1>
               <p style={{                  height: "150px",
                   maxHeight: "150px",
@@ -369,7 +369,7 @@ export default function OurExpertise() {
           <div className="item-2">
             <RightAnimatedDiv className="item-21 ">
               {" "}
-              <img alt="hair" src={content?.section5?.data?.[1]?.img} />
+              <img loading="lazy" alt="hair" src={content?.section5?.data?.[1]?.img} />
               <h1 className="item-h1">{content?.section5?.data?.[1]?.title}</h1>
               <p style={{                  height: "150px",
                   maxHeight: "150px",
@@ -392,7 +392,7 @@ export default function OurExpertise() {
         </div>
       </div>
       <ZoomInDiv className="image-coverr">
-        <img alt="hair" src={content?.section6?.img} />
+        <img loading="lazy" alt="hair" src={content?.section6?.img} />
 </ZoomInDiv>
 {/* </div> */}
 

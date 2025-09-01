@@ -11,7 +11,7 @@ export default function Page8({data}) {
         <div className='mobileView' >
           <div className='page-8 mbpage-8'>
           <div className="head-managereportN">
-            <img src="/assets/img/logo.png" className="head-managereport-logo" />
+            <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
             <h2 className="">Stress Management</h2>
             <p style={{margin: "0"}}>Smart Report</p>
           </div>
@@ -27,7 +27,7 @@ export default function Page8({data}) {
 
               <div class="content" style={{height : "6rem"}}>
                 <div class="image">
-                    <img src = "/assets/img/reports/management/page8/image7.png" style={{width : "100%",height : "auto"}} />
+                    <img loading="lazy" src = "/assets/img/reports/management/page8/image7.png" style={{width : "100%",height : "auto"}} />
                 </div>
                 <div class="content-body">
                   <ul style={{paddingLeft : "13px"}}>
@@ -90,13 +90,13 @@ export default function Page8({data}) {
                   </ul>
                 </div>
                 <div class="image-reversee" style={{backgroundColor: "#47a8ef",display:"flex",alignItems : "center"}}>
-                    <img src = "/assets/img/reports/management/page8/image2.png"  style={{width : "100%"}}/>
+                    <img loading="lazy" src = "/assets/img/reports/management/page8/image2.png"  style={{width : "100%"}}/>
                 </div>
               </div>
 
               <div class="content" style={{height : "8rem"}}>
                 <div class="image2">
-                    <img src= "/assets/img/reports/management/page8/image3.png" style={{width : "100%",height : "auto"}} />
+                    <img loading="lazy" src= "/assets/img/reports/management/page8/image3.png" style={{width : "100%",height : "auto"}} />
                 </div>
                 <div class="content-body">
                   <ul style={{fontSize : "8px", paddingLeft:"13px"}} >
@@ -148,13 +148,13 @@ export default function Page8({data}) {
                   </ul>
                 </div>
                 <div class="image-reverse2">
-                    <img src = "/assets/img/reports/management/page8/image4.png" style={{width : "100%",height : "auto"}} />
+                    <img loading="lazy" src = "/assets/img/reports/management/page8/image4.png" style={{width : "100%",height : "auto"}} />
                 </div>
               </div>
 
               <div class="content2" style={{height : "11rem"}}>
                 <div class="image3" style={{backgroundColor:"#47a8ef"}}>
-                <img src = "/assets/img/reports/management/page8/image5.png" style={{width : "100%",height : "auto"}} />
+                <img loading="lazy" src = "/assets/img/reports/management/page8/image5.png" style={{width : "100%",height : "auto"}} />
                 </div>
                 <div class="content-body" style={{width : "60%"}}>
                   <ul style={{paddingLeft : "13px"}}>
@@ -218,7 +218,7 @@ export default function Page8({data}) {
                   </ul>
                 </div>
                 <div class="image-reverse3" style={{backgroundColor:"#47a8ef"}}>
-                <img src = "/assets/img/reports/management/page8/image6.png" style={{width : "100%",height : "auto"}} />
+                <img loading="lazy" src = "/assets/img/reports/management/page8/image6.png" style={{width : "100%",height : "auto"}} />
 
                 </div>
               </div>
@@ -226,7 +226,7 @@ export default function Page8({data}) {
               <div class="content" style={{height : "5rem"}}>
                 <div class="image4">
                 
-                <img src = "/assets/img/reports/management/page8/image7.png" style={{width : "100%",height : "auto"}} />
+                <img loading="lazy" src = "/assets/img/reports/management/page8/image7.png" style={{width : "100%",height : "auto"}} />
 
                 </div>
                 <div class="content-body">

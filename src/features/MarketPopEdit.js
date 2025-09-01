@@ -41,12 +41,13 @@ function MarketPopEdit({section12,
   return (
     <div className='rx-container container'>
       <div >
-        <img alt='hair' className="animate__animated animate__fadeInLeft" src={section12} />
+        <img alt='hair' className="animate__animated animate__fadeInLeft" src={section12} loading="lazy"/>
         <input
       type="file"
       accept="image/*"
       onChange={(e) => handleImageUpload(e,"img")}
       style={{width : "95px"}}
+       loading="lazy"
     />
       </div>
 

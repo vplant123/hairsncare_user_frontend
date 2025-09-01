@@ -131,8 +131,8 @@ export default function PrescriptionUser({ data }) {
       <div id="report" className="report-container page-break-2" ref={contentRef}>
         <div className="heading-container">
           <div className="image-container">
-            <img className="rx-logo" src="/RX.png" alt="RX Logo" />
-            <img className="logo-main" src="/assets/img/logo.png" alt="Main Logo" />
+            <img loading="lazy" className="rx-logo" src="/RX.png" alt="RX Logo" />
+            <img loading="lazy" className="logo-main" src="/assets/img/logo.png" alt="Main Logo" />
           </div>
           <div className="time-detail">
             <div style={{ fontSize: "16px", fontWeight: "600" }}>
@@ -242,7 +242,7 @@ export default function PrescriptionUser({ data }) {
               </div>
               <div className="heading-container item2559" style={{ display: "flex", justifyContent: "end" }}>
                 <div className="docDetailsWrap">
-                  <img className="img-sign" src="/Amit-Sir---Signature.png" alt="Doctor's Image" />
+                  <img loading="lazy" className="img-sign" src="/Amit-Sir---Signature.png" alt="Doctor's Image" />
                   <h4 style={{ color: "#008CD7", fontWeight: "600" }}>Dr Amit Agarkar</h4>
                   <div style={{ fontSize: "17px", fontWeight: "600" }}>MBBS, MD, FCPS, DDV</div>
                   <div style={{ fontSize: "17px", fontWeight: "600" }}>Fellowship in Hair Transplant</div>

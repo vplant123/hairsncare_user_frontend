@@ -23,7 +23,7 @@ function GrowthStep({ stepNumber, stepTitle, imgSrc, alt,
     >
       {parseFloat(stepNumber) % 2 == 1 ? (
         <>
-          <img alt={alt} src={imgSrc} title={title} />
+          <img loading="lazy" alt={alt} src={imgSrc} title={title} />
           <a style={{ flexDirection: "column", gap: 0 }}>
             <span>{stepNumber}</span>
             <div style={{ textAlign: "center" }}><h3 style={{ fontSize: "12px" }}>{stepTitle}</h3></div>
@@ -35,7 +35,7 @@ function GrowthStep({ stepNumber, stepTitle, imgSrc, alt,
             <span>{stepNumber}</span>
             <div style={{ textAlign: "center" }}><h3 style={{ fontSize: "12px" }}>{stepTitle}</h3></div>
           </a>
-          <img alt={alt} src={imgSrc} title={title} />
+          <img loading="lazy" alt={alt} src={imgSrc} title={title} />
         </>
       )}
     </motion.div>

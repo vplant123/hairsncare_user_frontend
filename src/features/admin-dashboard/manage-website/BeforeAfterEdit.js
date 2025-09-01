@@ -68,7 +68,7 @@ function BeforeAfterEdit({section10,
           >
             <div className="dem0-container">
               <div className='d-flex flex-column'>
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src={e?.img1}
                 style={{ width: "250px" }}
@@ -81,7 +81,7 @@ function BeforeAfterEdit({section10,
     />
               </div>
               <div className='d-flex flex-column'>
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src={e?.img2}
                 style={{ width: "250px" }}
@@ -113,11 +113,11 @@ function BeforeAfterEdit({section10,
             style={{ width: "640px" }}
           >
             <div className="dem0-container">
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src={content?.section10?.data?.[0]?.img1}
               />
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src={content?.section10?.data?.[0]?.img2}
               />
@@ -135,11 +135,11 @@ function BeforeAfterEdit({section10,
             style={{ width: "640px" }}
           >
             <div className="dem0-container">
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src="/assets/img/Before After 2/Female After 2.png"
               />
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src="/assets/img/Before After 2/Female After 2.png"
               />
@@ -157,11 +157,11 @@ function BeforeAfterEdit({section10,
             style={{ width: "640px" }}
           >
             <div className="dem0-container">
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src="/assets/img/Before After 3/Female before 3.png"
               />
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src="/assets/img/Before After 3/female After 3.png"
               />
@@ -177,11 +177,11 @@ function BeforeAfterEdit({section10,
             style={{ width: "640px" }}
           >
             <div className="dem0-container">
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src="/assets/img/Before after 4/Before Male 4.jpg"
               />
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src="/assets/img/Before after 4/After Male 4.jpg"
               />
@@ -197,11 +197,11 @@ function BeforeAfterEdit({section10,
             style={{ width: "640px" }}
           >
             <div className="dem0-container">
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src="/assets/img/Before After 5/Hairloss-Treatment-Before1.jpg"
               />
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src="/assets/img/Before After 5/Hairloss-Treatment-After1.jpg"
               />
@@ -217,8 +217,8 @@ function BeforeAfterEdit({section10,
             style={{ width: "640px" }}
           >
             <div className="dem0-container">
-              <img alt="hair" src="/assets/img/Before after 6/before  6 .jpg" />
-              <img alt="hair" src="/assets/img/Before after 6/After 6.jpg" />
+              <img loading="lazy" alt="hair" src="/assets/img/Before after 6/before  6 .jpg" />
+              <img loading="lazy" alt="hair" src="/assets/img/Before after 6/After 6.jpg" />
             </div>
           </div>
         ) : (
@@ -231,8 +231,8 @@ function BeforeAfterEdit({section10,
             style={{ width: "640px" }}
           >
             <div className="dem0-container">
-              <img alt="hair" src="/assets/img/Before after 6/before  6 .jpg" />
-              <img alt="hair" src="/assets/img/Before after 6/After 6.jpg" />
+              <img loading="lazy" alt="hair" src="/assets/img/Before after 6/before  6 .jpg" />
+              <img loading="lazy" alt="hair" src="/assets/img/Before after 6/After 6.jpg" />
             </div>
           </div>
         ) : (
@@ -245,8 +245,8 @@ function BeforeAfterEdit({section10,
             style={{ width: "640px" }}
           >
             <div className="dem0-container">
-              <img alt="hair" src="/assets/img/Before After 7/Before 7.jpg" />
-              <img alt="hair" src="/assets/img/Before After 7/After 7.jpg" />
+              <img loading="lazy" alt="hair" src="/assets/img/Before After 7/Before 7.jpg" />
+              <img loading="lazy" alt="hair" src="/assets/img/Before After 7/After 7.jpg" />
             </div>
           </div>
         ) : (
@@ -259,8 +259,8 @@ function BeforeAfterEdit({section10,
             style={{ width: "640px" }}
           >
             <div className="dem0-container">
-              <img alt="hair" src="/assets/img/Before After 8/Before 8.jpg" />
-              <img alt="hair" src="/assets/img/Before After 8/after 8.jpg" />
+              <img loading="lazy" alt="hair" src="/assets/img/Before After 8/Before 8.jpg" />
+              <img loading="lazy" alt="hair" src="/assets/img/Before After 8/after 8.jpg" />
             </div>
           </div>
         ) : (
@@ -273,12 +273,12 @@ function BeforeAfterEdit({section10,
             style={{ width: "640px" }}
           >
             <div className="dem0-container">
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src="/assets/img/Before After 9/Before 9 .jpg"
                 style={{ width: "250px" }}
               />
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src="/assets/img/Before After 9/After 9.jpg"
                 style={{ width: "250px" }}
@@ -295,11 +295,11 @@ function BeforeAfterEdit({section10,
             style={{ width: "640px" }}
           >
             <div className="dem0-container">
-              <img
+              <img loading="lazy"
                 alt="hair"
                 src="/assets/img/Before after 10/Before Male 4.jpg"
               />
-              <img alt="hair" src="/assets/img/Before after 10/After 10.jpg" />
+              <img loading="lazy" alt="hair" src="/assets/img/Before after 10/After 10.jpg" />
             </div>
           </div>
         ) : (
@@ -312,8 +312,8 @@ function BeforeAfterEdit({section10,
             style={{ width: "640px" }}
           >
             <div className="dem0-container">
-              <img alt="hair" src="/assets/img/Before after 11/Before 11.jpg" />
-              <img
+              <img loading="lazy" alt="hair" src="/assets/img/Before after 11/Before 11.jpg" />
+              <img loading="lazy"
                 alt="hair"
                 src="/assets/img/Before after 11/After 11.jpg"
                 style={{ width: "200px" }}

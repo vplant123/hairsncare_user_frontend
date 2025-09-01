@@ -86,7 +86,7 @@ const ReviewItem = ({ item }) => {
       onClick={() => window.open("https://g.co/kgs/E5n3zxY")}
     >
       <div className="review-loop" style={{height: "330px"}}>
-        <img src={item?.img} alt="Google reviews" title="Google Reviews" style={{width: "60px",
+        <img loading="lazy" src={item?.img} alt="Google reviews" title="Google Reviews" style={{width: "60px",
     height: "60px"}} />
         <div className="review-person-name">{item?.name}</div>
 
@@ -132,7 +132,7 @@ const ReviewItem = ({ item }) => {
     overflowY: "scroll"}}>{item?.desc}</div>
 
         <div className="logo-container">
-          <img
+          <img loading="lazy"
             src="/assets/img/google-icon.webp"
             alt="Google Icon"
             title="Google Logo"

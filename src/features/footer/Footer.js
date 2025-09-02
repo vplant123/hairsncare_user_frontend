@@ -8,11 +8,10 @@ import { useNavigate } from "react-router-dom";
 const Footer = () => {
   const navigate = useNavigate();
 
-
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
       /* you can also use 'auto' behaviour 
          in place of 'smooth' */
     });
@@ -22,11 +21,17 @@ const Footer = () => {
     <div>
       <footer className="footer-container container">
         <div className="footer-item">
-          <img loading="lazy" alt="Hairsncares Footer Logo" src="/assets/img/footer-logo.png" title="Hairsncares Footer Logo" />
+          <img
+            loading="lazy"
+            alt="Hairsncares Footer Logo"
+            src="/assets/img/footer-logo.png"
+            title="Hairsncares Footer Logo"
+          />
           <div className="icon-footer">
             <FaMapMarkerAlt size={35} />
             <p>
-              HairsnCares.com,First Floor, Solitaire 1, A-102, New Link Rd, Opposite Infinity Mall, Malad West, Mumbai, Maharashtra 400064
+              HairsnCares.com,First Floor, Solitaire 1, A-102, New Link Rd,
+              Opposite Infinity Mall, Malad West, Mumbai, Maharashtra 400064
             </p>
           </div>
           <div className="icon-footer al">
@@ -40,58 +45,67 @@ const Footer = () => {
         </div>
         <div className="footer-item">
           <h3>SUPPORT</h3>
+
+          <h5 style={{ cursor: "pointer" }} className="com-con">
+            <a
+              href="https://blogs.hairsncares.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: "#1b1b1bff",
+                textDecoration: "none",
+                fontSize: "20px",
+                // fontWeight: "bold",
+              }}
+            >
+              Blogs
+            </a>
+          </h5>
+
           <h5
             onClick={() => {
-              scrollToTop()
-              navigate("/hair-care-blogs")
-            }
-            }
+              scrollToTop();
+              navigate("/disclaimer");
+            }}
             style={{ cursor: "pointer" }}
             className="com-con"
           >
-            Blogs{" "}
+            Disclaimer
           </h5>
+
           <h5
             onClick={() => {
-              scrollToTop()
-              navigate("/disclaimer")
-            }
-            }
+              scrollToTop();
+              navigate("/policy");
+            }}
             style={{ cursor: "pointer" }}
             className="com-con"
-
-          >
-            Disclaimer{" "}
-          </h5>
-          <h5 onClick={() => {
-            scrollToTop()
-            navigate("/policy")
-          }} style={{ cursor: "pointer" }}
-            className="com-con"
-
           >
             Privacy Policy
           </h5>
+
           <h5
             onClick={() => {
-              scrollToTop()
-              navigate("/terms-of-service")
+              scrollToTop();
+              navigate("/terms-of-service");
             }}
             style={{ cursor: "pointer" }}
             className="com-con"
           >
             Terms of Service
           </h5>
+
           <h5
             onClick={() => {
-              scrollToTop()
-              navigate("/return-policy")
+              scrollToTop();
+              navigate("/return-policy");
             }}
             style={{ cursor: "pointer" }}
           >
             Cancellation/Refund Policy
           </h5>
         </div>
+
         <div className="footer-item">
           <h3>COMPANY</h3>
           <h5
@@ -163,17 +177,19 @@ const Footer = () => {
               placeholder="hairsncares@gmail.com"
             />
 
-            <div class="btn-footer" onClick={() => {
-              console.log("wnkefnwei")
-              window.open("mailto:hairsncares@gmail.com")
-            }}>
+            <div
+              class="btn-footer"
+              onClick={() => {
+                console.log("wnkefnwei");
+                window.open("mailto:hairsncares@gmail.com");
+              }}
+            >
               <button
                 class="theme-btn-1 btn-foo"
                 type="submit"
                 value="news_submit"
                 id="news_submit"
-              // disabled="disabled"
-
+                // disabled="disabled"
               >
                 <RiSendPlaneLine size={20} />
               </button>
@@ -182,8 +198,9 @@ const Footer = () => {
         </div>
       </footer>
       <div className="row">
-        <div className="copyright col-12">{new Date().getFullYear()} Copyrights with HairsNcares.com</div>
-
+        <div className="copyright col-12">
+          {new Date().getFullYear()} Copyrights with HairsNcares.com
+        </div>
       </div>
     </div>
   );

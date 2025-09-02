@@ -30,6 +30,8 @@ import { Helmet } from "react-helmet";
 import DoctorHomepage from "../features/DoctorHomePage";
 import { generateOrganizationSchema } from "../utils/seoUtils";
 
+
+
 function HomePage(props) {
   let { cart, setCart } = props;
 
@@ -38,6 +40,7 @@ function HomePage(props) {
   }, []);
 
   const content = useSelector((state) => state.content.home);
+  console.log("home content", content);
 
   useEffect(() => {
     console.log("ojwoejorf");
@@ -169,7 +172,7 @@ function HomePage(props) {
           </section> */}
 
           <Hero />
-          <h1>Transform Your Hair Today</h1>
+          {/* <h1>Transform Your Hair Today</h1> */}
           <Trust />
           <WhyTrustHairCare />
           <Media />

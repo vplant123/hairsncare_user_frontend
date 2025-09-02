@@ -7,7 +7,7 @@ function Disclaimer(props) {
   return (
     <Navbar>
       <div className="container">
-        <div
+        <h1
           style={{
             textAlign: "center",
             padding: "40px 0 0 0",
@@ -16,16 +16,16 @@ function Disclaimer(props) {
           }}
         >
           Disclaimer
-        </div>
+        </h1>
 
-        <div
+        <h2
           style={{
             margin: "20px 0 10px 0",
             fontSize: "20px",
           }}
         >
           Overview:
-        </div>
+        </h2>
         <div>
           hairsncares.com is an online hair test portal that offers scalp
           analysis based on submitted scalp pictures and answers to a

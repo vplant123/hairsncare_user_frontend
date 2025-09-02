@@ -11,6 +11,8 @@ Disallow: /doctor-dashboard/
 Disallow: /admin-dashboard/
 Disallow: /login
 Disallow: /success/
+Disallow: /failure/
+Disallow: /payment-status/
 Disallow: /cart
 Disallow: /my-orders
 Disallow: /create-order

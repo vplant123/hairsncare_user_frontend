@@ -8,6 +8,9 @@ import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import useDivInView from "../../hooks/useDivInView";
 import { HashLink } from "react-router-hash-link";
+import { Box } from "@mui/material";
+
+// import { Typography, Box } from "@mui/material";
 
 const HeroSection = ({
   selectedHero,
@@ -67,13 +70,13 @@ const HeroSection = ({
                 }`}
               >
                 {id == 1 ? (
-                  <h1 style={{ fontSize: "1.4rem" }}>{title}</h1>
+                  <h2 style={{ fontSize: "1.4rem" }}>{title}</h2>
                 ) : (
-                  <h1 style={{ fontSize: "1.4rem" }}>{title}</h1>
+                  <h2 style={{ fontSize: "1.4rem" }}>{title}</h2>
                 )}
               </span>
               {id == 1 ? (
-                <h1>{subtitle}</h1>
+                <h2>{subtitle}</h2>
               ) : (
                 <h2 className={`${selectedHero == 2 ? "second-image-t2" : ""}`}>
                   {subtitle}
@@ -130,7 +133,8 @@ const HeroSection = ({
               animate={heroImageControl}
               transition={{ duration: 1, delay: 1.5 }}
             >
-              <img loading="lazy"
+              <img
+                loading="lazy"
                 alt={dd[id - 1]?.alt}
                 title={dd[id - 1]?.title}
                 className={`hero-image ${
@@ -267,7 +271,8 @@ const Hero = () => {
               }}
               style={{ cursor: "pointer" }}
             >
-              <img loading="lazy"
+              <img
+                loading="lazy"
                 src={e}
                 style={{ width: "25px", height: "25px" }}
                 alt={alt}

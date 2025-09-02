@@ -1,58 +1,57 @@
 // cartSlice.js
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import {
-    getUtilityData
-} from './ContentApi';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { getUtilityData } from "./ContentApi";
 
 export const getUtilityContentData = createAsyncThunk(
-  'content/getUtilityContentData',
+  "content/getUtilityContentData",
   async (thunkAPI) => {
-    console.log("koekjor")
+    console.log(
+      "Fetching utility content data.................................."
+    );
     const response = await getUtilityData();
+    console.log(response);
     return response?.data;
   }
 );
 
 const contentDataSlice = createSlice({
-  name: 'content',
+  name: "content",
   initialState: {
     home: {},
-    expertise : {},
-    aboutUs : {},
-    specialist : {},
+    expertise: {},
+    aboutUs: {},
+    specialist: {},
     hairWomen: {},
     hairMen: {},
     hairTransplant: {},
     otherProcedures: {},
     onlineTest: {},
     dermatologist: {},
-    customerVideos:{},
-    plan:[],
-    contactus:{},
-    status: 'idle',
-    config : {}
+    customerVideos: {},
+    plan: [],
+    contactus: {},
+    status: "idle",
+    config: {},
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addCase(getUtilityContentData.fulfilled, (state, action) => {
-        state.home = action.payload?.home;
-        state.expertise =  action.payload?.expertise;
-        state.aboutUs =  action.payload?.aboutUs
-        state.specialist =  action.payload?.specialist
-        state.specialist =  action.payload?.specialist
-        state.hairWomen =  action.payload?.hairWomen;
-        state.hairMen =  action.payload?.hairMen;
-        state.hairTransplant =  action.payload?.hairTransplant;
-        state.otherProcedures =  action.payload?.otherProcedures;
-        state.onlineTest =  action.payload?.onlineTest;
-        state.dermatologist =  action.payload?.dermatologist;
-        state.customerVideos = action.payload?.customerVideos;
-        state.plan = action.payload?.plan
-        state.contactus = action.payload?.contactus;
-        state.config = action.payload?.config
-
-      })
+    builder.addCase(getUtilityContentData.fulfilled, (state, action) => {
+      state.home = action.payload?.home;
+      state.expertise = action.payload?.expertise;
+      state.aboutUs = action.payload?.aboutUs;
+      state.specialist = action.payload?.specialist;
+      state.specialist = action.payload?.specialist;
+      state.hairWomen = action.payload?.hairWomen;
+      state.hairMen = action.payload?.hairMen;
+      state.hairTransplant = action.payload?.hairTransplant;
+      state.otherProcedures = action.payload?.otherProcedures;
+      state.onlineTest = action.payload?.onlineTest;
+      state.dermatologist = action.payload?.dermatologist;
+      state.customerVideos = action.payload?.customerVideos;
+      state.plan = action.payload?.plan;
+      state.contactus = action.payload?.contactus;
+      state.config = action.payload?.config;
+    });
   },
 });
 

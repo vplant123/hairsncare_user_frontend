@@ -5,10 +5,18 @@ import Navbar from "./nav/Navbar";
 
 const ReturnPolicy = () => {
   return (
-    <>    <Navbar>
-      <Container>
-        <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif', lineHeight: '1.6' }}>
-          {/* <h1>Refund, Return, and Cancellation Policy</h1>
+    <>
+      {" "}
+      <Navbar>
+        <Container>
+          <div
+            style={{
+              padding: "20px",
+              fontFamily: "Arial, sans-serif",
+              lineHeight: "1.6",
+            }}
+          >
+            {/* <h1>Refund, Return, and Cancellation Policy</h1>
 
           <p>At Vplant Speciality Clinic ("Hairsncares"), we prioritize customer satisfaction and aim to provide a smooth and hassle-free experience. Our Refund Policy allows for full refunds under specific conditions outlined below:</p>
 
@@ -46,26 +54,53 @@ const ReturnPolicy = () => {
           </ul>
           <p>If our courier partner attempts delivery for orders canceled before delivery, please decline acceptance. If delivery is accepted, we will arrange a reverse pickup, ensuring the products remain sealed and unused.</p> */}
 
-          <h2>Processing of Refunds</h2>
-          <p>Refund processing times depend on the original payment method:<br></br>
+            <h2 className="mb-4">Processing of Refunds</h2>
+            <p>
+              Refund processing times depend on the original payment method:
+              <br></br>
+              Credit/Debit Card or Net Banking: <br></br>Allow 5 to 7 working
+              days for the credit to appear.<br></br>
+              <br></br>
+              Cash on Delivery (COD): <br></br>May require an image of a voided
+              cheque leaf, bank statement, or bank details. COD refunds may take
+              up to 3 weeks.<br></br>
+              UPI (Unified Payments Interface): Refunds via UPI are typically
+              credited within 2 to 5 working days, depending on your bank and
+              UPI service provider.
+            </p>
+            <br></br>
+            <p>
+              Please note that refund processing times may be delayed due to
+              factors such as bank policies or circumstances beyond our control.
+              We apologize for any inconvenience caused.
+            </p>
+            <p>
+              This revised policy provides a clear and concise outline of the
+              refund, return, and cancellation processes at Vplant Speciality
+              Clinic ("Hairsncares").
+            </p>
 
-            Credit/Debit Card or Net Banking: <br></br>Allow 5 to 7 working days for the credit to appear.<br></br><br></br>
-            Cash on Delivery (COD): <br></br>May require an image of a voided cheque leaf, bank statement, or bank details. COD refunds may take up to 3 weeks.<br></br>
-            UPI (Unified Payments Interface): Refunds via UPI are typically credited within 2 to 5 working days, depending on your bank and UPI service provider.</p><br></br>
-
-          <p>Please note that refund processing times may be delayed due to factors such as bank policies or circumstances beyond our control. We apologize for any inconvenience caused.</p>
-
-          <p>This revised policy provides a clear and concise outline of the refund, return, and cancellation processes at Vplant Speciality Clinic ("Hairsncares").</p>
-        </div>
-        {/* <p>Refund processing times depend on the original payment method:</p>
+            {/* External link for security/trust */}
+            <Box mt={4}>
+              <Typography variant="body1">
+                <a
+                  href="https://blogs.hairsncares.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#1976d2", textDecoration: "underline" }}
+                ></a>
+              </Typography>
+            </Box>
+          </div>
+          {/* <p>Refund processing times depend on the original payment method:</p>
           <ul>
             <li><strong>Credit/Debit Card or Net Banking:</strong> Allow 5 to 7 working days for the credit to appear.</li>
             <li><strong>Cash on Delivery (COD):</strong> May require an image of a voided cheque leaf, bank statement, or bank details. COD refunds may take up to 3 weeks.</li>
           </ul>
           </div>*/}
-      </Container>
-      <Footer />
-    </Navbar>
+        </Container>
+        <Footer />
+      </Navbar>
     </>
   );
 };

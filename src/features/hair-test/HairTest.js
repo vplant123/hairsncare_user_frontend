@@ -321,21 +321,27 @@ export default function HairTest() {
         </div>
       </div>
       <div className="test-link container">
+        <h1
+          className="text-sm"
+          style={{ marginBottom: "1rem", display: "none" }}
+        >
+          Take hair test
+        </h1>
         <div className="test-link-item">
           <div className={`tab-1 tab ${step == 1 && "selected1"}`}>
-            <h1 style={{ fontSize: "1.4rem" }}>PERSONAL PROFILE</h1>
+            <h2 style={{ fontSize: "1.4rem" }}>PERSONAL PROFILE</h2>
           </div>
           <div className={`tab-2 tab ${step == 2 && "selected1"}`}>
-            <h1 style={{ fontSize: "1.4rem" }}>NUTRITIONAL</h1>
+            <h2 style={{ fontSize: "1.4rem" }}>NUTRITIONAL</h2>
           </div>
           <div className={`tab-3 tab ${step == 3 && "selected1"}`}>
-            <h1 style={{ fontSize: "1.4rem" }}>LIFESTYLE</h1>
+            <h2 style={{ fontSize: "1.4rem" }}>LIFESTYLE</h2>
           </div>
           <div className={`tab-4 tab ${step == 4 && "selected1"}`}>
-            <h1 style={{ fontSize: "1.4rem" }}>STRESS</h1 >
+            <h2 style={{ fontSize: "1.4rem" }}>STRESS</h2>
           </div>
           <div className={`tab-5 tab ${step == 5 && "selected1"}`}>
-            <h1 style={{ fontSize: "1.4rem" }}>HAIR AND SCALP ASSESSMENT</h1>
+            <h2 style={{ fontSize: "1.4rem" }}>HAIR AND SCALP ASSESSMENT</h2>
           </div>
         </div>
       </div>

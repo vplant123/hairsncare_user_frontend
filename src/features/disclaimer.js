@@ -3,6 +3,10 @@ import Navbar from "./nav/Navbar";
 import Footer from "./footer/Footer";
 import { useNavigate } from "react-router-dom";
 function Disclaimer(props) {
+  useEffect(() => {
+    if (props?.setTitle) props?.setTitle(window.location.pathname);
+  }, []);
+
   const navigate = useNavigate();
   return (
     <Navbar>

@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./nav/Navbar";
 import Footer from "./footer/Footer";
 function TermsOfService(props) {
+  useEffect(() => {
+    if (props?.setTitle) props?.setTitle(window.location.pathname);
+  }, []);
+
   return (
     <Navbar>
       <div className="container">
-        <div
+        <h1
           style={{
             textAlign: "center",
             padding: "40px 0 0 0",
@@ -14,7 +18,7 @@ function TermsOfService(props) {
           }}
         >
           Terms of Service
-        </div>
+        </h1>
         <div
           style={{
             margin: "20px 0 10px 0",
@@ -43,9 +47,9 @@ function TermsOfService(props) {
             <li>
               <div>
                 These Terms of Service (“Terms”) govern your use of and access
-                to the internal portal available at https://hairsncares.com/
-                and the Products and Services (as defined below). The Website
-                and its associated services are collectively referred to as the
+                to the internal portal available at https://hairsncares.com/ and
+                the Products and Services (as defined below). The Website and
+                its associated services are collectively referred to as the
                 “Platform.”
               </div>
             </li>
@@ -64,12 +68,13 @@ function TermsOfService(props) {
               <div>
                 These Terms constitute a binding legal agreement between Vplant
                 Speciality Clinic (operating under the brand name
-                “Hairsncares”), located at First Floor, Solitaire 1, A-102, New Link Rd, Opposite Infinity Mall, Malad West, Mumbai, Maharashtra 400064
-                , and you, the end-user of
-                our Products or Services (“you”). By agreeing to these Terms,
-                you confirm that you (i) have the legal capacity and authority
-                to enter into this agreement, and (ii) are of the age of
-                majority as defined by Indian law.
+                “Hairsncares”), located at First Floor, Solitaire 1, A-102, New
+                Link Rd, Opposite Infinity Mall, Malad West, Mumbai, Maharashtra
+                400064 , and you, the end-user of our Products or Services
+                (“you”). By agreeing to these Terms, you confirm that you (i)
+                have the legal capacity and authority to enter into this
+                agreement, and (ii) are of the age of majority as defined by
+                Indian law.
               </div>
             </li>
 

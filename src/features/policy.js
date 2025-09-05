@@ -2,6 +2,11 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./nav/Navbar";
 import Footer from "./footer/Footer";
 function Policy(props) {
+  
+  useEffect(() => {
+    if (props?.setTitle) props?.setTitle(window.location.pathname);
+  }, []);
+
   return (
     <Navbar>
       <div className="container">
@@ -23,13 +28,13 @@ function Policy(props) {
           }}
         >
           Welcome to our website and mobile application accessible at
-          www.hairsncares.com ("HAIRSNCARES WELLNESS CENTER"). This privacy policy ("Privacy
-          Policy") outlines the policies and procedures of Vplant Speciality
-          Clinics ("we," "our," or "us") regarding the collection, usage,
-          maintenance, protection, and disclosure of information, including your
-          Personal Information (as defined below), on Hairsncares.com and the
-          services, features, content, applications, and products we provide
-          (collectively referred to as the "Services").
+          www.hairsncares.com ("HAIRSNCARES WELLNESS CENTER"). This privacy
+          policy ("Privacy Policy") outlines the policies and procedures of
+          Vplant Speciality Clinics ("we," "our," or "us") regarding the
+          collection, usage, maintenance, protection, and disclosure of
+          information, including your Personal Information (as defined below),
+          on Hairsncares.com and the services, features, content, applications,
+          and products we provide (collectively referred to as the "Services").
         </div>
         <div
           style={{
@@ -37,8 +42,8 @@ function Policy(props) {
             fontSize: "20px",
           }}
         >
-          By clicking "Continue" during the sign-up process, using
-          HAIRSNCARES WELLNESS CENTER, or utilizing the Services, you confirm that you have
+          By clicking "Continue" during the sign-up process, using HAIRSNCARES
+          WELLNESS CENTER, or utilizing the Services, you confirm that you have
           read, comprehended, and consent to the privacy practices detailed in
           this Privacy Policy. You also acknowledge the collection, processing,
           transfer, manipulation, storage, disclosure, and other uses of your
@@ -98,9 +103,9 @@ function Policy(props) {
             fontSize: "20px",
           }}
         >
-          By accessing or using the HAIRSNCARES WELLNESS CENTER or the Services, or by
-          providing us with your information, you confirm that you have the
-          legal capacity to enter into a binding contract under Indian law,
+          By accessing or using the HAIRSNCARES WELLNESS CENTER or the Services,
+          or by providing us with your information, you confirm that you have
+          the legal capacity to enter into a binding contract under Indian law,
           specifically the Indian Contract Act, 1872. You also confirm that you
           have read, understood, and agreed to the practices and policies
           outlined in this Privacy Policy, and you consent to be bound by the

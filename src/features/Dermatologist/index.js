@@ -113,9 +113,15 @@ export default function Dermatologist() {
         style={{ fontFamily: '"Poppins", sans-serif' }}
       >
         <Helmet>
-          <link rel="canonical" href="https://backend.hairsncares.com/dr-amit-agarkar-hair-restoration-expert" />
+          <link
+            rel="canonical"
+            href="https://backend.hairsncares.com/dr-amit-agarkar-hair-restoration-expert"
+          />
         </Helmet>
-        <div style={{ background: "rgba(193, 237, 255, 1)", width: "100vw" }} className="main-div-resp">
+        <div
+          style={{ background: "rgba(193, 237, 255, 1)", width: "100vw" }}
+          className="main-div-resp"
+        >
           <div className="d-flex flex-column container">
             <div className="d-flex main-section-1-op">
               <ZoomInDiv
@@ -126,15 +132,17 @@ export default function Dermatologist() {
                   className="text-2-section-4-htw"
                   style={{ textAlign: "left", fontWeight: "800" }}
                 >
-                  <h2>Dr. Amit S. Agarkar</h2>
+                  <h1>Dr. Amit Agarkar</h1>
                 </div>
                 <div
                   className="text-2-section-4-htw"
                   style={{ textAlign: "left" }}
                 >
-                  <h1>A Leader in{" "}
+                  <h1>
+                    Hair Transplant & Restoration Expert -{" "}
                     <span className="blue-btw-text">Hair Restoration</span>,
-                    Trichology and Dermatology{" "}</h1>
+                    Trichology and Dermatology{" "}
+                  </h1>
                 </div>
                 <div className="text-3-section-1-htw-left">
                   <strong style={{ color: "rgba(0, 160, 227, 1)" }}>
@@ -164,7 +172,9 @@ export default function Dermatologist() {
                 </HashLink>
               </ZoomInDiv>
               <RightAnimatedDiv className="d-flex flex-column main-section-1-op-right">
-                <img loading="lazy" src="/assets/img/hairTreatmentWomen/dr-amit-agarkar-hair-care-expert.png"
+                <img
+                  loading="lazy"
+                  src="/assets/img/hairTreatmentWomen/dr-amit-agarkar-hair-care-expert.png"
                   alt="Dr. Amit Agarkar, leading expert in hair restoration, trichology, and dermatology, known for advanced hair loss treatments at HairsnCares."
                   title="Dr. Amit Agarkar – Hair Restoration Expert"
                 />
@@ -173,7 +183,10 @@ export default function Dermatologist() {
           </div>
         </div>
 
-        <div style={{ background: "rgba(193, 237, 255, 1)" }} className="main-div-resp">
+        <div
+          style={{ background: "rgba(193, 237, 255, 1)" }}
+          className="main-div-resp"
+        >
           <div
             className="d-flex flex-column container"
             style={{ gap: "15px", padding: "0 0 30px 0 " }}
@@ -181,9 +194,10 @@ export default function Dermatologist() {
             <div className="desktop-view" style={{ gap: "30px" }}>
               <LeftAnimatedDiv
                 className="main-section-2-htw-left"
-              //   style={{ height: "100vh" }}
+                //   style={{ height: "100vh" }}
               >
-                <img loading="lazy"
+                <img
+                  loading="lazy"
                   src="https://res.cloudinary.com/drkpwvnun/image/upload/v1729424606/hair-assessment/kh2b9nblfx8ven7gtqbl.png"
                   style={{ width: "100%", maxHeight: "682px" }}
                   alt="Dr. Amit Agarkar, renowned specialist in hair restoration and advanced hair loss treatments, seated in his office at HairsnCares."
@@ -195,37 +209,56 @@ export default function Dermatologist() {
                   className="text-2-section-2-htw"
                   style={{ textAlign: "left" }}
                 >
-                  <h2>Professional <span className="blue-btw-text">Overview</span></h2>
+                  <h2>
+                    Professional <span className="blue-btw-text">Overview</span>
+                  </h2>
                 </div>
                 <div className="text-3-section-2-htw">
-                  <div dangerouslySetInnerHTML={{ __html: content?.section1?.desc1}} />
-                  <div dangerouslySetInnerHTML={{ __html: content?.section1?.desc2}} />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: content?.section1?.desc1,
+                    }}
+                  />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: content?.section1?.desc2,
+                    }}
+                  />
                 </div>
               </ZoomInDiv>
             </div>
 
             <ZoomInDiv className="text-3-section-2-htw">
-            <div dangerouslySetInnerHTML={{ __html: content?.section1?.desc3}} />
-              <div dangerouslySetInnerHTML={{ __html: content?.section1?.desc4}} />
+              <div
+                dangerouslySetInnerHTML={{ __html: content?.section1?.desc3 }}
+              />
+              <div
+                dangerouslySetInnerHTML={{ __html: content?.section1?.desc4 }}
+              />
             </ZoomInDiv>
           </div>
         </div>
 
-        <div style={{ background: "rgba(193, 237, 255, 1)" }} className="main-div-resp">
+        <div
+          style={{ background: "rgba(193, 237, 255, 1)" }}
+          className="main-div-resp"
+        >
           <div
             className="d-flex flex-column container"
             style={{ gap: "20px", padding: "30px 0 30px 0" }}
           >
             <div className="desktop-view-1" style={{ gap: "2%" }}>
               <LeftAnimatedDiv className="left-div-11">
-                <img loading="lazy"
+                <img
+                  loading="lazy"
                   src={content?.section1?.image1}
                   style={{ width: "100%", height: "400px" }}
                   alt={content?.section1?.alt1}
                 />
               </LeftAnimatedDiv>
               <RightAnimatedDiv className="right-div-11">
-                <img loading="lazy"
+                <img
+                  loading="lazy"
                   src={content?.section1?.image2}
                   style={{ width: "100%", height: "400px" }}
                   alt={content?.section1?.alt2}
@@ -233,7 +266,8 @@ export default function Dermatologist() {
               </RightAnimatedDiv>
             </div>
             <ZoomInDiv>
-              <img loading="lazy"
+              <img
+                loading="lazy"
                 src={content?.section1?.image3}
                 style={{ width: "100%", height: "400px" }}
                 alt={content?.section1?.alt3}
@@ -253,9 +287,7 @@ export default function Dermatologist() {
                 className="text-2-section-4-htw"
                 style={{ width: "100%" }}
               >
-                <h3>
-                  Innovation at{" "}
-                </h3>
+                <h3>Innovation at </h3>
                 <span className="blue-btw-text">HairsnCares.com</span>
               </ZoomInDiv>
             </div>
@@ -271,13 +303,25 @@ export default function Dermatologist() {
                   className="text-2-section-4-htw"
                   style={{ textAlign: "left" }}
                 >
-                  <div dangerouslySetInnerHTML={{ __html: content?.section2?.title}} />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: content?.section2?.title,
+                    }}
+                  />
                 </div>
                 <div className="text-3-section-1-htw-left">
-                <div dangerouslySetInnerHTML={{ __html: content?.section2?.desc1}} />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: content?.section2?.desc1,
+                    }}
+                  />
                   <br />
                   <br />
-                  <div dangerouslySetInnerHTML={{ __html: content?.section2?.desc2}} />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: content?.section2?.desc2,
+                    }}
+                  />
                 </div>
                 <div className="">
                   <button
@@ -289,10 +333,11 @@ export default function Dermatologist() {
                 </div>
               </ZoomInDiv>
               <RightAnimatedDiv className="d-flex flex-column main-section-1-op-right">
-              <img loading="lazy"
-                src={content?.section2?.image}
-                alt={content?.section2?.alt}
-              />
+                <img
+                  loading="lazy"
+                  src={content?.section2?.image}
+                  alt={content?.section2?.alt}
+                />
               </RightAnimatedDiv>
             </div>
           </div>
@@ -305,7 +350,9 @@ export default function Dermatologist() {
           >
             <ZoomInDiv style={{ display: "flex", justifyContent: "center" }}>
               <div className="text-2-section-5-htw">
-              <div dangerouslySetInnerHTML={{ __html: content?.section3?.title}} />
+                <div
+                  dangerouslySetInnerHTML={{ __html: content?.section3?.title }}
+                />
               </div>
             </ZoomInDiv>
             <ZoomInDiv
@@ -313,11 +360,13 @@ export default function Dermatologist() {
               className="mt-5"
             >
               <div className="text-3-section-5-htw" style={{ width: "75%" }}>
-              <div dangerouslySetInnerHTML={{ __html: content?.section3?.desc}} />
+                <div
+                  dangerouslySetInnerHTML={{ __html: content?.section3?.desc }}
+                />
               </div>
             </ZoomInDiv>
             <div className="desktop-view-1 mt-3" style={{ gap: "15px" }}>
-            {content?.section3?.forms?.map((item, indx) => {
+              {content?.section3?.forms?.map((item, indx) => {
                 return (
                   <ZoomInDiv
                     className="mini-card-section-4-htw width-for-text-heading-23 d-flex flex-column"
@@ -328,7 +377,9 @@ export default function Dermatologist() {
                       gap: "15px",
                       border: "none",
                       background:
-                        activeSec5 === indx ? "rgba(0, 160, 227, 1)" : "#FFFFFF",
+                        activeSec5 === indx
+                          ? "rgba(0, 160, 227, 1)"
+                          : "#FFFFFF",
                     }}
                     onClick={() => setActiveSec5(indx)}
                   >
@@ -346,15 +397,18 @@ export default function Dermatologist() {
                         color: activeSec5 === indx ? "#FFFFFF" : "black",
                       }}
                     >
-                      <div dangerouslySetInnerHTML={{ __html: item.title}} />
+                      <div dangerouslySetInnerHTML={{ __html: item.title }} />
                     </div>
                     <div
                       className="mini-card-text-2-section-4-htw"
                       style={{
-                        color: activeSec5 === indx ? "#FFFFFF" : "rgba(97, 97, 97, 1)",
+                        color:
+                          activeSec5 === indx
+                            ? "#FFFFFF"
+                            : "rgba(97, 97, 97, 1)",
                       }}
                     >
-                      <div dangerouslySetInnerHTML={{ __html: item.desc}} />
+                      <div dangerouslySetInnerHTML={{ __html: item.desc }} />
                     </div>
                   </ZoomInDiv>
                 );
@@ -368,10 +422,20 @@ export default function Dermatologist() {
             className="d-flex flex-column container"
             style={{ padding: "30px 0 30px 0 " }}
           >
-            <ZoomInDiv className="text-1-section-3-htw"><h3><div dangerouslySetInnerHTML={{ __html: content?.section4?.title}} /></h3></ZoomInDiv>
+            <ZoomInDiv className="text-1-section-3-htw">
+              <h3>
+                <div
+                  dangerouslySetInnerHTML={{ __html: content?.section4?.title }}
+                />
+              </h3>
+            </ZoomInDiv>
             <ZoomInDiv style={{ display: "flex", justifyContent: "center" }}>
               <div className="text-2-section-3-htw" style={{ width: "100%" }}>
-              <div dangerouslySetInnerHTML={{ __html: content?.section4?.subTitle}} />
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: content?.section4?.subTitle,
+                  }}
+                />
               </div>
             </ZoomInDiv>
             <ZoomInDiv
@@ -379,7 +443,9 @@ export default function Dermatologist() {
               className="mt-3"
             >
               <div className="text-3-section-3-htw m-text-left">
-              <div dangerouslySetInnerHTML={{ __html: content?.section4?.desc}} />
+                <div
+                  dangerouslySetInnerHTML={{ __html: content?.section4?.desc }}
+                />
               </div>
             </ZoomInDiv>
             <RightAnimatedDiv
@@ -402,7 +468,11 @@ export default function Dermatologist() {
                   className="text-2-section-2-htw"
                   style={{ textAlign: "left", color: "white" }}
                 >
-                  <div dangerouslySetInnerHTML={{ __html: content?.section4?.itemTitle}} />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: content?.section4?.itemTitle,
+                    }}
+                  />
                 </div>
 
                 <div
@@ -410,31 +480,44 @@ export default function Dermatologist() {
                   style={{ gap: "20px" }}
                 >
                   {content?.section4?.forms.map((item, indx) => {
-                    return <ZoomInDiv className="d-flex" style={{ gap: "20px" }} key={indx}>
-                    <div
-                      className="mini-card-num-div-section-4-htw number-view"
-                    // style={{ padding: "10px", width: "8%", height: "5vh" }}
-                    >
-                      <div className="mini-card-num-text-section-4-htw flex-center-row">
-                        {indx + 1}
-                      </div>
-                    </div>
-                    <div
-                      className="text-3-section-2-htw"
-                      style={{ color: "white", width: "80%" }}
-                    >
-                      <strong className="strong"><div dangerouslySetInnerHTML={{ __html: item.title}} /></strong>
-                      <div dangerouslySetInnerHTML={{ __html: item.desc}} />
-                    </div>
-                  </ZoomInDiv>
+                    return (
+                      <ZoomInDiv
+                        className="d-flex"
+                        style={{ gap: "20px" }}
+                        key={indx}
+                      >
+                        <div
+                          className="mini-card-num-div-section-4-htw number-view"
+                          // style={{ padding: "10px", width: "8%", height: "5vh" }}
+                        >
+                          <div className="mini-card-num-text-section-4-htw flex-center-row">
+                            {indx + 1}
+                          </div>
+                        </div>
+                        <div
+                          className="text-3-section-2-htw"
+                          style={{ color: "white", width: "80%" }}
+                        >
+                          <strong className="strong">
+                            <div
+                              dangerouslySetInnerHTML={{ __html: item.title }}
+                            />
+                          </strong>
+                          <div
+                            dangerouslySetInnerHTML={{ __html: item.desc }}
+                          />
+                        </div>
+                      </ZoomInDiv>
+                    );
                   })}
                 </div>
               </div>
               <div
                 className="main-section-2-htw-left mp-2 "
-              // style={{ height: "750px" }}
+                // style={{ height: "750px" }}
               >
-                <img loading="lazy"
+                <img
+                  loading="lazy"
                   src={content?.section4?.image}
                   style={{ height: "100%", width: "100%" }}
                   alt={content?.section4?.alt}
@@ -446,7 +529,11 @@ export default function Dermatologist() {
               className="text-3-section-2-htw mt-5"
               style={{ color: "white" }}
             >
-              <div dangerouslySetInnerHTML={{ __html: content?.section4?.footerText}} />
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: content?.section4?.footerText,
+                }}
+              />
             </RightAnimatedDiv>
           </div>
         </div>
@@ -458,51 +545,79 @@ export default function Dermatologist() {
           <div className="desktop-view" style={{ gap: "30px" }}>
             <LeftAnimatedDiv
               className="main-section-2-htw-left"
-            //   style={{ height: "100vh" }}
+              //   style={{ height: "100vh" }}
             >
-              <img loading="lazy"
-                  src={content?.section5?.image}
-                  style={{ height: "100%", width: "100%" }}
-                  alt={content?.section5?.alt}
-                />
+              <img
+                loading="lazy"
+                src={content?.section5?.image}
+                style={{ height: "100%", width: "100%" }}
+                alt={content?.section5?.alt}
+              />
             </LeftAnimatedDiv>
             <div className=" main-section-2-htw-right d-flex flex-column">
               <ZoomInDiv
                 className="text-2-section-2-htw"
                 style={{ textAlign: "left" }}
               >
-                <h2><div dangerouslySetInnerHTML={{ __html: content?.section5?.title}} /></h2>
-                <div dangerouslySetInnerHTML={{ __html: content?.section5?.subTitle}} />
+                <h2>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: content?.section5?.title,
+                    }}
+                  />
+                </h2>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: content?.section5?.subTitle,
+                  }}
+                />
               </ZoomInDiv>
 
               <div className="text-3-section-2-htw">
-              <div dangerouslySetInnerHTML={{ __html: content?.section5?.desc1}} />
+                <div
+                  dangerouslySetInnerHTML={{ __html: content?.section5?.desc1 }}
+                />
                 <br />
                 <br />
-                <div dangerouslySetInnerHTML={{ __html: content?.section5?.desc2}} />
+                <div
+                  dangerouslySetInnerHTML={{ __html: content?.section5?.desc2 }}
+                />
               </div>
             </div>
           </div>
 
           <div className="text-3-section-2-htw">
-          <div dangerouslySetInnerHTML={{ __html: content?.section5?.desc3}} />
+            <div
+              dangerouslySetInnerHTML={{ __html: content?.section5?.desc3 }}
+            />
           </div>
 
           <ZoomInDiv
             className=""
             style={{ fontSize: "36px", fontWeight: "700" }}
           >
-            <h3><div dangerouslySetInnerHTML={{ __html: content?.section5?.title2}} /></h3>
+            <h3>
+              <div
+                dangerouslySetInnerHTML={{ __html: content?.section5?.title2 }}
+              />
+            </h3>
           </ZoomInDiv>
 
           <div className="text-3-section-2-htw">
-          <div dangerouslySetInnerHTML={{ __html: content?.section5?.desc4}} />
+            <div
+              dangerouslySetInnerHTML={{ __html: content?.section5?.desc4 }}
+            />
             <br />
-            <div dangerouslySetInnerHTML={{ __html: content?.section5?.desc5}} />
+            <div
+              dangerouslySetInnerHTML={{ __html: content?.section5?.desc5 }}
+            />
           </div>
         </div>
 
-        <div style={{ background: "rgba(193, 237, 255, 1)" }} className="main-div-resp">
+        <div
+          style={{ background: "rgba(193, 237, 255, 1)" }}
+          className="main-div-resp"
+        >
           <div
             className="d-flex flex-column container mw-90"
             style={{ padding: "30px 0 30px 0" }}
@@ -519,15 +634,28 @@ export default function Dermatologist() {
                   className="text-3-section-1-htw-left"
                   style={{ textAlign: "left" }}
                 >
-                  <div dangerouslySetInnerHTML={{ __html: content?.section6?.title}} />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: content?.section6?.title,
+                    }}
+                  />
                 </LeftAnimatedDiv>
                 <div className="text-3-section-1-htw-left">
-                <div dangerouslySetInnerHTML={{ __html: content?.section6?.desc1}} />
-                  <div dangerouslySetInnerHTML={{ __html: content?.section6?.desc2}} />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: content?.section6?.desc1,
+                    }}
+                  />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: content?.section6?.desc2,
+                    }}
+                  />
                 </div>
               </div>
               <RightAnimatedDiv className="d-flex flex-column main-section-1-op-right">
-              <img loading="lazy"
+                <img
+                  loading="lazy"
                   src={content?.section6?.image1}
                   style={{ height: "100%", width: "100%" }}
                   alt={content?.section6?.alt1}
@@ -541,9 +669,10 @@ export default function Dermatologist() {
             >
               <LeftAnimatedDiv
                 className="d-flex flex-column main-section-1-op-right"
-              // style={{ height: "90vh" }}
+                // style={{ height: "90vh" }}
               >
-                <img loading="lazy"
+                <img
+                  loading="lazy"
                   src={content?.section6?.image2}
                   style={{ height: "100%", width: "100%" }}
                   alt={content?.section6?.alt2}
@@ -557,12 +686,24 @@ export default function Dermatologist() {
                   className="text-2-section-4-htw"
                   style={{ textAlign: "left", fontSize: "50px" }}
                 >
-                  <h2><div dangerouslySetInnerHTML={{ __html: content?.section6?.title2}} /></h2>
+                  <h2>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: content?.section6?.title2,
+                      }}
+                    />
+                  </h2>
                 </RightAnimatedDiv>
                 <div className="text-3-section-1-htw-left">
-                <div dangerouslySetInnerHTML={{ __html: content?.section6?.desc3}} />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: content?.section6?.desc3,
+                    }}
+                  />
                 </div>
-                <h3><strong>Professional Affiliations:</strong></h3>
+                <h3>
+                  <strong>Professional Affiliations:</strong>
+                </h3>
                 <div>IADVL Member</div>
                 <div>Association of Hair Restoration Surgeons (AHRS)</div>
               </div>
@@ -593,14 +734,24 @@ export default function Dermatologist() {
               onClick={() => navigate("/our-expertise#read3")}
               className="btn sub-button-section-3-op"
             >
-              <h5 className="mfs-1"><div dangerouslySetInnerHTML={{ __html: content?.section8?.forms?.[0]?.title}} /></h5>
+              <h5 className="mfs-1">
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: content?.section8?.forms?.[0]?.title,
+                  }}
+                />
+              </h5>
             </button>
           </ZoomInDiv>
           <ZoomInDiv
             className="text-3-section-1-htw-left award-desc"
             style={{ width: "50%", textAlign: "center" }}
           >
-  <div dangerouslySetInnerHTML={{ __html: content?.section8?.forms?.[0]?.desc}} />
+            <div
+              dangerouslySetInnerHTML={{
+                __html: content?.section8?.forms?.[0]?.desc,
+              }}
+            />
           </ZoomInDiv>
 
           <ZoomInDiv style={{ position: "relative" }}>
@@ -609,62 +760,33 @@ export default function Dermatologist() {
                 className="d-flex"
                 style={{ justifyContent: "space-between" }}
               >
-                <div className="d-flex flex-column" style={{ width: "40%", alignItems:"center" }}>
-                  <div className="">
-                    <button
-                      onClick={() => navigate("/our-expertise#read3")}
-                      className="btn-d sub-button-section-3-op"
-                    >
-                      <h4 style={{ fontSize: "20x" }} className="award-title"><div dangerouslySetInnerHTML={{ __html: content?.section8?.forms?.[1]?.title}} /></h4>
-                    </button>
-                  </div>
-                  <div
-                    className="text-3-section-1-htw-left award-desc"
-                    style={{ width: "80%", textAlign: "center" }}
-                  >
-                   <div dangerouslySetInnerHTML={{ __html: content?.section8?.forms?.[1]?.desc}} />
-                  </div>
-                </div>
-
                 <div
                   className="d-flex flex-column"
-                  style={{ width: "40%",alignItems:"center" }}
+                  style={{ width: "40%", alignItems: "center" }}
                 >
                   <div className="">
                     <button
                       onClick={() => navigate("/our-expertise#read3")}
                       className="btn-d sub-button-section-3-op"
                     >
-                      <h4 style={{ fontSize: "20x" }} className="award-title"><div dangerouslySetInnerHTML={{ __html: content?.section8?.forms?.[2]?.title}} /></h4>
+                      <h4 style={{ fontSize: "20x" }} className="award-title">
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: content?.section8?.forms?.[1]?.title,
+                          }}
+                        />
+                      </h4>
                     </button>
                   </div>
                   <div
                     className="text-3-section-1-htw-left award-desc"
                     style={{ width: "80%", textAlign: "center" }}
                   >
-                    <div dangerouslySetInnerHTML={{ __html: content?.section8?.forms?.[2]?.desc}} />
-                  </div>
-                </div>
-              </div>
-
-              <div
-                className="d-flex"
-                style={{ justifyContent: "space-between" }}
-              >
-                <div className="d-flex flex-column" style={{ width: "40%" , alignItems:"center"}}>
-                  <div className="">
-                    <button
-                      onClick={() => navigate("/our-expertise#read3")}
-                      className="btn-d sub-button-section-3-op"
-                    >
-                      <h4 style={{ fontSize: "20x" }} className="award-title"><div dangerouslySetInnerHTML={{ __html: content?.section8?.forms?.[3]?.title}} /></h4>
-                    </button>
-                  </div>
-                  <div
-                    className="text-3-section-1-htw-left award-desc"
-                    style={{ width: "80%", textAlign: "center" }}
-                  >
-                    <div dangerouslySetInnerHTML={{ __html: content?.section8?.forms?.[3]?.desc}} />
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: content?.section8?.forms?.[1]?.desc,
+                      }}
+                    />
                   </div>
                 </div>
 
@@ -677,22 +799,98 @@ export default function Dermatologist() {
                       onClick={() => navigate("/our-expertise#read3")}
                       className="btn-d sub-button-section-3-op"
                     >
-                      <h4 style={{ fontSize: "20x" }} className="award-title"><div dangerouslySetInnerHTML={{ __html: content?.section8?.forms?.[4]?.title}} /></h4>
+                      <h4 style={{ fontSize: "20x" }} className="award-title">
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: content?.section8?.forms?.[2]?.title,
+                          }}
+                        />
+                      </h4>
                     </button>
                   </div>
                   <div
                     className="text-3-section-1-htw-left award-desc"
                     style={{ width: "80%", textAlign: "center" }}
                   >
-                    <div dangerouslySetInnerHTML={{ __html: content?.section8?.forms?.[4]?.desc}} />
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: content?.section8?.forms?.[2]?.desc,
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div
+                className="d-flex"
+                style={{ justifyContent: "space-between" }}
+              >
+                <div
+                  className="d-flex flex-column"
+                  style={{ width: "40%", alignItems: "center" }}
+                >
+                  <div className="">
+                    <button
+                      onClick={() => navigate("/our-expertise#read3")}
+                      className="btn-d sub-button-section-3-op"
+                    >
+                      <h4 style={{ fontSize: "20x" }} className="award-title">
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: content?.section8?.forms?.[3]?.title,
+                          }}
+                        />
+                      </h4>
+                    </button>
+                  </div>
+                  <div
+                    className="text-3-section-1-htw-left award-desc"
+                    style={{ width: "80%", textAlign: "center" }}
+                  >
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: content?.section8?.forms?.[3]?.desc,
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div
+                  className="d-flex flex-column"
+                  style={{ width: "40%", alignItems: "center" }}
+                >
+                  <div className="">
+                    <button
+                      onClick={() => navigate("/our-expertise#read3")}
+                      className="btn-d sub-button-section-3-op"
+                    >
+                      <h4 style={{ fontSize: "20x" }} className="award-title">
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: content?.section8?.forms?.[4]?.title,
+                          }}
+                        />
+                      </h4>
+                    </button>
+                  </div>
+                  <div
+                    className="text-3-section-1-htw-left award-desc"
+                    style={{ width: "80%", textAlign: "center" }}
+                  >
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: content?.section8?.forms?.[4]?.desc,
+                      }}
+                    />
                   </div>
                 </div>
               </div>
 
               <div className="cup-icon">
-                <img loading="lazy"
+                <img
+                  loading="lazy"
                   src="https://res.cloudinary.com/drkpwvnun/image/upload/v1729446172/hair-assessment/jxqtmhrlmpnhbhis8utq.png"
-                  style={{ width:"100%", height: "100%" }}
+                  style={{ width: "100%", height: "100%" }}
                   alt="Awards and honors received by Dr. Amit Agarkar, a leading expert in hair restoration and advanced hair loss treatments, recognizing excellence."
                   title="Awards and Honors "
                 />
@@ -705,7 +903,13 @@ export default function Dermatologist() {
               onClick={() => navigate("/our-expertise#read3")}
               className="btn sub-button-section-3-op"
             >
-              <h4 className="mfs-1"><div dangerouslySetInnerHTML={{ __html: content?.section8?.forms?.[5]?.title}} /></h4>
+              <h4 className="mfs-1">
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: content?.section8?.forms?.[5]?.title,
+                  }}
+                />
+              </h4>
             </button>
           </ZoomInDiv>
 
@@ -713,7 +917,11 @@ export default function Dermatologist() {
             className="text-3-section-1-htw-left"
             style={{ width: "50%", textAlign: "center" }}
           >
-            <div dangerouslySetInnerHTML={{ __html: content?.section8?.forms?.[5]?.desc}} />
+            <div
+              dangerouslySetInnerHTML={{
+                __html: content?.section8?.forms?.[5]?.desc,
+              }}
+            />
           </ZoomInDiv>
 
           <ZoomInDiv className="">
@@ -732,7 +940,13 @@ export default function Dermatologist() {
                   onClick={() => navigate("/our-expertise#read3")}
                   className="btn-d sub-button-section-3-op"
                 >
-                  <h4 style={{ fontSize: "20x" }} className="award-title"><div dangerouslySetInnerHTML={{ __html: content?.section8?.forms?.[6]?.title}} /></h4>
+                  <h4 style={{ fontSize: "20x" }} className="award-title">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: content?.section8?.forms?.[6]?.title,
+                      }}
+                    />
+                  </h4>
                 </button>
               </div>
               <div className="">
@@ -740,7 +954,13 @@ export default function Dermatologist() {
                   onClick={() => navigate("/our-expertise#read3")}
                   className="btn-d sub-button-section-3-op"
                 >
-                  <h4 style={{ fontSize: "20x" }} className="award-title"><div dangerouslySetInnerHTML={{ __html: content?.section8?.forms?.[7]?.title}} /></h4>
+                  <h4 style={{ fontSize: "20x" }} className="award-title">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: content?.section8?.forms?.[7]?.title,
+                      }}
+                    />
+                  </h4>
                 </button>
               </div>
               <div className="">
@@ -748,50 +968,72 @@ export default function Dermatologist() {
                   onClick={() => navigate("/our-expertise#read3")}
                   className="btn-d sub-button-section-3-op"
                 >
-                  <h4 style={{ fontSize: "20x" }} className="award-title"><div dangerouslySetInnerHTML={{ __html: content?.section8?.forms?.[8]?.title}} /></h4>
+                  <h4 style={{ fontSize: "20x" }} className="award-title">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: content?.section8?.forms?.[8]?.title,
+                      }}
+                    />
+                  </h4>
                 </button>
               </div>
             </div>
           </ZoomInDiv>
         </div>
 
-        <div style={{ background: "rgba(193, 237, 255, 1)" }} className="main-div-resp">
+        <div
+          style={{ background: "rgba(193, 237, 255, 1)" }}
+          className="main-div-resp"
+        >
           <div className="main-section-1-htw desktop-view-1 container">
             <div
               className="d-flex flex-column main-section-1-htw-left"
               style={{ padding: 0 }}
-            // ref={ref_61}
-            // animate={control_61}
-            // initial="hidden"
-            // variants={LEFT_VARIANTS}
-            // transition={TRANSITION}
+              // ref={ref_61}
+              // animate={control_61}
+              // initial="hidden"
+              // variants={LEFT_VARIANTS}
+              // transition={TRANSITION}
             >
               <ZoomInDiv className="text-1-section-1-htw-left">
-                <h2><div dangerouslySetInnerHTML={{ __html: content?.section7?.title}} /></h2>
+                <h2>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: content?.section7?.title,
+                    }}
+                  />
+                </h2>
               </ZoomInDiv>
               <div className="text-3-section-1-htw-left">
-              <div dangerouslySetInnerHTML={{ __html: content?.section7?.desc1}} />
+                <div
+                  dangerouslySetInnerHTML={{ __html: content?.section7?.desc1 }}
+                />
                 <br />
                 <br />
-                <div dangerouslySetInnerHTML={{ __html: content?.section7?.desc2}} />
+                <div
+                  dangerouslySetInnerHTML={{ __html: content?.section7?.desc2 }}
+                />
                 <br />
                 <br />
-                <div dangerouslySetInnerHTML={{ __html: content?.section7?.desc3}} />
+                <div
+                  dangerouslySetInnerHTML={{ __html: content?.section7?.desc3 }}
+                />
               </div>
             </div>
             <RightAnimatedDiv
               className="d-flex flex-column main-section-1-htw-right"
-            // ref={ref_62}
-            // animate={control_62}
-            // initial="hidden"
-            // variants={RIGHT_VARIANTS}
-            // transition={TRANSITION}
+              // ref={ref_62}
+              // animate={control_62}
+              // initial="hidden"
+              // variants={RIGHT_VARIANTS}
+              // transition={TRANSITION}
             >
-                <img loading="lazy"
-                  src={content?.section7?.image}
-                  style={{ height: "100%", width: "100%" }}
-                  alt={content?.section7?.alt}
-                />
+              <img
+                loading="lazy"
+                src={content?.section7?.image}
+                style={{ height: "100%", width: "100%" }}
+                alt={content?.section7?.alt}
+              />
             </RightAnimatedDiv>
           </div>
         </div>

@@ -78,9 +78,9 @@ import Blog from "./features/Blogs/Blog";
 const routes = [
   {
     path: "/",
-    title: "Get Personalized Hair Loss Treatment & Diagnosis, Hairsncares",
+    title: "Best Personalized Hair loss Treatment & Diagnosis | Hairs n Cares",
     exact: true,
-    desc: "Stop hair loss with HairsnCares. Get expert treatments, personalized plans, and a hair test delivered to your door. Dermatology & Nutrition solutions.",
+    desc: "Personalized hair loss treatment plans with expert diagnosis, hair care solutions, and effective hair growth management for lasting results.",
     keywords:
       "Take a Hair test, Hair Loss Treatment, Hair Care, Hair Treatments",
   },
@@ -93,27 +93,24 @@ const routes = [
   { path: "/book", title: "HairsNcares - Book" },
   {
     path: "/about-us-quality-hair-loss-scalp-care",
-    title:
-      "Hairsncares - Your Trusted Source for Quality Hair Loss & Scalp Care Solutions",
-    desc: "Discover HairsnCares – your trusted source for expert hair loss & scalp care tips, treatments, and solutions. Committed to healthy, beautiful hair for all.",
+    title: "About us - Hairsncares",
+    desc: "At Hairsncares, we provide expert hair loss solutions, personalized treatments, and hair care designed to help you regain confidence and healthy growth.",
     keywords:
       "hair care experts, about HairsnCares, hair treatments, hair solutions, healthy hair, hair care professionals, hair care advice",
   },
   { path: "/product-detail" },
   {
     path: "/hair-loss-treatment-experts-dermatologists",
-    title:
-      "Top Hair Experts & Dermatologists | Hair Loss Treatment Specialists - HairsnCares",
-    desc: "Discover expert hair care solutions from top dermatologists and hair loss treatment specialists at HairsnCares. Personalized care for hair regrowth, scalp health, and advanced treatments to restore your confidence.",
+    title: "Find the Best Dermatologists in India | Skin & Hair Experts",
+    desc: "Find the best dermatologists in India offering expert hair care, personalized treatments, and advanced solutions for lasting results",
   },
   { path: "/our-expertise", title: "HairsNcares - Expertise" },
   { path: "/user-profile", title: "HairsNcares - Profile" },
   { path: "/user-profile/", title: "HairsNcares - Profile" },
   {
     path: "/take-hair-test",
-    title:
-      "Take a Hair Test Online | Personalized Hair Loss Diagnosis & Treatment - HairsnCares",
-    desc: "Take a quick, convenient hair test online at HairsnCares to diagnose hair loss causes. Get expert analysis, personalized treatment plans, and effective solutions delivered to your door.",
+    title: "Hair Loss Test Online | Free Hair Diagnosis Test",
+    desc: "Take a quick hair loss test online to know your hair condition. Get accurate results and personalized treatment recommendations with Hairs n Cares.",
   },
   { path: "/doctor/report", title: "HairsNcares - Doctor Report" },
   {
@@ -127,59 +124,71 @@ const routes = [
   { path: "/cart", title: "HairsNcares - My Cart" },
   {
     path: "/hair-care-blogs",
-    title:
-      "Hair Care Tips, Hair Loss Solutions & Expert Advice Blogs | HairsnCares",
-    desc: "Discover personalized hair loss treatments and expert scalp care at Hairsncares. Advanced tests and solutions for effective hair restoration.",
+    title: "Hair Care Blogs | Expert Hair Tips & Hair Care Solutions",
+    desc: "Hair Care Blogs with expert tips, personalized solutions, and hair growth advice for healthy, strong, and beautiful hair",
     exact: true,
   },
   {
     path: "/advanced-hair-loss-solutions-prp-smp-cloning-systems",
-    title:
-      "PRP Hair Treatment, Scalp Micropigmentation & Hair Cloning | HairsnCares",
-    desc: "Expert hair care solutions from top dermatologists at HairsnCares. Personalized treatments for hair regrowth, scalp health, and restoring your confidence.",
+    title: "PRP Hair Treatment | Hair Cloning & Advanced Solutions",
+    desc: "PRP hair treatment, advanced solutions, scalp micropigmentation, and hair cloning techniques for effective hair restoration",
   },
   {
     path: "/hair-transplants-fue-dhi-mhi-natural-restoration",
-    title:
-      "Hair Transplants: FUE, DHI & MHI Techniques for Natural Restoration | HairsnCares",
-    desc: "Discover advanced hair transplant techniques like FUE, DHI, MHI, & MHI+ for natural restoration. Learn about costs, recovery, & top clinics for fuller hair.",
+    title: "Hair Transplant Methods | Advanced Hair Transplant Care",
+    desc: "Best advanced hair transplant techniques and methods for natural hair growth, expert care, and personalized solutions to restore your confidence.",
   },
   {
     path: "/online-hair-loss-test-diagnosis-treatment",
-    title:
-      "Take a Hair Test Online for Hair Loss Diagnosis & Treatment | HairsnCares",
-    desc: " Get a personalized hair loss diagnosis with HairsnCares’ online test. Uncover causes, get expert          analysis, and receive tailored treatments delivered to your door.",
+    title: "Online Hair Loss Treatment & Diagnosis | Hairs n Cares",
+    desc: "Get expert hair loss diagnosis online. Take our test to identify causes and explore personalized online hair loss treatment options with Hairs n Cares.",
   },
   {
     path: "/effective-hair-loss-treatment-men",
-    title:
-      "Hair Loss Treatment for Men: Expert Solutions & Advice | HairsnCares",
-    desc: "Discover expert hair care solutions for hair regrowth, scalp health, and advanced treatments at HairsnCares. Personalized care from top dermatologists and specialists.",
+    title: "Best Hair Loss Solutions for Men | Personalized & Advanced Care",
+    desc: "Best hair loss treatments for men with advanced care and customized hair care solutions to help you achieve stronger, healthier hair.",
     keywords:
       "hair loss treatment for men, male pattern baldness solutions, hair regrowth for men, Minoxidil for men, Finasteride hair loss, hair transplant options, laser therapy hair loss, causes of hair loss in men, scalp health, prevent hair loss men, online hair test, HairsnCares hair loss solutions",
   },
   {
     path: "/hair-loss-women-causes-treatments-remedies",
-    title:
-      "Hair Loss in Women: Causes, Effective Treatments & Remedies | HairsnCares",
-    desc: "Expert hair care & hair loss solutions by top dermatologists at HairsnCares. Personalized regrowth treatments for scalp health & restored confidence.",
+    title: "Women’s Hair Loss Treatment | Causes & Hair Care Solutions",
+    desc: "Hair loss treatments for women with expert diagnosis, natural care, and solutions designed to restore growth and improve hair health.",
   },
   {
     path: "/dr-amit-agarkar-hair-restoration-expert",
-    title:
-      "Dr. Amit S. Agarkar: Expert in Hair Restoration & PRP | Hairsncares",
-    desc: "Discover Dr. Amit S. Agarkar, a leading dermatologist specializing in hair restoration, PRP treatments, and MHI hair transplants. Advanced solutions for hair loss.",
+    title: "Dr. Amit Agarkar | Hair Transplant & Restoration Expert",
+    desc: "Meet Dr. Amit Agarkar, leading dermatologist and hair transplant surgeon in India. Renowned hair restoration expert offering advanced treatment solutions.",
   },
   {
     path: "/contact-hair-experts",
-    title:
-      "Contact Us To Get Expert Hair Advice| Get in Touch with HairsnCares Experts",
-    desc: "Have questions about hair care or treatments? Contact HairsnCares for expert advice on hair loss, hair growth, and scalp health. We're here to help with personalized solutions.",
+    title: "Contact Us | Best Hair Loss Treatment & Solutions",
+    desc: "Contact our experts for the best hair loss treatment, diagnosis, and growth solutions. We provide personalized care for your hair concerns.",
     keywords:
       "contact HairsnCares, hair care contact, hair loss expert contact, hair growth inquiries, hair treatment support, customer service, get in touch, contact for hair solutions, hair restoration queries",
   },
 
-  // Add more routes here
+  //added new routes
+  {
+    path: "/disclaimer",
+    title: "Disclaimer, Hair Treatment, Hair Care",
+    desc: "",
+  },
+  {
+    path: "/policy",
+    title: "Privacy Policy | Hair Treatment Policy & Data Safety",
+    desc: "Read our Privacy Policy for hair treatment services. Learn how we protect your data, ensure safety, and maintain transparency in our policy.",
+  },
+  {
+    path: "/terms-of-service",
+    title: "Terms of Service | Hair Treatment & Care Policies",
+    desc: "Read our Terms of Service for hair treatment. Learn about policies, customer care, and guidelines for safe and effective hair care services",
+  },
+  {
+    path: "/return-policy",
+    title: "Return & Refund Policy for Hair Treatment Products",
+    desc: "Read our return & refund policy for hair treatment products. Hassle-free process to ensure customer satisfaction with every purchase",
+  },
 ];
 
 // Hook to set the document title based on the route
@@ -288,10 +297,24 @@ function App() {
           <Route path="/success/:id" element={<Success />} />
           <Route path="/failure/:id" element={<Failure />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/disclaimer" element={<Disclaimer />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
-          <Route path="/return-policy" element={<ReturnPolicy />} />
-          <Route path="/policy" element={<Policy />} />
+
+          <Route
+            path="/disclaimer"
+            element={<Disclaimer />}
+            setTitle={setTitle}
+          />
+          <Route
+            path="/terms-of-service"
+            element={<TermsOfService />}
+            setTitle={setTitle}
+          />
+          <Route
+            path="/return-policy"
+            element={<ReturnPolicy />}
+            setTitle={setTitle}
+          />
+          <Route path="/policy" element={<Policy />} setTitle={setTitle} />
+
           <Route
             path="/best-hair-care-products-hair-loss-scalp-health"
             element={

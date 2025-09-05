@@ -7,7 +7,8 @@ import { useSelector } from "react-redux";
 import {
   LeftAnimatedDiv,
   RightAnimatedDiv,
-  ZoomInDiv, ZoomInDiv2
+  ZoomInDiv,
+  ZoomInDiv2,
 } from "../../componet/Animation";
 import ShoppingFeature from "../shopping-feature/ShoppingFeature";
 import Navbar from "../nav/Navbar";
@@ -31,7 +32,6 @@ export default function OtherProcedure() {
 
   const navigate = useNavigate();
 
-
   return (
     <Navbar>
       <div
@@ -39,23 +39,44 @@ export default function OtherProcedure() {
         style={{ fontFamily: '"Poppins", sans-serif' }}
       >
         <Helmet>
-          <link rel="canonical" href="https://hairsncares.com/advanced-hair-loss-solutions-prp-smp-cloning-systems" />
+          <link
+            rel="canonical"
+            href="https://hairsncares.com/advanced-hair-loss-solutions-prp-smp-cloning-systems"
+          />
         </Helmet>
-        <div style={{ background: "rgba(193, 237, 255, 1)" }} className="main-div-resp">
+        <div
+          style={{ background: "rgba(193, 237, 255, 1)" }}
+          className="main-div-resp"
+        >
           <div className="d-flex flex-column container">
-            <ZoomInDiv2 className="text-1-section-4-htw m-text-left"><div dangerouslySetInnerHTML={{ __html: content?.section1?.title }} /></ZoomInDiv2>
+            {/* <ZoomInDiv2 className="text-1-section-4-htw m-text-left"><div dangerouslySetInnerHTML={{ __html: content?.section1?.title }} /></ZoomInDiv2> */}
+            <h1 style={{ color: "#0e0e0eff", textAlign: "center" }}>
+              PRP Hair Treatment{" "}
+            </h1>
             <ZoomInDiv2 style={{ display: "flex", justifyContent: "center" }}>
               <div className="text-2-section-4-htw width-for-text-heading-80 m-text-left">
-                <div dangerouslySetInnerHTML={{ __html: content?.section1?.subTitle }} />
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: content?.section1?.subTitle,
+                  }}
+                />
               </div>
             </ZoomInDiv2>
             <div className="desktop-view-1 main-section-1-op">
               <ZoomInDiv2 className="d-flex flex-column main-section-1-op-left style={{padding : 0}}">
                 <div className="text-3-section-1-htw-left">
-                  <div dangerouslySetInnerHTML={{ __html: content?.section1?.desc1 }} />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: content?.section1?.desc1,
+                    }}
+                  />
                   <br />
                   <br />
-                  <div dangerouslySetInnerHTML={{ __html: content?.section1?.desc2 }} />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: content?.section1?.desc2,
+                    }}
+                  />
                   {!read1 ? (
                     <div
                       onClick={() => {
@@ -73,13 +94,18 @@ export default function OtherProcedure() {
                     <>
                       <br />
                       <br />
-                      <div dangerouslySetInnerHTML={{ __html: content?.section1?.desc3 }} />
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: content?.section1?.desc3,
+                        }}
+                      />
                     </>
                   )}
                 </div>
               </ZoomInDiv2>
               <RightAnimatedDiv className="d-flex flex-column main-section-1-op-right">
-                <img loading="lazy"
+                <img
+                  loading="lazy"
                   src={content?.section1?.image}
                   alt={content?.section1?.alt}
                 />
@@ -89,13 +115,22 @@ export default function OtherProcedure() {
         </div>
 
         <div className="d-flex flex-column main-section-2-htw container main-div-resp">
-          <ZoomInDiv2 className="text-1-section-2-htw"><h2><div dangerouslySetInnerHTML={{ __html: content?.section2?.title }} /></h2></ZoomInDiv2>
+          <ZoomInDiv2 className="text-1-section-2-htw">
+            <h2>
+              <div
+                dangerouslySetInnerHTML={{ __html: content?.section2?.title }}
+              />
+            </h2>
+          </ZoomInDiv2>
           <ZoomInDiv2 className="text-2-section-2-htw">
-            <div dangerouslySetInnerHTML={{ __html: content?.section2?.subTitle }} />
+            <div
+              dangerouslySetInnerHTML={{ __html: content?.section2?.subTitle }}
+            />
           </ZoomInDiv2>
           <div className="desktop-view" style={{ gap: "20px" }}>
             <LeftAnimatedDiv className="main-section-2-htw-left">
-              <img loading="lazy"
+              <img
+                loading="lazy"
                 src={content?.section2?.image}
                 alt={content?.section2?.alt}
                 width={"100%"}
@@ -103,10 +138,14 @@ export default function OtherProcedure() {
               />
             </LeftAnimatedDiv>
             <RightAnimatedDiv className="text-3-section-2-htw main-section-2-htw-right">
-              <div dangerouslySetInnerHTML={{ __html: content?.section2?.desc1 }} />
+              <div
+                dangerouslySetInnerHTML={{ __html: content?.section2?.desc1 }}
+              />
               <br />
               <br />
-              <div dangerouslySetInnerHTML={{ __html: content?.section2?.desc2 }} />
+              <div
+                dangerouslySetInnerHTML={{ __html: content?.section2?.desc2 }}
+              />
               {!read2 ? (
                 <div
                   onClick={() => {
@@ -124,7 +163,11 @@ export default function OtherProcedure() {
                 <>
                   <br />
                   <br />
-                  <div dangerouslySetInnerHTML={{ __html: content?.section2?.desc3 }} />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: content?.section2?.desc3,
+                    }}
+                  />
                 </>
               )}
             </RightAnimatedDiv>
@@ -133,10 +176,20 @@ export default function OtherProcedure() {
 
         <div className="main-section-3-op main-div-resp">
           <div className="d-flex flex-column container">
-            <ZoomInDiv2 className="text-1-section-3-htw"><h2><div dangerouslySetInnerHTML={{ __html: content?.section3?.title }} /></h2></ZoomInDiv2>
+            <ZoomInDiv2 className="text-1-section-3-htw">
+              <h2>
+                <div
+                  dangerouslySetInnerHTML={{ __html: content?.section3?.title }}
+                />
+              </h2>
+            </ZoomInDiv2>
             <ZoomInDiv2 style={{ display: "flex", justifyContent: "center" }}>
               <div className="text-2-section-3-htw" style={{ width: "100%" }}>
-                <div dangerouslySetInnerHTML={{ __html: content?.section3?.subTitle }} />
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: content?.section3?.subTitle,
+                  }}
+                />
               </div>
             </ZoomInDiv2>
             <div className="main-section-1-op d-flex">
@@ -148,20 +201,47 @@ export default function OtherProcedure() {
                   className="text-3-section-1-htw-left"
                   style={{ color: "#FFFFFF" }}
                 >
-                  <div dangerouslySetInnerHTML={{ __html: content?.section3?.desc1 }} />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: content?.section3?.desc1,
+                    }}
+                  />
                   <br />
                   <br />
-                  <div dangerouslySetInnerHTML={{ __html: content?.section3?.desc2 }} />
-                  {!read3 ? <div onClick={() => { setRead3(!read3) }} style={{ fontWeight: "700", fontSize: "20px", cursor: "pointer" }}>Read More</div> : <>
-                    <br />
-                    <br />
-                    <div dangerouslySetInnerHTML={{ __html: content?.section3?.desc3 }} />
-                  </>
-                  }
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: content?.section3?.desc2,
+                    }}
+                  />
+                  {!read3 ? (
+                    <div
+                      onClick={() => {
+                        setRead3(!read3);
+                      }}
+                      style={{
+                        fontWeight: "700",
+                        fontSize: "20px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Read More
+                    </div>
+                  ) : (
+                    <>
+                      <br />
+                      <br />
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: content?.section3?.desc3,
+                        }}
+                      />
+                    </>
+                  )}
                 </div>
               </LeftAnimatedDiv>
               <RightAnimatedDiv className="d-flex flex-column main-section-1-op-right">
-                <img loading="lazy"
+                <img
+                  loading="lazy"
                   src={content?.section3?.image}
                   alt={content?.section3?.alt}
                 />
@@ -170,24 +250,36 @@ export default function OtherProcedure() {
           </div>
         </div>
 
-
         <div className="d-flex flex-column main-section-2-htw container main-div-resp">
-          <div className="text-1-section-2-htw"><h2><div dangerouslySetInnerHTML={{ __html: content?.section4?.title }} /></h2></div>
+          <div className="text-1-section-2-htw">
+            <h2>
+              <div
+                dangerouslySetInnerHTML={{ __html: content?.section4?.title }}
+              />
+            </h2>
+          </div>
           <ZoomInDiv className="text-2-section-2-htw">
-            <div dangerouslySetInnerHTML={{ __html: content?.section4?.subTilte }} />
+            <div
+              dangerouslySetInnerHTML={{ __html: content?.section4?.subTilte }}
+            />
           </ZoomInDiv>
           <div className="desktop-view">
             <LeftAnimatedDiv className="main-section-2-htw-left">
-              <img loading="lazy"
+              <img
+                loading="lazy"
                 src={content?.section4?.image}
                 alt={content?.section4?.alt}
               />
             </LeftAnimatedDiv>
             <RightAnimatedDiv className="text-3-section-2-htw main-section-2-htw-right">
-              <div dangerouslySetInnerHTML={{ __html: content?.section4?.desc1 }} />
+              <div
+                dangerouslySetInnerHTML={{ __html: content?.section4?.desc1 }}
+              />
               <br />
               <br />
-              <div dangerouslySetInnerHTML={{ __html: content?.section4?.desc2 }} />
+              <div
+                dangerouslySetInnerHTML={{ __html: content?.section4?.desc2 }}
+              />
               {!read4 ? (
                 <div
                   onClick={() => {
@@ -205,7 +297,11 @@ export default function OtherProcedure() {
                 <>
                   <br />
                   <br />
-                  <div dangerouslySetInnerHTML={{ __html: content?.section4?.desc3 }} />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: content?.section4?.desc3,
+                    }}
+                  />
                 </>
               )}
             </RightAnimatedDiv>
@@ -236,7 +332,6 @@ export default function OtherProcedure() {
             </div>
           </div>
         </div> */}
-
 
         <ShoppingFeature col={"1"} />
         <Footer />

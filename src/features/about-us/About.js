@@ -43,9 +43,9 @@ export default function About() {
         <div className="container">
           <div className="about-us-container">
             <LeftAnimatedDiv className="">
-              <h2 className="contect-us-heading ">
+              <h1 className="contect-us-heading ">
                 {content?.section1?.title}
-              </h2>
+              </h1>
             </LeftAnimatedDiv>
             <ZoomInDiv>
               <img
@@ -120,7 +120,7 @@ export default function About() {
       </div>
       <div className="about-section-2 container">
         <LeftAnimatedDiv className="item-2">
-          <h1 style={{ fontSize: "32px" }}>{content?.section2?.title}</h1>
+          <h2 style={{ fontSize: "32px" }}>{content?.section2?.title}</h2>
           <span>{content?.section2?.shortDesc}</span>
           <p>{content?.section2?.longDesc}</p>
         </LeftAnimatedDiv>

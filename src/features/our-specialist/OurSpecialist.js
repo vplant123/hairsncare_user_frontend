@@ -191,83 +191,79 @@ export default function OurSpecialist() {
   //   },
   // ];
 
-
   let dd = [
     {
       alt: "Icon representing an experienced team of hair experts and dermatologists at HairsnCares, committed to specialized hair loss treatment and personalized care.",
-      title: "Experienced Team"
+      title: "Experienced Team",
     },
     {
       alt: "Icon depicting HairsnCares' award-winning hair loss treatment formula, recognized by hair experts and dermatologists for effective care solutions.",
-      title: "Award-Winning Formula"
+      title: "Award-Winning Formula",
     },
     {
       alt: "Icon illustrating personalized hair care counselling at HairsnCares, provided by experienced hair experts and dermatologists for effective treatment guidance.",
-      title: "Hair Care Counselling"
+      title: "Hair Care Counselling",
     },
     {
       alt: "Shield icon representing safe and effective hair loss treatment solutions by HairsnCares with no side effects, guided by expert hair specialists and dermatologists.",
-      title: "No Side Effects"
-    }
-  ]
-
+      title: "No Side Effects",
+    },
+  ];
 
   let doctorData = [
     {
       alt: "Dr. Sunita Patel - HairsnCares specialist doctor offering expert hair loss treatment solutions, focusing on scalp health and personalized hair care under the guidance of top hair experts and dermatologists.",
-      title: "Dr. Sunita Patel"
+      title: "Dr. Sunita Patel",
     },
     {
       alt: "Dr. Sudhir Singh - HairsnCares specialist doctor offering expert hair loss treatment solutions, focusing on scalp health and personalized hair care under the guidance of top hair experts and dermatologists.",
-      title: "Dr. Sudhir Singh"
+      title: "Dr. Sudhir Singh",
     },
     {
       alt: "Dr. Trupti K- HairsnCares specialist doctor offering expert dietary advice, focusing on hair loss and scalp health.",
-      title: "Dr. Trupti K"
+      title: "Dr. Trupti K",
     },
     {
       alt: "Dr. Jyoti Agarkar - HairsnCares specialist doctor offering expert hair loss treatment solutions, focusing on scalp health and personalized hair care under the guidance of top hair experts and dermatologists.",
-      title: "Dr. Jyoti Agarkar"
+      title: "Dr. Jyoti Agarkar",
     },
     {
       alt: "Dr. Poorti Kolge- HairsnCares specialist doctor providing expert hair loss treatment and scalp health solutions, with a focus on advanced and personalized hair care.",
-      title: "Dr. Poorti Kolge"
+      title: "Dr. Poorti Kolge",
     },
     {
       alt: "Dr. Ram Tainwala - HairsnCares specialist doctor offering expert hair loss treatment and scalp health solutions, focusing on personalized and advanced hair care.",
-      title: "Dr. Ram Tainwala"
+      title: "Dr. Ram Tainwala",
     },
-  ]
-
+  ];
 
   let section5Data = [
     {
       alt: "Icon representing education and confidence boosting services by HairsnCares counsellors, aimed at enhancing knowledge and self-assurance in hair care solutions.",
-      title: "Education & Confidence Boosting"
+      title: "Education & Confidence Boosting",
     },
     {
       alt: "Icon representing result assessment services provided by HairsnCares counsellors to monitor and evaluate progress in hair care treatments for optimal results.",
-      title: "Result Assessment"
+      title: "Result Assessment",
     },
     {
       alt: "Icon representing recommendation and product knowledge services by HairsnCares counsellors, offering expert advice on hair care solutions and products.",
-      title: "Product Recommendations & Knowledge"
+      title: "Product Recommendations & Knowledge",
     },
     {
       alt: "Icon illustrating hair health and style guiding provided by HairsnCares counsellors, focusing on personalized care for optimal hair wellness and styling.",
-      title: "Hair Health & Style Guiding"
+      title: "Hair Health & Style Guiding",
     },
     {
       alt: "Icon representing regular follow-up services provided by HairsnCares counsellors to ensure consistent progress in hair care and treatment effectiveness.",
-      title: "Regular Follow-Up Services"
+      title: "Regular Follow-Up Services",
     },
-  ]
-
+  ];
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
       /* you can also use 'auto' behaviour 
          in place of 'smooth' */
     });
@@ -298,12 +294,11 @@ export default function OurSpecialist() {
   };
 
   useEffect(() => {
-    scrollToTop()
+    scrollToTop();
     fetchData();
   }, []);
 
   const home = useSelector((state) => state.content.home);
-
 
   return (
     <>
@@ -313,43 +308,76 @@ export default function OurSpecialist() {
         role="img"
         aria-label="Group of top hair experts and dermatologists in lab coats and scrubs at HairsnCares, specializing in personalized hair loss treatments and scalp health solutions."
       >
-        <div className="our-specialist-container container" title="Hair Experts & Dermatologists">
+        <div
+          className="our-specialist-container container"
+          title="Hair Experts & Dermatologists"
+        >
           <div>
-            <h1 className="contect-us-heading">{content?.section1?.title}</h1>
+            <h2 className="contect-us-heading">{content?.section1?.title}</h2>
           </div>
           <Helmet>
-            <link rel="canonical" href="https://hairsncares.com/hair-loss-treatment-experts-dermatologists" />
+            <link
+              rel="canonical"
+              href="https://hairsncares.com/hair-loss-treatment-experts-dermatologists"
+            />
           </Helmet>
         </div>
       </LeftAnimatedDiv>
 
-      <div className='icon-abs' style={{ top: "35%" }}>
+      <div className="icon-abs" style={{ top: "35%" }}>
         {home?.section1?.socialImg?.map((e, ind) => {
-          let alt = ind == "0" ? "Facebook" : ind == 1 ? "Whatsapp" : ind == 1 ?
-            "Youtube" : ind == 3 ? "Instagram" : "X";
-          let title = ind == "0" ? "Facebook logo" : ind == 1 ? "Whatsapp logo" : ind == 1 ?
-            "Youtube logo" : ind == 3 ? "Instagram logo" : "X logo";
+          let alt =
+            ind == "0"
+              ? "Facebook"
+              : ind == 1
+              ? "Whatsapp"
+              : ind == 1
+              ? "Youtube"
+              : ind == 3
+              ? "Instagram"
+              : "X";
+          let title =
+            ind == "0"
+              ? "Facebook logo"
+              : ind == 1
+              ? "Whatsapp logo"
+              : ind == 1
+              ? "Youtube logo"
+              : ind == 3
+              ? "Instagram logo"
+              : "X logo";
           return (
-            <div onClick={() => {
-              if (ind == 0) {
-                window.open("https://www.facebook.com/profile.php?id=61558302628092")
-              }
-              if (ind == 1) {
-                window.open("https://wa.link/pcousx")
-              }
-              if (ind == 2) {
-                window.open("https://www.youtube.com/@Hairsncares")
-              }
-              if (ind == 3) {
-                window.open("https://www.instagram.com/hairsncares/?hl=en")
-              }
-              if (ind == 4) {
-                window.open("https://x.com/hairsncare")
-              }
-            }} style={{ cursor: "pointer" }}>
-              <img loading="lazy" src={e} style={{ width: "25px", height: "25px" }} alt={alt} title={title} />
+            <div
+              onClick={() => {
+                if (ind == 0) {
+                  window.open(
+                    "https://www.facebook.com/profile.php?id=61558302628092"
+                  );
+                }
+                if (ind == 1) {
+                  window.open("https://wa.link/pcousx");
+                }
+                if (ind == 2) {
+                  window.open("https://www.youtube.com/@Hairsncares");
+                }
+                if (ind == 3) {
+                  window.open("https://www.instagram.com/hairsncares/?hl=en");
+                }
+                if (ind == 4) {
+                  window.open("https://x.com/hairsncare");
+                }
+              }}
+              style={{ cursor: "pointer" }}
+            >
+              <img
+                loading="lazy"
+                src={e}
+                style={{ width: "25px", height: "25px" }}
+                alt={alt}
+                title={title}
+              />
             </div>
-          )
+          );
         })}
       </div>
       <div className="specialist-section-2 container">
@@ -357,13 +385,17 @@ export default function OurSpecialist() {
           let src = "";
 
           if (i == 0) {
-            src = "https://res.cloudinary.com/drkpwvnun/image/upload/v1735637368/hair-assessment/Experienced-hair-experts-team-hairsncares.png.png"
+            src =
+              "https://res.cloudinary.com/drkpwvnun/image/upload/v1735637368/hair-assessment/Experienced-hair-experts-team-hairsncares.png.png";
           } else if (i == 1) {
-            src = "https://res.cloudinary.com/drkpwvnun/image/upload/v1735637234/hair-assessment/Award-winning-hair-treatment-formula-hairs%20cares.png.png"
+            src =
+              "https://res.cloudinary.com/drkpwvnun/image/upload/v1735637234/hair-assessment/Award-winning-hair-treatment-formula-hairs%20cares.png.png";
           } else if (i == 2) {
-            src = "https://res.cloudinary.com/drkpwvnun/image/upload/v1735637391/hair-assessment/Personalized-hair-care-counselling-hairsncares.png.png"
+            src =
+              "https://res.cloudinary.com/drkpwvnun/image/upload/v1735637391/hair-assessment/Personalized-hair-care-counselling-hairsncares.png.png";
           } else {
-            src = "https://res.cloudinary.com/drkpwvnun/image/upload/v1735637412/hair-assessment/Safe-hair-treatment-no-side-effects-hairsncares.png.png"
+            src =
+              "https://res.cloudinary.com/drkpwvnun/image/upload/v1735637412/hair-assessment/Safe-hair-treatment-no-side-effects-hairsncares.png.png";
           }
 
           return (
@@ -379,8 +411,12 @@ export default function OurSpecialist() {
       </div>
       <div className="specialist-section-3 container">
         <ZoomInDiv className="sec-3 ">
-          <img loading="lazy" alt="Dr. Amit Agarkar, expert hair loss treatment specialist and dermatologist & Hair Transplant surgeon at HairsnCares, providing advanced hair care solutions and personalized treatments"
-            src={content?.section3?.img} title="Dr. Amit Agarkar - Leading Hair Specialist" />
+          <img
+            loading="lazy"
+            alt="Dr. Amit Agarkar, expert hair loss treatment specialist and dermatologist & Hair Transplant surgeon at HairsnCares, providing advanced hair care solutions and personalized treatments"
+            src={content?.section3?.img}
+            title="Dr. Amit Agarkar - Leading Hair Specialist"
+          />
         </ZoomInDiv>
         <RightAnimatedDiv className="sec-3 sec-pad ">
           <h3>{content?.section3?.name}</h3>
@@ -421,7 +457,9 @@ export default function OurSpecialist() {
           <div className="col-lg-3">
             <h6>Awards</h6>
           </div>
-          <img loading="lazy" alt="Awards and certificates received by HairsnCares, showcasing recognition for excellence in hair loss treatment and services by top hair experts and dermatologists"
+          <img
+            loading="lazy"
+            alt="Awards and certificates received by HairsnCares, showcasing recognition for excellence in hair loss treatment and services by top hair experts and dermatologists"
             src={content?.section3?.awards}
             title="hairsncares-awards-recognition-hair-loss-treatment"
           />
@@ -429,15 +467,23 @@ export default function OurSpecialist() {
       </div>
       <div className=" container">
         <div className="doc-head">
-          <h2>{content?.section4?.title}</h2>
+          <h1>Our Team Of Doctors</h1>
+          {/* <h2>{content?.section4?.title}</h2> */}
           <p>{content?.section4?.desc}</p>
         </div>
         <div className="doc-container">
           {doctors
-            .filter(item => item?.showOnDashboard)
+            .filter((item) => item?.showOnDashboard)
             .map((item, index) => {
-              let f = doctorData.find((e) => e?.title?.toLowerCase() == item?.name?.toLowerCase())
-              console.log('msrjfor', f, doctorData[index]?.title?.toLowerCase(), item)
+              let f = doctorData.find(
+                (e) => e?.title?.toLowerCase() == item?.name?.toLowerCase()
+              );
+              console.log(
+                "msrjfor",
+                f,
+                doctorData[index]?.title?.toLowerCase(),
+                item
+              );
               return (
                 <LeftAnimatedDiv
                   className="doctors "
@@ -445,7 +491,13 @@ export default function OurSpecialist() {
                   style={{ cursor: "pointer" }}
                 >
                   <div className="doc-image">
-                    <img loading="lazy" src={item?.image} className="doc-img-1" alt={f?.alt} title={f?.title} />
+                    <img
+                      loading="lazy"
+                      src={item?.image}
+                      className="doc-img-1"
+                      alt={f?.alt}
+                      title={f?.title}
+                    />
                   </div>
                   <div className="doc-detail">
                     <h2>{item?.name}</h2>
@@ -453,7 +505,7 @@ export default function OurSpecialist() {
                     <p>{item?.description}</p>
                   </div>
                 </LeftAnimatedDiv>
-              )
+              );
             })}
         </div>
       </div>
@@ -464,11 +516,19 @@ export default function OurSpecialist() {
           <div className="councellor-item animate__backInLeft">
             {content?.section5?.data?.map((e, index) => {
               return (
-                <RightAnimatedDiv className="coun-item" transition={{
-                  ...TRANSITION,
-                  delay: 0.2 * parseInt(index),
-                }}>
-                  <img loading="lazy" src={e?.img} alt={section5Data[index]?.alt} title={section5Data[index]?.title} />
+                <RightAnimatedDiv
+                  className="coun-item"
+                  transition={{
+                    ...TRANSITION,
+                    delay: 0.2 * parseInt(index),
+                  }}
+                >
+                  <img
+                    loading="lazy"
+                    src={e?.img}
+                    alt={section5Data[index]?.alt}
+                    title={section5Data[index]?.title}
+                  />
                   <p>{e?.desc}</p>
                 </RightAnimatedDiv>
               );
@@ -543,7 +603,11 @@ export default function OurSpecialist() {
                   <div className="col-lg-3">
                     <h6>Awards</h6>
                   </div>
-                  <img loading="lazy" alt="hair" src="/assets/img/specialists/award.png" />
+                  <img
+                    loading="lazy"
+                    alt="hair"
+                    src="/assets/img/specialists/award.png"
+                  />
                 </div>
               </div>
             </div>

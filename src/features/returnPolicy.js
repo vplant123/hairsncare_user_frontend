@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Typography, Box } from "@mui/material";
 import Footer from "./footer/Footer";
 import Navbar from "./nav/Navbar";
 
-const ReturnPolicy = () => {
+const ReturnPolicy = (props) => {
+  useEffect(() => {
+    if (props?.setTitle) props?.setTitle(window.location.pathname);
+  }, []);
+
   return (
     <>
       {" "}
@@ -16,9 +20,9 @@ const ReturnPolicy = () => {
               lineHeight: "1.6",
             }}
           >
-            {/* <h1>Refund, Return, and Cancellation Policy</h1>
+            <h1>Return Policy</h1>
 
-          <p>At Vplant Speciality Clinic ("Hairsncares"), we prioritize customer satisfaction and aim to provide a smooth and hassle-free experience. Our Refund Policy allows for full refunds under specific conditions outlined below:</p>
+            {/* <p>At Vplant Speciality Clinic ("Hairsncares"), we prioritize customer satisfaction and aim to provide a smooth and hassle-free experience. Our Refund Policy allows for full refunds under specific conditions outlined below:</p>
 
           <ul>
             <li><strong>Incorrect Product Received:</strong> If you receive an incorrect product.</li>
@@ -54,7 +58,7 @@ const ReturnPolicy = () => {
           </ul>
           <p>If our courier partner attempts delivery for orders canceled before delivery, please decline acceptance. If delivery is accepted, we will arrange a reverse pickup, ensuring the products remain sealed and unused.</p> */}
 
-            <h2 className="mb-4">Processing of Refunds</h2>
+            <h2 className="mb-4 text-md">Processing of Refunds</h2>
             <p>
               Refund processing times depend on the original payment method:
               <br></br>

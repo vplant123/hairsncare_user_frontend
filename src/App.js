@@ -171,8 +171,8 @@ const routes = [
   //added new routes
   {
     path: "/disclaimer",
-    title: "Disclaimer, Hair Treatment, Hair Care",
-    desc: "",
+    title: "Hairsncares Disclaimer- Legal & Usage Notice",
+    desc: "Read the Hairsncares Disclaimer for legal, accuracy, and usage guidelines. Understand your rights and responsibilities when using our hair care content and services.",
   },
   {
     path: "/policy",
@@ -190,8 +190,6 @@ const routes = [
     desc: "Read our return & refund policy for hair treatment products. Hassle-free process to ensure customer satisfaction with every purchase",
   },
 ];
-
-// Hook to set the document title based on the route
 
 let y =
   "Discover customized hair loss treatments and accurate diagnosis with Hairsncares. Our expert services and advanced hair tests provide personalized solutions for effective hair restoration. Start your journey to fuller, healthier hair today!";

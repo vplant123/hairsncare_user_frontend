@@ -323,9 +323,9 @@ export default function HairTest() {
       <div className="test-link container">
         <h1
           className="text-sm"
-          style={{ marginBottom: "1rem", display: "none" }}
+          style={{ marginBottom: "1rem", display: "" }}
         >
-          Take hair test
+          Take Your Hair Loss Test Online
         </h1>
         <div className="test-link-item">
           <div className={`tab-1 tab ${step == 1 && "selected1"}`}>

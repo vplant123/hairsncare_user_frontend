@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./nav/Navbar";
 import Footer from "./footer/Footer";
 function Policy(props) {
-  
   useEffect(() => {
     if (props?.setTitle) props?.setTitle(window.location.pathname);
   }, []);
@@ -10,7 +9,7 @@ function Policy(props) {
   return (
     <Navbar>
       <div className="container">
-        <div
+        <h1
           style={{
             textAlign: "center",
             padding: "40px 0 0 0",
@@ -19,7 +18,7 @@ function Policy(props) {
           }}
         >
           Privacy Policy
-        </div>
+        </h1>
 
         <div
           style={{

@@ -4,79 +4,100 @@ import Faq from "./faq/Faq";
 
 export default function OurSpecialist() {
   let [formData, setFormData] = useState({
-    experiencedTeamTitle: 'Experienced Team',
-    experiencedTeamDesc: 'Our experienced dermatologists specialize in hair care, offering tailored solutions for your hair needs. Trust us for the healthy, beautiful hair you deserve.',
-    hairsNcaresTitle: 'HairsNcares Counsellors',
-    hairsNcaresDesc: 'Our team of skilled hair care counselors is here to provide personalized advice and solutions for all your hair needs. With a deep understanding of various hair types and concerns',
+    experiencedTeamTitle: "Experienced Team",
+    experiencedTeamDesc:
+      "Our experienced dermatologists specialize in hair care, offering tailored solutions for your hair needs. Trust us for the healthy, beautiful hair you deserve.",
+    hairsNcaresTitle: "HairsNcares Counsellors",
+    hairsNcaresDesc:
+      "Our team of skilled hair care counselors is here to provide personalized advice and solutions for all your hair needs. With a deep understanding of various hair types and concerns",
     counselors: [
-      { title: 'Education & Confidence Boosting', img: '/uploads/admprcoun-icon1.png' },
-      { title: 'Result Assessment', img: '/uploads/coun-icon2.png' },
-      { title: 'Recommendation & Product Knowledge', img: '/uploads/coun-icon3.png' },
-      { title: 'Hair Health and Style Guiding', img: '/uploads/coun-icon4.png' },
-      { title: 'Regular Follow-Up', img: '/uploads/coun-icon5.png' },
+      {
+        title: "Education & Confidence Boosting",
+        img: "/uploads/admprcoun-icon1.png",
+      },
+      { title: "Result Assessment", img: "/uploads/coun-icon2.png" },
+      {
+        title: "Recommendation & Product Knowledge",
+        img: "/uploads/coun-icon3.png",
+      },
+      {
+        title: "Hair Health and Style Guiding",
+        img: "/uploads/coun-icon4.png",
+      },
+      { title: "Regular Follow-Up", img: "/uploads/coun-icon5.png" },
     ],
     doctors: [
       {
         src: "/uploads/admprteam-pic1.png",
         name: "Dr. Sudhir Singh",
         degree: "MBBS, MD",
-        decrip: "Dr. Sudhir is a member of IADVL (Indian Association of Dermatologists, Venereologists)"
+        decrip:
+          "Dr. Sudhir is a member of IADVL (Indian Association of Dermatologists, Venereologists)",
       },
       {
         src: "/uploads/admprteam-pic2.png",
         name: "Dr. Ram Tainwala",
         degree: "MBBS",
-        decrip: "Dr. Ram is a member of IIADVL (Indian Association of Dermatologists, Venereologists)"
+        decrip:
+          "Dr. Ram is a member of IIADVL (Indian Association of Dermatologists, Venereologists)",
       },
       {
         src: "/uploads/team-pic3.png",
         name: "Dr. Jyoti Agarkar",
         degree: "MBBS, MD MBBS, MD, DDV, PGDHA, D.N.Y.S",
-        decrip: "Dr. Jyoti Agarkar is a member of IIADVL (Indian Association of Dermatologists, Venereologists)"
+        decrip:
+          "Dr. Jyoti Agarkar is a member of IIADVL (Indian Association of Dermatologists, Venereologists)",
       },
       {
         src: "/uploads/team-pic4.png",
         name: "Dr. Sunita Patel",
         degree: "MBBS, MD, DDV",
-        decrip: "Dr. Sunita is a member of IADVL (Indian Association of Dermatologists, Venereologists)"
+        decrip:
+          "Dr. Sunita is a member of IADVL (Indian Association of Dermatologists, Venereologists)",
       },
       {
         src: "/uploads/team-pic5.png",
         name: "Dr. Poorti Kolge",
         degree: "MBBS, DDV",
-        decrip: "Dr. Poorti is a member of IADVL (Indian Association of Dermatologists, Venereologists)"
+        decrip:
+          "Dr. Poorti is a member of IADVL (Indian Association of Dermatologists, Venereologists)",
       },
       {
         src: "/uploads/team-pic6.png",
         name: "Dr. Pradeep Mishra",
         degree: "MD, FCAS",
-        decrip: "Dr. Pradeep is a member of IADVL (Indian Association of Dermatologists & Venereologists in India)"
+        decrip:
+          "Dr. Pradeep is a member of IADVL (Indian Association of Dermatologists & Venereologists in India)",
       },
       {
         src: "/uploads/team-pic7.png",
         name: "Dr. Sagar Vyas",
         degree: "MD, FCAS",
-        decrip: "Dr. Sagar Vyas is a member of IADVL (Indian Association of Dermatologists & Venereologists in India)"
+        decrip:
+          "Dr. Sagar Vyas is a member of IADVL (Indian Association of Dermatologists & Venereologists in India)",
       },
       {
         src: "/uploads/team-pic9.png",
         name: "Dr. Trupti K",
         degree: "Nutritionalist",
-        decrip: "Dr. Trupti K is a member of IADVL (Indian Association of Dermatologists & Venereologists in India)"
+        decrip:
+          "Dr. Trupti K is a member of IADVL (Indian Association of Dermatologists & Venereologists in India)",
       },
       {
         src: "/uploads/team-pic10.png",
         name: "Dr. Anjali Dinarajan",
         degree: "BAMS",
-        decrip: "Dr. Anjali is a member of Ayurveda Medical Association Of India"
+        decrip:
+          "Dr. Anjali is a member of Ayurveda Medical Association Of India",
       },
       {
         src: "/uploads/team-pic11.png",
         name: "Dr. Suvarnna Uday",
         degree: "MBBS",
-        decrip: "Dr. Suvarnna is a member of IADVL (Indian Association of Dermatologists & Venereologists in India)"
-      }
-    ]
+        decrip:
+          "Dr. Suvarnna is a member of IADVL (Indian Association of Dermatologists & Venereologists in India)",
+      },
+    ],
   });
 
   const handleInputChange = (e, field, index = null) => {
@@ -112,7 +133,7 @@ export default function OurSpecialist() {
       <div className="our-specialist">
         <div className="our-specialist-container container">
           <div>
-            <h1 className="contect-us-heading">OUR SPECIALISTS</h1>
+            <h2 className="contect-us-heading">OUR SPECIALISTS</h2>
           </div>
         </div>
       </div>
@@ -130,33 +151,21 @@ export default function OurSpecialist() {
           />
         </div>
         <div className="section-item">
-          <input
-            type="text"
-            value="Hair Care Counselling"
-            readOnly
-          />
+          <input type="text" value="Hair Care Counselling" readOnly />
           <textarea
             value="Hair counselling is vital for personalized, informed, and effective hair management. It empowers individuals to achieve and maintain healthy, beautiful hair while addressing their unique needs and concerns."
             readOnly
           />
         </div>
         <div className="section-item">
-          <input
-            type="text"
-            value="Award Winning Approach"
-            readOnly
-          />
+          <input type="text" value="Award Winning Approach" readOnly />
           <textarea
             value="Discover our award-winning holistic approach to hair loss management."
             readOnly
           />
         </div>
         <div className="section-item">
-          <input
-            type="text"
-            value="Safe & Cost Effective"
-            readOnly
-          />
+          <input type="text" value="Safe & Cost Effective" readOnly />
           <textarea
             value="Safe and cost-effective hair loss solution which is evidence-based, administered by qualified professionals, tailored to your needs, balances effectiveness with affordability, and regularly monitored."
             readOnly
@@ -221,7 +230,11 @@ export default function OurSpecialist() {
           <div className="col-lg-3">
             <h6>Awards</h6>
           </div>
-          <img loading="lazy" alt="hair" src="/assets/img/specialists/award.png" />
+          <img
+            loading="lazy"
+            alt="hair"
+            src="/assets/img/specialists/award.png"
+          />
         </div>
       </div>
 
@@ -243,7 +256,7 @@ export default function OurSpecialist() {
                   type="file"
                   style={{
                     height: "354px",
-                    width: "345px"
+                    width: "345px",
                   }}
                   onChange={(e) => handleFileUpload(e, index)}
                 />

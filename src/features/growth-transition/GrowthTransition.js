@@ -114,7 +114,9 @@ function GrowthTransition() {
           }}
           className=" mt-4 animate__animated animate__fadeInDown"
         >
-          Start Your Hair Growth Transformation
+          {/* Start Your Hair Growth Transformation
+           */}
+          Best Hair Loss Treatment & Personalized Hair Care Solutions
         </h1>
       </div>
       <div className="growth-container container">

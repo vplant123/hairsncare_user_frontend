@@ -467,7 +467,7 @@ export default function OurSpecialist() {
       </div>
       <div className=" container">
         <div className="doc-head">
-          <h1>Our Team Of Doctors</h1>
+          <h1>Dermatologists Experts</h1>
           {/* <h2>{content?.section4?.title}</h2> */}
           <p>{content?.section4?.desc}</p>
         </div>

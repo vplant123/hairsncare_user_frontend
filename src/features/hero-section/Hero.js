@@ -180,7 +180,7 @@ const Hero = () => {
     {
       id: 1,
       title: "Witness a Remarkable",
-      subtitle: "Hair Growth In Just Few Months",
+      subtitle: " Hair Transformation Journey with Our Expert Care  ",
       imageSrc: "/uploads/admprhero-banner.png",
     },
     {

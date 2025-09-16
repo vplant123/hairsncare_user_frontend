@@ -8,7 +8,7 @@ import {
   LeftAnimatedDiv,
   RightAnimatedDiv,
   ZoomInDiv,
-  ZoomInDiv2
+  ZoomInDiv2,
 } from "../../componet/Animation";
 import ShoppingFeature from "../shopping-feature/ShoppingFeature";
 import Navbar from "../nav/Navbar";
@@ -37,35 +37,35 @@ export default function HairTreatmentWomen() {
       desc: "Hormonal Imbalances",
       text: "Things like menopause, pregnancy, or thyroid issues can wreak havoc on your hair.",
       alt: "Representation of hormonal influences on female health, with pills, a clock, and a gender symbol. Key insights on hormonal imbalances affecting female hair loss.",
-      title: "Hormonal Imbalance and Hair Loss in Women"
+      title: "Hormonal Imbalance and Hair Loss in Women",
     },
     {
       img: "/assets/img/hairTreatmentWomen/image-5.png",
       desc: "Genetics",
       text: "If your mom or grandmother had androgenetic alopecia (hereditary hair loss), there’s a chance you might, too.",
       alt: "Doctor examining DNA strand to understand genetic causes of hair loss in women. Focus on genetic hair loss insights and solutions.",
-      title: "Genetic Causes of Hair Loss in Women"
+      title: "Genetic Causes of Hair Loss in Women",
     },
     {
       img: "https://res.cloudinary.com/drkpwvnun/image/upload/v1730232446/hair-assessment/qgxyqoi5f0vjiue9fji5.png",
       desc: "Stress",
       text: "Both physical and emotional stress can cause telogen effluvium, a temporary shedding that could lead to more severe thinning if not addressed.",
       alt: "Stressed woman experiencing hair loss, symbolizing the impact of stress-induced hair shedding in women. Focus on stress-related hair loss causes and solutions.",
-      title: "Stress-Induced Hair Loss in Women"
+      title: "Stress-Induced Hair Loss in Women",
     },
     {
       img: "/assets/img/hairTreatmentWomen/image-7.png",
       desc: "Dietary Deficiencies",
       text: "A lack of iron or biotin can make your hair weak and thin. We often overlook how important a nutrient-rich diet is for hair health.",
       alt: "Healthy food choices versus sugary snacks, highlighting the impact of nutrition on female hair health and the role of diet in preventing hair loss.",
-      title: "Nutrition's Role in Preventing Hair Loss in Women"
+      title: "Nutrition's Role in Preventing Hair Loss in Women",
     },
     {
       img: "/assets/img/hairTreatmentWomen/image-8.png",
       desc: "Medical Conditions",
       text: "Conditions like autoimmune diseases or scalp infections can interfere with your hair’s growth cycle",
       alt: "Doctor creating a personalized plan for female hair loss treatments and prevention, supporting effective hair health solutions.",
-      title: "Effective Female Hair Loss Treatment Plans"
+      title: "Effective Female Hair Loss Treatment Plans",
     },
   ];
 
@@ -75,39 +75,39 @@ export default function HairTreatmentWomen() {
       desc: "Medical Treatments",
       text: "Dermatologist-approved medications like Minoxidil or Redensyl can stimulate regrowth and stop further loss",
       alt: "Healthcare professional prepares PRP treatment for medical hair loss solutions with icons representing innovative technologies in hair restoration.",
-      title: "PRP and Stem Cell Therapy for Hair Loss"
+      title: "PRP and Stem Cell Therapy for Hair Loss",
     },
     {
       img: "https://res.cloudinary.com/drkpwvnun/image/upload/v1730232542/hair-assessment/fitc8qfmqebq7mljrtvi.png",
       desc: "Hair Procedures",
       text: "Options like PRP (Platelet-Rich Plasma), VGROW, Stem Cell PRP, GFC PRP, and VThread Therapy are fantastic for rejuvenating the scalp and promoting new hair growth. I’ve seen incredible results with these in my practice.",
       alt: "Specialist administers PRP hair restoration treatment to female patient’s scalp, targeting hair regrowth and strengthening at HairsnCares.",
-      title: "PRP Hair Restoration Procedure"
+      title: "PRP Hair Restoration Procedure",
     },
     {
       img: "/assets/img/hairTreatmentWomen/image-11.png",
       desc: "Hair Transplants",
       text: "For those dealing with more advanced hair loss, procedures like FUE (Follicular Unit Extraction), DHI (Direct Hair Implantation), and my own innovations, MHI / MHI+ (Modified Hair Implantation), can work wonders. These are especially effective for women with significant thinning.",
       alt: "Doctor examines patient's scalp before hair transplant procedure at HairsnCares, providing solutions for hair restoration and hair health.",
-      title: "Expert Hair Transplant Procedure"
+      title: "Expert Hair Transplant Procedure",
     },
     {
       img: "/assets/img/hairTreatmentWomen/image-12.png",
       desc: "Natural Remedies",
       text: "If you’re looking for a more holistic approach, essential oils like rosemary and supplements like biotin or zinc can strengthen your hair naturally. I always recommend pairing these with medical treatments for the best results.",
       alt: "Natural ingredients and essential oils, including rosemary, cucumber, ginger, and citrus, for natural hair loss remedies at HairsnCares.",
-      title: "Natural Remedies for Hair Loss"
+      title: "Natural Remedies for Hair Loss",
     },
     {
       img: "/assets/img/hairTreatmentWomen/image-13.png",
       desc: "Lifestyle Adjustments",
       text: "Reducing stress and sticking to a nutrient-rich diet can do wonders for your long-term hair health",
       alt: "Blocks spelling 'LIFESTYLE' symbolizing the impact of lifestyle changes on hair health, as promoted by HairsnCares for natural hair loss remedies.",
-      title: "Hair Health with Lifestyle Changes"
+      title: "Hair Health with Lifestyle Changes",
     },
   ];
 
-  const [section5Sel, setSection5Sel] = useState(1)
+  const [section5Sel, setSection5Sel] = useState(1);
   let section5 = [
     {
       desc: "Minoxidil",
@@ -158,30 +158,45 @@ export default function HairTreatmentWomen() {
         style={{ fontFamily: '"Poppins", sans-serif' }}
       >
         <Helmet>
-          <link rel="canonical" href="https://hairsncares.com/hair-loss-women-causes-treatments-remedies" />
+          <link
+            rel="canonical"
+            href="https://hairsncares.com/hair-loss-women-causes-treatments-remedies"
+          />
         </Helmet>
-        <div style={{ background: "rgba(193, 237, 255, 1)" }} className="main-div-resp">
+        <div
+          style={{ background: "rgba(193, 237, 255, 1)" }}
+          className="main-div-resp"
+        >
           <div className="main-section-1-htw desktop-view-1 container">
             <ZoomInDiv
               variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
               transition={{ duration: 1, delay: 0.5 }}
-              className="d-flex flex-column main-section-1-htw-left">
+              className="d-flex flex-column main-section-1-htw-left"
+            >
               <div className="text-1-section-1-htw-left">
                 <div
                   dangerouslySetInnerHTML={{ __html: content?.section1?.title }}
+                
                 />
               </div>
               <div className="text-2-section-1-htw-left">
                 <div
-                  dangerouslySetInnerHTML={{ __html: content?.section1?.subTitle }}
+                  dangerouslySetInnerHTML={{
+                    __html: content?.section1?.subTitle,
+                  }}
                 />
               </div>
               <div className="text-3-section-1-htw-left">
-                <div dangerouslySetInnerHTML={{ __html: content?.section1?.desc }} />
+                <div
+                  dangerouslySetInnerHTML={{ __html: content?.section1?.desc }}
+                />
               </div>
             </ZoomInDiv>
             <RightAnimatedDiv className="d-flex flex-column main-section-1-htw-right">
-              <img loading="lazy" src="/assets/img/hairTreatmentWomen/dr-amit-agarkar-hair-care-expert.png" alt="Dr. Amit Agarkar, expert in Hair Loss and Hair Care Treatments, known for his personalized approach to hair health and growth."
+              <img
+                loading="lazy"
+                src="/assets/img/hairTreatmentWomen/dr-amit-agarkar-hair-care-expert.png"
+                alt="Dr. Amit Agarkar, expert in Hair Loss and Hair Care Treatments, known for his personalized approach to hair health and growth."
                 title="Dr. Amit Agarkar – Hair Specialist"
               />
             </RightAnimatedDiv>
@@ -200,31 +215,43 @@ export default function HairTreatmentWomen() {
           </ZoomInDiv2>
           <div className="desktop-view">
             <LeftAnimatedDiv className="main-section-2-htw-left">
-              <img loading="lazy"
+              <img
+                loading="lazy"
                 src={content?.section2?.image}
                 style={{ height: "90%", width: "98%" }}
                 alt={content?.section2?.alt}
               />
             </LeftAnimatedDiv>
             <RightAnimatedDiv className="text-3-section-2-htw main-section-2-htw-right strong-black m-0">
-              <div dangerouslySetInnerHTML={{ __html: content?.section2?.desc }} />
-              <div dangerouslySetInnerHTML={{ __html: content?.section2?.desc1 }} />
-              <div dangerouslySetInnerHTML={{ __html: content?.section2?.desc2 }} />
+              <div
+                dangerouslySetInnerHTML={{ __html: content?.section2?.desc }}
+              />
+              <div
+                dangerouslySetInnerHTML={{ __html: content?.section2?.desc1 }}
+              />
+              <div
+                dangerouslySetInnerHTML={{ __html: content?.section2?.desc2 }}
+              />
             </RightAnimatedDiv>
           </div>
         </div>
 
         <div className="main-section-3-htw main-div-resp">
-          <div className="d-flex flex-column container" style={{ padding: "3% 0 3% 0" }}>
+          <div
+            className="d-flex flex-column container"
+            style={{ padding: "3% 0 3% 0" }}
+          >
             <div className="text-1-section-3-htw">
               <div
                 dangerouslySetInnerHTML={{ __html: content?.section3?.title }}
               />
             </div>
             <ZoomInDiv2 style={{ display: "flex", justifyContent: "center" }}>
-              <div className="text-2-section-3-htw width-for-text-heading-80" >
+              <div className="text-2-section-3-htw width-for-text-heading-80">
                 <div
-                  dangerouslySetInnerHTML={{ __html: content?.section3?.subTitle }}
+                  dangerouslySetInnerHTML={{
+                    __html: content?.section3?.subTitle,
+                  }}
                 />
               </div>
             </ZoomInDiv2>
@@ -241,7 +268,8 @@ export default function HairTreatmentWomen() {
                 return (
                   <ZoomInDiv className="sub-section-3-htw d-flex">
                     <div className="sub-img-section-3-htw div1">
-                      <img loading="lazy"
+                      <img
+                        loading="lazy"
                         src={item?.image}
                         style={{ height: "100%", width: "100%" }}
                         alt={item?.image}
@@ -253,8 +281,14 @@ export default function HairTreatmentWomen() {
                       }}
                       className="d-flex flex-column horizontal-card-text div2"
                     >
-                      <h5 className="mfs-2 sub-text-1-section-3-htw"><div dangerouslySetInnerHTML={{ __html: item.description }} /></h5>
-                      <div className="sub-text-2-section-3-htw mfs-1"><div dangerouslySetInnerHTML={{ __html: item.title }} /></div>
+                      <h5 className="mfs-2 sub-text-1-section-3-htw">
+                        <div
+                          dangerouslySetInnerHTML={{ __html: item.description }}
+                        />
+                      </h5>
+                      <div className="sub-text-2-section-3-htw mfs-1">
+                        <div dangerouslySetInnerHTML={{ __html: item.title }} />
+                      </div>
                     </div>
                   </ZoomInDiv>
                 );
@@ -268,11 +302,11 @@ export default function HairTreatmentWomen() {
                 textAlign: "center",
               }}
             >
-              <div
-                className="sub-text-2-section-3-htw mt-5 width-for-text-heading-80"
-              >
+              <div className="sub-text-2-section-3-htw mt-5 width-for-text-heading-80">
                 <div
-                  dangerouslySetInnerHTML={{ __html: content?.section3?.footerText }}
+                  dangerouslySetInnerHTML={{
+                    __html: content?.section3?.footerText,
+                  }}
                 />
               </div>
             </div>
@@ -289,16 +323,23 @@ export default function HairTreatmentWomen() {
         </div>
 
         <div className="main-div-resp">
-          <div className="d-flex flex-column container" style={{ padding: "3% 0 3% 0" }}>
+          <div
+            className="d-flex flex-column container"
+            style={{ padding: "3% 0 3% 0" }}
+          >
             <div className="text-1-section-4-htw">
               <div
                 dangerouslySetInnerHTML={{ __html: content?.section4?.title }}
               />
             </div>
-            <LeftAnimatedDiv style={{ display: "flex", justifyContent: "center" }}>
-              <div className="text-2-section-4-htw width-for-text-heading-80" >
+            <LeftAnimatedDiv
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <div className="text-2-section-4-htw width-for-text-heading-80">
                 <div
-                  dangerouslySetInnerHTML={{ __html: content?.section4?.subTitle }}
+                  dangerouslySetInnerHTML={{
+                    __html: content?.section4?.subTitle,
+                  }}
                 />
               </div>
             </LeftAnimatedDiv>
@@ -315,7 +356,8 @@ export default function HairTreatmentWomen() {
                 return (
                   <ZoomInDiv className="sub-section-4-htw d-flex">
                     <div className="sub-img-section-4-htw">
-                      <img loading="lazy"
+                      <img
+                        loading="lazy"
                         src={item?.image}
                         style={{ height: "100%", width: "100%" }}
                         alt={item?.image}
@@ -328,8 +370,20 @@ export default function HairTreatmentWomen() {
                       }}
                       className="d-flex flex-column horizontal-card-text"
                     >
-                      <div className="sub-text-1-section-4-htw"><h5 className="mfs-1 new-section4-htw"><div dangerouslySetInnerHTML={{ __html: item?.description }} /></h5></div>
-                      <div className="sub-text-2-section-4-htw"><div dangerouslySetInnerHTML={{ __html: item?.title }} /></div>
+                      <div className="sub-text-1-section-4-htw">
+                        <h5 className="mfs-1 new-section4-htw">
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: item?.description,
+                            }}
+                          />
+                        </h5>
+                      </div>
+                      <div className="sub-text-2-section-4-htw">
+                        <div
+                          dangerouslySetInnerHTML={{ __html: item?.title }}
+                        />
+                      </div>
                     </div>
                   </ZoomInDiv>
                 );
@@ -348,7 +402,9 @@ export default function HairTreatmentWomen() {
                 style={{ width: "80%", color: "black" }}
               >
                 <div
-                  dangerouslySetInnerHTML={{ __html: content?.section4?.footerText }}
+                  dangerouslySetInnerHTML={{
+                    __html: content?.section4?.footerText,
+                  }}
                 />
               </div>
             </div>
@@ -454,8 +510,8 @@ export default function HairTreatmentWomen() {
         <div className="d-flex flex-column main-section-2-htw container main-div-resp">
           <div className="desktop-view">
             <LeftAnimatedDiv className="main-section-2-htw-left">
-
-              <img loading="lazy"
+              <img
+                loading="lazy"
                 src={content?.section6?.image}
                 style={{ height: "100%", width: "100%" }}
                 alt={content?.section6?.alt}
@@ -475,7 +531,9 @@ export default function HairTreatmentWomen() {
                 style={{ textAlign: "left" }}
               >
                 <div
-                  dangerouslySetInnerHTML={{ __html: content?.section6?.subTitle }}
+                  dangerouslySetInnerHTML={{
+                    __html: content?.section6?.subTitle,
+                  }}
                 />
               </ZoomInDiv2>
               <div className="text-3-section-2-htw">
@@ -486,7 +544,9 @@ export default function HairTreatmentWomen() {
                 <br />
                 <br />
                 <div
-                  dangerouslySetInnerHTML={{ __html: content?.section6?.footerText }}
+                  dangerouslySetInnerHTML={{
+                    __html: content?.section6?.footerText,
+                  }}
                   style={{ lineHeight: "25px" }}
                 />
               </div>
@@ -502,10 +562,15 @@ export default function HairTreatmentWomen() {
           </div>
         </div>
 
-        <div style={{ background: "rgba(193, 237, 255, 1)" }} className="main-div-resp">
+        <div
+          style={{ background: "rgba(193, 237, 255, 1)" }}
+          className="main-div-resp"
+        >
           <div className="main-section-1-htw desktop-view-1 container">
             <div className="d-flex flex-column main-section-1-htw-left">
-              <ZoomInDiv className="text-1-section-1-htw-left"><h2>Conclusion</h2></ZoomInDiv>
+              <ZoomInDiv className="text-1-section-1-htw-left">
+                <h2>Conclusion</h2>
+              </ZoomInDiv>
               <div className="text-3-section-1-htw-left">
                 <div
                   dangerouslySetInnerHTML={{ __html: content?.section7?.desc }}
@@ -514,7 +579,9 @@ export default function HairTreatmentWomen() {
                 <br />
                 <br />
                 <div
-                  dangerouslySetInnerHTML={{ __html: content?.section7?.footerText }}
+                  dangerouslySetInnerHTML={{
+                    __html: content?.section7?.footerText,
+                  }}
                   style={{ lineHeight: "25px" }}
                 />
               </div>
@@ -528,7 +595,8 @@ export default function HairTreatmentWomen() {
               </ZoomInDiv>
             </div>
             <RightAnimatedDiv className="d-flex flex-column main-section-1-htw-right">
-              <img loading="lazy"
+              <img
+                loading="lazy"
                 src={content?.section7?.image}
                 alt={content?.section7?.alt}
               />
@@ -566,19 +634,18 @@ export default function HairTreatmentWomen() {
                       }}
                       className="faq-icon"
                     >
-                      <img loading="lazy"
+                      <img
+                        loading="lazy"
                         src={"/assets/img/hairTreatmentWomen/image-16.png"}
-                        className='faq-dropDown'
+                        className="faq-dropDown"
                         alt="Hair loss men faqs"
                         title="Hair loss men faqs"
-
                       />
                     </div>
                   </div>
                   {selectedQ == indx + 1 ? (
                     <div className="main-sub-heading-text-section-8-htw">
                       {item?.text}
-
                     </div>
                   ) : null}
                 </div>

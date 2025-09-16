@@ -35,31 +35,30 @@ export default function HairTreatmentMen() {
       desc: "Nutritional Support",
       text: "A balanced diet rich in protein, iron, zinc, biotin, and omega-3 fatty acids is essential for hair health. Deficiencies in these nutrients can lead to hair thinning or loss.",
       alt: "Selection of nutrient-rich foods supporting healthy hair growth, emphasizing the role of diet in preventive care for hair loss in men.",
-      title: "Diet for Healthy Hair"
+      title: "Diet for Healthy Hair",
     },
     {
       img: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729376572/hair-assessment/a8udim7s95eahadmv1en.png",
       desc: "Lifestyle Changes",
       text: "Managing stress through practices like meditation, exercise, and adequate sleep, along with regular scalp care, is crucial for hair growth. Scalp massages and improved circulation through physical activity can also promote healthy hair.",
       alt: "Healthy lifestyle essentials, including measuring tape, chalkboard, and apple, highlighting the role of lifestyle changes in preventing hair loss in men.",
-      title: "Lifestyle Changes for Preventing Hair Loss"
+      title: "Lifestyle Changes for Preventing Hair Loss",
     },
     {
       img: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729376593/hair-assessment/ue0b1mc4fgcw82uu56um.png",
       desc: "Avoid Damaging Hair Treatments",
       text: " Limit the use of excessive heat, chemical treatments, and tight hairstyles, which can damage hair follicles.",
       alt: "Man inspecting a hair treatment product with concern, emphasizing the importance of avoiding damaging hair treatments in preventive hair loss care for men.",
-      title: "Avoiding Damaging Hair Treatments"
+      title: "Avoiding Damaging Hair Treatments",
     },
     {
       img: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729376641/hair-assessment/rewcimkla0j8lwy7vqri.png",
       desc: "Consult a Professional",
       text: "If you experience sudden or excessive hair loss, seek medical advice to rule out any underlying health conditions.",
       alt: "Two professionals discussing hair loss treatment options and dietary deficiency solutions for improving hair health.",
-      title: "Dietary Deficiency and Hair Health Solutions"
-    }
+      title: "Dietary Deficiency and Hair Health Solutions",
+    },
   ];
-
 
   let section5 = [
     {
@@ -103,17 +102,19 @@ export default function HairTreatmentMen() {
     const beforeMid = text.substring(0, mid);
     const afterMid = text.substring(mid);
 
-    const lastPeriodIndex = beforeMid.lastIndexOf('.');
+    const lastPeriodIndex = beforeMid.lastIndexOf(".");
     if (lastPeriodIndex !== -1) {
       return [
         text.substring(0, lastPeriodIndex + 1),
-        text.substring(lastPeriodIndex + 1)
+        text.substring(lastPeriodIndex + 1),
       ];
     }
     return [beforeMid, afterMid];
   };
 
-  const [firstPart, secondPart] = splitDescription(content?.section1?.desc || '');
+  const [firstPart, secondPart] = splitDescription(
+    content?.section1?.desc || ""
+  );
 
   return (
     <Navbar>
@@ -122,16 +123,25 @@ export default function HairTreatmentMen() {
         style={{ fontFamily: '"Poppins", sans-serif' }}
       >
         <Helmet>
-          <link rel="canonical" href="https://hairsncares.com/effective-hair-loss-treatment-men" />
+          <link
+            rel="canonical"
+            href="https://hairsncares.com/effective-hair-loss-treatment-men"
+          />
         </Helmet>
-        <div style={{ background: "rgba(193, 237, 255, 1)" }} className="main-div-resp">
+        <div
+          style={{ background: "rgba(193, 237, 255, 1)" }}
+          className="main-div-resp"
+        >
           <div className="main-section-1-htm desktop-view-1 container">
             <ZoomInDiv
               className="d-flex flex-column main-section-1-htw-left"
               style={{ padding: 0 }}
             >
               <div className="text-2-section-1-htw-left">
-              <div dangerouslySetInnerHTML={{ __html: content?.section1?.title }} />
+                <h1>Best Hair Loss Treatment For Men</h1>
+                    {/* <div
+                  dangerouslySetInnerHTML={{ __html: content?.section1?.title }}
+                /> */}
               </div>
               <div className="text-3-section-1-htw-left">
                 <div dangerouslySetInnerHTML={{ __html: firstPart }} />
@@ -144,12 +154,13 @@ export default function HairTreatmentMen() {
                   onClick={() => setShowMore(!showMore)}
                   className="btn sub-button-section-3-op"
                 >
-                {showMore ? 'Show Less' : 'Learn More'}
+                  {showMore ? "Show Less" : "Learn More"}
                 </button>
               </div>
             </ZoomInDiv>
             <RightAnimatedDiv className="d-flex flex-column main-section-1-op-right">
-              <img loading="lazy" 
+              <img
+                loading="lazy"
                 src={content?.section1?.image}
                 alt={content?.section1?.alt}
               />
@@ -157,12 +168,14 @@ export default function HairTreatmentMen() {
           </div>
         </div>
 
-        <div className="d-flex flex-column main-section-2-htw container main-div-resp" style={{gap:"42px"}}>
+        <div
+          className="d-flex flex-column main-section-2-htw container main-div-resp"
+          style={{ gap: "42px" }}
+        >
           <div className="desktop-view" style={{ gap: "30px" }}>
-            <LeftAnimatedDiv
-              className="main-section-2-htw-left"
-            >
-              <img loading="lazy"
+            <LeftAnimatedDiv className="main-section-2-htw-left">
+              <img
+                loading="lazy"
                 src={content?.section2?.image1}
                 style={{ height: 650, width: "100%" }}
                 alt={content?.section2?.alt1}
@@ -173,51 +186,56 @@ export default function HairTreatmentMen() {
                 className="text-2-section-2-htw"
                 style={{ textAlign: "left" }}
               >
-                <div dangerouslySetInnerHTML={{ __html: content?.section2?.title }} />
+                <div
+                  dangerouslySetInnerHTML={{ __html: content?.section2?.title }}
+                />
               </RightAnimatedDiv>
 
-              {content?.section2?.forms.slice(0,3).map((item, indx) => {
-                  return <div className="d-flex" style={{ gap: "10px" }} key={indx}>
-                  <div
-                    className="mini-card-num-div-section-4-htw number-view-2"
-  
-                  >
-                    <div className="mini-card-num-text-section-4-htw flex-center-row">
-                      {indx + 1}
+              {content?.section2?.forms.slice(0, 3).map((item, indx) => {
+                return (
+                  <div className="d-flex" style={{ gap: "10px" }} key={indx}>
+                    <div className="mini-card-num-div-section-4-htw number-view-2">
+                      <div className="mini-card-num-text-section-4-htw flex-center-row">
+                        {indx + 1}
+                      </div>
+                    </div>
+                    <div
+                      className="text-3-section-2-htw"
+                      style={{ width: "90%" }}
+                    >
+                      <h3 dangerouslySetInnerHTML={{ __html: item.title }} />
+                      <div dangerouslySetInnerHTML={{ __html: item.desc }} />
                     </div>
                   </div>
-                  <div className="text-3-section-2-htw" style={{ width: "90%" }}>
-                    <h3><div dangerouslySetInnerHTML={{ __html: item.title}} /></h3>
-                    <div dangerouslySetInnerHTML={{ __html: item.desc}} />
-                  </div>
-                </div>
+                );
               })}
             </div>
           </div>
 
           <div className="desktop-view-1" style={{ gap: "30px" }}>
             <div className=" main-section-2-htw-right d-flex flex-column">
-              {content?.section2?.forms?.slice(3,5)?.map((item, indx) => {
-                  return <div className="d-flex" style={{ gap: "10px" }} key={indx}>
-                  <div
-                    className="mini-card-num-div-section-4-htw number-view-2"
-  
-                  >
-                    <div className="mini-card-num-text-section-4-htw flex-center-row">
-                      {indx + 4}
+              {content?.section2?.forms?.slice(3, 5)?.map((item, indx) => {
+                return (
+                  <div className="d-flex" style={{ gap: "10px" }} key={indx}>
+                    <div className="mini-card-num-div-section-4-htw number-view-2">
+                      <div className="mini-card-num-text-section-4-htw flex-center-row">
+                        {indx + 4}
+                      </div>
+                    </div>
+                    <div
+                      className="text-3-section-2-htw"
+                      style={{ width: "90%" }}
+                    >
+                      <h3 dangerouslySetInnerHTML={{ __html: item.title }} />
+                      <div dangerouslySetInnerHTML={{ __html: item.desc }} />
                     </div>
                   </div>
-                  <div className="text-3-section-2-htw" style={{ width: "90%" }}>
-                    <h3><div dangerouslySetInnerHTML={{ __html: item.title}} /></h3>
-                    <div dangerouslySetInnerHTML={{ __html: item.desc}} />
-                  </div>
-                </div>
+                );
               })}
             </div>
-            <RightAnimatedDiv
-              className="main-section-2-htw-left"
-            >
-              <img loading="lazy"
+            <RightAnimatedDiv className="main-section-2-htw-left">
+              <img
+                loading="lazy"
                 src={content?.section2?.image2}
                 style={{ height: "100%", width: "100%" }}
                 alt={content?.section2?.alt2}
@@ -226,125 +244,148 @@ export default function HairTreatmentMen() {
           </div>
         </div>
 
-
-
         <div className="main-section-5-htm padding-60">
           <div className="d-flex flex-column container">
-            <RightAnimatedDiv style={{ display: "flex", justifyContent: "center" }}>
-              <div className="text-2-section-5-htw" style={{ width: "80%", color: "white" }}>
-              <div dangerouslySetInnerHTML={{ __html: content?.section3?.title }} />
+            <RightAnimatedDiv
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <div
+                className="text-2-section-5-htw"
+                style={{ width: "80%", color: "white" }}
+              >
+                <div
+                  dangerouslySetInnerHTML={{ __html: content?.section3?.title }}
+                />
               </div>
             </RightAnimatedDiv>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <div className="text-3-section-5-htw width-for-text-heading-75 m-text-left" style={{ color: "white" }}>
-              <div dangerouslySetInnerHTML={{ __html: content?.section3?.desc }} />
+              <div
+                className="text-3-section-5-htw width-for-text-heading-75 m-text-left"
+                style={{ color: "white" }}
+              >
+                <div
+                  dangerouslySetInnerHTML={{ __html: content?.section3?.desc }}
+                />
               </div>
             </div>
 
             <div className="desktop-view-1 mt-3" style={{ gap: "15px" }}>
               {content?.section3?.forms?.map((item, indx) => {
-                return <ZoomInDiv
-                className="mini-card-section-4-htw d-flex flex-column width-for-text-heading-23"
-                style={{
-                  padding: "30px",
-                  // width: "23%",
-                  alignItems: "center",
-                  gap: "15px",
-                  background:
-                    activeSec5 === indx ? "rgba(0, 160, 227, 1)" : "#FFFFFF",
-                }}
-                onClick={() => setActiveSec5(indx)}
-              >
-                <div
-                  className="mini-card-num-div-section-4-htw"
-                  style={{ padding: "10px", width: "20%" }}
-                >
-                  <div className="mini-card-num-text-section-4-htw flex-center-row">
-                    {indx + 1}
-                  </div>
-                </div>
-                <div
-                  className="mini-card-text-1-section-4-htw"
-                  style={{
-                    color: activeSec5 === indx ? "#FFFFFF" : "black",
-                  }}
-                >
-                  <h3 className="m-text-left"><div dangerouslySetInnerHTML={{ __html: item.title}} /></h3>
-                </div>
-                <div
-                  className="mini-card-text-2-section-4-htw m-text-left"
-                  style={{
-                    color: activeSec5 === indx ? "#FFFFFF" : "rgba(97, 97, 97, 1)",
-                  }}
-                >
-                  <div dangerouslySetInnerHTML={{ __html: item.desc}} />
-                </div>
-              </ZoomInDiv>
+                return (
+                  <ZoomInDiv
+                    className="mini-card-section-4-htw d-flex flex-column width-for-text-heading-23"
+                    style={{
+                      padding: "30px",
+                      alignItems: "center",
+                      gap: "15px",
+                      background:
+                        activeSec5 === indx
+                          ? "rgba(0, 160, 227, 1)"
+                          : "#FFFFFF",
+                    }}
+                    onClick={() => setActiveSec5(indx)}
+                    key={indx}
+                  >
+                    <div
+                      className="mini-card-num-div-section-4-htw"
+                      style={{ padding: "10px", width: "20%" }}
+                    >
+                      <div className="mini-card-num-text-section-4-htw flex-center-row">
+                        {indx + 1}
+                      </div>
+                    </div>
+                    <div
+                      className="mini-card-text-1-section-4-htw"
+                      style={{
+                        color: activeSec5 === indx ? "#FFFFFF" : "black",
+                      }}
+                    >
+                      {/* FIX: Use dangerouslySetInnerHTML directly on h3 */}
+                      <h3 className="m-text-left" dangerouslySetInnerHTML={{ __html: item.title }} />
+                    </div>
+                    <div
+                      className="mini-card-text-2-section-4-htw m-text-left"
+                      style={{
+                        color:
+                          activeSec5 === indx
+                            ? "#FFFFFF"
+                            : "rgba(97, 97, 97, 1)",
+                      }}
+                    >
+                      <div dangerouslySetInnerHTML={{ __html: item.desc }} />
+                    </div>
+                  </ZoomInDiv>
+                );
               })}
             </div>
-
           </div>
         </div>
 
-        <div className="d-flex flex-column main-section-2-htw container main-div-resp"  >
+        <div className="d-flex flex-column main-section-2-htw container main-div-resp">
           <ZoomInDiv className="text-2-section-2-htw">
-          <div dangerouslySetInnerHTML={{ __html: content?.section4?.title }} />
+            <div
+              dangerouslySetInnerHTML={{ __html: content?.section4?.title }}
+            />
           </ZoomInDiv>
 
           <div className="desktop-view" style={{ gap: "30px" }}>
             <LeftAnimatedDiv
               className="main-section-2-htw-left"
-            // style={{ height: "100vh" }}
+              // style={{ height: "100vh" }}
             >
-              <img loading="lazy"
+              <img
+                loading="lazy"
                 src={content?.section4?.image1}
                 style={{ height: "100%", width: "100%" }}
                 alt={content?.section4?.alt1}
               />
             </LeftAnimatedDiv>
             <div className=" main-section-2-htw-right d-flex flex-column">
-            {content?.section4?.forms.slice(0,3).map((item, indx) => {
-                  return <div className="d-flex" style={{ gap: "10px" }} key={indx}>
-                  <div
-                    className="mini-card-num-div-section-4-htw number-view-2"
-  
-                  >
-                    <div className="mini-card-num-text-section-4-htw flex-center-row">
-                      {indx + 1}
+              {content?.section4?.forms.slice(0, 3).map((item, indx) => {
+                return (
+                  <div className="d-flex" style={{ gap: "10px" }} key={indx}>
+                    <div className="mini-card-num-div-section-4-htw number-view-2">
+                      <div className="mini-card-num-text-section-4-htw flex-center-row">
+                        {indx + 1}
+                      </div>
+                    </div>
+                    <div
+                      className="text-3-section-2-htw"
+                      style={{ width: "90%" }}
+                    >
+                      <h3 dangerouslySetInnerHTML={{ __html: item.title }} />
+                      <div dangerouslySetInnerHTML={{ __html: item.desc }} />
                     </div>
                   </div>
-                  <div className="text-3-section-2-htw" style={{ width: "90%" }}>
-                    <h3><div dangerouslySetInnerHTML={{ __html: item.title}} /></h3>
-                    <div dangerouslySetInnerHTML={{ __html: item.desc}} />
-                  </div>
-                </div>
+                );
               })}
             </div>
           </div>
 
           <div className="desktop-view-1" style={{ gap: "30px" }}>
             <div className=" main-section-2-htw-right d-flex flex-column">
-              {content?.section4?.forms?.slice(3,5)?.map((item, indx) => {
-                  return <div className="d-flex" style={{ gap: "10px" }} key={indx}>
-                  <div
-                    className="mini-card-num-div-section-4-htw number-view-2"
-  
-                  >
-                    <div className="mini-card-num-text-section-4-htw flex-center-row">
-                      {indx + 4}
+              {content?.section4?.forms?.slice(3, 5)?.map((item, indx) => {
+                return (
+                  <div className="d-flex" style={{ gap: "10px" }} key={indx}>
+                    <div className="mini-card-num-div-section-4-htw number-view-2">
+                      <div className="mini-card-num-text-section-4-htw flex-center-row">
+                        {indx + 4}
+                      </div>
+                    </div>
+                    <div
+                      className="text-3-section-2-htw"
+                      style={{ width: "90%" }}
+                    >
+                      <h3 dangerouslySetInnerHTML={{ __html: item.title }} />
+                      <div dangerouslySetInnerHTML={{ __html: item.desc }} />
                     </div>
                   </div>
-                  <div className="text-3-section-2-htw" style={{ width: "90%" }}>
-                    <h3><div dangerouslySetInnerHTML={{ __html: item.title}} /></h3>
-                    <div dangerouslySetInnerHTML={{ __html: item.desc}} />
-                  </div>
-                </div>
+                );
               })}
             </div>
-            <RightAnimatedDiv
-              className="main-section-2-htw-left"
-            >
-              <img loading="lazy"
+            <RightAnimatedDiv className="main-section-2-htw-left">
+              <img
+                loading="lazy"
                 src={content?.section4?.image2}
                 style={{ height: "100%", width: "100%" }}
                 alt={content?.section4?.alt2}
@@ -353,17 +394,29 @@ export default function HairTreatmentMen() {
           </div>
         </div>
 
-        <div style={{ background: "rgba(193, 237, 255, 1)", padding: "60px 0 60px 0" }}>
+        <div
+          style={{
+            background: "rgba(193, 237, 255, 1)",
+            padding: "60px 0 60px 0",
+          }}
+        >
           <div className="d-flex flex-column container">
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <RightAnimatedDiv className="text-2-section-5-htw" style={{ width: "80%" }}>
-              <div dangerouslySetInnerHTML={{ __html: content?.section5?.title }} />
+              <RightAnimatedDiv
+                className="text-2-section-5-htw"
+                style={{ width: "80%" }}
+              >
+                <div
+                  dangerouslySetInnerHTML={{ __html: content?.section5?.title }}
+                />
               </RightAnimatedDiv>
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <div className="text-3-section-5-htw width-for-text-heading-75" >
-              <div dangerouslySetInnerHTML={{ __html: content?.section5?.desc }} />
-                </div>
+              <div className="text-3-section-5-htw width-for-text-heading-75">
+                <div
+                  dangerouslySetInnerHTML={{ __html: content?.section5?.desc }}
+                />
+              </div>
             </div>
 
             <div className="desktop-view-1 mt-3" style={{ gap: "15px" }}>
@@ -373,18 +426,17 @@ export default function HairTreatmentMen() {
                     className="mini-card-section-4-htw d-flex flex-column width-for-text-heading-23"
                     style={{
                       padding: "10px",
-                      // width: "23%",
                       alignItems: "center",
                       gap: "15px",
-                      background:
-                        "none",
+                      background: "none",
                     }}
+                    key={indx}
                   >
-                    <div
-                      // className="mini-card-num-div-section-4-htw"
-                      style={{ width: "100%" }}
-                    >
-                      <img loading="lazy" src={item.image} style={{ width: "100%" }}
+                    <div style={{ width: "100%" }}>
+                      <img
+                        loading="lazy"
+                        src={item.image}
+                        style={{ width: "100%" }}
                         alt={item.title}
                         title={item.title}
                       />
@@ -395,7 +447,8 @@ export default function HairTreatmentMen() {
                         color: "black",
                       }}
                     >
-                      <h3><div dangerouslySetInnerHTML={{ __html: item.title}} /></h3>
+                      {/* FIX: Use dangerouslySetInnerHTML directly on h3 */}
+                      <h3 dangerouslySetInnerHTML={{ __html: item.title }} />
                     </div>
                     <div
                       className="mini-card-text-2-section-4-htw"
@@ -403,20 +456,21 @@ export default function HairTreatmentMen() {
                         color: "rgba(97, 97, 97, 1)",
                       }}
                     >
-                      <div dangerouslySetInnerHTML={{ __html: item.desc}} />
+                      <div dangerouslySetInnerHTML={{ __html: item.desc }} />
                     </div>
                   </ZoomInDiv>
                 );
               })}
             </div>
-
           </div>
         </div>
 
-
         <div className="container mt-3 main-div-resp">
           <RightAnimatedDiv className="main-text-section-8-htw">
-            <h2>Frequently <span className="blue-btw-text">Asked Questions</span> (FAQs)</h2>
+            <h2>
+              Frequently <span className="blue-btw-text">Asked Questions</span>{" "}
+              (FAQs)
+            </h2>
           </RightAnimatedDiv>
           <div className="mt-5 d-flex flex-column">
             {section8?.map((item, indx) => {
@@ -444,12 +498,12 @@ export default function HairTreatmentMen() {
                       }}
                       className="faq-icon"
                     >
-                      <img loading="lazy"
+                      <img
+                        loading="lazy"
                         src={"/assets/img/hairTreatmentWomen/image-16.png"}
-                        className='faq-dropDown'
+                        className="faq-dropDown"
                         alt="Hairsncares Faqs icon"
                         title="Hairsncares Faqs icon"
-
                       />
                     </div>
                   </div>

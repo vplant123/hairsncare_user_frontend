@@ -171,7 +171,7 @@ const routes = [
   //added new routes
   {
     path: "/disclaimer",
-    title: "Hairsncares Disclaimer- Legal & Usage Notice",
+    title: "Hairsncares Disclaimer - Legal & Usage Notice",
     desc: "Read the Hairsncares Disclaimer for legal, accuracy, and usage guidelines. Understand your rights and responsibilities when using our hair care content and services.",
   },
   {

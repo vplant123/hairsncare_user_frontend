@@ -44,9 +44,9 @@ export default function About() {
           <div className="about-us-container">
             <LeftAnimatedDiv className="contect-us-heading">
             
-              <h2 className="contect-us-heading">
+              <h1 className="contect-us-heading">
                 {content?.section1?.title}
-              </h2>
+              </h1>
             </LeftAnimatedDiv>
             <ZoomInDiv>
               <img

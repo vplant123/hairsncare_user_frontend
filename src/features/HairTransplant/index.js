@@ -138,9 +138,9 @@ export default function HairTransplant() {
               style={{ padding: 0 }}
             >
               <div className="text-2-section-1-htw-left">
-                <h1>
+                {/* <h1>
                   <div dangerouslySetInnerHTML={{ __html: content?.section1?.title }} />
-                </h1>
+                </h1> */}
               </div>
               <div className="text-3-section-1-htw-left">
               <div dangerouslySetInnerHTML={{ __html: content?.section1?.desc }} />

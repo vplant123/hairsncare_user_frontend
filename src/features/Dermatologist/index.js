@@ -132,17 +132,19 @@ export default function Dermatologist() {
                   className="text-2-section-4-htw"
                   style={{ textAlign: "left", fontWeight: "800" }}
                 >
-                  <h1>Dr. Amit Agarkar</h1>
+                  <h1>
+                    Dr. Amit Agarkar –<br /> Hair Transplant & Restoration Expert
+                  </h1>
                 </div>
                 <div
                   className="text-2-section-4-htw"
                   style={{ textAlign: "left" }}
                 >
-                  <h1>
+                  {/* <h1>
                     Hair Transplant & Restoration Expert -{" "}
                     <span className="blue-btw-text">Hair Restoration</span>,
                     Trichology and Dermatology{" "}
-                  </h1>
+                  </h1> */}
                 </div>
                 <div className="text-3-section-1-htw-left">
                   <strong style={{ color: "rgba(0, 160, 227, 1)" }}>

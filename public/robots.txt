@@ -1,9 +1,9 @@
 User-agent: *
 Allow: /
 
-# Disallow admin and doctor subdomains
-Disallow: https://doctor.hairsncares.com/
-Disallow: https://admin.hairsncares.com/
+# Disallow admin and doctor sections
+Disallow: /doctor/
+Disallow: /admin/
 
 # Disallow private areas
 Disallow: /user-profile/
@@ -31,7 +31,6 @@ Allow: /our-expertise
 Allow: /take-hair-test
 Allow: /contact-hair-experts
 Allow: /hair-care-blogs
-Allow: /product-detail/
 Allow: /effective-hair-loss-treatment-men
 Allow: /hair-loss-women-causes-treatments-remedies
 Allow: /hair-transplants-fue-dhi-mhi-natural-restoration

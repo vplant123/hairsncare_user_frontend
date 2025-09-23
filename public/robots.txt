@@ -6,6 +6,7 @@ Disallow: /doctor/
 Disallow: /admin/
 
 # Disallow private areas
+
 Disallow: /user-profile/
 Disallow: /doctor-dashboard/
 Disallow: /admin-dashboard/
@@ -30,7 +31,6 @@ Allow: /hair-loss-treatment-experts-dermatologists
 Allow: /our-expertise
 Allow: /take-hair-test
 Allow: /contact-hair-experts
-Allow: /hair-care-blogs
 Allow: /effective-hair-loss-treatment-men
 Allow: /hair-loss-women-causes-treatments-remedies
 Allow: /hair-transplants-fue-dhi-mhi-natural-restoration

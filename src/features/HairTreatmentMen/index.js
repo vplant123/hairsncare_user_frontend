@@ -12,7 +12,8 @@ import {
 import ShoppingFeature from "../shopping-feature/ShoppingFeature";
 import Navbar from "../nav/Navbar";
 import { Padding } from "@mui/icons-material";
-import { Helmet } from "react-helmet";
+import SEO from "../../components/SEO";
+import SEOLinkHub from "../../components/SEOLinkHub";
 export default function HairTreatmentMen() {
   const [read1, setRead1] = useState(false);
   const [read2, setRead2] = useState(false);
@@ -117,21 +118,17 @@ export default function HairTreatmentMen() {
   );
 
   return (
-    <Navbar>
-      <div
-        className="d-flex flex-column"
-        style={{ fontFamily: '"Poppins", sans-serif' }}
-      >
-        <Helmet>
-          <link
-            rel="canonical"
-            href="https://hairsncares.com/effective-hair-loss-treatment-men"
-          />
-        </Helmet>
+    <>
+      <SEO useRouteData={true} />
+      <Navbar>
         <div
-          style={{ background: "rgba(193, 237, 255, 1)" }}
-          className="main-div-resp"
+          className="d-flex flex-column"
+          style={{ fontFamily: '"Poppins", sans-serif' }}
         >
+          <div
+            style={{ background: "rgba(193, 237, 255, 1)" }}
+            className="main-div-resp"
+          >
           <div className="main-section-1-htm desktop-view-1 container">
             <ZoomInDiv
               className="d-flex flex-column main-section-1-htw-left"
@@ -518,9 +515,14 @@ export default function HairTreatmentMen() {
           </div>
         </div>
 
+        <SEOLinkHub 
+          currentPage="/effective-hair-loss-treatment-men" 
+          pageType="men-treatment"
+        />
         <ShoppingFeature col={"1"} />
         <Footer />
       </div>
     </Navbar>
+    </>
   );
 }

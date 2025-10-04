@@ -47,7 +47,7 @@ const ViewDiv1 = ({ item }) => {
   );
 };
 
-export default function OnlineHairTest() {
+export default function OnlineHairTest(props) {
   const [read1, setRead1] = useState(false);
   const [read2, setRead2] = useState(false);
   const [read3, setRead3] = useState(false);
@@ -179,6 +179,7 @@ export default function OnlineHairTest() {
           <Helmet>
             <link rel="canonical" href="https://hairsncares.com/online-hair-loss-test-diagnosis-treatment" />
           </Helmet>
+          
           <div className="d-flex flex-column container p-2">
             <div style={{ display: "flex", justifyContent: "center" }}>
               <motion.div

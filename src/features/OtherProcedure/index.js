@@ -14,7 +14,8 @@ import ShoppingFeature from "../shopping-feature/ShoppingFeature";
 import Navbar from "../nav/Navbar";
 import { Padding } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import SEO from "../../components/SEO";
+import SEOLinkHub from "../../components/SEOLinkHub";
 export default function OtherProcedure() {
   const [read1, setRead1] = useState(false);
   const [read2, setRead2] = useState(false);
@@ -33,21 +34,17 @@ export default function OtherProcedure() {
   const navigate = useNavigate();
 
   return (
-    <Navbar>
-      <div
-        className="d-flex flex-column"
-        style={{ fontFamily: '"Poppins", sans-serif' }}
-      >
-        <Helmet>
-          <link
-            rel="canonical"
-            href="https://hairsncares.com/advanced-hair-loss-solutions-prp-smp-cloning-systems"
-          />
-        </Helmet>
+    <>
+      <SEO useRouteData={true} />
+      <Navbar>
         <div
-          style={{ background: "rgba(193, 237, 255, 1)" }}
-          className="main-div-resp"
+          className="d-flex flex-column"
+          style={{ fontFamily: '"Poppins", sans-serif' }}
         >
+          <div
+            style={{ background: "rgba(193, 237, 255, 1)" }}
+            className="main-div-resp"
+          >
           <div className="d-flex flex-column container">
             {/* <ZoomInDiv2 className="text-1-section-4-htw m-text-left"><div dangerouslySetInnerHTML={{ __html: content?.section1?.title }} /></ZoomInDiv2> */}
             <h1 style={{ color: "#0e0e0eff", textAlign: "center" }}>
@@ -333,9 +330,14 @@ export default function OtherProcedure() {
           </div>
         </div> */}
 
+        <SEOLinkHub 
+          currentPage="/advanced-hair-loss-solutions-prp-smp-cloning-systems" 
+          pageType="advanced-solutions"
+        />
         <ShoppingFeature col={"1"} />
         <Footer />
       </div>
     </Navbar>
+  </>
   );
 }

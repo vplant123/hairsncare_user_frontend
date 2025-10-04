@@ -14,7 +14,8 @@ import ShoppingFeature from "../shopping-feature/ShoppingFeature";
 import Navbar from "../nav/Navbar";
 import { Padding } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import SEO from "../../components/SEO";
+import SEOLinkHub from "../../components/SEOLinkHub";
 export default function HairTreatmentWomen() {
   const [read1, setRead1] = useState(false);
   const [read2, setRead2] = useState(false);
@@ -152,21 +153,17 @@ export default function HairTreatmentWomen() {
   ];
 
   return (
-    <Navbar>
-      <div
-        className="d-flex flex-column"
-        style={{ fontFamily: '"Poppins", sans-serif' }}
-      >
-        <Helmet>
-          <link
-            rel="canonical"
-            href="https://hairsncares.com/hair-loss-women-causes-treatments-remedies"
-          />
-        </Helmet>
+    <>
+      <SEO useRouteData={true} />
+      <Navbar>
         <div
-          style={{ background: "rgba(193, 237, 255, 1)" }}
-          className="main-div-resp"
+          className="d-flex flex-column"
+          style={{ fontFamily: '"Poppins", sans-serif' }}
         >
+          <div
+            style={{ background: "rgba(193, 237, 255, 1)" }}
+            className="main-div-resp"
+          >
           <div className="main-section-1-htw desktop-view-1 container">
             <ZoomInDiv
               variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
@@ -654,9 +651,14 @@ export default function HairTreatmentWomen() {
           </div>
         </div>
 
+        <SEOLinkHub 
+          currentPage="/hair-loss-women-causes-treatments-remedies" 
+          pageType="women-treatment"
+        />
         <ShoppingFeature col={"1"} />
         <Footer />
       </div>
     </Navbar>
+    </>
   );
 }

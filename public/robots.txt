@@ -1,30 +1,8 @@
+# General user-agent rules
 User-agent: *
 Allow: /
 
-# Disallow admin and doctor sections
-Disallow: /doctor/
-Disallow: /admin/
-
-# Disallow private areas
-
-Disallow: /user-profile/
-Disallow: /doctor-dashboard/
-Disallow: /admin-dashboard/
-Disallow: /login
-Disallow: /success/
-Disallow: /failure/
-Disallow: /payment-status/
-Disallow: /cart
-Disallow: /my-orders
-Disallow: /create-order
-Disallow: /coupon
-Disallow: /address
-Disallow: /management-report/
-Disallow: /doctor/report/
-Disallow: /doctor-analyse-report/
-Disallow: /unauthorized
-
-# Allow important pages
+# Important SEO pages - Allow crawling
 Allow: /best-hair-care-products-hair-loss-scalp-health
 Allow: /about-us-quality-hair-loss-scalp-care
 Allow: /hair-loss-treatment-experts-dermatologists
@@ -37,6 +15,187 @@ Allow: /hair-transplants-fue-dhi-mhi-natural-restoration
 Allow: /advanced-hair-loss-solutions-prp-smp-cloning-systems
 Allow: /online-hair-loss-test-diagnosis-treatment
 Allow: /dr-amit-agarkar-hair-restoration-expert
+Allow: /hair-care-blogs
 
-# Sitemap location
+# Disallow private and admin areas
+Disallow: /a/downloads/-/*
+Disallow: /admin
+Disallow: /admin-dashboard
+Disallow: /doctor-dashboard
+Disallow: /user-profile
+Disallow: /login
+Disallow: /unauthorized
+Disallow: /cart
+Disallow: /carts
+Disallow: /orders
+Disallow: /my-orders
+Disallow: /create-order
+Disallow: /checkouts/
+Disallow: /checkout
+Disallow: /10016227394/checkouts
+Disallow: /10016227394/orders
+Disallow: /account
+Disallow: /coupon
+Disallow: /address
+Disallow: /success/
+Disallow: /failure/
+Disallow: /status/
+Disallow: /payment-status/
+Disallow: /doctor/
+Disallow: /management-report/
+Disallow: /doctor/report/
+Disallow: /doctor-analyse-report/
+
+# Disallow filtered and sorted collection URLs
+Disallow: /collections/*sort_by*
+Disallow: /*/collections/*sort_by*
+Disallow: /collections/*+*
+Disallow: /collections/*%2B*
+Disallow: /collections/*%2b*
+Disallow: /*/collections/*+*
+Disallow: /*/collections/*%2B*
+Disallow: /*/collections/*%2b*
+Disallow: */collections/*filter*&*filter*
+
+# Disallow filtered blog URLs
+Disallow: /blogs/*+*
+Disallow: /blogs/*%2B*
+Disallow: /blogs/*%2b*
+Disallow: /*/blogs/*+*
+Disallow: /*/blogs/*%2B*
+Disallow: /*/blogs/*%2b*
+
+# Disallow search and tracking URLs
+Disallow: /*?*oseid=*
+Disallow: /*preview_theme_id*
+Disallow: /*preview_script_id*
+Disallow: /policies/
+Disallow: /*/policies/
+Disallow: /*/*?*ls=*&ls=*
+Disallow: /*/*?*ls%3D*%3Fls%3D*
+Disallow: /*/*?*ls%3d*%3fls%3d*
+Disallow: /search
+Disallow: /sf_private_access_tokens
+Disallow: /apple-app-site-association
+Disallow: /.well-known/shopify/monorail
+Disallow: /cdn/wpm/*.js
+Disallow: /recommendations/products
+Disallow: /*/recommendations/products
+
+# Google adsbot specific rules (ignores robots.txt unless specifically named!)
+User-agent: adsbot-google
+Disallow: /checkouts/
+Disallow: /checkout
+Disallow: /carts
+Disallow: /orders
+Disallow: /10016227394/checkouts
+Disallow: /10016227394/orders
+Disallow: /*?*oseid=*
+Disallow: /*preview_theme_id*
+Disallow: /*preview_script_id*
+Disallow: /cdn/wpm/*.js
+Disallow: /sf_private_access_tokens
+
+# Block Nutch crawler completely
+User-agent: Nutch
+Disallow: /
+
+# AhrefsBot with crawl delay
+User-agent: AhrefsBot
+Crawl-delay: 10
+Disallow: /a/downloads/-/*
+Disallow: /admin
+Disallow: /cart
+Disallow: /orders
+Disallow: /checkouts/
+Disallow: /checkout
+Disallow: /10016227394/checkouts
+Disallow: /10016227394/orders
+Disallow: /carts
+Disallow: /account
+Disallow: /collections/*sort_by*
+Disallow: /*/collections/*sort_by*
+Disallow: /collections/*+*
+Disallow: /collections/*%2B*
+Disallow: /collections/*%2b*
+Disallow: /*/collections/*+*
+Disallow: /*/collections/*%2B*
+Disallow: /*/collections/*%2b*
+Disallow: */collections/*filter*&*filter*
+Disallow: /blogs/*+*
+Disallow: /blogs/*%2B*
+Disallow: /blogs/*%2b*
+Disallow: /*/blogs/*+*
+Disallow: /*/blogs/*%2B*
+Disallow: /*/blogs/*%2b*
+Disallow: /*?*oseid=*
+Disallow: /*preview_theme_id*
+Disallow: /*preview_script_id*
+Disallow: /policies/
+Disallow: /*/policies/
+Disallow: /*/*?*ls=*&ls=*
+Disallow: /*/*?*ls%3D*%3Fls%3D*
+Disallow: /*/*?*ls%3d*%3fls%3d*
+Disallow: /search
+Disallow: /sf_private_access_tokens
+Disallow: /apple-app-site-association
+Disallow: /.well-known/shopify/monorail
+Disallow: /cdn/wpm/*.js
+Disallow: /recommendations/products
+Disallow: /*/recommendations/products
+
+# AhrefsSiteAudit with crawl delay
+User-agent: AhrefsSiteAudit
+Crawl-delay: 10
+Disallow: /a/downloads/-/*
+Disallow: /admin
+Disallow: /cart
+Disallow: /orders
+Disallow: /checkouts/
+Disallow: /checkout
+Disallow: /10016227394/checkouts
+Disallow: /10016227394/orders
+Disallow: /carts
+Disallow: /account
+Disallow: /collections/*sort_by*
+Disallow: /*/collections/*sort_by*
+Disallow: /collections/*+*
+Disallow: /collections/*%2B*
+Disallow: /collections/*%2b*
+Disallow: /*/collections/*+*
+Disallow: /*/collections/*%2B*
+Disallow: /*/collections/*%2b*
+Disallow: */collections/*filter*&*filter*
+Disallow: /blogs/*+*
+Disallow: /blogs/*%2B*
+Disallow: /blogs/*%2b*
+Disallow: /*/blogs/*+*
+Disallow: /*/blogs/*%2B*
+Disallow: /*/blogs/*%2b*
+Disallow: /*?*oseid=*
+Disallow: /*preview_theme_id*
+Disallow: /*preview_script_id*
+Disallow: /policies/
+Disallow: /*/policies/
+Disallow: /*/*?*ls=*&ls=*
+Disallow: /*/*?*ls%3D*%3Fls%3D*
+Disallow: /*/*?*ls%3d*%3fls%3d*
+Disallow: /search
+Disallow: /sf_private_access_tokens
+Disallow: /apple-app-site-association
+Disallow: /.well-known/shopify/monorail
+Disallow: /cdn/wpm/*.js
+Disallow: /recommendations/products
+Disallow: /*/recommendations/products
+
+# MJ12bot with crawl delay
+User-agent: MJ12bot
+Crawl-delay: 10
+
+# Pinterest with shorter crawl delay
+User-agent: Pinterest
+Crawl-delay: 1
+
+# Sitemap locations
 Sitemap: https://www.hairsncares.com/sitemap.xml
+Sitemap: https://blogs.hairsncares.com/sitemap_index.xml

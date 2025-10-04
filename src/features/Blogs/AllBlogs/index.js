@@ -20,6 +20,7 @@ import { useSelector } from "react-redux";
 import ReactPaginate from "react-paginate";
 import { Hourglass } from "react-loader-spinner";
 import { Helmet } from "react-helmet";
+import SEOLinkHub from "../../../components/SEOLinkHub";
 
 const View1 = ({ navigate, category, content }) => {
   const [ref1, control1] = useDivInView();
@@ -840,6 +841,10 @@ export default function AllBlog(props) {
             </div>
           </div>
         </div>
+        <SEOLinkHub 
+          currentPage="/hair-care-blogs" 
+          pageType="blogs"
+        />
         <Footer />
         <ToastContainer position="bottom-right" />
       </Navbar>

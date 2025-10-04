@@ -3,7 +3,7 @@ import Navbar from "../features/nav/Navbar";
 import About from "../features/about-us/About";
 import Footer from "../features/footer/Footer";
 import { useSelector } from "react-redux";
-import { Helmet } from "react-helmet";
+import SEO from "../components/SEO";
 import Breadcrumb from "../components/Breadcrumb";
 
 export default function AboutUsPage(props) {
@@ -15,14 +15,9 @@ export default function AboutUsPage(props) {
   console.log("about Us content", content);
 
   return (
-    <div>
+    <>
+      <SEO useRouteData={true} />
       <Navbar>
-        <Helmet>
-          <link
-            rel="canonical"
-            href="https://hairsncares.com/about-us-quality-hair-loss-scalp-care"
-          />
-        </Helmet>
         {content ? (
           <>
             <div className="container" style={{ marginTop: "20px" }}>
@@ -35,6 +30,6 @@ export default function AboutUsPage(props) {
           <></>
         )}
       </Navbar>
-    </div>
+    </>
   );
 }

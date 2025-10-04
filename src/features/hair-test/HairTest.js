@@ -321,10 +321,7 @@ export default function HairTest() {
         </div>
       </div>
       <div className="test-link container">
-        <h1
-          className="text-sm"
-          style={{ marginBottom: "1rem", display: "" }}
-        >
+        <h1 className="text-sm" style={{ marginBottom: "1rem", display: "" }}>
           Take Your Hair Loss Test Online
         </h1>
         <div className="test-link-item">
@@ -372,6 +369,7 @@ export default function HairTest() {
           />
         )}
       </div>
+   
       <ToastContainer position="bottom-right" />
     </>
   );

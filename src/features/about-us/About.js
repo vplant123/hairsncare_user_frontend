@@ -7,6 +7,7 @@ import {
   RightAnimatedDiv,
   ZoomInDiv,
 } from "../../componet/Animation";
+import AboutUsLinks from "./components/AboutUsLinks";
 
 export default function About() {
   const navigate = useNavigate();
@@ -270,6 +271,9 @@ export default function About() {
           </div>
         </div>
       </div>
+      
+      {/* Strategic Internal and External Links for SEO */}
+      <AboutUsLinks />
     </>
   );
 }

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Container, Typography, Box } from "@mui/material";
 import Footer from "./footer/Footer";
 import Navbar from "./nav/Navbar";
+import SEO from "../components/SEO";
+import LegalPagesLinks from "../components/LegalPagesLinks";
 
 const ReturnPolicy = (props) => {
   useEffect(() => {
@@ -12,6 +14,7 @@ const ReturnPolicy = (props) => {
     <>
       {" "}
       <Navbar>
+        <SEO useRouteData={true} />
         <Container>
           <div
             style={{
@@ -102,6 +105,9 @@ const ReturnPolicy = (props) => {
             <li><strong>Cash on Delivery (COD):</strong> May require an image of a voided cheque leaf, bank statement, or bank details. COD refunds may take up to 3 weeks.</li>
           </ul>
           </div>*/}
+          
+          {/* Strategic Internal and External Links for SEO */}
+          <LegalPagesLinks currentPage="/return-policy" />
         </Container>
         <Footer />
       </Navbar>

@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import Navbar from '../features/nav/Navbar'
 import OurExpertise from '../features/our-expertise/OurExpertise'
 import { useSelector } from 'react-redux'
+import SEOLinkHub from '../components/SEOLinkHub'
+import SEO from '../components/SEO'
 
 export default function OurExpertisePage(props) {
   
@@ -12,8 +14,19 @@ export default function OurExpertisePage(props) {
   const content = useSelector((state) => state.content.expertise);
 
   return (
-    <Navbar>
-        {content ? <OurExpertise/> : <></>}
-    </Navbar>
+    <>
+      <SEO useRouteData={true} />
+      <Navbar>
+        {content ? (
+          <>
+            <OurExpertise/>
+            <SEOLinkHub 
+              currentPage="/our-expertise" 
+              pageType="expertise"
+            />
+          </>
+        ) : <></>}
+      </Navbar>
+    </>
   )
 }

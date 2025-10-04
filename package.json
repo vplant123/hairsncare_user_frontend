@@ -41,6 +41,7 @@
     "react-datepicker": "^6.9.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
+    "react-helmet-async": "^2.0.5",
     "react-icons": "^5.0.1",
     "react-image-magnify": "^2.7.4",
     "react-loader-spinner": "^6.1.6",
@@ -65,9 +66,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "node scripts/compress-build.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "analyze": "react-scripts build && npx webpack-bundle-analyzer build/static/js/*.js"
+    "analyze": "source-map-explorer 'build/static/js/*.js' 'build/static/css/*.css' || true",
+    "start:prod": "node server/serve-compressed.js"
   },
   "eslintConfig": {
     "extends": [
@@ -88,6 +91,43 @@
     ]
   },
   "devDependencies": {
-    "webpack-bundle-analyzer": "^4.10.2"
+    "autoprefixer": "^10.4.21",
+    "clean-css-cli": "^5.6.3",
+    "cssnano": "^7.1.1",
+    "postcss": "^8.5.6",
+    "postcss-cli": "^11.0.1",
+    "react-snap": "^1.23.0",
+    "webpack-bundle-analyzer": "^4.10.2",
+    "source-map-explorer": "^2.6.2"
+  },
+  "reactSnap": {
+    "include": [
+      "/",
+      "/best-hair-care-products-hair-loss-scalp-health",
+      "/about-us-quality-hair-loss-scalp-care",
+      "/hair-loss-treatment-experts-dermatologists",
+      "/take-hair-test",
+      "/contact-hair-experts",
+      "/effective-hair-loss-treatment-men",
+      "/hair-loss-women-causes-treatments-remedies",
+      "/hair-transplants-fue-dhi-mhi-natural-restoration",
+      "/advanced-hair-loss-solutions-prp-smp-cloning-systems",
+      "/online-hair-loss-test-diagnosis-treatment",
+      "/dr-amit-agarkar-hair-restoration-expert",
+      "/hair-care-blogs",
+      "/disclaimer",
+      "/policy",
+      "/terms-of-service",
+      "/return-policy"
+    ],
+    "skipThirdPartyRequests": true,
+    "cacheAjaxRequests": false,
+    "puppeteerArgs": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox"
+    ],
+    "crawl": true,
+    "waitFor": 1000,
+    "minifyHtml": true
   }
 }

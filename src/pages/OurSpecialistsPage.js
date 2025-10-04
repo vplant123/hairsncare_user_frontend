@@ -5,6 +5,7 @@ import Footer from '../features/footer/Footer'
 import { useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import Breadcrumb from '../components/Breadcrumb'
+import SEOLinkHub from '../components/SEOLinkHub'
 
 function OurSpecialistsPage(props) {
 
@@ -26,6 +27,10 @@ function OurSpecialistsPage(props) {
               <Breadcrumb />
             </div>
             <OurSpecialist/>
+            <SEOLinkHub 
+              currentPage="/hair-loss-treatment-experts-dermatologists" 
+              pageType="specialists"
+            />
             <Footer/></> : <></>}
         </Navbar>
     </div>

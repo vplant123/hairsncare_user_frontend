@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./nav/Navbar";
 import Footer from "./footer/Footer";
+import SEO from "../components/SEO";
+import LegalPagesLinks from "../components/LegalPagesLinks";
 function TermsOfService(props) {
+
   useEffect(() => {
     if (props?.setTitle) props?.setTitle(window.location.pathname);
   }, []);
 
   return (
-    <Navbar>
+    <>
+      <SEO useRouteData={true} />
+      <Navbar>
+
       <div className="container">
         <h1
           style={{
@@ -1099,9 +1105,13 @@ function TermsOfService(props) {
             </div>
           </li>
         </ul>
+        
+        {/* Strategic Internal and External Links for SEO */}
+        <LegalPagesLinks currentPage="/terms-of-service" />
       </div>
       <Footer />
     </Navbar>
+    </>
   );
 }
 

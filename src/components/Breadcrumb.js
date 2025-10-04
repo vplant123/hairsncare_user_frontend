@@ -1,26 +1,24 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { generateBreadcrumbSchema } from '../utils/seoUtils';
+import './Breadcrumb.css';
 
 const Breadcrumb = ({ items = [] }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Generate breadcrumbs based on current path if no items provided
+ 
   const generateBreadcrumbs = () => {
     if (items.length > 0) return items;
 
     const pathSegments = location.pathname.split('/').filter(segment => segment);
-    const breadcrumbs = [
-      { name: 'Home', url: '/' }
-    ];
+    const breadcrumbs = [{ name: 'Home', url: '/' }];
 
     let currentPath = '';
-    pathSegments.forEach((segment, index) => {
+    pathSegments.forEach((segment) => {
       currentPath += `/${segment}`;
-      
-      // Convert segment to readable name
+
       const readableName = segment
         .split('-')
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
@@ -37,8 +35,15 @@ const Breadcrumb = ({ items = [] }) => {
 
   const breadcrumbItems = generateBreadcrumbs();
 
+  // Prepare absolute URLs for structured data
+  const siteBase = 'https://www.hairsncares.com';
+  const breadcrumbForSchema = breadcrumbItems.map(item => ({
+    name: item.name,
+    url: item.url.startsWith('http') ? item.url : `${siteBase}${item.url}`
+  }));
+
   // Generate structured data for breadcrumbs
-  const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems);
+  const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbForSchema);
 
   return (
     <>
@@ -47,7 +52,7 @@ const Breadcrumb = ({ items = [] }) => {
           {JSON.stringify(breadcrumbSchema)}
         </script>
       </Helmet>
-      
+
       <nav aria-label="Breadcrumb" className="breadcrumb-nav">
         <ol className="breadcrumb-list">
           {breadcrumbItems.map((item, index) => (
@@ -58,16 +63,9 @@ const Breadcrumb = ({ items = [] }) => {
                 </span>
               ) : (
                 <>
-                  <a 
-                    href={item.url} 
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigate(item.url);
-                    }}
-                    className="breadcrumb-link"
-                  >
+                  <Link to={item.url} className="breadcrumb-link">
                     {item.name}
-                  </a>
+                  </Link>
                   <span className="breadcrumb-separator">/</span>
                 </>
               )}
@@ -75,63 +73,8 @@ const Breadcrumb = ({ items = [] }) => {
           ))}
         </ol>
       </nav>
-
-      <style jsx>{`
-        .breadcrumb-nav {
-          padding: 10px 0;
-          margin-bottom: 20px;
-        }
-        
-        .breadcrumb-list {
-          list-style: none;
-          margin: 0;
-          padding: 0;
-          display: flex;
-          align-items: center;
-          flex-wrap: wrap;
-        }
-        
-        .breadcrumb-item {
-          display: flex;
-          align-items: center;
-        }
-        
-        .breadcrumb-link {
-          color: #005cad;
-          text-decoration: none;
-          font-size: 14px;
-          transition: color 0.3s ease;
-        }
-        
-        .breadcrumb-link:hover {
-          color: #003d7a;
-          text-decoration: underline;
-        }
-        
-        .breadcrumb-current {
-          color: #666;
-          font-size: 14px;
-          font-weight: 500;
-        }
-        
-        .breadcrumb-separator {
-          margin: 0 8px;
-          color: #ccc;
-          font-size: 12px;
-        }
-        
-        @media (max-width: 768px) {
-          .breadcrumb-list {
-            font-size: 12px;
-          }
-          
-          .breadcrumb-separator {
-            margin: 0 4px;
-          }
-        }
-      `}</style>
     </>
   );
 };
 
-export default Breadcrumb; 
+export default Breadcrumb;

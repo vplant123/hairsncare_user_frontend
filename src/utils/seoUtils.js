@@ -107,9 +107,10 @@ export const generateOrganizationSchema = () => {
     logo: "https://www.hairsncares.com/assets/img/logo.png",
     description: "Expert hair loss treatment and scalp care solutions",
     sameAs: [
-      "https://www.facebook.com/hairsncares",
+      "https://www.facebook.com/profile.php?id=61558302628092",
       "https://www.instagram.com/hairsncares",
-      "https://twitter.com/hairsncares",
+      "https://www.youtube.com/@Hairsncares",
+      "https://www.linkedin.com/company/hairsncares",
     ],
   };
 };
@@ -140,7 +141,7 @@ export const generateOrganizationSchema = () => {
 //     "priceRange": "₹₹",
 //     "image": "https://www.hairsncares.com/assets/img/logo.png",
 //     "sameAs": [
-//       "https://www.facebook.com/hairsncares",
+//       "https://www.facebook.com/profile.php?id=61558302628092",
 //       "https://www.instagram.com/hairsncares",
 //       "https://twitter.com/hairsncares"
 //     ]
@@ -165,16 +166,17 @@ export const generateLocalBusinessSchema = () => {
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: "19.1763", // Approximate latitude for Malad West
-      longitude: "72.8377", // Approximate longitude for Malad West
+      latitude: "19.1763",
+      longitude: "72.8377",
     },
     openingHours: "Mo-Fr 09:00-18:00",
     priceRange: "₹₹",
     image: "https://www.hairsncares.com/assets/img/logo.png",
     sameAs: [
-      "https://www.facebook.com/hairsncares",
+      "https://www.facebook.com/profile.php?id=61558302628092",
       "https://www.instagram.com/hairsncares",
-      "https://twitter.com/hairsncares",
+      "https://www.youtube.com/@Hairsncares",
+      "https://www.linkedin.com/company/hairsncares",
     ],
   };
 };

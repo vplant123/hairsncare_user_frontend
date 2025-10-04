@@ -1,0 +1,112 @@
+.products-link-section {
+  width: 100%;
+  margin: 22px 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+.products-link-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 18px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+}
+
+.products-link-content {
+  flex: 1 1 60%;
+  min-width: 260px;
+}
+
+.products-link-title {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.products-link-description {
+  margin: 0 0 14px 0;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.products-link-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(180deg,#007bff 0%, #0063d6 100%);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(3,102,214,0.12);
+  transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+}
+
+.products-link-button:hover,
+.products-link-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(3,102,214,0.14);
+  outline: none;
+  opacity: 0.98;
+}
+
+.button-text { font-size: 14px; }
+.button-arrow { display: inline-block; color: inherit; }
+
+.products-link-features {
+  flex: 0 0 36%;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.feature-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid rgba(0,0,0,0.03);
+  color: #0b6efd;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.feature-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(11,110,237,0.06);
+  font-size: 18px;
+}
+
+@media (max-width: 980px) {
+  .products-link-container { flex-direction: column; gap: 14px; padding: 14px; }
+  .products-link-features { flex-direction: row; gap: 8px; flex-wrap: wrap; }
+  .feature-item { flex: 1 1 calc(50% - 8px); }
+}
+
+@media (max-width: 560px) {
+  .products-link-container { padding: 12px; border-radius: 8px; }
+  .products-link-title { font-size: 18px; }
+  .products-link-button { width: 100%; justify-content: center; }
+  .feature-item { font-size: 13px; padding: 8px; }
+  .feature-icon { width: 32px; height: 32px; font-size: 16px; }
+}

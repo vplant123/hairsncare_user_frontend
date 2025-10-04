@@ -26,9 +26,10 @@ import AboutUsEdit from "../features/admin-dashboard/manage-website/AboutUsEdit"
 import OurSpecialistEdit from "../features/admin-dashboard/manage-website/OurSpecialistEdit";
 import Analysis from "../features/doctor-dashboard/Analysis";
 import { useSelector } from "react-redux";
-import { Helmet } from "react-helmet";
+import SEO from "../components/SEO";
 import DoctorHomepage from "../features/DoctorHomePage";
 import { generateOrganizationSchema } from "../utils/seoUtils";
+import SEOLinkHub from "../components/SEOLinkHub";
 
 
 
@@ -54,7 +55,7 @@ function HomePage(props) {
       const script = document.createElement("script");
       script.type = "text/javascript";
       script.src =
-        "https://d3mkw6s8thqya7.cloudfront.net/integration-plugin.js"; // Replace with the actual script URL
+        "https://d3mkw6s8thqya7.cloudfront.net/integration-plugin.js"; 
       script.id = "aisensy-wa-widget";
       script.async = true;
 
@@ -76,13 +77,12 @@ function HomePage(props) {
   const organizationSchema = generateOrganizationSchema();
 
   return (
-    <Navbar>
-      <Helmet>
-        <link rel="canonical" href="https://hairsncares.com" />
-        <script type="application/ld+json">
-          {JSON.stringify(organizationSchema)}
-        </script>
-      </Helmet>
+    <>
+      <SEO 
+        structuredData={organizationSchema}
+        useRouteData={true}
+      />
+      <Navbar>
       {content ? (
         <>
           {/* <section
@@ -184,13 +184,18 @@ function HomePage(props) {
           <Product cart={cart} setCart={setCart} />
           <ShoppingFeature />
           <BeforeAfter />
+          <SEOLinkHub 
+            currentPage="/" 
+            pageType="home"
+          />
           <Slider />
           <Footer />
         </>
       ) : (
         <></>
       )}
-    </Navbar>
+      </Navbar>
+    </>
   );
 }
 

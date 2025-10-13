@@ -51,7 +51,7 @@ function HomePage(props) {
       document.getElementById("aisensy-wa-widget")
     );
     if (!document.getElementById("aisensy-wa-widget")) {
-      // Create the script element
+   
       const script = document.createElement("script");
       script.type = "text/javascript";
       script.src =

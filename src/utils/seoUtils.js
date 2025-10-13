@@ -3,13 +3,10 @@ export const updateMetaTags = (title, description, keywords, image = null) => {
   // Update document title
   document.title = title || "HairsnCares";
 
-  // Update meta description
   updateMetaTag("description", description);
 
-  // Update meta keywords
   updateMetaTag("keywords", keywords);
 
-  // Update Open Graph tags
   updateMetaTag("og:title", title);
   updateMetaTag("og:description", description);
   updateMetaTag("og:url", window.location.href);
@@ -17,7 +14,6 @@ export const updateMetaTags = (title, description, keywords, image = null) => {
     updateMetaTag("og:image", image);
   }
 
-  // Update Twitter Card tags
   updateMetaTag("twitter:title", title);
   updateMetaTag("twitter:description", description);
   if (image) {

@@ -15,7 +15,8 @@ import SouthIcon from "@mui/icons-material/South";
 import MailIcon from "@mui/icons-material/Mail";
 import { useNavigate } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
-import SEO from "../../components/SEO";
+import { Helmet } from "react-helmet";
+// import SEO from "../../components/SEO";
 
 export default function Dermatologist() {
   const [read1, setRead1] = useState(false);
@@ -108,11 +109,14 @@ export default function Dermatologist() {
 
   return (
     <>
-      <SEO
-        useRouteData={true}
-        canonicalUrl="https://www.hairsncares.com/dr-amit-agarkar-hair-restoration-expert"
-      />
+      {/* <SEO useRouteData={true} /> */}
       <Navbar>
+        <Helmet>
+          <link
+            rel="canonical"
+            href="https://hairsncares.com/dr-amit-agarkar-hair-restoration-expert"
+          />
+        </Helmet>
         <div
           className="d-flex flex-column "
           style={{ fontFamily: '"Poppins", sans-serif' }}

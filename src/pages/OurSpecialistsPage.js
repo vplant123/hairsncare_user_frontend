@@ -3,9 +3,9 @@ import Navbar from '../features/nav/Navbar'
 import OurSpecialist from '../features/our-specialist/OurSpecialist'
 import Footer from '../features/footer/Footer'
 import { useSelector } from 'react-redux'
+import { Helmet } from 'react-helmet'
 import Breadcrumb from '../components/Breadcrumb'
 import SEOLinkHub from '../components/SEOLinkHub'
-import SEO from '../components/SEO'
 
 function OurSpecialistsPage(props) {
 
@@ -17,24 +17,23 @@ function OurSpecialistsPage(props) {
 
 
   return (
-    <>
-      <SEO
-        useRouteData={true}
-        canonicalUrl="https://www.hairsncares.com/our-hair-specialists"
-      />
-      <Navbar>
-        {content ? <>
-          <div className="container" style={{ marginTop: "20px" }}>
-            <Breadcrumb />
-          </div>
-          <OurSpecialist/>
-          <SEOLinkHub 
-            currentPage="/hair-loss-treatment-experts-dermatologists" 
-            pageType="specialists"
-          />
-          <Footer/></> : <></>}
-      </Navbar>
-    </>
+    <div>
+        <Navbar>
+        <Helmet>
+        <link rel="canonical" href="https://hairsncares.com/our-hair-specialists" />
+      </Helmet>
+          {content ? <>
+            <div className="container" style={{ marginTop: "20px" }}>
+              <Breadcrumb />
+            </div>
+            <OurSpecialist/>
+            <SEOLinkHub 
+              currentPage="/hair-loss-treatment-experts-dermatologists" 
+              pageType="specialists"
+            />
+            <Footer/></> : <></>}
+        </Navbar>
+    </div>
   )
 }
 

@@ -18,7 +18,7 @@ import useDivInView from "../../../hooks/useDivInView";
 import { HashLink } from 'react-router-hash-link';
 import moment from "moment";
 import { useSelector } from "react-redux";
-import SEO from "../../../components/SEO";
+import { Helmet } from "react-helmet";
 
 
 const View1 = ({navigate,category,content}) => {
@@ -304,38 +304,11 @@ export default function Blog(props) {
     fetchRSSFeed();
   }, []);
 
-  const seoTitle =
-    blog?.metaTitle ||
-    blog?.seoMetaTitle ||
-    blog?.title ||
-    "Hair Care Blog | HairsnCares";
-  const seoDescription =
-    blog?.metaDescription ||
-    blog?.seoMetaDesc ||
-    blog?.shortDesc ||
-    blog?.shortDescription ||
-    "Explore expert insights on hair care, scalp health, and effective treatment tips from HairsnCares.";
-  const seoKeywords = Array.isArray(blog?.keywords)
-    ? blog?.keywords?.join(", ")
-    : blog?.metaKeywords ||
-      blog?.seoMetaKeywords ||
-      (Array.isArray(blog?.tags) ? blog?.tags?.join(", ") : "hair care, hairsncares blog");
-  const canonicalUrl = blog?.metaCanonical
-    ? blog.metaCanonical.startsWith("http")
-      ? blog.metaCanonical
-      : `https://www.hairsncares.com/${blog.metaCanonical.replace(/^\/?/, "")}`
-    : undefined;
-
   return (
-    <>
-      <SEO
-        useRouteData={false}
-        title={seoTitle}
-        description={seoDescription}
-        keywords={seoKeywords}
-        canonicalUrl={canonicalUrl}
-      />
     <div style={{ position: "relative" }}>
+      <Helmet>
+        <link rel="canonical" href={`${window.location.origin}/${blog?.metaCanonical}`} />
+      </Helmet>
       <Navbar cart={cart} setCart={setCart}>
 
       <div className='main-hero' style={{marginBottom : "4rem"}}>
@@ -664,6 +637,5 @@ export default function Blog(props) {
         <ToastContainer position="bottom-right" />
       </Navbar>
     </div>
-    </>
   );
 }

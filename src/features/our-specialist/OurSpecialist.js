@@ -11,7 +11,6 @@ import {
   ZoomInDiv,
 } from "../../componet/Animation";
 import { TRANSITION } from "../../hooks/useDivInView";
-import { Helmet } from "react-helmet";
 
 export default function OurSpecialist() {
   const [data, setData] = useState(false);
@@ -315,12 +314,6 @@ export default function OurSpecialist() {
           <div>
             <h2 className="contect-us-heading">{content?.section1?.title}</h2>
           </div>
-          <Helmet>
-            <link
-              rel="canonical"
-              href="https://hairsncares.com/hair-loss-treatment-experts-dermatologists"
-            />
-          </Helmet>
         </div>
       </LeftAnimatedDiv>
 

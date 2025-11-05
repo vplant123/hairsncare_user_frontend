@@ -19,7 +19,7 @@ import { HashLink } from "react-router-hash-link";
 import { useSelector } from "react-redux";
 import ReactPaginate from "react-paginate";
 import { Hourglass } from "react-loader-spinner";
-import { Helmet } from "react-helmet";
+import SEO from "../../../components/SEO";
 import SEOLinkHub from "../../../components/SEOLinkHub";
 
 const View1 = ({ navigate, category, content }) => {
@@ -345,14 +345,13 @@ export default function AllBlog(props) {
   console.log("smeokef", feedItems);
 
   return (
-    <div style={{ position: "relative" }}>
-      <Navbar cart={cart} setCart={setCart}>
-        <Helmet>
-          <link
-            rel="canonical"
-            href="https://hairsncares.com/hair-care-blogs"
-          />
-        </Helmet>
+    <>
+      <SEO
+        useRouteData={true}
+        canonicalUrl="https://www.hairsncares.com/hair-care-blogs"
+      />
+      <div style={{ position: "relative" }}>
+        <Navbar cart={cart} setCart={setCart}>
         <div className="main-hero" style={{ marginBottom: "4rem" }}>
           <View1 navigate={navigate} category={category} content={content} />
         </div>
@@ -849,5 +848,6 @@ export default function AllBlog(props) {
         <ToastContainer position="bottom-right" />
       </Navbar>
     </div>
+    </>
   );
 }

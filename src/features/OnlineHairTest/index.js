@@ -19,7 +19,7 @@ import ShoppingFeature from "../shopping-feature/ShoppingFeature";
 import Navbar from "../nav/Navbar";
 import SouthIcon from "@mui/icons-material/South";
 import { useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import SEO from "../../components/SEO";
 
 const ViewDiv1 = ({ item }) => {
   const [ref, control] = useDivInView();
@@ -165,7 +165,12 @@ export default function OnlineHairTest(props) {
   
 
   return (
-    <Navbar>
+    <>
+      <SEO
+        useRouteData={true}
+        canonicalUrl="https://www.hairsncares.com/online-hair-loss-test-diagnosis-treatment"
+      />
+      <Navbar>
       <div
         className="d-flex flex-column"
         style={{ fontFamily: '"Poppins", sans-serif' }}
@@ -175,11 +180,7 @@ export default function OnlineHairTest(props) {
             background: "rgba(193, 237, 255, 1)",
             padding: "40px 0 0px 0",
           }}
-        >
-          <Helmet>
-            <link rel="canonical" href="https://hairsncares.com/online-hair-loss-test-diagnosis-treatment" />
-          </Helmet>
-          
+        >          
           <div className="d-flex flex-column container p-2">
             <div style={{ display: "flex", justifyContent: "center" }}>
               <motion.div
@@ -869,6 +870,7 @@ export default function OnlineHairTest(props) {
         <ShoppingFeature col={"1"} />
         <Footer />
       </div>
-    </Navbar>
+      </Navbar>
+    </>
   );
 }

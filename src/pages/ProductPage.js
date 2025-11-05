@@ -6,7 +6,6 @@ import SliderImage from "../features/video-slider/SliderImage";
 import Footer from "../features/footer/Footer";
 import { ToastContainer } from "react-toastify";
 import MiniCart from "./MiniCart";
-import { Helmet } from "react-helmet";
 import Breadcrumb from "../components/Breadcrumb";
 import SEO from "../components/SEO";
 import SEOLinkHub from "../components/SEOLinkHub";
@@ -148,15 +147,9 @@ function ProductPage(props) {
     <div style={{ position: "relative" }}>
       <SEO 
         useRouteData={true}
+        canonicalUrl="https://www.hairsncares.com/best-hair-care-products-hair-loss-scalp-health"
       />
       <Navbar cart={cart} setCart={setCart}>
-        <Helmet>
-          <link
-            rel="canonical"
-            href="https://hairsncares.com/best-hair-care-products-hair-loss-scalp-health"
-          />
-        </Helmet>
-
         <MiniCart
           isOpen={isCartOpen}
           onClose={toggleCart}

@@ -27,9 +27,6 @@
 User-agent: *
 Content-signal: search=yes,ai-input=yes,ai-train=no
 Allow: /
-# END Site content signals
-
-# General user-agent rules
 User-agent: *
 Allow: /
 

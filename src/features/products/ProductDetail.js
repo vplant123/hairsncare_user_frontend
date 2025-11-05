@@ -21,9 +21,9 @@ import ReactImageMagnify from "react-image-magnify";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { useMediaQuery } from "@mui/material";
 import ReactPaginate from "react-paginate";
-import { Helmet } from "react-helmet";
 import { generateProductSchema } from "../../utils/seoUtils";
 import Breadcrumb from "../../components/Breadcrumb";
+import SEO from "../../components/SEO";
 
 const findNearestWhitespace = (str, index) => {
   let left = index;
@@ -445,29 +445,51 @@ function ProductDetail(props) {
   )?.toFixed(0);
 
   // Generate product schema
+  const seoTitle =
+    product?.metaTitle ||
+    product?.name ||
+    "Product Details | HairsnCares";
+  const seoDescription =
+    product?.metaDesc ||
+    product?.shortDesc ||
+    product?.description ||
+    "Discover detailed information about HairsnCares hair care products, including benefits, ingredients, and usage.";
+  const seoKeywords =
+    product?.metaKeyword ||
+    product?.keywords ||
+    "hair care products, hairsncares products";
+  const canonicalUrl = product?.metaCanonical
+    ? product.metaCanonical.startsWith("http")
+      ? product.metaCanonical
+      : `https://www.hairsncares.com/${product.metaCanonical.replace(/^\/?/, "")}`
+    : undefined;
   const productSchema = product
     ? generateProductSchema({
-        name: product.name,
-        description: product.shortDes,
-        image: product.src?.[0] || "",
-        price: product.price,
-        discount: product.discount,
+        name: product?.name,
+        description: product?.metaDesc || product?.description,
+        image:
+          Array.isArray(product?.img) && product.img.length > 0
+            ? product.img[0]
+            : product?.image,
+        price: product?.price || product?.sellingPrice || product?.mrp,
       })
     : null;
 
   return (
     <>
-      <Helmet>
-        <link
-          rel="canonical"
-          href={`${window.location.origin}/${product?.metaCanonical}`}
-        />
-        {productSchema && (
-          <script type="application/ld+json">
-            {JSON.stringify(productSchema)}
-          </script>
-        )}
-      </Helmet>
+      <SEO
+        useRouteData={false}
+        title={seoTitle}
+        description={seoDescription}
+        keywords={seoKeywords}
+        canonicalUrl={canonicalUrl}
+        structuredData={productSchema || undefined}
+        ogImage={
+          Array.isArray(product?.img) && product.img.length > 0
+            ? product.img[0]
+            : product?.image
+        }
+      />
       <Navbar cart={cart} setCart={setCart} />
 
       <div className="container" style={{ marginTop: "20px" }}>

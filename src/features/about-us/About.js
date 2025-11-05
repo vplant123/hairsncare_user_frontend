@@ -7,7 +7,8 @@ import {
   RightAnimatedDiv,
   ZoomInDiv,
 } from "../../componet/Animation";
-import AboutUsLinks from "./components/AboutUsLinks";
+// import AboutUsLinks from "./components/AboutUsLinks";
+import SEOLinkHub from '../../components/SEOLinkHub';
 
 export default function About() {
   const navigate = useNavigate();
@@ -44,10 +45,7 @@ export default function About() {
         <div className="container">
           <div className="about-us-container">
             <LeftAnimatedDiv className="contect-us-heading">
-            
-              <h1 className="contect-us-heading">
-                {content?.section1?.title}
-              </h1>
+              <h1 className="contect-us-heading">{content?.section1?.title}</h1>
             </LeftAnimatedDiv>
             <ZoomInDiv>
               <img
@@ -229,17 +227,7 @@ export default function About() {
               dangerouslySetInnerHTML={{ __html: content?.section6?.desc }}
             />
           </ZoomInDiv>
-          {/* <p>
-            We are inspired by the success stories of our clients who have
-            regained their confidence and transformed their lives through our
-            comprehensive hair care programs. Hairsncares is dedicated to being
-            the trusted companion on your path to healthier, fuller hair.
-          </p>
-          <p>
-            Welcome to Hairsncares, where your hair health is our top priority.
-            Together, let's unlock the secrets to radiant, thriving hair and
-            embrace a life filled with confidence and vitality.
-          </p> */}
+
           <div className="commit-con">
             {content?.section6?.data?.map((e, ind) => {
               return (
@@ -269,11 +257,13 @@ export default function About() {
               VIEW PRODUCT RANGE
             </button>
           </div>
+           
         </div>
+         <SEOLinkHub 
+                      currentPage="/" 
+                      pageType="home"
+                    />
       </div>
-      
-      {/* Strategic Internal and External Links for SEO */}
-      <AboutUsLinks />
     </>
   );
 }

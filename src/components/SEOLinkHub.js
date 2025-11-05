@@ -388,7 +388,7 @@ export default function SEOLinkHub({
     ],
   };
 
-  // High-authority external links for SEO value
+  
   const authorityExternalLinks = [
     {
       href: "https://blogs.hairsncares.com/hair-care/how-to-treat-damaged-hair/",

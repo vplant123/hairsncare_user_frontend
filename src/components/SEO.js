@@ -2,13 +2,30 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useRouteSEO } from '../hooks/useRouteSEO';
 
+// Move the default structured data out of the parameter list to avoid
+// complex inline defaults which can sometimes lead to parser/lint issues.
+const DEFAULT_STRUCTURED_DATA = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Hairs N Cares",
+  "url": "https://www.hairsncares.com/",
+  "logo": "https://www.hairsncares.com/assets/img/logo.png",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "Customer Support",
+    "telephone": "+919136028327",
+    "areaServed": "IN",
+    "availableLanguage": "English"
+  }
+};
+
 const SEO = ({ 
   title, 
   description, 
   keywords, 
   ogImage = '/assets/img/logo.png',
   canonicalUrl,
-  structuredData,
+  structuredData = DEFAULT_STRUCTURED_DATA,
   useRouteData = true 
 }) => {
   const routeSEO = useRouteSEO();

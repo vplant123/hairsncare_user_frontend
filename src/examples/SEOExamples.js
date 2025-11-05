@@ -9,7 +9,7 @@ import Footer from '../features/footer/Footer';
 const YourPage = () => {
   return (
     <>
-      {/* This will automatically use the SEO data from routes.js based on current URL */}
+   
       <SEO useRouteData={true} />
       
       <Navbar>
@@ -21,11 +21,11 @@ const YourPage = () => {
   );
 };
 
-// Method 2: Override specific SEO fields while keeping route data as fallback
+
 const YourPageWithOverride = () => {
   return (
     <>
-      {/* Use route data but override description for this specific case */}
+    
       <SEO 
         useRouteData={true}
         description="Custom description that overrides route data"

@@ -14,40 +14,7 @@ function Disclaimer(props) {
   return (
     <Navbar>
       <SEO useRouteData={true} />
-      {/* <Helmet>
-        <title>
-          Disclaimer - HairsNCares | Online Hair Assessment & Scalp Analysis
-          Terms
-        </title>
-        <meta
-          name="description"
-          content="Read HairsNCares disclaimer for online hair assessment, scalp analysis & provisional diagnosis. Understand terms of use for our hair health portal & professional guidance requirements."
-        />
-        <meta
-          name="keywords"
-          content="HairsNCares disclaimer, hair assessment terms, scalp analysis disclaimer, online hair test terms, hair health portal disclaimer, provisional diagnosis terms, hair care disclaimer, medical advice disclaimer, hair consultation terms"
-        />
-        <meta name="robots" content="index, follow" />
-        <meta
-          property="og:title"
-          content="Disclaimer - HairsNCares | Online Hair Assessment Terms"
-        />
-        <meta
-          property="og:description"
-          content="Read HairsNCares disclaimer for online hair assessment, scalp analysis & provisional diagnosis. Understand terms of use for our hair health portal."
-        />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary" />
-        <meta
-          name="twitter:title"
-          content="Disclaimer - HairsNCares | Online Hair Assessment Terms"
-        />
-        <meta
-          name="twitter:description"
-          content="Read HairsNCares disclaimer for online hair assessment, scalp analysis & provisional diagnosis. Understand terms of use for our hair health portal."
-        />
-        <link rel="canonical" href="https://hairsncares.com/disclaimer" />
-      </Helmet> */}
+
       <div className="container">
         <h1
           style={{

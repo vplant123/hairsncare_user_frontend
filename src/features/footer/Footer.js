@@ -174,6 +174,7 @@ const Footer = () => {
               type="email"
               name="news_email"
               id="news_email"
+              class="p-2"
               placeholder="hairsncares@gmail.com"
             />
 

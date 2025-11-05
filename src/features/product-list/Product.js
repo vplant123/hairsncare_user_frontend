@@ -145,7 +145,8 @@ const ProductCard = ({ product, index, cart, setCart }) => {
           ) : (
             <></>
           )}{" "}
-          <img loading="lazy"
+          <img
+            loading="lazy"
             src={product.src?.[0]}
             alt={product.name}
             title={product.name}
@@ -397,12 +398,7 @@ function Product(props) {
         const response = await fetch(`${BASE_URL}/admin/product?review=4`);
         const data = await response.json();
         console.log("Products fetched:", data);
-        setProducts([
-          ...data.message,
-          // ...data.message,
-          // ...data.message,
-          // ...data.message,
-        ]); // Adjust according to your API response structure
+        setProducts([...data.message]);
         setStatus("idle");
       } catch (error) {
         console.error("Error fetching products:", error);

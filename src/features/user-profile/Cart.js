@@ -244,11 +244,15 @@ export default function Cart(props) {
                     return (
                       <li key={item?._id} className="cart-item">
                         <img loading="lazy" src={item?.item?.src?.[0]} alt={item?.item?.name} onClick={() => {
-                          navigate('/product-detail/' + item?.item.metaSlug ?? item.item._id, { id: item?.item._id })
+                          const slug = (item?.item?.metaSlug ?? item?.item?._id) ? String(item?.item?.metaSlug ?? item?.item?._id).toLowerCase() : '';
+                          navigate(`/product-detail/${encodeURIComponent(slug)}`, { id: item?.item?._id })
                         }} style={{ cursor: "pointer" }} />
                         <div className="cart-item-details">
                          
-                          <h3 onClick={() => navigate('/product-detail/' + item?.item.metaSlug ?? item.item._id, { id: item?.item._id })} style={{ cursor: "pointer" }}>{item?.item?.name}</h3>
+                          <h3 onClick={() => {
+                            const slug = (item?.item?.metaSlug ?? item?.item?._id) ? String(item?.item?.metaSlug ?? item?.item?._id).toLowerCase() : '';
+                            navigate(`/product-detail/${encodeURIComponent(slug)}`, { id: item?.item?._id })
+                          }} style={{ cursor: "pointer" }}>{item?.item?.name}</h3>
                       
                           <p>GST: {item?.item?.gst}%</p>
                           <p>Price:₹{Math.round(item?.item?.price - (item?.item?.price * Number(item?.item?.discount || 0) / 100))}</p>

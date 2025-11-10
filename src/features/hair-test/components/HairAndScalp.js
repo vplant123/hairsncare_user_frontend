@@ -1910,76 +1910,61 @@ export default function HairAndScalp({male,scrollToTop,data,testId, selectedOpti
               );
               console.log("jijewijre",isSelected,question,question.ques)
 
+              // For only two questions we want triangle visuals. Others remain circle.
+              const isTriangleQuestion =
+                question.ques === 'Course of Hair Loss?' ||
+                question.ques === 'Describe the rate at which your hair loss has occurred?';
+
+              const isSpecialOption =
+                (typeof option === 'string' && (option === 'Not Sure' || option === 'None' || option === 'Other')) ||
+                (typeof option !== 'string' && (option?.name === 'Not Sure' || option?.name === 'None' || option?.name === 'Other'));
+
+              const baseShapeClass = isTriangleQuestion
+                ? isSpecialOption
+                  ? 'triangle-02'
+                  : 'triangle-01'
+                : isSpecialOption
+                ? 'circle-02'
+                : 'circle-01';
+
               return (
                 <div key={optionIndex} className="option-container">
                   <div
-                    className={`option ${
-                      typeof option === "string"
-                        ? `${
-                            option?.name == "Not Sure" ||
-                            option?.name == "None" ||
-                            option?.name == "Other"
-                              ? "circle-02"
-                              : "circle-01"
-                          }`
-                        : ""
-                    } ${isSelected ? "selected-personal" : ""}`}
-                    onClick={() =>
-                      handleOptionSelect(option, question.ques, question.multi,question)
-                    }
+                    className={`option ${isTriangleQuestion ? 'triangle-wide-option' : ''} ${isSelected ? 'selected-personal' : ''}`}
+                    onClick={() => handleOptionSelect(option, question.ques, question.multi, question)}
                   >
-                    {typeof option === "string" ? (
+                    {typeof option === 'string' ? (
                       <>
-                      <Tooltip title={question?.title ? question?.title[optionIndex] : ""}><div
-                          className={`${
-                            option?.name == "Not Sure" ||
-                            option?.name == "None" ||
-                            option?.name == "Other"
-                              ? "circle-02"
-                              : "circle-01"
-                          }`}
-                        >
-                          {option}
-                        </div></Tooltip>
-                        
-                        {/* <div className="hide">
-                          {question?.title ? question?.title[optionIndex] : ""}
-                        </div> */}
+                        <Tooltip title={question?.title ? question?.title[optionIndex] : ''}>
+                          {isTriangleQuestion ? (
+                            <div className={baseShapeClass} data-text={option} />
+                          ) : (
+                            <div className={baseShapeClass}>{option}</div>
+                          )}
+                        </Tooltip>
                       </>
                     ) : (
                       <label>
                         {option.src ? (
                           <>
-                          <Tooltip title=                              {question?.title
-                                ? question?.title[optionIndex]
-                                : ""}>
-                          <img loading="lazy"
-                              className={`${
-                                option?.name == "Not Sure" ||
-                                option?.name == "None" ||
-                                option?.name == "Other"
-                                  ? "circle-02"
-                                  : "circle-01"
-                              }`}
-                              src={option.src}
-                              alt={option.name}
-                              style={{
-                                border : option.name == "Normal" ? "1px solid" : ""
-                              }}
-                            />
-                          </Tooltip>
-                            
-
-                            {/* <div className="hide">
-                              {question?.title
-                                ? question?.title[optionIndex]
-                                : ""}
-                            </div> */}
+                            <Tooltip title={question?.title ? question?.title[optionIndex] : ''}>
+                              <img
+                                loading="lazy"
+                                className={isTriangleQuestion ? (option?.name === 'Not Sure' || option?.name === 'None' || option?.name === 'Other' ? 'triangle-02' : 'triangle-01') : (option?.name === 'Not Sure' || option?.name === 'None' || option?.name === 'Other' ? 'circle-02' : 'circle-01')}
+                                src={option.src}
+                                alt={option.name}
+                                style={{ border: option.name == 'Normal' ? '1px solid' : '' }}
+                              />
+                            </Tooltip>
                           </>
                         ) : (
-                          <div className="circle-01 no-image option">
-                            {option.name}
-                          </div>
+                          isTriangleQuestion ? (
+                            <div className={`triangle-01 no-image option`} data-text={option.name} />
+                          ) : (
+                            <div className={`circle-01 no-image option`}>
+                              {option.name}
+                            </div>
+                          )
                         )}
                         <div>{option.name}</div>
                       </label>

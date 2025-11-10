@@ -37,7 +37,7 @@ export default function Page1({data}) {
       <div className='mobileView'>
         <div className="" style={{padding : "10px",position: "relative"}}>
           <div className="head-managereportN">
-            <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
+            <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" alt="HairsnCares logo" />
             <h2>Management Report</h2>
             <p>Smart Report</p>
           </div>

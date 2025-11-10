@@ -973,7 +973,7 @@ export default function Page3({ data }) {
             className="head-managereport d-flex"
             style={{ justifyContent: "space-between" }}
           >
-            <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
+            <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" alt="HairsnCares logo" />
             <div className="head-managereport-text1" style={{fontSize : "22px"}}>
               Hair & Scalp Treatment Recommendation
             </div>
@@ -986,7 +986,7 @@ export default function Page3({ data }) {
           </div> */}
 
           <div className="head-managereportN">
-            <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
+            <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" alt="HairsnCares logo" />
             <h2 className="">Hair & Scalp Treatment Recommendation</h2>
             <p>Smart Report</p>
           </div>
@@ -1274,7 +1274,7 @@ export default function Page3({ data }) {
               className="head-managereport d-flex"
               style={{ justifyContent: "space-between" }}
             >
-              <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
+              <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" alt="HairsnCares logo" />
               <div className="head-managereport-text1" style={{fontSize : "22px"}}>
                 Hair & Scalp Treatment Recommendation
               </div>
@@ -1287,7 +1287,7 @@ export default function Page3({ data }) {
             </div> */}
 
             <div className="head-managereportN">
-              <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
+              <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" alt="HairsnCares logo" />
               <h2 className="">Hair & Scalp Treatment Recommendation</h2>
               <p>Smart Report</p>
             </div>
@@ -1478,7 +1478,7 @@ export default function Page3({ data }) {
 <div className='d-flex flex-column page-break-2' style={{justifyContent : "space-between"}}>
 
 {/* <div className="head-managereport d-flex" style={{ justifyContent: "space-between" }}>
-  <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
+  <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" alt="HairsnCares logo" />
   <div className="head-managereport-text1" style={{fontSize : "22px"}}>
     Hair & Scalp Treatment Recommendation
   </div>
@@ -1489,7 +1489,7 @@ export default function Page3({ data }) {
   </div>
 </div> */}
 <div className="head-managereportN">
-  <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
+  <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" alt="HairsnCares logo" />
   <h2 className="">Hair & Scalp Treatment Recommendation</h2>
   <p>Smart Report</p>
 </div>

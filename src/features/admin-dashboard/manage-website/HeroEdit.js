@@ -312,7 +312,7 @@ export default function HeroEdit({ section1,
           {section1?.socialImg?.map((e, ind) => {
             return (
               <div>
-                <img loading="lazy" src={e} style={{ width: "25px", height: "25px" }} />
+                <img loading="lazy" src={e} alt={`social-icon-${ind}`} style={{ width: "25px", height: "25px" }} />
                 <input
                   type="file"
                   accept="image/*"

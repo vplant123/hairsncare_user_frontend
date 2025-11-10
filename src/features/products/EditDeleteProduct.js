@@ -816,7 +816,7 @@ function EditDeleteProduct() {
                 {imagesrc?.map((item, index) => {
                   return (
                     <div className='d-flex flex-column'>
-                      <img loading="lazy" src={item} />
+                      <img loading="lazy" src={item} alt={editData.name ? `${editData.name} image ${index+1}` : `product-image-${index}`} />
                       <button type="button" onClick={() => RemoveOriginalImg(index)}> Remove</button>
                     </div>
 

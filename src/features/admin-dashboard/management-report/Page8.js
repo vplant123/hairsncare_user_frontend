@@ -416,7 +416,7 @@ export default function Page8({value}) {
                return  <ul><li style={{fontSize:'1.4rem'}}><strong>{it.strong}</strong>{it.text}</li></ul>
            })}
         </div>
-        <div><img loading="lazy" style={{maxWidth:'100%'}} src='/untitled.jpg'/></div>
+  <div><img loading="lazy" style={{maxWidth:'100%'}} src='/untitled.jpg' alt="illustration"/></div>
         <table border="1" style={{ width: '100%', borderCollapse: 'collapse' }}>
       <thead>
         <tr>

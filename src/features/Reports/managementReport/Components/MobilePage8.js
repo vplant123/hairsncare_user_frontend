@@ -11,7 +11,7 @@ export default function Page8({data}) {
         <div className='mobileView' >
           <div className='page-8 mbpage-8'>
           <div className="head-managereportN">
-            <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
+            <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" alt="HairsnCares logo" />
             <h2 className="">Stress Management</h2>
             <p style={{margin: "0"}}>Smart Report</p>
           </div>
@@ -26,9 +26,9 @@ export default function Page8({data}) {
               </div>
 
               <div class="content" style={{height : "6rem"}}>
-                <div class="image">
-                    <img loading="lazy" src = "/assets/img/reports/management/page8/image7.png" style={{width : "100%",height : "auto"}} />
-                </div>
+          <div class="image">
+          <img loading="lazy" src = "/assets/img/reports/management/page8/image7.png" alt="stress illustration" style={{width : "100%",height : "auto"}} />
+        </div>
                 <div class="content-body">
                   <ul style={{paddingLeft : "13px"}}>
                     <li class="main-heading">
@@ -89,15 +89,15 @@ export default function Page8({data}) {
                     </li>
                   </ul>
                 </div>
-                <div class="image-reversee" style={{backgroundColor: "#47a8ef",display:"flex",alignItems : "center"}}>
-                    <img loading="lazy" src = "/assets/img/reports/management/page8/image2.png"  style={{width : "100%"}}/>
-                </div>
+          <div class="image-reversee" style={{backgroundColor: "#47a8ef",display:"flex",alignItems : "center"}}>
+          <img loading="lazy" src = "/assets/img/reports/management/page8/image2.png" alt="therapy illustration" style={{width : "100%"}}/>
+        </div>
               </div>
 
               <div class="content" style={{height : "8rem"}}>
-                <div class="image2">
-                    <img loading="lazy" src= "/assets/img/reports/management/page8/image3.png" style={{width : "100%",height : "auto"}} />
-                </div>
+          <div class="image2">
+          <img loading="lazy" src= "/assets/img/reports/management/page8/image3.png" alt="medication illustration" style={{width : "100%",height : "auto"}} />
+        </div>
                 <div class="content-body">
                   <ul style={{fontSize : "8px", paddingLeft:"13px"}} >
                     <li class="main-heading">
@@ -147,14 +147,14 @@ export default function Page8({data}) {
                     </li>
                   </ul>
                 </div>
-                <div class="image-reverse2">
-                    <img loading="lazy" src = "/assets/img/reports/management/page8/image4.png" style={{width : "100%",height : "auto"}} />
-                </div>
+          <div class="image-reverse2">
+          <img loading="lazy" src = "/assets/img/reports/management/page8/image4.png" alt="rehabilitation illustration" style={{width : "100%",height : "auto"}} />
+        </div>
               </div>
 
               <div class="content2" style={{height : "11rem"}}>
                 <div class="image3" style={{backgroundColor:"#47a8ef"}}>
-                <img loading="lazy" src = "/assets/img/reports/management/page8/image5.png" style={{width : "100%",height : "auto"}} />
+                <img loading="lazy" src = "/assets/img/reports/management/page8/image5.png" alt="stress-reduction" style={{width : "100%",height : "auto"}} />
                 </div>
                 <div class="content-body" style={{width : "60%"}}>
                   <ul style={{paddingLeft : "13px"}}>
@@ -217,16 +217,16 @@ export default function Page8({data}) {
                     </li>
                   </ul>
                 </div>
-                <div class="image-reverse3" style={{backgroundColor:"#47a8ef"}}>
-                <img loading="lazy" src = "/assets/img/reports/management/page8/image6.png" style={{width : "100%",height : "auto"}} />
+          <div class="image-reverse3" style={{backgroundColor:"#47a8ef"}}>
+        <img loading="lazy" src = "/assets/img/reports/management/page8/image6.png" alt="support-network" style={{width : "100%",height : "auto"}} />
 
-                </div>
+        </div>
               </div>
 
               <div class="content" style={{height : "5rem"}}>
                 <div class="image4">
                 
-                <img loading="lazy" src = "/assets/img/reports/management/page8/image7.png" style={{width : "100%",height : "auto"}} />
+                <img loading="lazy" src = "/assets/img/reports/management/page8/image7.png" alt="plan illustration" style={{width : "100%",height : "auto"}} />
 
                 </div>
                 <div class="content-body">

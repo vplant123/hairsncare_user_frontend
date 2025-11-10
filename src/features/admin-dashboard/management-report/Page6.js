@@ -1224,7 +1224,7 @@ export default function Page6({value}) {
         <h2 style={{textAlign:'center'}} className='nut-head' >{data.question3}</h2>
         {data.answer4&&data.answer4.map((item,index)=>{
         return  value==='Diet for PCOD'?<ul><li style={{fontSize:'1.4rem'}}>{item.text}</li></ul>
-          : <div className='tick-con'><img loading="lazy" className='tick' src='/tick mark.jpg'/><p key={index}>
+          : <div className='tick-con'><img loading="lazy" className='tick' src='/tick mark.jpg' alt="tick"/><p key={index}>
           
           {item.text}
        </p></div>

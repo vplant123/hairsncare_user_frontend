@@ -2,7 +2,7 @@
 export const routes = [
   {
     path: "/",
-    title: "Best Personalized Hair loss Treatment & Diagnosis | Hairs n Cares",
+    title: "Best Personalized Hair loss Treatment & Diagnosis",
     exact: true,
     desc: "Personalized hair loss treatment plans with expert diagnosis, hair care solutions, and effective hair growth management for lasting results.",
     keywords:

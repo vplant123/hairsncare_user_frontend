@@ -155,11 +155,16 @@ function SearchProduct({ isOpen, onClose, cart, setCart }) {
       <div className="mini-cart-content">
         {!status ? (products?.length > 0 ? (
           products?.map((item, index) => (
-            <div className="d-flex" style={{ gap: "10px", margin: "25px 0 25px 0", cursor: "pointer" }} onClick={(it) => navigate('/product-detail/' + item?.metaSlug ?? item._id, { id: item?._id })}>
+            <div className="d-flex" style={{ gap: "10px", margin: "25px 0 25px 0", cursor: "pointer" }} onClick={(it) => {
+              const slug = (item?.metaSlug ?? item?._id) ? String(item?.metaSlug ?? item?._id).toLowerCase() : '';
+              navigate(`/product-detail/${encodeURIComponent(slug)}`, { id: item?._id });
+            }}>
               <div className="d-flex">
-                <img loading="lazy"
+                <img
+                  loading="lazy"
                   style={{ width: "70px", height: "70px" }}
                   src={item?.src?.[0]}
+                  alt={item?.name || 'product image'}
                 />
               </div>
               <div className="d-flex flex-column">

@@ -78,7 +78,7 @@ const View1 = ({navigate,category,content}) => {
             backgroundColor: "#FFFFFF",
             padding: "12px"
       }}>
-        {content?.section1?.socialImg?.map((e, ind) => {
+            {content?.section1?.socialImg?.map((e, ind) => {
           return (
             <div onClick={() => {
               if (ind == 0) {
@@ -97,7 +97,7 @@ const View1 = ({navigate,category,content}) => {
                 window.open("https://x.com/hairsncare")
               }
             }} style={{ cursor: "pointer" }}>
-              <img loading="lazy" src={e} style={{ width: "25px", height: "25px" }} />
+              <img loading="lazy" src={e} alt={`social-icon-${ind}`} style={{ width: "25px", height: "25px" }} />
             </div>
           )
         })}
@@ -432,23 +432,24 @@ export default function Blog(props) {
             </div>
 
             <div className="row" style={{margin : "0 0 10px 0",cursor : "pointer" }} onClick={() => {
-              if(category?.img2Link){
-                window.open(category?.img2Link);
-              }
-              else navigate("/take-hair-test")
+                if(category?.img2Link){
+                  window.open(category?.img2Link);
+                }
+                else navigate("/take-hair-test")
             }}>
-                <img loading="lazy" src = {category?.img2 || "https://res.cloudinary.com/drkpwvnun/image/upload/v1731315867/hair-assessment/yxu8ajeb2xumgjp1pcxp.png"} />
+                <img loading="lazy" src = {category?.img2 || "https://res.cloudinary.com/drkpwvnun/image/upload/v1731315867/hair-assessment/yxu8ajeb2xumgjp1pcxp.png"} alt={category?.name || 'Banner - Click Here'} />
                 </div>
 
             <div className="row d-flex flex-column" style={{margin : 0,gap:"10px"}}>
                 <div>
                 <img loading="lazy"
                   src="https://res.cloudinary.com/drkpwvnun/image/upload/v1730046710/hair-assessment/kuyizxppnaldktuzvlbc.png"
+                  alt="Hair assessment banner"
                   style={{ height: "100%", width: "100%" }}
                 />
                 </div>
                 <div>
-                    <img loading="lazy" src = "https://res.cloudinary.com/drkpwvnun/image/upload/v1730046748/hair-assessment/n2q5d5ndjktz5keawba2.png"  style={{ height: "100%", width: "100%" }} />
+                    <img loading="lazy" src = "https://res.cloudinary.com/drkpwvnun/image/upload/v1730046748/hair-assessment/n2q5d5ndjktz5keawba2.png" alt="Hair assessment graphic" style={{ height: "100%", width: "100%" }} />
                 </div>
                 <div>
                 I’m Dr. Amit Agarkar, a dermatologist and trichologist with over 20 years of experience in helping people regain their hair and confidence. Let’s dive into a topic that affects millions of women—hair loss. It’s a common issue, but it doesn’t have to be your forever reality. Today, I’m going to break down why women experience hair loss, what you can do about it, and the treatments that work best based on my own professional experience
@@ -534,8 +535,8 @@ export default function Blog(props) {
             <div className="d-flex mt-3" style={{ gap: "2%",height: "100%" }}>
               <div className="blog-auth-img">
                 <img loading="lazy"
-                  src=              {blog?.authorImg}
-
+                  src={blog?.authorImg}
+                  alt={blog?.authorName || 'Author image'}
                   style={{ width: "100%", height: "100%" }}
                 />
               </div>
@@ -554,10 +555,11 @@ export default function Blog(props) {
               </div>
             </div>  
             
-            {blog?.img && <div className="blog-img-main mt-3">
+              {blog?.img && <div className="blog-img-main mt-3">
 
               <img loading="lazy"
                 src={blog?.img}
+                alt={blog?.title || 'Blog main image'}
                 style={{ width: "100%", height: "100%" }}
               />
             </div>}
@@ -616,9 +618,9 @@ export default function Blog(props) {
                   scrollToTop()
                   navigate(`/hair-care-blogs/${item?.category}/${item?.slug}`)
                 }}>
-                <div className="blog-sub-img">
-                    <img loading="lazy" src = {item?.img} style={{ width: "100%", height: "100%" }}/>
-                </div>
+        <div className="blog-sub-img">
+          <img loading="lazy" src = {item?.img} alt={item?.title || 'Blog image'} style={{ width: "100%", height: "100%" }}/>
+        </div>
                 <div className="blog-sub-img-text">
                 {item?.title}
                 </div>

@@ -134,7 +134,7 @@ function ProductList(props) {
   }, [isMobile, isLargeScreen]);
 
   const [loader, setLoader] = useState(false); // New state for discount
-  let { minValue, maxValue, rating, type, filter } = props;
+  let { minValue, maxValue, rating, type, filter, searchQuery } = props;
   let storedUserData = JSON.parse(localStorage.getItem("User343"));
   const userId = storedUserData?.logedInUser.user._id;
   const [cur, setCur] = useState(0);
@@ -154,11 +154,58 @@ function ProductList(props) {
     const fetchProducts = async () => {
       setStatus("loading");
       try {
-        const response = await fetch(
-          `${BASE_URL}/admin/product?review=${rating}&lessPrice=${minValue}&morePrice=${maxValue}&type=${type}&filter=${filter}&display=1`
-        );
+        // Build filter string from array
+        const filterString = filter.length > 0 ? filter.join(',') : '';
+        
+        // Build API URL with all parameters
+        let url = `${BASE_URL}/admin/product?review=${rating}&lessPrice=${minValue}&morePrice=${maxValue}&type=${type}&filter=${filterString}&display=1`;
+        
+        // Add search query if provided
+        if (searchQuery && searchQuery.trim()) {
+          url += `&search=${encodeURIComponent(searchQuery.trim())}`;
+        }
+        
+        const response = await fetch(url);
         const data = await response.json();
-        setProducts(data.message); // Adjust according to your API response structure
+        
+        // Client-side filtering for search if API doesn't support it
+        let filteredProducts = data.message || [];
+        
+        if (searchQuery && searchQuery.trim()) {
+          const query = searchQuery.toLowerCase().trim();
+          filteredProducts = filteredProducts.filter(product => {
+            const nameMatch = product.name?.toLowerCase().includes(query);
+            const descriptionMatch = product.description?.toLowerCase().includes(query);
+            
+            // Enhanced price search logic
+            let priceMatch = false;
+            const productPrice = product.price?.toString() || '';
+            const discountedPrice = product.discountedPrice?.toString() || '';
+            
+            // Direct price match
+            if (productPrice.includes(query) || discountedPrice.includes(query)) {
+              priceMatch = true;
+            }
+            
+            // If query is a number, check if it's within the price range
+            const queryAsNumber = parseFloat(query);
+            if (!isNaN(queryAsNumber)) {
+              const price = parseFloat(product.price) || 0;
+              const discPrice = parseFloat(product.discountedPrice) || price;
+              
+              // Check if query matches exact price or is within reasonable range
+              if (price === queryAsNumber || discPrice === queryAsNumber ||
+                  (queryAsNumber <= price && queryAsNumber >= (price * 0.8)) ||
+                  (queryAsNumber <= discPrice && queryAsNumber >= (discPrice * 0.8))) {
+                priceMatch = true;
+              }
+            }
+            
+            return nameMatch || priceMatch || descriptionMatch;
+          });
+        }
+        
+        setProducts(filteredProducts);
         setStatus("idle");
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -167,7 +214,7 @@ function ProductList(props) {
     };
 
     fetchProducts();
-  }, [minValue, maxValue, rating, type, filter]);
+  }, [minValue, maxValue, rating, type, filter, searchQuery]);
   console.log(products, "products");
 
   const handleAddToCart = async (product) => {
@@ -228,16 +275,52 @@ function ProductList(props) {
         </div>
       ) : status === "error" ? (
         <div>Error loading products</div>
+      ) : products && products.length === 0 ? (
+        <div className="no-products-found" style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '400px',
+          width: '100%',
+          textAlign: 'center',
+          fontSize: '18px',
+          color: '#666'
+        }}>
+          <div style={{
+            fontSize: '48px',
+            marginBottom: '20px',
+            color: '#ddd'
+          }}>
+            📦
+          </div>
+          <h3 style={{ 
+            margin: '0 0 10px 0',
+            fontSize: '24px',
+            color: '#333'
+          }}>
+            No Products Found
+          </h3>
+          <p style={{ 
+            margin: '0',
+            fontSize: '16px',
+            color: '#666'
+          }}>
+            Sorry, we couldn't find any products matching your criteria.
+          </p>
+        </div>
       ) : (
         <>
           {products
             ?.slice(cur * slide, (cur + 1) * slide)
             ?.map((product, index) => {
+              
               let disPercent = (
                 (parseFloat(product?.discount || 0) /
                   parseFloat(product?.price)) *
                 100
               )?.toFixed(0);
+              const slug = (product?.metaSlug ?? product?._id) ? String(product?.metaSlug ?? product?._id).toLowerCase() : '';
               return (
                 <div
                   className="product-item d-flex flex-column col-6 col-md-3"
@@ -266,12 +349,7 @@ function ProductList(props) {
                         // padding: "40px",
                       }
                     }
-                    onClick={() =>
-                      navigate(
-                        "/product-detail/" + product?.metaSlug ?? product._id,
-                        { id: product?._id }
-                      )
-                    }
+                    onClick={() => { navigate(`/product-detail/${encodeURIComponent(slug)}`, { id: product?._id }); }}
                     title={product?.name}
                     className="image-container-product-all"
                   >
@@ -309,12 +387,7 @@ function ProductList(props) {
                   >
                     <div
                       style={{ textAlign: "left", paddingBottom: "8px" }}
-                      onClick={() =>
-                        navigate(
-                          "/product-detail/" + product?.metaSlug ?? product._id,
-                          { id: product?._id }
-                        )
-                      }
+                      onClick={() => { navigate(`/product-detail/${encodeURIComponent(slug)}`, { id: product?._id }); }}
                     >
                       {product.name}
                     </div>
@@ -444,12 +517,7 @@ function ProductList(props) {
                     <div
                       style={{ textAlign: "left", paddingBottom: "8px" }}
                       className="d-flex"
-                      onClick={() =>
-                        navigate(
-                          "/product-detail/" + product?.metaSlug ?? product._id,
-                          { id: product?._id }
-                        )
-                      }
+                      onClick={() => { navigate(`/product-detail/${encodeURIComponent(slug)}`, { id: product?._id }); }}
                     >
                       <div style={{ fontWeight: "600" }}>
                         ₹{" "}

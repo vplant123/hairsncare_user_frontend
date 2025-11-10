@@ -9,7 +9,7 @@ export default function Page2({ data }) {
     <div className="page-avoid-1" style={{padding : "10px 0"}}>
 
     <div className="head-managereportN">
-        <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
+    <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" alt="HairsnCares logo" />
         <h2>Doctors  Analysis Report</h2>
         <p>Smart Report</p>
     </div>
@@ -22,7 +22,7 @@ export default function Page2({ data }) {
 
     <div className="d-flex darpanel" style={{gap : "3%"}}>
         <div style={{width: "35%",height : "180px"}} className="darcol">
-            <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page2/image2371177-pzv-500w.png" style={{width : "100%",height : "100%"}} />
+            <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page2/image2371177-pzv-500w.png" alt="Nutritional assessment illustration" style={{width : "100%",height : "100%"}} />
         </div>
 
         <div style={{width: "30%",fontSize: "9px"}} className="darcol">
@@ -30,7 +30,7 @@ export default function Page2({ data }) {
             instance, iron deficiency can weaken hair follicles, while inadequate zinc may lead to thinning. Our expert dermatologists have assessed your inputs and provided the following nutritional assessment.
         </div>
         <div style={{width: "30%",background : "rgba(190, 206, 55, 0.2)",borderRadius : "5%",display: "flex",flexDirection : "column",justifyContent : "center",alignItems: "center"}} className="darcol">
-            <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page2/image59627101182-iwz-200w.png" style={{ width : "100px" }} />
+            <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page2/image59627101182-iwz-200w.png" alt={data?.nutrition?.value ? `Nutrition score: ${data?.nutrition?.value}` : "Nutrition score icon"} style={{ width : "100px" }} />
             <div style={{padding : "0 25%",fontSize : "10px",fontWeight : "600",textAlign: "center"}}>
                 {data?.nutrition?.value || ""}
             </div>
@@ -53,7 +53,7 @@ export default function Page2({ data }) {
 
     <div className="d-flex darpanel" style={{gap : "3%"}}>
         <div style={{width: "35%",height : "180px"}} className="darcol">
-            <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page2/image2391189-qw7o-500h.png" style={{ height : "100%", width : "100%" }} />
+            <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page2/image2391189-qw7o-500h.png" alt="Lifestyle assessment illustration" style={{ height : "100%", width : "100%" }} />
         </div>
 
         <div style={{width: "30%",fontSize: "9px"}} className="darcol">
@@ -61,7 +61,7 @@ export default function Page2({ data }) {
             These factors disrupt hair growth cycles and affect circulation. Addressing these issues involves adopting healthier lifestyle practices. Our expert dermatologists have reviewed your inputs and provided a tailored nutritional assessment to
             support your hair health </div>
         <div style={{width: "30%",background : "rgba(190, 206, 55, 0.2)",borderRadius : "5%",display: "flex",flexDirection : "column",justifyContent : "center",alignItems: "center"}} className="darcol">
-            <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page2/image74795591194-o6xo-200h.png" style={{ width : "100px" }} />
+            <img loading="lazy" src="/assets/img/reports/doctorAnalysis/page2/image74795591194-o6xo-200h.png" alt={data?.lifeStyle?.value ? `Lifestyle score: ${data?.lifeStyle?.value}` : "Lifestyle score icon"} style={{ width : "100px" }} />
             <div style={{padding : "0 25%",fontSize : "10px",fontWeight : "600",textAlign: "center"}}>
                 {data?.lifeStyle?.value || ""}
             </div>
@@ -92,7 +92,7 @@ export default function Page2({ data }) {
             Stress-induced hair loss occurs when hair follicles shift from the active growth phase to the resting phase, resulting in increased shedding. Elevated cortisol levels disrupt follicle function and restrict blood flow to the scalp, affecting hair health.
             Managing stress through relaxation and support can help mitigate this impact. Finding: Your Stress Indicator score is 21. </div>
         <div style={{width: "30%",background : "rgba(190, 206, 55, 0.2)",borderRadius : "5%",display: "flex",flexDirection : "column",justifyContent : "center",alignItems: "center"}} className="darcol">
-            <img loading="lazy" src={`/assets/img/reports/doctorAnalysis/page2/${data?.stress?.src}`} style={{ width : "100px" }} />
+            <img loading="lazy" src={`/assets/img/reports/doctorAnalysis/page2/${data?.stress?.src}`} alt={data?.stress?.value ? `Stress level: ${data?.stress?.value}` : "Stress indicator image"} style={{ width : "100px" }} />
             <div style={{padding : "0 25%",fontSize : "10px",fontWeight : "600",textAlign: "center"}}>
                 {data?.stress?.value || ""}
             </div>

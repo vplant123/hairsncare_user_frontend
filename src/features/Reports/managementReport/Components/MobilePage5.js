@@ -13,7 +13,7 @@ export default function Page5({data}) {
           className="head-managereport d-flex"
           style={{ justifyContent: "space-between" }}
         >
-          <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
+          <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" alt="HairsnCares logo" />
           <div className="head-managereport-text1">Nutrition Management</div>
           <div
             className="text-flex-line-center-veritcal"
@@ -25,7 +25,7 @@ export default function Page5({data}) {
         
 
         <div className="head-managereportN">
-          <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
+          <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" alt="HairsnCares logo" />
           <h2 className="">Nutrition Management</h2>
           <p>Smart Report</p>
         </div>
@@ -255,7 +255,7 @@ export default function Page5({data}) {
           className="head-managereport d-flex"
           style={{ justifyContent: "space-between" }}
         >
-          <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
+          <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" alt="HairsnCares logo" />
           <div className="head-managereport-text1">Nutrition Management</div>
           <div
             className="text-flex-line-center-veritcal"
@@ -267,7 +267,7 @@ export default function Page5({data}) {
 
 
         <div className="head-managereportN">
-          <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
+          <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" alt="HairsnCares logo" />
           <h2 className="">Nutrition Management</h2>
           <p>Smart Report</p>
         </div>

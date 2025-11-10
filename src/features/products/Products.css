@@ -90,8 +90,7 @@
   display: none;
 }
 
-.hero-heading-11 {
-}
+
 
 .btn-prod {
   border: 1px solid rgba(0, 160, 227, 1);
@@ -205,7 +204,8 @@
   font-weight: 600;
   display: flex;
   align-self: flex-start;
-  margin-left: 2rem;
+  /* align with container / search bar - remove fixed left margin */
+  margin-left: 0;
 }
 
 .text-align{

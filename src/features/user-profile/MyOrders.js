@@ -231,7 +231,10 @@ export default function MyOrders(props) {
                         <h3>Items:</h3>
                         <ul>
                           {order?.products?.map((item, index) => (
-                            <li key={index} onClick={() => navigate('/product-detail/' + item?.item.metaSlug ?? item.item._id, { id: item?.item._id })} style={{ cursor: "pointer" }}>
+                            <li key={index} onClick={() => {
+                              const slug = (item?.item?.metaSlug ?? item?.item?._id) ? String(item?.item?.metaSlug ?? item?.item?._id).toLowerCase() : '';
+                              navigate(`/product-detail/${encodeURIComponent(slug)}`, { id: item?.item?._id })
+                            }} style={{ cursor: "pointer" }}>
                               {item?.item?.name} - Quantity: {item?.quantity || 1} - Price:{" "}
                               {item?.item?.price}
                             </li>

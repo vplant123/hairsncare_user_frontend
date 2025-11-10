@@ -299,9 +299,9 @@ console.log(data1[0],"api data")
   ))}</>:<p>Please wait</p>
 }
 {
-selectedTab === 'uploadedImages' &&<div>{data1?.UploadedImage?.map((e)=>{
+selectedTab === 'uploadedImages' &&<div>{data1?.UploadedImage?.map((e, idx)=>{
   return(
-    <img loading="lazy" style={{width:'400px',cursor:"pointer"}} src={e?.imageUrl} onClick={() => {
+    <img loading="lazy" style={{width:'400px',cursor:"pointer"}} src={e?.imageUrl} alt={e?.caption || `uploaded-image-${idx}`} onClick={() => {
       console.log("kmjodfr",e?.imageUrl)
       window.open(e?.imageUrl)
     }}/>

@@ -6,7 +6,7 @@ export default function Page1({ data }) {
   return (
       <div className="">
         <div className="head-managereportN">
-          <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" />
+          <img loading="lazy" src="/assets/img/logo.png" className="head-managereport-logo" alt="HairsnCares logo" />
           <h2>Doctors  Analysis Report</h2>
           <p>
             Smart Report

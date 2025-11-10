@@ -101,7 +101,8 @@ const Products = (props) => {
   const [maxValue, set_maxValue] = useState(50000);
   const [rating, setRating] = useState("");
   const [type, setType] = useState(0);
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const navigate = useNavigate();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -125,9 +126,18 @@ const Products = (props) => {
   };
 
   const handlerFilter = (e) => {
-    console.log("msorfojs", e?.target?.name)
-    if (filter == e?.target?.name) setFilter(null)
-    else setFilter(e?.target?.name?.toLowerCase())
+    const filterName = e?.target?.name?.toLowerCase();
+    if (filter.includes(filterName)) {
+      // Remove filter if already selected
+      setFilter(filter.filter(f => f !== filterName));
+    } else {
+      // Add filter if not selected
+      setFilter([...filter, filterName]);
+    }
+  }
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
   }
 
 
@@ -169,472 +179,315 @@ const Products = (props) => {
 
 
       <div className="container-Products container">
-        <div className="col-12 col-md-3">
-          {/* Content for the first column */}
-          {/* {isLargeScreen && <h4 className="filter-price-heading">FILTER BY PRICE</h4>} */}
-          <div className="row">
+        <div className="col-12 mainProduct">
+          {isLargeScreen && <div className="sortBylist">
+            {/* Sorting options can be added here if needed */}
+          </div>}
 
-            <div className="filter-price-11 d-flex flex-column" style={{ gap: "10px" }}>
-              <div className="d-flex" style={{ justifyContent: "space-between" }}>
-                <div style={{ fontWeight: "600" }}>Hair Concern</div>
-                {!isLargeScreen && <div onClick={() => handleMobileDropDownToggle(!dropDown)}>
-                  {
-                    dropDown ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
-                  }
-                </div>}
-              </div>
+          <div className="d-flex mt-1" style={{ justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "20px" }}>
+            <div className="custom-header" >Our Best Products</div>
+            <button onClick={handleMobileMenuToggle} style={{ margin: "0", cursor: "pointer", color: "rgba(114, 114, 114, 1)", fontSize: "12px" }} className="btn-d btn-prod ">Sort by Relevance</button>
+          </div>
 
-              {
-                !isLargeScreen && dropDown || isLargeScreen ? <>  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
-                  <input
-                    type="checkbox"
-                    name="Hair Loss Treatment for men"
-                    className="default-checkbox"
-                    checked={filter == ("Hair Loss Treatment for men")?.toLowerCase()}
-                    onChange={(e) => handlerFilter(e)}
-                  />
-                  <div>Hair Loss Treatment for men</div>
-                </div>
+          {/* Search Bar */}
+          <div className="search-bar-container" style={{ marginBottom: "20px" }}>
+            <input
+              type="text"
+              placeholder="Search products by name or price..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              style={{
+                width: "100%",
+                padding: "12px 16px",
+                border: "2px solid #e0e0e0",
+                borderRadius: "8px",
+                fontSize: "16px",
+                backgroundColor: "#fff",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                outline: "none",
+                transition: "all 0.3s ease",
+                fontFamily: "inherit"
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = "#005cad";
+                e.target.style.boxShadow = "0 2px 12px rgba(0,92,173,0.2)";
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = "#e0e0e0";
+                e.target.style.boxShadow = "0 2px 8px rgba(0,0,0,0.1)";
+              }}
+            />
+          </div>
 
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+          {/* Hair Concern Filters */}
+          <div className="filter-price-11 d-flex flex-column" style={{ gap: "10px", marginBottom: "20px", padding: "15px", backgroundColor: "#f8f9fa", borderRadius: "8px" }}>
+            <div className="d-flex" style={{ justifyContent: "space-between" }}>
+              <div style={{ fontWeight: "600", fontSize: "18px", color: "#333" }}>Hair Concern</div>
+              {!isLargeScreen && <div onClick={() => handleMobileDropDownToggle(!dropDown)}>
+                {
+                  dropDown ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
+                }
+              </div>}
+            </div>
+
+            {
+              !isLargeScreen && dropDown || isLargeScreen ? (
+                <div style={{ display: "grid", gridTemplateColumns: isLargeScreen ? "repeat(3, 1fr)" : "repeat(2, 1fr)", gap: "15px", marginTop: "10px" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
+                    <input
+                      type="checkbox"
+                      name="Hair Loss Treatment for men"
+                      className="default-checkbox"
+                      checked={filter.includes(("Hair Loss Treatment for men")?.toLowerCase())}
+                      onChange={(e) => handlerFilter(e)}
+                    />
+                    <div style={{ fontSize: "14px" }}>Hair Loss Treatment for men</div>
+                  </div>
+
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Hair Loss Treatment for women"
                       className="default-checkbox"
-                      checked={filter == ("Hair Loss Treatment for women")?.toLowerCase()}
+                      checked={filter.includes(("Hair Loss Treatment for women")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Hair Loss Treatment for women</div>
+                    <div style={{ fontSize: "14px" }}>Hair Loss Treatment for women</div>
                   </div>
 
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Dandruff Treatment"
                       className="default-checkbox"
-                      checked={filter == ("Dandruff Treatment")?.toLowerCase()}
+                      checked={filter.includes(("Dandruff Treatment")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Dandruff Treatment</div>
+                    <div style={{ fontSize: "14px" }}>Dandruff Treatment</div>
                   </div>
 
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Gray Hair Care"
                       className="default-checkbox"
-                      checked={filter == ("Gray Hair Care")?.toLowerCase()}
+                      checked={filter.includes(("Gray Hair Care")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Gray Hair Care</div>
+                    <div style={{ fontSize: "14px" }}>Gray Hair Care</div>
                   </div>
 
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Damaged Hair"
                       className="default-checkbox"
-                      checked={filter == ("Damaged Hair")?.toLowerCase()}
+                      checked={filter.includes(("Damaged Hair")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Damaged Hair</div>
+                    <div style={{ fontSize: "14px" }}>Damaged Hair</div>
                   </div>
 
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Hair Supplements"
                       className="default-checkbox"
-                      checked={filter == ("Hair Supplements")?.toLowerCase()}
-                      // checked={scalp.includes('Oily Scalp'))?.toLowerCase()}
+                      checked={filter.includes(("Hair Supplements")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Hair Supplements</div>
+                    <div style={{ fontSize: "14px" }}>Hair Supplements</div>
                   </div>
 
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Ayurvedic Products"
                       className="default-checkbox"
-                      checked={filter == ("Ayurvedic Products")?.toLowerCase()}
+                      checked={filter.includes(("Ayurvedic Products")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Ayurvedic Products</div>
+                    <div style={{ fontSize: "14px" }}>Ayurvedic Products</div>
                   </div>
 
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Color-Treated Hair"
                       className="default-checkbox"
-                      checked={filter == ("Color-Treated Hair")?.toLowerCase()}
+                      checked={filter.includes(("Color-Treated Hair")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Color-Treated Hair</div>
+                    <div style={{ fontSize: "14px" }}>Color-Treated Hair</div>
                   </div>
 
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Heat Damage Control"
                       className="default-checkbox"
-                      checked={filter == ("Heat Damage Control")?.toLowerCase()}
+                      checked={filter.includes(("Heat Damage Control")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Heat Damage Control</div>
+                    <div style={{ fontSize: "14px" }}>Heat Damage Control</div>
                   </div>
 
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Thyroid- Stress"
                       className="default-checkbox"
-                      checked={filter == ("Thyroid- Stress")?.toLowerCase()}
+                      checked={filter.includes(("Thyroid- Stress")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Thyroid- Stress</div>
+                    <div style={{ fontSize: "14px" }}>Thyroid- Stress</div>
                   </div>
 
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="PCOS- Hormone"
                       className="default-checkbox"
-                      checked={filter == ("PCOS- Hormone")?.toLowerCase()}
+                      checked={filter.includes(("PCOS- Hormone")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>PCOS- Hormone</div>
+                    <div style={{ fontSize: "14px" }}>PCOS- Hormone</div>
                   </div>
 
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Anemia"
                       className="default-checkbox"
-                      checked={filter == ("Anemia")?.toLowerCase()}
+                      checked={filter.includes(("Anemia")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Anemia</div>
+                    <div style={{ fontSize: "14px" }}>Anemia</div>
                   </div>
 
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Oily Scalp"
                       className="default-checkbox"
-                      checked={filter == ("Oily Scalp")?.toLowerCase()}
+                      checked={filter.includes(("Oily Scalp")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Oily Scalp</div>
+                    <div style={{ fontSize: "14px" }}>Oily Scalp</div>
                   </div>
 
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Dry Scalp"
                       className="default-checkbox"
-                      checked={filter == ("Dry Scalpp")?.toLowerCase()}
+                      checked={filter.includes(("Dry Scalp")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Dry Scalp</div>
+                    <div style={{ fontSize: "14px" }}>Dry Scalp</div>
                   </div>
 
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Sensitive Scalp"
                       className="default-checkbox"
-                      checked={filter == ("Sensitive Scalp")?.toLowerCase()}
+                      checked={filter.includes(("Sensitive Scalp")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Sensitive Scalp</div>
+                    <div style={{ fontSize: "14px" }}>Sensitive Scalp</div>
                   </div>
 
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Normal Scalp"
                       className="default-checkbox"
-                      checked={filter == ("Normal Scalp")?.toLowerCase()}
+                      checked={filter.includes(("Normal Scalp")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Normal Scalp</div>
+                    <div style={{ fontSize: "14px" }}>Normal Scalp</div>
                   </div>
 
-
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Straight Hair"
                       className="default-checkbox"
-                      checked={filter == ("Straight Hair")?.toLowerCase()}
+                      checked={filter.includes(("Straight Hair")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Straight Hair </div>
+                    <div style={{ fontSize: "14px" }}>Straight Hair</div>
                   </div>
 
-
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Wavy Hair"
                       className="default-checkbox"
-                      checked={filter == ("Wavy Hair")?.toLowerCase()}
+                      checked={filter.includes(("Wavy Hair")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Wavy Hair</div>
+                    <div style={{ fontSize: "14px" }}>Wavy Hair</div>
                   </div>
 
-
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Curly Hair"
                       className="default-checkbox"
-                      checked={filter == ("Curly Hair")?.toLowerCase()}
+                      checked={filter.includes(("Curly Hair")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Curly Hair</div>
+                    <div style={{ fontSize: "14px" }}>Curly Hair</div>
                   </div>
 
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Coily/Kinky Hair"
                       className="default-checkbox"
-                      checked={filter == ("Coily/Kinky Hair")?.toLowerCase()}
+                      checked={filter.includes(("Coily/Kinky Hair")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Coily/Kinky Hair</div>
+                    <div style={{ fontSize: "14px" }}>Coily/Kinky Hair</div>
                   </div>
 
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Dull Hair"
                       className="default-checkbox"
-                      checked={filter == ("Dull Hair")?.toLowerCase()}
+                      checked={filter.includes(("Dull Hair")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Dull Hair</div>
+                    <div style={{ fontSize: "14px" }}>Dull Hair</div>
                   </div>
 
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Frizzy Hair"
                       className="default-checkbox"
-                      checked={filter == ("Frizzy Hair")?.toLowerCase()}
+                      checked={filter.includes(("Frizzy Hair")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Frizzy Hair</div>
+                    <div style={{ fontSize: "14px" }}>Frizzy Hair</div>
                   </div>
 
-                  <div className="d-flex" style={{ gap: "15px", alignItems: "center" }}>
+                  <div className="d-flex" style={{ gap: "10px", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       name="Split End"
                       className="default-checkbox"
-                      checked={filter == ("Split End")?.toLowerCase()}
+                      checked={filter.includes(("Split End")?.toLowerCase())}
                       onChange={(e) => handlerFilter(e)}
-
                     />
-                    <div>Split End</div>
-                  </div></> : <></>
-              }
-
-
-            </div>
-            {/* {isLargeScreen && <div className="filter-price col-12">
-              <h4>PRICE</h4>
-              <MultiRangeSlider
-                min={0}
-                max={50000}
-                step={21}
-                minValue={minValue}
-                maxValue={maxValue}
-                onInput={(e) => {
-                  handleInput(e);
-                }}
-              />
-              <h4>
-                Rs {minValue} - Rs {maxValue}
-              </h4>
-            </div>}
-            {isLargeScreen && <div className="fiter-rating col-12">
-              <h4>FILTER BY RATING</h4>
-              <label className="rating-lebel">
-                <input
-                  type="checkbox"
-                  value="4plus"
-                  checked={rating == 4}
-                  onClick={() => {
-                    if (rating == 4) setRating("");
-                    else setRating(4);
-                  }}
-                />
-                4 Stars and Above
-              </label>
-              <label className="rating-lebel">
-                <input
-                  type="checkbox"
-                  value="below3"
-                  checked={rating == 3}
-                  onClick={() => {
-                    if (rating == 3) setRating("");
-                    else setRating(3);
-                  }}
-                />
-                3 Stars and Above
-              </label>
-              <label className="rating-lebel">
-                <input
-                  type="checkbox"
-                  value="below3"
-                  checked={rating == 2}
-                  onClick={() => {
-                    if (rating == 3) setRating("");
-                    else setRating(3);
-                  }}
-                />
-                2 Stars and Above
-              </label>
-              <label className="rating-lebel lavel">
-                <input
-                  type="checkbox"
-                  value="below3"
-                  checked={rating == 1}
-                  onClick={() => {
-                    if (rating == 3) setRating("");
-                    else setRating(3);
-                  }}
-                />
-                1 Stars and Above
-              </label>
-            </div>} 
-            <div className="col-12">
-              <img loading="lazy"
-                alt="hair"
-                src="/assets/img/banner-2.png"
-                style={{ width: "100%" }}
-              />
-            </div>
-            */}
-          </div>
-        </div>
-        <div className="col-12 col-md-9 mainProduct">
-          {isLargeScreen && <div className="sortBylist">
-            {/* <ul className="nav-tabs" id="myTab" role="tablist">
-              <li>
-                <a href="#" className="text-uppercase">
-                  Sort By:
-                </a>
-              </li> */}
-            {/* <li className="nav-item" role="presentation">
-                <a
-                  className={`nav-link-1 ${type == 0 ? "active" : ""}`}
-                  id="relevant-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#relevant"
-                  href="#"
-                  role="tab"
-                  aria-controls="relevant"
-                  aria-selected="true"
-                  onClick={() => setType(0)}
-                  style={{
-                    padding: "5px 0 0 10px",
-                  }}
-                >
-                  Relevant Products<span className="arrow-down"></span>
-                </a>
-              </li> */}
-            {/* <li className="nav-item" role="presentation">
-                <a
-                  className={`nav-link-1 ${type == 1 ? "active" : ""}`}
-                  id="popular-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#popular"
-                  href="#"
-                  role="tab"
-                  aria-controls="popular"
-                  aria-selected="false"
-                  onClick={() => setType(1)}
-                  style={{
-                    padding: "5px 0 0 10px",
-                  }}
-                >
-                  Popular Products{" "}
-                  <span className="arrow-down arrow-down-one"></span>
-                </a>
-              </li>
-              <li className="nav-item" role="presentation">
-                <a
-                  className={`nav-link-1 ${type == 2 ? "active" : ""}`}
-                  id="latest-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#latest"
-                  href="#"
-                  role="tab"
-                  aria-controls="latest"
-                  aria-selected="false"
-                  onClick={() => setType(2)}
-                  style={{
-                    padding: "5px 0 0 10px",
-                  }}
-                >
-                  Latest Products
-                  <span className="arrow-down arrow-down-two"></span>
-                </a>
-              </li>
-              <li className="nav-item" role="presentation">
-                <a
-                  className={`nav-link-1 ${type == 3 ? "active" : ""}`}
-                  id="kit-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#kit"
-                  href="#"
-                  role="tab"
-                  aria-controls="kit"
-                  aria-selected="false"
-                  onClick={() => setType(3)}
-                  style={{
-                    padding: "5px 0 0 10px",
-                  }}
-                >
-                  Kits <span className="arrow-down arrow-down-two"></span>
-                </a>
-              </li> */}
-            {/* </ul> */}
-          </div>}
-
-
-          <div className="d-flex mt-1" style={{ justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "20px" }}>
-            <div className="custom-header" >Our Best Products</div>
-
-            <button onClick={handleMobileMenuToggle} style={{ margin: "0", cursor: "pointer", color: "rgba(114, 114, 114, 1)", fontSize: "12px" }} className="btn-d btn-prod ">Sort by Relevance</button>
-
+                    <div style={{ fontSize: "14px" }}>Split End</div>
+                  </div>
+                </div>
+              ) : null
+            }
           </div>
 
           {/* <div
@@ -678,6 +531,7 @@ const Products = (props) => {
             setCart={setCart}
             toggleCart={props?.toggleCart}
             filter={filter}
+            searchQuery={searchQuery}
           />
         </div>
       </div>

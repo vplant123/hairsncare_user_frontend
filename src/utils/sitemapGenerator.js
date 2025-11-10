@@ -41,9 +41,10 @@ export const generateSitemapXML = (routes, products = [], blogs = []) => {
 
   // Add product pages
   products.forEach(product => {
+    const slug = (product?.metaSlug ?? product?._id) ? String(product?.metaSlug ?? product?._id).toLowerCase() : '';
     sitemap += `
   <url>
-    <loc>${baseURL}/product-detail/${product?.metaSlug ?? product._id}</loc>
+    <loc>${baseURL}/product-detail/${encodeURIComponent(slug)}</loc>
     <lastmod>${currentDate}</lastmod>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>

@@ -190,7 +190,7 @@ console.log("smrfkmer",data)
           </div>
         </div>
         <div className="mobile-ui-img-div" style={{textAlign : "center"}}>
-          <img loading="lazy" src = "/assets/img/Report Image (1).png" className="mobile-ui-img" style={{maxWidth : "60%"}}/>
+          <img loading="lazy" src = "/assets/img/Report Image (1).png" className="mobile-ui-img" alt="Report preview" style={{maxWidth : "60%"}}/>
         </div>
         <div className="intro-report">
           <h1 style={{color:"#008bff"}}>Welcome to the hairsncares.com – YOUR HAIR EXPERT!</h1>
@@ -248,7 +248,7 @@ console.log("smrfkmer",data)
                 justifyContent: "center",
               }}
             >
-              <img loading="lazy" src="\2.png" />
+              <img loading="lazy" src="\2.png" alt="diagnosis image" />
               
               <div className='diag'>
                 {data?.dianosis?.map((item)=>{
@@ -316,7 +316,7 @@ console.log("smrfkmer",data)
               }}
             >
 
-          <img loading="lazy" src={data?.nutrition?.src} />
+          <img loading="lazy" src={data?.nutrition?.src} alt={data?.nutrition?.value ? `Nutrition: ${data?.nutrition?.value}` : 'Nutrition image'} />
           <h2>{data?.nutrition?.value}</h2>
             </div>
 
@@ -356,7 +356,7 @@ console.log("smrfkmer",data)
               }}
             >
 
-          <img loading="lazy" src={data?.lifeStyle?.src} />
+          <img loading="lazy" src={data?.lifeStyle?.src} alt={data?.lifeStyle?.value ? `Lifestyle: ${data?.lifeStyle?.value}` : 'Lifestyle image'} />
           <h2>{data?.lifeStyle?.value}</h2>
             </div>
           <p>
@@ -401,7 +401,7 @@ console.log("smrfkmer",data)
                 justifyContent: "center",
               }}
             >
- <img loading="lazy" src={data?.stress?.src} />
+ <img loading="lazy" src={data?.stress?.src} alt={data?.stress?.value ? `Stress: ${data?.stress?.value}` : 'Stress image'} />
  <h2>{data?.stress?.value}</h2>
             </div>
 

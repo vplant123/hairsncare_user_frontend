@@ -26,6 +26,10 @@
   border: none;
   font-weight: 600;
   transition: all 0.3s ease 0s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 .primary {
   background-color: #fbd84e;
@@ -157,6 +161,16 @@
   border: none;
   font-weight: 600;
   transition: all 0.3s ease 0s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn11 h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .btn11:hover {
@@ -164,14 +178,87 @@
   cursor: pointer;
 }
 
+/* Tablet styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .hero-btn {
+    gap: 10px;
+    margin-top: 1.5rem;
+    flex-direction: row;
+  }
+  
+  .btn11 {
+    padding: 12px 18px;
+    height: auto;
+    min-height: 50px;
+    flex: 1;
+  }
+  
+  .btn11 h2 {
+    font-size: 14px !important;
+    margin: 0 !important;
+    line-height: 1.2;
+  }
+  
+  .btn {
+    padding: 12px 18px;
+    height: auto;
+    min-height: 50px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+  
+  .hero-content {
+    padding: 0 2rem;
+  }
+  
+  .hero-heading {
+    width: 55%;
+  }
+}
+
 @media (max-width: 768px) {
   .hero-btn{
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-top: 1.5rem;
+    width: 100%;
+    justify-content: center;
   }
+  
   .btn11 {
-    height: 100%;
+    height: auto;
+    min-height: 45px;
+    padding: 10px 15px;
+    flex: 1;
+    max-width: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
+  
+  .btn11 h2 {
+    font-size: 12px !important;
+    margin: 0 !important;
+    line-height: 1.2;
+    text-align: center;
+  }
+  
+  .btn {
+    height: auto;
+    min-height: 45px;
+    padding: 10px 15px;
+    flex: 1;
+    max-width: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+  
   .hero-content {
     flex-direction: column;
     align-items: center;
@@ -209,5 +296,26 @@
   }
   .second-image-t2 {
     font-size: 1.2rem;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .btn11 h2 {
+    font-size: 10px !important;
+  }
+  
+  .btn {
+    font-size: 10px;
+  }
+  
+  .hero-btn {
+    gap: 8px;
+  }
+  
+  .btn11, .btn {
+    padding: 8px 12px;
+    min-height: 40px;
+    max-width: 160px;
   }
 }

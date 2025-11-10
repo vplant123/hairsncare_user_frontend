@@ -141,16 +141,33 @@ function Navbar({ children, cart, setCart }) {
               </div>
             </a>
             <a className="who-we-link-1">
-              <NavLink
-                activeClassName="active"
-                onClick={() => setActive(!active)}
-              >
-                OUR EXPERTISE
-              </NavLink>
-              <div
-                className="sub-link-3"
-                style={{ display: active ? "block" : "none" }}
-              >
+              {/* "OUR EXPERTISE" is a toggle that shows sub-links. Previously it used a NavLink without a `to` prop which could be
+                  treated as active (especially with older react-router versions). Replace with a button and compute active state
+                  based on the current pathname so it only appears active when on one of the expertise child routes. */}
+              {(() => {
+                const expertisePaths = [
+                  "/effective-hair-loss-treatment-men",
+                  "/hair-loss-women-causes-treatments-remedies",
+                  "/hair-transplants-fue-dhi-mhi-natural-restoration",
+                  "/advanced-hair-loss-solutions-prp-smp-cloning-systems",
+                ];
+                const isExpertiseActive = expertisePaths.some((p) =>
+                  location.pathname.startsWith(p)
+                );
+
+                return (
+                  <button
+                    type="button"
+                    className={isExpertiseActive ? "active" : ""}
+                    onClick={() => setActive(!active)}
+                    style={{ background: "transparent", border: "none", cursor: "pointer" }}
+                  >
+                    OUR EXPERTISE
+                  </button>
+                );
+              })()}
+
+              <div className="sub-link-3" style={{ display: active ? "block" : "none" }}>
                 <p
                   onClick={() => navigate("/effective-hair-loss-treatment-men")}
                 >

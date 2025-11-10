@@ -232,13 +232,13 @@ options:['13-25','25-40','40+']
             questions: [
                 {
                     ques: 'Course of Hair Loss?',
-                    options: ['Acute', 'Chronic Intermittent', 'Chronic Persistent'],
-                    title: ['Acute (sudden and significant loss of hair within a relatively short period)', 'Chronic Intermittent (long-lasting and periodic hair loss)', 'Chronic Persistent (long-lasting and continuous hair loss)']
+                    options: ['Sudden / Significant Hair Loss', 'Long Lasting & Periodic Hair Loss', 'Long Lasting & Continuous Hair Loss'],
+                    title: ['Sudden / Significant Hair Loss', 'Long Lasting & Periodic Hair Loss', 'Long Lasting & Continuous Hair Loss']
                 },
                 {
                     ques: 'Describe the rate at which your hair loss has occurred?',
-                    options: ['Fast progressive hair loss', 'Slow progressive hair loss'],
-                    title: ['Fast progressive hair loss (rapid, more apparent and noticeable)', 'Slow progressive hair loss (gradual, steady rate, less apparent and Unnoticeable)']
+                    options: ['Rapid, More Apparent Noticeable Hairloss', 'Gradual, Steady Rate, Less Apparent & Unnoticeable'],
+                    title: ['Rapid, More Apparent Noticeable Hairloss', 'Gradual, Steady Rate, Less Apparent & Unnoticeable']
                 },
                 {
                     ques: 'Since how long have you been experiencing hair loss?',
@@ -713,13 +713,13 @@ options:'input'
             questions: [
                 {
                     ques: 'Course of Hair Loss?',
-                    options: ['Acute', 'Chronic Intermittent', 'Chronic Persistent'],
-                    title: ['Acute (sudden and significant loss of hair within a relatively short period)', 'Chronic Intermittent (long-lasting and periodic hair loss)', 'Chronic Persistent (long-lasting and continuous hair loss)']
+                    options: ['Sudden / Significant Hair Loss', 'Long Lasting & Periodic Hair Loss', 'Long Lasting & Continuous Hair Loss'],
+                    title: ['Sudden / Significant Hair Loss', 'Long Lasting & Periodic Hair Loss', 'Long Lasting & Continuous Hair Loss']
                 },
                 {
                     ques: 'Describe the rate at which your hair loss has occurred?',
-                    options: ['Fast progressive hair loss', 'Slow progressive hair loss'],
-                    title: ['Fast progressive hair loss (rapid, more apparent and noticeable)', 'Slow progressive hair loss (gradual, steady rate, less apparent and Unnoticeable)']
+                    options: ['Rapid, More Apparent Noticeable Hairloss', 'Gradual, Steady Rate, Less Apparent & Unnoticeable'],
+                    title: ['Rapid, More Apparent Noticeable Hairloss', 'Gradual, Steady Rate, Less Apparent & Unnoticeable']
                 },
                 {
                     ques: 'Since how long have you been experiencing hair loss?',

@@ -153,9 +153,8 @@ const ProductCard = ({ product, index, cart, setCart }) => {
             style={{ height: "200px" }}
             onClick={() => {
               scrollToTop();
-              navigate("/product-detail/" + product?.metaSlug ?? product._id, {
-                id: product?._id,
-              });
+              const slug = (product?.metaSlug ?? product?._id) ? String(product?.metaSlug ?? product?._id).toLowerCase() : '';
+              navigate(`/product-detail/${encodeURIComponent(slug)}`, { id: product?._id });
             }}
           />
         </div>
@@ -167,11 +166,10 @@ const ProductCard = ({ product, index, cart, setCart }) => {
               fontWeight: "500",
             }}
             onClick={() => {
-              scrollToTop();
-              navigate("/product-detail/" + product?.metaSlug ?? product._id, {
-                id: product?._id,
-              });
-            }}
+                scrollToTop();
+                const slug = (product?.metaSlug ?? product?._id) ? String(product?.metaSlug ?? product?._id).toLowerCase() : '';
+                navigate(`/product-detail/${encodeURIComponent(slug)}`, { id: product?._id });
+              }}
           >
             {product.name}
           </div>
@@ -184,11 +182,10 @@ const ProductCard = ({ product, index, cart, setCart }) => {
               justifyContent: "center",
               gap: "10px",
             }}
-            onClick={() => {
+                        onClick={() => {
               scrollToTop();
-              navigate("/product-detail/" + product?.metaSlug ?? product._id, {
-                id: product?._id,
-              });
+              const slug = (product?.metaSlug ?? product?._id) ? String(product?.metaSlug ?? product?._id).toLowerCase() : '';
+              navigate(`/product-detail/${encodeURIComponent(slug)}`, { id: product?._id });
             }}
           >
             ₹{" "}

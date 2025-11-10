@@ -1257,7 +1257,7 @@ export default function Page5({value}) {
           </>
         })}
         <h2 className='nut-head'>{data.question1}</h2>
-        <div className='tick-con'><img loading="lazy" className='tick' src='/tick mark.jpg'/><h2>{data.mainAnswer1}</h2></div>
+    <div className='tick-con'><img loading="lazy" className='tick' src='/tick mark.jpg' alt="tick"/><h2>{data.mainAnswer1}</h2></div>
         {/* {data.answer1.map((item,index)=>{
           return    <p key={index}>
           <strong className='nut-head'>{item.strong}</strong> 
@@ -1291,7 +1291,7 @@ export default function Page5({value}) {
     return <ul style={{marginLeft:"4rem"}}><li style={{fontSize:'1.4rem'}} >{ite.text}</li></ul>
    })}
 
-       <div className='tick-con'><img loading="lazy" className='tick' src='/cross mark.jpg'/> <h2 >{data.mainAnswer2}</h2></div>
+  <div className='tick-con'><img loading="lazy" className='tick' src='/cross mark.jpg' alt="cross"/> <h2 >{data.mainAnswer2}</h2></div>
         {data.answer2.map((item,index)=>{
           return    <p key={index}>
           <strong className='nut-head'>{item.strong}</strong> 

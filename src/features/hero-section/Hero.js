@@ -114,6 +114,8 @@ const HeroSection = ({
                     style={{
                       textDecoration: "none",
                       color: "black",
+                      border: "none",
+                      
                     }}
                   >
                     {" "}

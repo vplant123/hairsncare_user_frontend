@@ -444,12 +444,12 @@ function Product(props) {
       </div>
       <div
         className="view-all-product animate__animated animate__fadeInDown"
-        style={{ animationDelay: "0.2s" }}
+        style={{ animationDelay: "0.2s", textAlign: "center", display: "flex", justifyContent: "center", width: "100%" }}
       >
         <button
           onClick={handleViewAll}
           className="btn primary"
-          style={{ background: "#4b555c", color: "white" }}
+          style={{ background: "#4b555c", color: "white", margin: 0 }} 
         >
           VIEW ALL PRODUCTS
         </button>

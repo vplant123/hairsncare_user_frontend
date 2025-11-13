@@ -133,7 +133,8 @@ function GrowthTransition() {
           />
         ))}
       </div>
-      <div className="growth-btn">
+      <div className="growth-btn"
+      style={{ animationDelay: "0.2s", textAlign: "center", display: "flex", justifyContent: "center", width: "100%" }}>
         <button
           className="btn primary"
           onClick={() => navigate("/take-hair-test")}

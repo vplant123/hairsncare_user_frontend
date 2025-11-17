@@ -108,6 +108,7 @@ const Products = (props) => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const isLargeScreen = useMediaQuery('(min-width:1200px)');
   const [dropDown, setDropDown] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
 
   const handleMobileMenuToggle = () => {
     console.log("jojeojfer", showMobileMenu)
@@ -138,6 +139,10 @@ const Products = (props) => {
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
+  }
+
+  const toggleFilters = () => {
+    setShowFilters(!showFilters);
   }
 
 
@@ -173,7 +178,7 @@ const Products = (props) => {
       </div>
 
 
-      <div className='main-hero' style={{ marginBottom: "4rem" }}>
+      <div className='main-hero' style={{ marginBottom: "1rem" }}>
         <View1 navigate={navigate} />
       </div>
 
@@ -186,7 +191,19 @@ const Products = (props) => {
 
           <div className="d-flex mt-1" style={{ justifyContent: "space-between", alignItems: "center", width: "100%", marginBottom: "20px" }}>
             <div className="custom-header" >Our Best Products</div>
-            <button onClick={handleMobileMenuToggle} style={{ margin: "0", cursor: "pointer", color: "rgba(114, 114, 114, 1)", fontSize: "12px" }} className="btn-d btn-prod ">Sort by Relevance</button>
+            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+              <button
+                onClick={toggleFilters}
+                className="btn-d btn-prod"
+                style={{ margin: "0", cursor: "pointer", color: "rgba(114, 114, 114, 1)", fontSize: "12px", display: "flex", alignItems: "center", gap: "6px" }}
+              >
+                {showFilters ? "Hide Filters" : "Show Filters"}
+                <span style={{ transform: showFilters ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.3s ease", marginLeft: "6px" }}>
+                  ▼
+                </span>
+              </button>
+              <button onClick={handleMobileMenuToggle} style={{ margin: "0", cursor: "pointer", color: "rgba(114, 114, 114, 1)", fontSize: "12px" }} className="btn-d btn-prod ">Sort by Relevance</button>
+            </div>
           </div>
 
           {/* Search Bar */}
@@ -220,7 +237,8 @@ const Products = (props) => {
           </div>
 
           {/* Hair Concern Filters */}
-          <div className="filter-price-11 d-flex flex-column" style={{ gap: "10px", marginBottom: "20px", padding: "15px", backgroundColor: "#f8f9fa", borderRadius: "8px" }}>
+          {showFilters && (
+          <div className="filter-price-11 d-flex flex-column" style={{ gap: "10px", marginBottom: "20px", padding: "15px", backgroundColor: "#f8f9fa", borderRadius: "8px", animation: "slideDown 0.3s ease" }}>
             <div className="d-flex" style={{ justifyContent: "space-between" }}>
               <div style={{ fontWeight: "600", fontSize: "18px", color: "#333" }}>Hair Concern</div>
               {!isLargeScreen && <div onClick={() => handleMobileDropDownToggle(!dropDown)}>
@@ -489,6 +507,7 @@ const Products = (props) => {
               ) : null
             }
           </div>
+          )}
 
           {/* <div
             className="sortBylistMenu"

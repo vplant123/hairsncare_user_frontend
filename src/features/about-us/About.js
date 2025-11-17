@@ -207,7 +207,12 @@ export default function About() {
             );
           })}
         </div>
-        <div className="hero-btn-about">
+        <div className="hero-btn-about"
+        style={{
+          display:"flex",
+          justifyContent:"center",
+
+        }}>
           <button
             onClick={() => navigate("/take-hair-test")}
             className="btn primary"
@@ -247,7 +252,12 @@ export default function About() {
               );
             })}
           </div>
-          <div className="hero-btn-about">
+          <div className="hero-btn-about"
+            style={{
+          display:"flex",
+          justifyContent:"center",
+          
+        }}>
             <button
               onClick={() =>
                 navigate("/best-hair-care-products-hair-loss-scalp-health")

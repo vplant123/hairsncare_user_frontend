@@ -23,7 +23,7 @@ import { useMediaQuery } from "@mui/material";
 import ReactPaginate from "react-paginate";
 import { Helmet } from "react-helmet";
 import { generateProductSchema } from "../../utils/seoUtils";
-import Breadcrumb from "../../components/Breadcrumb";
+import { IoArrowBack } from "react-icons/io5";
 
 const findNearestWhitespace = (str, index) => {
   let left = index;
@@ -470,8 +470,15 @@ function ProductDetail(props) {
       </Helmet>
       <Navbar cart={cart} setCart={setCart} />
 
-      <div className="container" style={{ marginTop: "20px" }}>
-        <Breadcrumb />
+      <div className="container back-navigation-container">
+        <button 
+          className="back-button" 
+          onClick={() => navigate(-1)}
+          aria-label="Go back"
+        >
+          <IoArrowBack className="back-icon" />
+          Back
+        </button>
       </div>
 
       <div className="container">
@@ -732,6 +739,7 @@ function ProductDetail(props) {
               <div style={{ textDecoration: "line-through", fontSize: "20px" }}>
                 ₹{parseFloat(product?.price || 0)?.toFixed(0)}
               </div>
+              
               <div className="cout-cont">
                 <div
                   style={{
@@ -756,13 +764,10 @@ function ProductDetail(props) {
                     +
                   </div>
                 </div>
-                {/* <div className="count-item" style={{ padding: "10px" }}>
-                  <button onClick={incrementQuantity}>+</button>
-                  <button onClick={decrementQuantity}>-</button>
-                </div> */}
               </div>
             </div>
-            <div className="d-flex .shop-btn1">
+            
+            <div className="action-buttons-container">
               <div
                 className={`d-flex shop-btn1 btn-222 ${
                   product?.stock === 0 ? "disabled" : ""

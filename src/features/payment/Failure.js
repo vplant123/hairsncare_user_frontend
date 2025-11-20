@@ -54,6 +54,7 @@ function Failure() {
                 onClick={handleRetry}
                 className="failure-button"
                 aria-label="Go to Homepage"
+                
               >
                 Retry (Go to Homepage)
               </button>

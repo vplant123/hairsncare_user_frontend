@@ -162,6 +162,16 @@ const Footer = () => {
           >
             DERMATOLOGIST
           </h5>
+          <h5
+            className="com-con"
+            onClick={() => {
+              scrollToTop();
+              navigate("/online-hair-loss-treatment-bangalore");
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            BANGALORE TREATMENT
+          </h5>
         </div>
 
         <div className="footer-item">

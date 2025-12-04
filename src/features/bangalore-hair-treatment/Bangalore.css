@@ -1,0 +1,921 @@
+/* Bangalore Hair Treatment Page Styles */
+/* Based on About Us page styling pattern */
+
+.bangalore-treatment {
+  background: linear-gradient(
+    135deg,
+    rgb(142, 208, 235) 33%,
+    rgb(249, 235, 206) 66%
+  );
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.bangalore-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Hero Section */
+.bangalore-hero {
+  /* Use simple centered layout when image is not visible */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 2rem; /* tightened vertical spacing */
+  padding: 2rem 1.5rem; /* reduced padding to decrease gap-y */
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Reset hero content to normal flow */
+.bangalore-hero .hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem; /* smaller gap between stacked hero elements */
+  width: 100%;
+  max-width: 800px;
+}
+
+.bangalore-hero .hero-image {
+  display: none; /* Hide image section since it's not loading */
+}
+
+.bangalore-hero .hero-img {
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(8, 186, 237, 0.15);
+  transition: transform 0.25s ease;
+}
+
+.bangalore-hero .hero-img:hover { transform: translateY(-4px); }
+
+.bangalore-hero .hero-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.bangalore-hero .hero-subtitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #08baed;
+  line-height: 1.4;
+  margin: 0 0 1rem 0; /* reduce space under subtitle */
+  text-align: center;
+}
+
+.bangalore-hero .hero-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #475569;
+  margin: 0 0 1rem 0; /* tightened spacing under description */
+  text-align: center;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bangalore-hero .hero-description strong {
+  color: #1e293b;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 1.15rem;
+}
+
+.bangalore-hero .hero-cta {
+  margin-top: 1rem; /* smaller gap above CTA */
+  text-align: center;
+}
+
+/* CTA Buttons */
+.bangalore-cta-button {
+  background: #08baed;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.bangalore-cta-button:hover {
+  background: #0ea5d9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(8, 186, 237, 0.4);
+}
+
+.bangalore-cta-button.large {
+  padding: 16px 32px;
+  font-size: 1.1rem;
+}
+
+/* Section Titles */
+.bangalore-section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #1e293b;
+  line-height: 1.15;
+  /* Layout the decorative lines and title on one row */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  position: relative;
+  white-space: nowrap; /* keep the heading in a single row on wide screens */
+}
+#successbanglore{
+
+color: black;
+}
+
+.bangalore-section-title::before,
+.bangalore-section-title::after {
+  content: "";
+  flex: 1 1 16%;
+  height: 2px;
+  background-color: #08baed;
+  min-width: 40px;
+  max-width: 220px;
+}
+
+.bangalore-section-description {
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #4a5568;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.bangalore-section-note {
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #718096;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.bangalore-section-cta {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Why Choose Section */
+.bangalore-why-choose-section {
+  margin-bottom: 3rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 3rem 2rem;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 15px 50px rgba(8, 186, 237, 0.1);
+}
+
+/* Slider: features wrapper and horizontally scrollable grid */
+.bangalore-features-wrapper {
+  position: relative;
+  max-width: 1160px;
+  margin: 0 auto 1.5rem auto;
+}
+
+.features-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #08baed;
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 6px 18px rgba(8,186,237,0.2);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.features-prev { left: -22px; }
+.features-next { right: -22px; }
+
+.bangalore-features-grid {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 0.75rem 0.25rem;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  align-items: stretch; /* ensure children stretch to same height */
+}
+
+/* hide native scrollbar while keeping scroll functionality */
+.bangalore-features-grid::-webkit-scrollbar { height: 10px; }
+.bangalore-features-grid::-webkit-scrollbar-track { background: transparent; }
+.bangalore-features-grid::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 8px; }
+
+/* Hide scrollbar across browsers while keeping scroll functionality */
+.bangalore-features-grid { -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.bangalore-features-grid::-webkit-scrollbar { display: none; height: 0; }
+
+.bangalore-feature-card {
+  background: rgba(255, 255, 255, 0.98);
+  padding: 1.25rem; /* smaller padding for compact cards */
+  border-radius: 12px;
+  box-shadow: 0 6px 22px rgba(8, 186, 237, 0.07);
+  border-left: 3px solid #08baed;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  height: 420px; /* fixed uniform height for all cards */
+  flex: 0 0 320px; /* fixed card width so they line up in one row */
+  scroll-snap-align: start;
+  overflow: hidden; /* hide anything that overflows card box */
+}
+
+.bangalore-feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(8, 186, 237, 0.2);
+}
+
+.bangalore-feature-number {
+  position: absolute;
+  top: -12px;
+  right: 20px;
+  background: #08baed;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(8, 186, 237, 0.25);
+}
+
+.bangalore-feature-title {
+  font-size: 1.1rem; /* slightly reduced */
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.6rem;
+  line-height: 1.25;
+}
+
+.bangalore-feature-description {
+  font-size: 0.95rem;
+  color: #4a5568;
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.bangalore-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.bangalore-feature-list li {
+  padding: 0.5rem 0;
+  color: #2d3748;
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* allow the list area to scroll inside the card if content is long */
+.bangalore-feature-list {
+  overflow: auto;
+}
+
+/* hide inner scrollbar for feature lists while keeping scroll */
+.bangalore-feature-list { -ms-overflow-style: none; scrollbar-width: none; }
+.bangalore-feature-list::-webkit-scrollbar { display: none; height: 0; }
+
+.bangalore-feature-list li:before {
+  content: "✓";
+  color: #08baed;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+}
+
+.bangalore-feature-note {
+  font-size: 0.9rem;
+  color: #08baed;
+  font-weight: 600;
+  font-style: italic;
+  margin-top: auto; /* push note to bottom of the card */
+  padding: 0.75rem 0.75rem;
+  background: rgba(8, 186, 237, 0.08);
+  border-radius: 6px;
+  border-left: 3px solid #08baed;
+  align-self: stretch; /* make note full-width inside card */
+  box-sizing: border-box;
+}
+
+/* Services Section */
+.bangalore-services-section {
+  margin-bottom: 3rem;
+  padding: 2rem 0;
+}
+
+.bangalore-services-grid {
+  /* show services as a single horizontal row */
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  padding: 0.75rem 0.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bangalore-service-card {
+  flex: 0 0 300px; /* fixed width so they display in a single row */
+  min-width: 260px;
+  background: white;
+  padding: 1.25rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  position: relative;
+  border-top: 3px solid #08baed;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  height: 360px; /* increase height slightly to fit content */
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.bangalore-service-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.bangalore-service-number {
+  position: absolute;
+  top: -10px;
+  left: 15px;
+  background: #08baed;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* hide service numbers visually (user requested) */
+.bangalore-service-number { display: none; }
+
+/* hide scrollbar for services row while keeping scroll functionality */
+.bangalore-services-grid { -ms-overflow-style: none; scrollbar-width: none; }
+.bangalore-services-grid::-webkit-scrollbar { display: none; height: 0; }
+
+.bangalore-service-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1b1b1b;
+  margin-bottom: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.bangalore-service-description {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+  flex: 0 0 auto;
+}
+
+.bangalore-service-features {
+  list-style: none;
+  padding: 0;
+  margin-top: 0.5rem;
+  flex: 1 1 auto; /* allow features area to grow and scroll */
+  overflow: auto;
+}
+
+.bangalore-service-features li {
+  padding: 0.4rem 0;
+  color: #666;
+  position: relative;
+  padding-left: 1.25rem;
+  font-size: 0.9rem;
+}
+
+/* hide scrollbar for inner service features list while keeping scroll */
+.bangalore-service-features { -ms-overflow-style: none; scrollbar-width: none; }
+.bangalore-service-features::-webkit-scrollbar { display: none; height: 0; }
+
+.bangalore-service-features li:before {
+  content: "→";
+  color: #08baed;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+/* Causes Section */
+.bangalore-causes-section {
+  margin-bottom: 3rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 3rem 2rem;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 15px 50px rgba(8, 186, 237, 0.1);
+}
+
+.bangalore-causes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.bangalore-cause-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  min-width: 200px;
+  flex: 0 0 auto;
+}
+
+.bangalore-cause-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.bangalore-cause-bullet {
+  color: #08baed;
+  font-size: 1.2rem;
+  margin-right: 1rem;
+  font-weight: bold;
+}
+
+.bangalore-cause-text {
+  font-size: 1rem;
+  color: #555;
+  font-weight: 500;
+}
+
+/* How It Works Section */
+.bangalore-how-it-works-section {
+  margin-bottom: 3rem;
+  padding: 2rem 0;
+}
+
+.bangalore-steps-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.bangalore-step-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.bangalore-step-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.bangalore-step-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.bangalore-step-number {
+  background: linear-gradient(45deg, #08baed, #0ea5d9);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  min-width: 60px;
+  text-align: center;
+}
+
+.bangalore-step-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1b1b1b;
+}
+
+.bangalore-step-description {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.bangalore-step-arrow {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #08baed;
+  margin: 0.75rem 0;
+}
+
+/* Who Can Use Section */
+.bangalore-who-can-use-section {
+  margin-bottom: 3rem;
+  padding: 2rem 0;
+}
+
+.bangalore-conditions-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.bangalore-condition-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  min-width: 180px;
+  flex: 0 0 auto;
+}
+
+.bangalore-condition-bullet {
+  color: #08baed;
+  font-size: 1rem;
+  margin-right: 0.75rem;
+  font-weight: bold;
+}
+
+.bangalore-condition-text {
+  font-size: 0.95rem;
+  color: #555;
+  font-weight: 500;
+}
+
+/* Why Works Section */
+.bangalore-why-works-section {
+  margin-bottom: 3rem;
+  padding: 2rem 0;
+}
+
+.bangalore-benefits-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.bangalore-benefit-item {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  text-align: center;
+  font-size: 0.95rem;
+  color: #555;
+  border-left: 3px solid #08baed;
+  font-weight: 500;
+  min-width: 160px;
+  flex: 0 0 auto;
+}
+
+/* Success Section */
+.bangalore-success-section {
+  margin-bottom: 3rem;
+  background: linear-gradient(
+    135deg,
+    rgba(8, 186, 237, 0.15),
+    rgba(14, 165, 217, 0.1)
+  );
+  padding: 3rem 2rem;
+  border-radius: 25px;
+  color: black;
+  /* box-shadow: 0 15px 40px rgba(8, 186, 237, 0.3); */
+  text-align: center;
+}
+
+.bangalore-success-section .bangalore-section-title {
+  color: white;
+  margin-bottom: 2rem;
+}
+
+.bangalore-success-section .bangalore-section-title::before,
+.bangalore-success-section .bangalore-section-title::after {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.bangalore-stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.bangalore-stat-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  text-align: center;
+  flex-direction: column;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  min-width: 200px;
+  flex: 0 0 auto;
+}
+
+.bangalore-stat-item:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-5px);
+}
+
+.bangalore-stat-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.bangalore-stat-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* FAQ Section */
+.bangalore-faq-section {
+  margin-bottom: 3rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 3rem 2rem;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 15px 50px rgba(8, 186, 237, 0.1);
+}
+
+.bangalore-faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.bangalore-faq-item {
+  margin-bottom: 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(8, 186, 237, 0.1);
+  transition: all 0.3s ease;
+  border-left: 4px solid #08baed;
+}
+
+.bangalore-faq-item:hover {
+  box-shadow: 0 8px 25px rgba(8, 186, 237, 0.2);
+  transform: translateY(-2px);
+}
+
+.bangalore-faq-question {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  padding: 0;
+}
+
+.bangalore-faq-answer {
+  font-size: 1rem;
+  color: #4a5568;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* Final CTA Section */
+.bangalore-final-cta-section {
+  margin-bottom: 2rem;
+  background: linear-gradient(
+    135deg,
+    rgba(8, 186, 237, 0.15),
+    rgba(14, 165, 217, 0.1)
+  );
+  padding: 3rem 2rem;
+  border-radius: 25px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.bangalore-final-cta-description {
+  font-size: 1.2rem;
+  color: #4a5568;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.bangalore-final-cta-subtitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 2rem;
+}
+
+.bangalore-final-cta-button {
+  margin-top: 1rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+  .bangalore-hero {
+    padding: 2rem 1rem;
+  }
+
+  .bangalore-features-grid { gap: 0.85rem; }
+
+  .features-nav { display: none; }
+}
+
+@media screen and (max-width: 768px) {
+  .bangalore-container {
+    padding: 0 0.5rem;
+  }
+
+  .bangalore-hero {
+    padding: 1.5rem 0.5rem;
+  }
+
+  .bangalore-hero .hero-title {
+    font-size: 2rem;
+  }
+
+  .bangalore-hero .hero-subtitle {
+    font-size: 1.3rem;
+  }
+
+  .bangalore-hero .hero-description {
+    font-size: 1rem;
+  }
+
+  .bangalore-section-title {
+    font-size: 1.5rem;
+  }
+
+  /* allow long section titles to wrap on smaller screens */
+  .bangalore-section-title {
+    white-space: normal;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .bangalore-section-title::before,
+  .bangalore-section-title::after {
+    width: 10%;
+  }
+
+  .bangalore-features-grid,
+  .bangalore-services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .bangalore-feature-card,
+  .bangalore-service-card {
+    min-width: auto;
+  }
+
+  .bangalore-causes-grid,
+  .bangalore-conditions-grid,
+  .bangalore-benefits-grid {
+    justify-content: stretch;
+  }
+
+  .bangalore-cause-item,
+  .bangalore-condition-item,
+  .bangalore-benefit-item {
+    min-width: auto;
+    flex: 1;
+  }
+
+  .bangalore-stats-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .bangalore-stat-item {
+    min-width: auto;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .bangalore-why-choose-section,
+  .bangalore-causes-section,
+  .bangalore-success-section,
+  .bangalore-faq-section,
+  .bangalore-final-cta-section {
+    padding: 2rem 1rem;
+  }
+
+  .bangalore-cta-button {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  .bangalore-cta-button.large {
+    padding: 12px 24px;
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .bangalore-container {
+    padding: 0 0.25rem;
+  }
+
+  .bangalore-hero .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .bangalore-hero .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .bangalore-section-title {
+    font-size: 1.3rem;
+  }
+
+  .bangalore-section-title::before,
+  .bangalore-section-title::after {
+    width: 5%;
+  }
+
+  .bangalore-feature-number {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+
+  .bangalore-service-number {
+    width: 25px;
+    height: 25px;
+    font-size: 0.8rem;
+  }
+
+  .bangalore-why-choose-section,
+  .bangalore-causes-section,
+  .bangalore-success-section,
+  .bangalore-faq-section,
+  .bangalore-final-cta-section {
+    padding: 1.5rem 0.75rem;
+  }
+}
+
+/* Remove the numbered badge in the corner */
+.bangalore-feature-number { display: none; }

@@ -78,6 +78,7 @@ import Dermatologist from "./features/Dermatologist";
 import InvoiceView from "./features/user-profile/InvoiceView";
 import AllBlogs from "./features/Blogs/AllBlogs";
 import Blog from "./features/Blogs/Blog";
+import BangaloreHairTreatmentPage from "./pages/BangaloreHairTreatmentPage";
 
 // const routes = [
 //   {
@@ -585,6 +586,26 @@ function App() {
               path="dr-amit-agarkar-hair-restoration-expert"
               element={
                 <Dermatologist
+                  setTitle={setTitle}
+                  cart={cart}
+                  setCart={setCart}
+                />
+              }
+            />
+            <Route
+              path="online-hair-loss-treatment-bangalore"
+              element={
+                <BangaloreHairTreatmentPage
+                  setTitle={setTitle}
+                  cart={cart}
+                  setCart={setCart}
+                />
+              }
+            />
+            <Route
+              path="/hair-care-blogs"
+              element={
+                <BangaloreHairTreatmentPage
                   setTitle={setTitle}
                   cart={cart}
                   setCart={setCart}

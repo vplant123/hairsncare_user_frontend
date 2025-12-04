@@ -186,6 +186,12 @@ export const routes = [
     desc: "Read our return & refund policy for hair treatment products. Hassle-free process to ensure customer satisfaction with every purchase",
     keywords: "return policy, refund policy, hair product returns, customer satisfaction"
   },
+  {
+    path: "/online-hair-loss-treatment-bangalore",
+    title: "Online Hair Loss Treatment in Bangalore | Personalized Hair Care Solutions",
+    desc: "Online hair loss treatment for Bangalore residents. Get personalized diagnosis, doctor-approved treatments, and medicines delivered to your home. No clinic visit needed.",
+    keywords: "hair loss treatment Bangalore, online hair treatment Bangalore, hair care Bangalore, hair fall treatment, dermatologist Bangalore, hair loss consultation online"
+  },
 ];
 
 // Function to get route data by path

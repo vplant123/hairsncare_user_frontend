@@ -216,8 +216,9 @@ color: black;
 .features-next { right: -22px; }
 
 .bangalore-features-grid {
+  --features-gap: 1rem;
   display: flex;
-  gap: 1rem;
+  gap: var(--features-gap);
   overflow-x: auto;
   padding: 0.75rem 0.25rem;
   -webkit-overflow-scrolling: touch;
@@ -249,7 +250,8 @@ color: black;
   justify-content: flex-start;
   box-sizing: border-box;
   height: 420px; /* fixed uniform height for all cards */
-  flex: 0 0 320px; /* fixed card width so they line up in one row */
+  flex: 0 0 calc((100% - 2 * var(--features-gap)) / 3); /* show exactly 3 cards per view */
+  max-width: 360px;
   scroll-snap-align: start;
   overflow: hidden; /* hide anything that overflows card box */
 }
@@ -337,7 +339,10 @@ color: black;
   border-left: 3px solid #08baed;
   align-self: stretch; /* make note full-width inside card */
   box-sizing: border-box;
+  margin-bottom: 5px; /* vertical gap between multiple notes */
 }
+
+.bangalore-feature-note:last-child { margin-bottom: 0; }
 
 /* Services Section */
 .bangalore-services-section {
@@ -354,6 +359,52 @@ color: black;
   overflow-x: auto;
   padding: 0.75rem 0.25rem;
   -webkit-overflow-scrolling: touch;
+}
+
+/* Marquee styles for Services: continuous right->left scroll */
+.bangalore-services-marquee {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+.bangalore-marquee-track {
+  display: flex;
+  gap: 1rem;
+  align-items: stretch;
+  /* duplicated content means track is 200% of the visible set; animate translateX -50% */
+  animation: marquee linear infinite;
+  animation-duration: var(--marquee-duration, 30s);
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* make the service-cards inside marquee the same visual as before */
+.bangalore-services-marquee .bangalore-service-card {
+  flex: 0 0 300px;
+  min-width: 260px;
+  height: 360px;
+}
+
+/* pause on hover and focus for readability */
+.bangalore-services-marquee:hover .bangalore-marquee-track,
+.bangalore-services-marquee:focus-within .bangalore-marquee-track {
+  animation-play-state: paused;
+}
+
+/* respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .bangalore-marquee-track { animation: none; }
+}
+
+/* On small screens disable marquee and allow manual swipe */
+@media screen and (max-width: 768px) {
+  .bangalore-marquee-track { animation: none; display: flex; overflow-x: auto; }
+  .bangalore-services-marquee { overflow-x: auto; }
 }
 
 .bangalore-service-card {
@@ -499,11 +550,12 @@ color: black;
 }
 
 .bangalore-steps-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  max-width: 800px;
+  display: block;
+  position: relative;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 2rem 1rem;
+  counter-reset: step;
 }
 
 .bangalore-step-card {
@@ -554,6 +606,98 @@ color: black;
   font-size: 1.5rem;
   color: #08baed;
   margin: 0.75rem 0;
+}
+
+/* Desktop: lay out steps horizontally with arrows between them */
+@media screen and (min-width: 1024px) {
+  /* centered vertical timeline */
+  .bangalore-steps-container::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, rgba(8,186,237,0.25), rgba(8,186,237,0.08));
+    transform: translateX(-50%);
+    border-radius: 4px;
+  }
+
+  .bangalore-step-row {
+    display: grid;
+    grid-template-columns: 1fr 140px 1fr;
+    align-items: center;
+    width: 100%;
+    margin: 2.25rem 0;
+    position: relative;
+  }
+
+  /* badge on center line using counter so it sits on the spine, not the card */
+  .bangalore-step-row::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #08baed, #0ea5d9);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    box-shadow: 0 8px 24px rgba(8,186,237,0.18);
+    transform: translate(-50%, -50%);
+    z-index: 3;
+  }
+
+  .bangalore-step-row.left .bangalore-step-card {
+    grid-column: 1 / 2;
+    justify-self: end;
+  }
+
+  .bangalore-step-row.right .bangalore-step-card {
+    grid-column: 3 / 4;
+    justify-self: start;
+  }
+
+  .bangalore-step-card {
+    width: 360px;
+    max-width: 90vw;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    position: relative;
+  }
+
+  /* horizontal connector from card to center line */
+  .bangalore-step-card::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 70px;
+    height: 6px;
+    background: linear-gradient(90deg, rgba(8,186,237,0.9), rgba(14,165,217,0.8));
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(8,186,237,0.08);
+  }
+
+  .bangalore-step-row.left .bangalore-step-card::after {
+    right: -70px;
+  }
+
+  .bangalore-step-row.right .bangalore-step-card::after {
+    left: -70px;
+  }
+
+  /* hide in-card badge on desktop so only the spine badge shows */
+  .bangalore-step-card .bangalore-step-number {
+    display: none;
+  }
+
+  /* remove extra arrow icon */
+  .bangalore-step-arrow { display: none; }
 }
 
 /* Who Can Use Section */
@@ -782,9 +926,225 @@ color: black;
   .features-nav { display: none; }
 }
 
+/* Tablet responsiveness: between mobile and desktop */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  /* general centering and slightly reduced sizes */
+  .bangalore-hero,
+  .bangalore-why-choose-section,
+  .bangalore-causes-section,
+  .bangalore-services-section,
+  .bangalore-how-it-works-section,
+  .bangalore-who-can-use-section,
+  .bangalore-why-works-section,
+  .bangalore-success-section,
+  .bangalore-faq-section,
+  .bangalore-final-cta-section {
+    text-align: center;
+  }
+
+  .bangalore-hero .hero-title { font-size: 2.4rem; }
+  .bangalore-hero .hero-subtitle { font-size: 1.25rem; }
+  .bangalore-section-title { font-size: 1.6rem; }
+
+  /* features grid: 2 columns on tablet */
+  .bangalore-features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+
+  /* marquee pacing for tablet */
+  .bangalore-marquee-track { animation-duration: 32s; }
+
+  /* timeline adjustments: keep center spine but scale components */
+  .bangalore-step-row { grid-template-columns: 1fr 110px 1fr; margin: 1.75rem 0; }
+  .bangalore-step-row::before { width: 56px; height: 56px; font-size: 0.95rem; }
+  .bangalore-step-card { width: 320px; }
+  .bangalore-step-card::after { width: 60px; }
+
+  /* ensure in-card numbers remain hidden and spine badge visible */
+  .bangalore-step-card .bangalore-step-number { display: none; }
+
+  /* small typographic tweaks for readability */
+  .bangalore-step-title { font-size: 1.12rem; }
+  .bangalore-step-description { font-size: 0.98rem; }
+
+  /* center key section headings and descriptions like Common Causes */
+  .bangalore-hero .hero-title,
+  .bangalore-how-it-works-section .bangalore-section-title,
+  .bangalore-who-can-use-section .bangalore-section-title,
+  .bangalore-why-works-section .bangalore-section-title,
+  .bangalore-why-choose-section .bangalore-section-title {
+    text-align: center;
+    justify-content: center;
+  }
+
+  .bangalore-how-it-works-section .bangalore-section-description,
+  .bangalore-who-can-use-section .bangalore-section-description,
+  .bangalore-why-works-section .bangalore-section-description,
+  .bangalore-why-choose-section .bangalore-section-description {
+    text-align: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Narrow phones / small tablets: 400px - 765px
+   Center key sections and make causes responsive */
+@media screen and (min-width: 400px) and (max-width: 765px) {
+  .bangalore-why-choose-section {
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
+
+  .bangalore-why-choose-section .bangalore-section-title {
+    justify-content: center;
+    font-size: 1.55rem;
+    white-space: normal;
+  }
+
+  /* Stack causes into a single column for readability */
+  .bangalore-causes-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    align-items: start;
+  }
+
+  /* Make the conditions grid responsive and centered (Who Can Use section) */
+  .bangalore-conditions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+    align-items: start;
+    justify-items: center;
+  }
+
+  .bangalore-cause-item {
+    width: 100%;
+    min-width: 0;
+    justify-content: flex-start;
+    padding: 0.85rem;
+  }
+
+  .bangalore-cause-bullet {
+    font-size: 1.1rem;
+    margin-right: 0.65rem;
+  }
+
+  .bangalore-cause-text {
+    font-size: 0.98rem;
+    text-align: left;
+    line-height: 1.45;
+  }
+
+  /* make feature/service cards fit container */
+  .bangalore-feature-card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Keep services marquee behavior as the default for this range (horizontal scroll on small screens) */
+  /* No wrapping; rely on the existing small-screen marquee rules (max-width:768px) to handle swipe/scroll */
+
+  /* modest heading scaling for this range */
+  .bangalore-hero .hero-title { font-size: 2rem; }
+  .bangalore-hero .hero-subtitle { font-size: 1.1rem; }
+
+  /* keep timeline stacked and readable */
+  .bangalore-step-row { grid-template-columns: 1fr; }
+  .bangalore-step-card { width: 100%; }
+  .bangalore-step-card .bangalore-step-number { display: inline-flex; margin-bottom: 0.5rem; }
+  .bangalore-step-card::after { display: none; }
+}
+
+/* Fix section-heading wrapping and marquee duplicates for narrow devices (400-765px) */
+@media screen and (min-width: 400px) and (max-width: 765px) {
+  /* Keep the title and decorative lines on a single row */
+  .bangalore-section-title {
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .bangalore-section-title::before,
+  .bangalore-section-title::after {
+    flex: 1 1 12%;
+    min-width: 28px;
+    max-width: 160px;
+    height: 2px;
+  }
+
+  /* For the services marquee on narrow devices: do not show the duplicated cards
+     (the track is duplicated in JS for desktop marquee). Hide second half so only
+     the original set is visible and the layout scrolls/swallows properly. */
+  .bangalore-marquee-track {
+    animation: none; /* keep manual swipe/scroll behaviour */
+    display: flex;
+    overflow-x: auto;
+  }
+
+  /* assuming original services list is 4 items, hide duplicates (items 5+)
+     so mobile shows only the primary set and avoids duplicate cards */
+  .bangalore-marquee-track > .bangalore-service-card:nth-child(n+5) {
+    display: none;
+  }
+}
+
+/* Improve visibility of decorative lines for headings in narrow/tablet ranges */
+@media screen and (min-width: 400px) and (max-width: 1024px) {
+  .bangalore-how-it-works-section .bangalore-section-title::before,
+  .bangalore-how-it-works-section .bangalore-section-title::after,
+  .bangalore-services-section .bangalore-section-title::before,
+  .bangalore-services-section .bangalore-section-title::after {
+    flex: 1 1 18%;
+    min-width: 60px;
+    max-width: 220px;
+  }
+}
+
+/* Also ensure the section headings and descriptions are centered in this narrow range */
+@media screen and (min-width: 400px) and (max-width: 765px) {
+  .bangalore-how-it-works-section .bangalore-section-title,
+  .bangalore-who-can-use-section .bangalore-section-title,
+  .bangalore-why-works-section .bangalore-section-title,
+  .bangalore-why-choose-section .bangalore-section-title {
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .bangalore-how-it-works-section .bangalore-section-description,
+  .bangalore-who-can-use-section .bangalore-section-description,
+  .bangalore-why-works-section .bangalore-section-description,
+  .bangalore-why-choose-section .bangalore-section-description {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 95%;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .bangalore-container {
     padding: 0 0.5rem;
+  }
+
+  /* center headings and reduce sizing for better mobile fit */
+  .bangalore-hero,
+  .bangalore-why-choose-section,
+  .bangalore-causes-section,
+  .bangalore-services-section,
+  .bangalore-how-it-works-section,
+  .bangalore-who-can-use-section,
+  .bangalore-why-works-section,
+  .bangalore-success-section,
+  .bangalore-faq-section,
+  .bangalore-final-cta-section {
+    text-align: center;
+  }
+
+  .bangalore-section-title {
+    font-size: 1.4rem;
+    justify-content: center;
   }
 
   .bangalore-hero {
@@ -817,6 +1177,24 @@ color: black;
   .bangalore-section-title::before,
   .bangalore-section-title::after {
     width: 10%;
+  }
+
+  /* tighten marquee spacing on mobile */
+  .bangalore-services-marquee {
+    margin: 1.25rem 0;
+  }
+
+  .bangalore-marquee-track {
+    animation-duration: 36s;
+  }
+
+  /* add breathing room between stacked steps */
+  .bangalore-step-row {
+    margin: 1.5rem 0;
+  }
+
+  .bangalore-step-card {
+    padding: 1.25rem;
   }
 
   .bangalore-features-grid,
@@ -875,20 +1253,29 @@ color: black;
 }
 
 @media screen and (max-width: 480px) {
-  .bangalore-container {
-    padding: 0 0.25rem;
-  }
+  .bangalore-container { padding: 0 0.25rem; }
 
   .bangalore-hero .hero-title {
     font-size: 1.8rem;
   }
+
+  /* stack timeline vertically on small screens */
+  .bangalore-steps-container::before { display: none; }
+  .bangalore-step-row { justify-content: center; grid-template-columns: 1fr; position: relative; }
+  .bangalore-step-row::before { display: none; }
+  .bangalore-step-card { width: 100%; text-align: left; }
+  .bangalore-step-number { position: relative; transform: none; left: auto; top: auto; margin-bottom: 0.5rem; display: inline-flex; }
+  .bangalore-step-card::after { display: none; }
+
+  .bangalore-step-title { font-size: 1.05rem; }
+  .bangalore-step-description { font-size: 0.95rem; line-height: 1.5; }
 
   .bangalore-hero .hero-subtitle {
     font-size: 1.1rem;
   }
 
   .bangalore-section-title {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 
   .bangalore-section-title::before,

@@ -90,7 +90,12 @@ export default function Bangalore({ city = "Bangalore" }) {
   const services = [
     {
       title: "Online Hair Fall Treatment",
-      description: "Personalised allopathy-based treatment plans for men and women."
+      description: "Personalised allopathy-based treatment plans for men and women.",
+      features: [
+        "Doctor-supervised treatment plans",
+        "Personalised medicine delivery",
+        "Regular progress tracking and follow-ups"
+      ]
     },
     {
       title: "Hair Growth Support", 
@@ -249,7 +254,7 @@ export default function Bangalore({ city = "Bangalore" }) {
                 onClick={() => {
                   const el = featuresRef.current;
                   if (!el) return;
-                  const amount = Math.min(el.clientWidth * 0.7, 600);
+                  const amount = el.clientWidth; // scroll by one visible page (three cards)
                   el.scrollBy({ left: -amount, behavior: "smooth" });
                 }}
                 aria-label="Previous"
@@ -298,7 +303,7 @@ export default function Bangalore({ city = "Bangalore" }) {
                 onClick={() => {
                   const el = featuresRef.current;
                   if (!el) return;
-                  const amount = Math.min(el.clientWidth * 0.7, 600);
+                  const amount = el.clientWidth; // scroll by one visible page (three cards)
                   el.scrollBy({ left: amount, behavior: "smooth" });
                 }}
                 aria-label="Next"
@@ -343,22 +348,24 @@ export default function Bangalore({ city = "Bangalore" }) {
             <h2 className="bangalore-section-title">
               Online Hair Loss Services We Provide
             </h2>
-            
-            <div className="bangalore-services-grid">
-              {services.map((service, index) => (
-                <div key={index} className="bangalore-service-card">
-                  <div className="bangalore-service-number">{index + 1}</div>
-                  <h3 className="bangalore-service-title">{service.title}</h3>
-                  <p className="bangalore-service-description">{service.description}</p>
-                  {service.features && (
-                    <ul className="bangalore-service-features">
-                      {service.features.map((feature, idx) => (
-                        <li key={idx}>{feature}</li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ))}
+
+            {/* Marquee-style continuous scroll: duplicate items for smooth loop */}
+            <div className="bangalore-services-marquee" aria-hidden={false}>
+              <div className="bangalore-marquee-track" style={{"--marquee-duration": "30s"}}>
+                {services.concat(services).map((service, index) => (
+                  <div key={index} className="bangalore-service-card">
+                    <h3 className="bangalore-service-title">{service.title}</h3>
+                    <p className="bangalore-service-description">{service.description}</p>
+                    {service.features && (
+                      <ul className="bangalore-service-features">
+                        {service.features.map((feature, idx) => (
+                          <li key={idx}>{feature}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="bangalore-section-cta">
@@ -379,15 +386,12 @@ export default function Bangalore({ city = "Bangalore" }) {
             
             <div className="bangalore-steps-container">
               {treatmentSteps.map((step, index) => (
-                <div key={index} className="bangalore-step-card">
-                  <div className="bangalore-step-header">
-                    <div className="bangalore-step-number">{step.step}</div>
+                <div key={index} className={`bangalore-step-row ${index % 2 === 0 ? 'left' : 'right'}`}>
+                  <div className="bangalore-step-card">
+                    <div className="bangalore-step-number">{index + 1}</div>
                     <h3 className="bangalore-step-title">{step.title}</h3>
+                    <p className="bangalore-step-description">{step.description}</p>
                   </div>
-                  <p className="bangalore-step-description">{step.description}</p>
-                  {index < treatmentSteps.length - 1 && (
-                    <div className="bangalore-step-arrow">↓</div>
-                  )}
                 </div>
               ))}
             </div>

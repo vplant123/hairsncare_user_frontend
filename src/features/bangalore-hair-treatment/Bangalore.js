@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import "./Bangalore.css";
 import { useNavigate } from "react-router-dom";
 import SEOLinkHub from '../../components/SEOLinkHub';
@@ -6,6 +6,7 @@ import SEOLinkHub from '../../components/SEOLinkHub';
 export default function Bangalore({ city = "Bangalore" }) {
   const navigate = useNavigate();
   const featuresRef = useRef(null);
+  const [openFaq, setOpenFaq] = useState(null);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -14,19 +15,9 @@ export default function Bangalore({ city = "Bangalore" }) {
     });
   };
 
-  const handleBookConsultation = () => {
+  const handleTakeHairTest = () => {
     scrollToTop();
-    navigate("/contact-hair-experts");
-  };
-
-  const handleBookAppointment = () => {
-    scrollToTop();
-    navigate("/contact-hair-experts");
-  };
-
-  const handleStartTreatment = () => {
-    scrollToTop();
-    navigate("/contact-hair-experts");
+    navigate("/take-hair-test");
   };
 
   const causes = [
@@ -44,6 +35,7 @@ export default function Bangalore({ city = "Bangalore" }) {
     {
       title: "Personalised Online Diagnosis",
       description: "We will examine your hair's fall with precision by conducting the internet in a session.",
+      image: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729423548/hair-assessment/gctpdtkibo3nen5zcnhm.png",
       details: [
         "Condition of the Scalp",
         "Hair density", 
@@ -56,6 +48,7 @@ export default function Bangalore({ city = "Bangalore" }) {
     {
       title: "Doctor-Approved Allopathy Treatments",
       description: "Our treatments are:",
+      image: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729423480/hair-assessment/iyg4qyjpehesjctlcv6z.png",
       details: [
         "Clinically tested",
         "Safe for long-term use",
@@ -66,6 +59,7 @@ export default function Bangalore({ city = "Bangalore" }) {
     {
       title: `Tailored Plans for ${city} Conditions`,
       description: `Even though we work online, we design your plan for ${city}'s:`,
+      image: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729423573/hair-assessment/z5bhoesxvlh89xjdclj5.png",
       details: [
         "Hard water",
         "Humidity",
@@ -77,6 +71,7 @@ export default function Bangalore({ city = "Bangalore" }) {
     {
       title: "Complete Online Care – No Clinic Visit Needed",
       description: "You can complete your entire treatment from home. You get:",
+      image: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729423530/hair-assessment/zl161vfmpve9bnjc3eqs.png",
       details: [
         "Online consultation",
         "Online diagnosis",
@@ -134,27 +129,32 @@ export default function Bangalore({ city = "Bangalore" }) {
     {
       step: "Step 1",
       title: "Online Consultation",
-      description: "Tell us about your hair fall and upload scalp photos."
+      description: "Tell us about your hair fall and upload scalp photos.",
+      image: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729423548/hair-assessment/gctpdtkibo3nen5zcnhm.png"
     },
     {
       step: "Step 2", 
       title: "Diagnosis",
-      description: "We study your scalp condition, lifestyle, and hair concerns."
+      description: "We study your scalp condition, lifestyle, and hair concerns.",
+      image: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729423480/hair-assessment/iyg4qyjpehesjctlcv6z.png"
     },
     {
       step: "Step 3",
       title: "Personalised Treatment Plan", 
-      description: "You will be provided with an individualised treatment plan approved by a medical doctor specifically tailored to you."
+      description: "You will be provided with an individualised treatment plan approved by a medical doctor specifically tailored to you.",
+      image: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729423573/hair-assessment/z5bhoesxvlh89xjdclj5.png"
     },
     {
       step: "Step 4",
       title: "Medicine Delivery",
-      description: "We can arrange for delivery of the prescribed medicines to your residence."
+      description: "We can arrange for delivery of the prescribed medicines to your residence.",
+      image: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729423500/hair-assessment/lfqafjizvupmqwdhg83w.png"
     },
     {
       step: "Step 5",
       title: "Regular Follow-Ups",
-      description: "We monitor the results and make adjustments as required."
+      description: "We monitor the results and make adjustments as required.",
+      image: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729423530/hair-assessment/zl161vfmpve9bnjc3eqs.png"
     }
   ];
 
@@ -223,16 +223,16 @@ export default function Bangalore({ city = "Bangalore" }) {
               <div className="hero-cta">
                 <button 
                   className="bangalore-cta-button"
-                  onClick={handleBookConsultation}
+                  onClick={handleTakeHairTest}
                 >
-                  Book Free Consultation
+                  Take a Hair Test
                 </button>
               </div>
             </div>
             <div className="hero-image">
               <img 
-                src="/assets/img/hair-care-hero.jpg" 
-                alt={`Online Hair Loss Treatment in ${city}`}
+                src="https://res.cloudinary.com/drkpwvnun/image/upload/v1729423500/hair-assessment/lfqafjizvupmqwdhg83w.png" 
+                alt={`Online Hair Loss Treatment in ${city} - Professional Dermatologist Consultation`}
                 className="hero-img"
                 onError={(e) => {
                   e.target.style.display = 'none';
@@ -265,6 +265,13 @@ export default function Bangalore({ city = "Bangalore" }) {
               <div className="bangalore-features-grid" ref={featuresRef}>
                 {treatmentFeatures.map((feature, index) => (
                   <div key={index} className="bangalore-feature-card">
+                  <div className="bangalore-feature-image">
+                    <img 
+                      src={feature.image} 
+                      alt={feature.title}
+                      loading="lazy"
+                    />
+                  </div>
                   <div className="bangalore-feature-number">{index + 1}</div>
                   <h3 className="bangalore-feature-title">{feature.title}</h3>
                   <p className="bangalore-feature-description">{feature.description}</p>
@@ -315,9 +322,9 @@ export default function Bangalore({ city = "Bangalore" }) {
             <div className="bangalore-section-cta">
               <button 
                 className="bangalore-cta-button"
-                onClick={handleBookAppointment}
+                onClick={handleTakeHairTest}
               >
-                Book Appointment
+                Take a Hair Test
               </button>
             </div>
           </div>
@@ -371,9 +378,9 @@ export default function Bangalore({ city = "Bangalore" }) {
             <div className="bangalore-section-cta">
               <button 
                 className="bangalore-cta-button"
-                onClick={handleStartTreatment}
+                onClick={handleTakeHairTest}
               >
-                Start Online Treatment
+                Take a Hair Test
               </button>
             </div>
           </div>
@@ -388,6 +395,15 @@ export default function Bangalore({ city = "Bangalore" }) {
               {treatmentSteps.map((step, index) => (
                 <div key={index} className={`bangalore-step-row ${index % 2 === 0 ? 'left' : 'right'}`}>
                   <div className="bangalore-step-card">
+                    {step.image && (
+                      <div className="bangalore-step-image">
+                        <img 
+                          src={step.image} 
+                          alt={step.title}
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
                     <div className="bangalore-step-number">{index + 1}</div>
                     <h3 className="bangalore-step-title">{step.title}</h3>
                     <p className="bangalore-step-description">{step.description}</p>
@@ -456,14 +472,28 @@ export default function Bangalore({ city = "Bangalore" }) {
           <div className="bangalore-faq-section">
             <h2 className="bangalore-section-title">FAQs</h2>
             <div className="bangalore-faq-container">
-              {faqs.map((faq, index) => (
-                <div key={index} className="bangalore-faq-item">
-                  <h3 className="bangalore-faq-question">
-                    {index + 1}. {faq.question}
-                  </h3>
-                  <p className="bangalore-faq-answer">{faq.answer}</p>
-                </div>
-              ))}
+              {faqs.map((faq, index) => {
+                const isOpen = openFaq === index;
+                return (
+                  <div key={index} className={`bangalore-faq-item ${isOpen ? 'open' : ''}`}>
+                    <h3
+                      className="bangalore-faq-question"
+                      role="button"
+                      tabIndex={0}
+                      aria-expanded={isOpen}
+                      onClick={() => setOpenFaq(isOpen ? null : index)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') setOpenFaq(isOpen ? null : index);
+                      }}
+                    >
+                      {index + 1}. {faq.question}
+                    </h3>
+                    <p className={`bangalore-faq-answer ${isOpen ? 'open' : ''}`}>
+                      {faq.answer}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -484,9 +514,9 @@ export default function Bangalore({ city = "Bangalore" }) {
             <div className="bangalore-final-cta-button">
               <button 
                 className="bangalore-cta-button large"
-                onClick={handleBookConsultation}
+                onClick={handleTakeHairTest}
               >
-                Book Free Consultation
+                Take a Hair Test
               </button>
             </div>
           </div>

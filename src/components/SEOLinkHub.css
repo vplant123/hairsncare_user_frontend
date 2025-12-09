@@ -48,6 +48,19 @@
   gap: 18px;
 }
 
+/* links grid - base layout */
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+/* individual section containers */
+.internal-links-section,
+.external-links-section {
+  width: 100%;
+}
+
 /* common link card */
 .seo-link {
   display: flex;
@@ -130,17 +143,95 @@
 .seo-link-hub .muted { color: #6b7280; font-size: 13px; }
 
 /* responsive */
-@media (max-width: 980px) {
-  .links-grid { grid-template-columns: repeat(2, 1fr); }
-  .link-icon { width: 48px; height: 48px; flex: 0 0 48px; }
+/* Desktop/Laptop: 2 columns in links-grid */
+@media (min-width: 981px) {
+  .links-grid { 
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
+
+/* Tablet: 2 columns */
+@media (max-width: 980px) {
+  .seo-link-hub {
+    padding: 24px;
+    margin: 20px auto;
+  }
+  .links-grid { 
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .link-icon { 
+    width: 48px; 
+    height: 48px; 
+    flex: 0 0 48px; 
+  }
+}
+
+/* Tablet Portrait / Large Mobile */
+@media (max-width: 768px) {
+  .seo-link-hub {
+    padding: 20px;
+    margin: 16px;
+  }
+  .seo-link-container {
+    gap: 16px;
+  }
+  .links-grid { 
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+/* Mobile: single column */
 @media (max-width: 560px) {
-  .seo-link-hub { padding: 12px; border-radius: 8px; }
-  .links-grid { grid-template-columns: 1fr; gap: 10px; }
-  .seo-link { padding: 10px; min-height: 64px; gap: 10px; }
-  .link-text { font-size: 15px; white-space: normal; }
-  .link-desc { font-size: 13px; }
-  .link-arrow { display: none; }
+  .seo-link-hub { 
+    padding: 16px 12px; 
+    border-radius: 8px;
+    margin: 12px;
+  }
+  .links-grid { 
+    grid-template-columns: 1fr; 
+    gap: 10px; 
+  }
+  .seo-link { 
+    padding: 10px; 
+    min-height: 64px; 
+    gap: 10px; 
+  }
+  .link-text { 
+    font-size: 14px; 
+    white-space: normal; 
+  }
+  .link-desc { 
+    font-size: 12px; 
+  }
+  .link-arrow { 
+    display: none; 
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 400px) {
+  .seo-link-hub {
+    padding: 12px;
+    margin: 8px;
+  }
+  .seo-link {
+    padding: 8px;
+    gap: 8px;
+  }
+  .link-icon {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    font-size: 16px;
+  }
+  .link-text {
+    font-size: 13px;
+  }
+  .link-desc {
+    font-size: 11px;
+  }
 }
 
 /* small touch improvements */

@@ -13,7 +13,7 @@
 .bangalore-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 4rem 2rem;
+  padding: 2rem 2rem;
 
 }
 
@@ -943,6 +943,23 @@
   width: 100%;
   text-align: left;
   padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.bangalore-faq-question::after {
+  content: "▼";
+  color: #08baed;
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+.bangalore-faq-question[aria-expanded="true"]::after {
+  transform: rotate(180deg);
 }
 
 .bangalore-faq-answer {

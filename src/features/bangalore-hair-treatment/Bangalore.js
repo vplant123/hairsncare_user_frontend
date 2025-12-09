@@ -48,7 +48,7 @@ export default function Bangalore({ city = "Bangalore" }) {
     {
       title: "Doctor-Approved Allopathy Treatments",
       description: "Our treatments are:",
-      image: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729423480/hair-assessment/iyg4qyjpehesjctlcv6z.png",
+      image: "/Doctor-Approved Allopathy Treatments.png",
       details: [
         "Clinically tested",
         "Safe for long-term use",
@@ -59,7 +59,7 @@ export default function Bangalore({ city = "Bangalore" }) {
     {
       title: `Tailored Plans for ${city} Conditions`,
       description: `Even though we work online, we design your plan for ${city}'s:`,
-      image: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729423573/hair-assessment/z5bhoesxvlh89xjdclj5.png",
+      image: "/Tailored Plans for Bangalore Conditions.png",
       details: [
         "Hard water",
         "Humidity",
@@ -130,31 +130,31 @@ export default function Bangalore({ city = "Bangalore" }) {
       step: "Step 1",
       title: "Online Consultation",
       description: "Tell us about your hair fall and upload scalp photos.",
-      image: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729423548/hair-assessment/gctpdtkibo3nen5zcnhm.png"
+      image: "/Online Consultation.png"
     },
     {
       step: "Step 2", 
       title: "Diagnosis",
       description: "We study your scalp condition, lifestyle, and hair concerns.",
-      image: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729423480/hair-assessment/iyg4qyjpehesjctlcv6z.png"
+      image: "/Diagnosis.png"
     },
     {
       step: "Step 3",
       title: "Personalised Treatment Plan", 
       description: "You will be provided with an individualised treatment plan approved by a medical doctor specifically tailored to you.",
-      image: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729423573/hair-assessment/z5bhoesxvlh89xjdclj5.png"
+      image: "/Personalised Treatment Plan.png"
     },
     {
       step: "Step 4",
       title: "Medicine Delivery",
       description: "We can arrange for delivery of the prescribed medicines to your residence.",
-      image: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729423500/hair-assessment/lfqafjizvupmqwdhg83w.png"
+      image: "/Medicine Delivery'.png"
     },
     {
       step: "Step 5",
       title: "Regular Follow-Ups",
       description: "We monitor the results and make adjustments as required.",
-      image: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729423530/hair-assessment/zl161vfmpve9bnjc3eqs.png"
+      image: "/Regular Follow-Ups.png"
     }
   ];
 
@@ -231,7 +231,7 @@ export default function Bangalore({ city = "Bangalore" }) {
             </div>
             <div className="hero-image">
               <img 
-                src="https://res.cloudinary.com/drkpwvnun/image/upload/v1729423500/hair-assessment/lfqafjizvupmqwdhg83w.png" 
+                src="/Online hair solution.png" 
                 alt={`Online Hair Loss Treatment in ${city} - Professional Dermatologist Consultation`}
                 className="hero-img"
                 onError={(e) => {

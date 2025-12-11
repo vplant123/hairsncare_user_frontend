@@ -19,6 +19,33 @@ import { useNavigate } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import SEO from "../../components/SEO";
 import SEOLinkHub from "../../components/SEOLinkHub";
+
+// Helper function to style keywords in headings
+const styleHeadingText = (htmlContent) => {
+  if (!htmlContent) return htmlContent;
+  
+  // Keywords to highlight in blue
+  const keywords = [
+    /Hair Transplant/gi,
+    /HairsnCares/gi,
+    /Hairsncares/gi,
+    /Hair Loss/gi,
+    /FUE/gi,
+    /DHI/gi,
+    /MHI/gi
+  ];
+  
+  let styledContent = htmlContent;
+  keywords.forEach(pattern => {
+    styledContent = styledContent.replace(
+      pattern,
+      (match) => `<span style="color: #00A0E3; font-weight: 700;">${match}</span>`
+    );
+  });
+  
+  return styledContent;
+};
+
 export default function HairTransplant(props) {
   useEffect(() => {
     if (props?.setTitle) props?.setTitle(window.location.pathname);
@@ -153,9 +180,9 @@ export default function HairTransplant(props) {
               >
                 <div className="text-2-section-1-htw-left">
                   {/* <h1>
-                  <div dangerouslySetInnerHTML={{ __html: content?.section1?.title }} />
+                  <div dangerouslySetInnerHTML={{ __html: styleHeadingText(content?.section1?.title) }} />
                 </h1> */}
-                  <h1>Advanced Hair Transplant Techniques</h1>
+                  <h1><div dangerouslySetInnerHTML={{ __html: styleHeadingText("Advanced Hair Transplant Techniques") }} /></h1>
                 </div>
                 <div className="text-3-section-1-htw-left">
                   <div
@@ -187,14 +214,14 @@ export default function HairTransplant(props) {
           <div className="d-flex flex-column main-section-2-htw container main-div-resp">
             <div className="text-1-section-2-htw">
               <div
-                dangerouslySetInnerHTML={{ __html: content?.section2?.title }}
+                dangerouslySetInnerHTML={{ __html: styleHeadingText(content?.section2?.title) }}
               />
             </div>
             <ZoomInDiv2 className="text-2-section-2-htw">
               <h2>
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: content?.section2?.subTitle,
+                    __html: styleHeadingText(content?.section2?.subTitle),
                   }}
                 />
               </h2>
@@ -265,7 +292,7 @@ export default function HairTransplant(props) {
             >
               <div className="text-1-section-3-htw">
                 <div
-                  dangerouslySetInnerHTML={{ __html: content?.section3?.title }}
+                  dangerouslySetInnerHTML={{ __html: styleHeadingText(content?.section3?.title) }}
                 />
               </div>
               <ZoomInDiv2 style={{ display: "flex", justifyContent: "center" }}>

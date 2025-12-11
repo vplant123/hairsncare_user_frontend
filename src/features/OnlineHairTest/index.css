@@ -16,3 +16,34 @@
     margin: 0;
     padding:0
 }
+
+/* Custom styling for Online Hair Test page titles and headings */
+/* Make all headings bold with increased specificity */
+.text-2-section-4-htw,
+.text-2-section-4-htw *,
+.text-1-section-1-htw-left,
+.text-2-section-2-htw,
+.text-2-section-2-htw *,
+.main-heading-text-section-8-htw,
+.text-3-section-2-htw strong,
+.strong {
+    font-weight: 700 !important;
+}
+
+/* Ensure proper dark color for main text while keeping existing structure */
+.text-2-section-4-htw,
+.text-2-section-2-htw,
+.text-1-section-1-htw-left {
+    color: rgba(56, 56, 56, 1);
+}
+
+/* Brand name styling - blue color with bold weight for spans with inline styles */
+.text-2-section-4-htw span[style*="#00A0E3"],
+.text-2-section-2-htw span[style*="#00A0E3"],
+.text-1-section-1-htw-left span[style*="#00A0E3"],
+.text-2-section-4-htw span[style*="color: #00A0E3"],
+.text-2-section-2-htw span[style*="color: #00A0E3"],
+.text-1-section-1-htw-left span[style*="color: #00A0E3"] {
+    color: #00A0E3 !important;
+    font-weight: 700 !important;
+}

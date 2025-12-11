@@ -14,6 +14,33 @@ import Navbar from "../nav/Navbar";
 import { Padding } from "@mui/icons-material";
 import SEO from "../../components/SEO";
 import SEOLinkHub from "../../components/SEOLinkHub";
+
+// Helper function to style keywords in headings
+const styleHeadingText = (htmlContent) => {
+  if (!htmlContent) return htmlContent;
+  
+  // Keywords to highlight in blue
+  const keywords = [
+    /Hair Loss/gi,
+    /HairsnCares/gi,
+    /Hairsncares/gi,
+    /Hair Treatment/gi,
+    /Male Pattern Baldness/gi,
+    /Minoxidil/gi,
+    /Finasteride/gi
+  ];
+  
+  let styledContent = htmlContent;
+  keywords.forEach(pattern => {
+    styledContent = styledContent.replace(
+      pattern,
+      (match) => `<span style="color: #00A0E3; font-weight: 700;">${match}</span>`
+    );
+  });
+  
+  return styledContent;
+};
+
 export default function HairTreatmentMen() {
   const [read1, setRead1] = useState(false);
   const [read2, setRead2] = useState(false);
@@ -135,9 +162,9 @@ export default function HairTreatmentMen() {
               style={{ padding: 0 }}
             >
               <div className="text-2-section-1-htw-left">
-                <h1>Best Hair Loss Treatment For Men</h1>
+                <h1><div dangerouslySetInnerHTML={{ __html: styleHeadingText("Best Hair Loss Treatment For Men") }} /></h1>
                     {/* <div
-                  dangerouslySetInnerHTML={{ __html: content?.section1?.title }}
+                  dangerouslySetInnerHTML={{ __html: styleHeadingText(content?.section1?.title) }}
                 /> */}
               </div>
               <div className="text-3-section-1-htw-left">
@@ -184,7 +211,7 @@ export default function HairTreatmentMen() {
                 style={{ textAlign: "left" }}
               >
                 <div
-                  dangerouslySetInnerHTML={{ __html: content?.section2?.title }}
+                  dangerouslySetInnerHTML={{ __html: styleHeadingText(content?.section2?.title) }}
                 />
               </RightAnimatedDiv>
 

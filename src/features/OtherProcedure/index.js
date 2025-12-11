@@ -16,6 +16,33 @@ import { Padding } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import SEO from "../../components/SEO";
 import SEOLinkHub from "../../components/SEOLinkHub";
+
+// Helper function to style keywords in headings
+const styleHeadingText = (htmlContent) => {
+  if (!htmlContent) return htmlContent;
+  
+  // Keywords to highlight in blue
+  const keywords = [
+    /Hair Treatment/gi,
+    /HairsnCares/gi,
+    /Hairsncares/gi,
+    /Hair Loss/gi,
+    /VGROW/gi,
+    /GFC/gi,
+    /VThread/gi
+  ];
+  
+  let styledContent = htmlContent;
+  keywords.forEach(pattern => {
+    styledContent = styledContent.replace(
+      pattern,
+      (match) => `<span style="color: #00A0E3; font-weight: 700;">${match}</span>`
+    );
+  });
+  
+  return styledContent;
+};
+
 export default function OtherProcedure() {
   const [read1, setRead1] = useState(false);
   const [read2, setRead2] = useState(false);
@@ -46,15 +73,15 @@ export default function OtherProcedure() {
             className="main-div-resp"
           >
           <div className="d-flex flex-column container">
-            {/* <ZoomInDiv2 className="text-1-section-4-htw m-text-left"><div dangerouslySetInnerHTML={{ __html: content?.section1?.title }} /></ZoomInDiv2> */}
+            {/* <ZoomInDiv2 className="text-1-section-4-htw m-text-left"><div dangerouslySetInnerHTML={{ __html: styleHeadingText(content?.section1?.title) }} /></ZoomInDiv2> */}
             <h1 style={{ color: "#0e0e0eff", textAlign: "center" }}>
-              PRP Hair Treatment{" "}
+              <div dangerouslySetInnerHTML={{ __html: styleHeadingText("PRP Hair Treatment") }} />
             </h1>
             <ZoomInDiv2 style={{ display: "flex", justifyContent: "center" }}>
               <div className="text-2-section-4-htw width-for-text-heading-80 m-text-left">
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: content?.section1?.subTitle,
+                    __html: styleHeadingText(content?.section1?.subTitle),
                   }}
                 />
               </div>
@@ -115,13 +142,13 @@ export default function OtherProcedure() {
           <ZoomInDiv2 className="text-1-section-2-htw">
             <h2>
               <div
-                dangerouslySetInnerHTML={{ __html: content?.section2?.title }}
+                dangerouslySetInnerHTML={{ __html: styleHeadingText(content?.section2?.title) }}
               />
             </h2>
           </ZoomInDiv2>
           <ZoomInDiv2 className="text-2-section-2-htw">
             <div
-              dangerouslySetInnerHTML={{ __html: content?.section2?.subTitle }}
+              dangerouslySetInnerHTML={{ __html: styleHeadingText(content?.section2?.subTitle) }}
             />
           </ZoomInDiv2>
           <div className="desktop-view" style={{ gap: "20px" }}>
@@ -176,7 +203,7 @@ export default function OtherProcedure() {
             <ZoomInDiv2 className="text-1-section-3-htw">
               <h2>
                 <div
-                  dangerouslySetInnerHTML={{ __html: content?.section3?.title }}
+                  dangerouslySetInnerHTML={{ __html: styleHeadingText(content?.section3?.title) }}
                 />
               </h2>
             </ZoomInDiv2>

@@ -1,0 +1,29 @@
+/* Bold styling for all headings */
+.text-2-section-1-htw-left,
+.text-2-section-1-htw-left *,
+.text-1-section-2-htw,
+.text-1-section-2-htw *,
+.text-2-section-2-htw,
+.text-2-section-2-htw *,
+.text-1-section-3-htw,
+.text-1-section-3-htw *,
+.text-2-section-3-htw,
+.text-2-section-3-htw *,
+.text-2-section-4-htw,
+.text-2-section-4-htw *,
+.text-2-section-5-htw,
+.text-2-section-5-htw * {
+  font-weight: 700 !important;
+}
+
+/* Blue color for styled keywords */
+.text-2-section-1-htw-left span[style*="#00A0E3"],
+.text-1-section-2-htw span[style*="#00A0E3"],
+.text-2-section-2-htw span[style*="#00A0E3"],
+.text-1-section-3-htw span[style*="#00A0E3"],
+.text-2-section-3-htw span[style*="#00A0E3"],
+.text-2-section-4-htw span[style*="#00A0E3"],
+.text-2-section-5-htw span[style*="#00A0E3"] {
+  color: #00A0E3 !important;
+  font-weight: 700 !important;
+}

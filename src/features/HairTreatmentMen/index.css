@@ -1,1 +1,25 @@
 .main-section-1-htm{padding:3% 0;gap:5%}.main-section-5-htm{background:url("https://res.cloudinary.com/drkpwvnun/image/upload/v1729375604/hair-assessment/vygxt9nztzj3ldfzwmh7.png")}h3 strong{color:#000}
+
+/* Bold styling for all headings */
+.text-2-section-1-htw-left,
+.text-2-section-1-htw-left *,
+.text-2-section-2-htw,
+.text-2-section-2-htw *,
+.text-1-section-3-htw,
+.text-1-section-3-htw *,
+.text-2-section-4-htw,
+.text-2-section-4-htw *,
+.text-1-section-5-htw,
+.text-1-section-5-htw * {
+  font-weight: 700 !important;
+}
+
+/* Blue color for styled keywords */
+.text-2-section-1-htw-left span[style*="#00A0E3"],
+.text-2-section-2-htw span[style*="#00A0E3"],
+.text-1-section-3-htw span[style*="#00A0E3"],
+.text-2-section-4-htw span[style*="#00A0E3"],
+.text-1-section-5-htw span[style*="#00A0E3"] {
+  color: #00A0E3 !important;
+  font-weight: 700 !important;
+}

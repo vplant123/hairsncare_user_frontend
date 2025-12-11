@@ -16,6 +16,56 @@ import { Padding } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import SEO from "../../components/SEO";
 import SEOLinkHub from "../../components/SEOLinkHub";
+
+// Helper function to style keywords in headings
+const styleHeadingText = (htmlContent) => {
+  if (!htmlContent) return htmlContent;
+  
+  // First handle specific full-heading cases to ensure two-color split
+  let styledContent = htmlContent;
+
+  // 1) "Hair Loss Treatments For Women" -> make "Hair Loss Treatments" blue and "For Women" black (bold)
+  const pattern1 = /Hair\s+Loss\s+Treatments\s+For\s+Women/gi;
+  if (pattern1.test(styledContent)) {
+    styledContent = styledContent.replace(pattern1, (match) => {
+      return `<span style="color: #00A0E3; font-weight: 700;">Hair Loss Treatments</span> <span style="color: #0e0e0e; font-weight: 700;">For Women</span>`;
+    });
+    return styledContent;
+  }
+
+  // 2) "Find the Right Female Hair Loss Treatment for You" -> make "Female Hair Loss Treatment" blue, remaining words black
+  const pattern2 = /Find\s+the\s+Right\s+Female\s+Hair\s+Loss\s+Treatment\s+for\s+You/gi;
+  if (pattern2.test(styledContent)) {
+    styledContent = styledContent.replace(pattern2, (match) => {
+      return `<span style="color: #0e0e0e; font-weight: 700;">Find the Right </span><span style="color: #00A0E3; font-weight: 700;">Female Hair Loss Treatment</span><span style="color: #0e0e0e; font-weight: 700;"> for You</span>`;
+    });
+    return styledContent;
+  }
+
+  // Generic keyword highlighting (order matters - longer phrases first)
+  const keywords = [
+    /Female Hair Loss Treatment/gi,
+    /Hair Loss Treatments/gi,
+    /Hair Loss Treatment/gi,
+    /Hair Loss/gi,
+    /HairsnCares/gi,
+    /Hairsncares/gi,
+    /Hair Treatment/gi,
+    /Female/gi,
+    /Minoxidil/gi,
+    /Redensyl/gi
+  ];
+
+  keywords.forEach(pattern => {
+    styledContent = styledContent.replace(
+      pattern,
+      (match) => `<span style="color: #00A0E3; font-weight: 700;">${match}</span>`
+    );
+  });
+
+  return styledContent;
+};
+
 export default function HairTreatmentWomen() {
   const [read1, setRead1] = useState(false);
   const [read2, setRead2] = useState(false);
@@ -172,14 +222,14 @@ export default function HairTreatmentWomen() {
             >
               <div className="text-1-section-1-htw-left">
                 <div
-                  dangerouslySetInnerHTML={{ __html: content?.section1?.title }}
+                  dangerouslySetInnerHTML={{ __html: styleHeadingText(content?.section1?.title) }}
                 
                 />
               </div>
               <div className="text-2-section-1-htw-left">
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: content?.section1?.subTitle,
+                    __html: styleHeadingText(content?.section1?.subTitle),
                   }}
                 />
               </div>
@@ -203,11 +253,11 @@ export default function HairTreatmentWomen() {
         <div className="d-flex flex-column main-section-2-htw container main-div-resp">
           <div
             className="text-1-section-2-htw"
-            dangerouslySetInnerHTML={{ __html: content?.section2?.title }}
+            dangerouslySetInnerHTML={{ __html: styleHeadingText(content?.section2?.title) }}
           />
           <ZoomInDiv2 className="text-2-section-2-htw">
             <div
-              dangerouslySetInnerHTML={{ __html: content?.section2?.subTitle }}
+              dangerouslySetInnerHTML={{ __html: styleHeadingText(content?.section2?.subTitle) }}
             />
           </ZoomInDiv2>
           <div className="desktop-view">
@@ -238,11 +288,11 @@ export default function HairTreatmentWomen() {
             className="d-flex flex-column container"
             style={{ padding: "3% 0 3% 0" }}
           >
-            <div className="text-1-section-3-htw">
-              <div
-                dangerouslySetInnerHTML={{ __html: content?.section3?.title }}
-              />
-            </div>
+              <div className="text-1-section-3-htw">
+                <div
+                  dangerouslySetInnerHTML={{ __html: styleHeadingText(content?.section3?.title) }}
+                />
+              </div>
             <ZoomInDiv2 style={{ display: "flex", justifyContent: "center" }}>
               <div className="text-2-section-3-htw width-for-text-heading-80">
                 <div
@@ -326,7 +376,7 @@ export default function HairTreatmentWomen() {
           >
             <div className="text-1-section-4-htw">
               <div
-                dangerouslySetInnerHTML={{ __html: content?.section4?.title }}
+                dangerouslySetInnerHTML={{ __html: styleHeadingText(content?.section4?.title) }}
               />
             </div>
             <LeftAnimatedDiv
@@ -412,13 +462,13 @@ export default function HairTreatmentWomen() {
           <div className="d-flex flex-column container" style={{ padding: "3% 0 3% 0" }}>
             <div className="text-1-section-5-htw mt-3">
               <div
-                dangerouslySetInnerHTML={{ __html: content?.section5?.title }}
+                dangerouslySetInnerHTML={{ __html: styleHeadingText(content?.section5?.title) }}
               />
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <RightAnimatedDiv className="text-2-section-5-htw width-for-text-heading-80">
                 <div
-                  dangerouslySetInnerHTML={{ __html: content?.section5?.subTitle }}
+                  dangerouslySetInnerHTML={{ __html: styleHeadingText(content?.section5?.subTitle) }}
                 />
               </RightAnimatedDiv>
             </div>
@@ -520,7 +570,7 @@ export default function HairTreatmentWomen() {
                 style={{ textAlign: "left" }}
               >
                 <div
-                  dangerouslySetInnerHTML={{ __html: content?.section6?.title }}
+                  dangerouslySetInnerHTML={{ __html: styleHeadingText(content?.section6?.title) }}
                 />
               </div>
               <ZoomInDiv2

@@ -21,6 +21,36 @@ import SouthIcon from "@mui/icons-material/South";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
+// Helper function to style brand name and specific keywords in HTML content
+const styleBrandName = (htmlContent) => {
+  if (!htmlContent) return htmlContent;
+  
+  // Replace variations of brand name with styled version
+  const brandPatterns = [
+    /HairsnCares/gi,
+    /Hairsncares/gi,
+    /HairsNCares/gi,
+    /hairsncares/gi,
+    /HAIRSNCARES/gi
+  ];
+  
+  let styledContent = htmlContent;
+  brandPatterns.forEach(pattern => {
+    styledContent = styledContent.replace(
+      pattern,
+      (match) => `<span style="color: #00A0E3; font-weight: 700;">${match}</span>`
+    );
+  });
+  
+  // Also style "Hair Loss" in blue
+  styledContent = styledContent.replace(
+    /Hair Loss/gi,
+    (match) => `<span style="color: #00A0E3; font-weight: 700;">${match}</span>`
+  );
+  
+  return styledContent;
+};
+
 const ViewDiv1 = ({ item }) => {
   const [ref, control] = useDivInView();
 
@@ -163,6 +193,50 @@ export default function OnlineHairTest(props) {
 
   console.log(content?.section3?.forms);
   
+  // Apply brand name styling to all text nodes after content loads
+  React.useEffect(() => {
+    if (content) {
+      const styleBrandNamesInDOM = () => {
+        const headingSelectors = [
+          '.text-2-section-4-htw',
+          '.text-2-section-2-htw',
+          '.text-1-section-1-htw-left',
+          '.text-3-section-2-htw'
+        ];
+        
+        headingSelectors.forEach(selector => {
+          const elements = document.querySelectorAll(selector);
+          elements.forEach(element => {
+            if (element.innerHTML && !element.dataset.styled) {
+              const brandPatterns = [
+                { regex: /(HairsnCares|Hairsncares|HairsNCares|hairsncares|HAIRSNCARES|Hairscares)/gi, replacement: '<span style="color: #00A0E3; font-weight: 700;">$1</span>' },
+                { regex: /(Hair Loss)/gi, replacement: '<span style="color: #00A0E3; font-weight: 700;">$1</span>' }
+              ];
+              
+              let html = element.innerHTML;
+              let changed = false;
+              
+              brandPatterns.forEach(pattern => {
+                if (pattern.regex.test(html)) {
+                  html = html.replace(pattern.regex, pattern.replacement);
+                  changed = true;
+                }
+              });
+              
+              if (changed) {
+                element.innerHTML = html;
+                element.dataset.styled = 'true';
+              }
+            }
+          });
+        });
+      };
+      
+      // Run immediately and after a small delay to catch dynamically loaded content
+      styleBrandNamesInDOM();
+      setTimeout(styleBrandNamesInDOM, 500);
+    }
+  }, [content]);
 
   return (
     <Navbar>
@@ -191,7 +265,7 @@ export default function OnlineHairTest(props) {
                 animate={headingControl_1}
                 transition={{ duration: 1, delay: 0.5 }}
               >
-                <div dangerouslySetInnerHTML={{ __html: content?.section1?.title}} />
+                <div dangerouslySetInnerHTML={{ __html: styleBrandName(content?.section1?.title)}} />
               </motion.div>
             </div>
             <div className="d-flex main-section-1-op">
@@ -204,12 +278,12 @@ export default function OnlineHairTest(props) {
                 variants={LEFT_VARIANTS}
                 transition={TRANSITION}
               >
-                <div className="text-1-section-1-htw-left"><div dangerouslySetInnerHTML={{ __html: content?.section1?.subTilte}} /></div>
+                <div className="text-1-section-1-htw-left"><div dangerouslySetInnerHTML={{ __html: styleBrandName(content?.section1?.subTilte)}} /></div>
                 <div className="text-3-section-1-htw-left">
-                <div dangerouslySetInnerHTML={{ __html: content?.section1?.desc1}} />
+                <div dangerouslySetInnerHTML={{ __html: styleBrandName(content?.section1?.desc1)}} />
                   <br />
                   <br />
-                  <div dangerouslySetInnerHTML={{ __html: content?.section1?.desc2}} />
+                  <div dangerouslySetInnerHTML={{ __html: styleBrandName(content?.section1?.desc2)}} />
                   {!read1 ? (
                     <div
                       onClick={() => {
@@ -280,13 +354,13 @@ export default function OnlineHairTest(props) {
                 className="text-2-section-2-htw"
                 style={{ textAlign: "left" }}
               >
-                <h2><div dangerouslySetInnerHTML={{ __html: content?.section2?.title}} /></h2>
+                <h2><div dangerouslySetInnerHTML={{ __html: styleBrandName(content?.section2?.title)}} /></h2>
               </div>
               <div className="text-3-section-2-htw m-top">
-              <div dangerouslySetInnerHTML={{ __html: content?.section2?.desc1}} />
+              <div dangerouslySetInnerHTML={{ __html: styleBrandName(content?.section2?.desc1)}} />
                 <br />
                 <br />
-                <div dangerouslySetInnerHTML={{ __html: content?.section2?.desc2}} />
+                <div dangerouslySetInnerHTML={{ __html: styleBrandName(content?.section2?.desc2)}} />
               </div>
               <div className="">
                 <button
@@ -315,7 +389,7 @@ export default function OnlineHairTest(props) {
                 variants={LEFT_VARIANTS}
                 transition={TRANSITION}
               >
-                <h2><div dangerouslySetInnerHTML={{ __html: content?.section3?.title}} /></h2>
+                <h2><div dangerouslySetInnerHTML={{ __html: styleBrandName(content?.section3?.title)}} /></h2>
               </motion.div>
 
               <div className="d-flex flex-column  mt-5 gap-desktop" style={{ gap: "20px" }}>
@@ -332,8 +406,8 @@ export default function OnlineHairTest(props) {
                     className="text-3-section-2-htw m-text-1"
                     style={{ color: "white", width: "80%" }}
                   >
-                    <strong className="strong"><div dangerouslySetInnerHTML={{ __html: item.title}} /></strong>
-                    <div dangerouslySetInnerHTML={{ __html: item.desc}} />
+                    <strong className="strong"><div dangerouslySetInnerHTML={{ __html: styleBrandName(item.title)}} /></strong>
+                    <div dangerouslySetInnerHTML={{ __html: styleBrandName(item.desc)}} />
                   </div>
                   </ZoomInDiv>
                 })}
@@ -348,7 +422,7 @@ export default function OnlineHairTest(props) {
                 animate={headingControl_34}
                 transition={{ duration: 1, delay: 0.5 }}
               >
-                <div dangerouslySetInnerHTML={{ __html: content?.section3?.desc}} />
+                <div dangerouslySetInnerHTML={{ __html: styleBrandName(content?.section3?.desc)}} />
               </motion.div>
             </div>
             <motion.div
@@ -383,7 +457,7 @@ export default function OnlineHairTest(props) {
           >
             <h2>
               How Does the <span className="blue-btw-text">Hair Loss Test</span>{" "}
-              Work at HairsnCares.com?
+              Work at <span style={{ color: "#00A0E3", fontWeight: 700 }}>HairsnCares.com</span>?
             </h2>
           </motion.div>
           <div className="d-flex flex-column mp-2" style={{ gap: "0" }}>
@@ -727,7 +801,7 @@ export default function OnlineHairTest(props) {
               transition={{ duration: 1, delay: 0.5 }}
             >
               <div className="text-2-section-4-htw width-for-text-heading-80">
-                <h2><div dangerouslySetInnerHTML={{ __html: content?.section4?.title}} /></h2>
+                <h2><div dangerouslySetInnerHTML={{ __html: styleBrandName(content?.section4?.title)}} /></h2>
               </div>
             </motion.div>
             <motion.div
@@ -739,7 +813,7 @@ export default function OnlineHairTest(props) {
               transition={{ duration: 1, delay: 0.5 }}
             >
               <div className="text-3-section-4-htw mfs-1 m-text-left" style={{ width: "80%" }}>
-              <div dangerouslySetInnerHTML={{ __html: content?.section4?.desc}} />
+              <div dangerouslySetInnerHTML={{ __html: styleBrandName(content?.section4?.desc)}} />
               </div>
             </motion.div>
 
@@ -764,10 +838,10 @@ export default function OnlineHairTest(props) {
             >
               <div className="text-1-section-1-htw-left">Conclusion</div>
               <div className="text-3-section-1-htw-left">
-              <div dangerouslySetInnerHTML={{ __html: content?.section5?.desc}} />
+              <div dangerouslySetInnerHTML={{ __html: styleBrandName(content?.section5?.desc)}} />
                 <br />
                 <br />
-                <div dangerouslySetInnerHTML={{ __html: content?.section5?.footerText}} />
+                <div dangerouslySetInnerHTML={{ __html: styleBrandName(content?.section5?.footerText)}} />
               </div>
               <div className="">
                 <button

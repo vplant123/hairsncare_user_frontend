@@ -135,10 +135,10 @@ export default function Dermatologist() {
                     className="text-2-section-4-htw"
                     style={{ textAlign: "left", fontWeight: "800" }}
                   >
-                    <h1>
-                      Dr. Amit Agarkar – Hair Transplant &amp; Restoration
-                      Expert
-                    </h1>
+                      <h1>
+                        <span style={{ color: '#0e0e0e', fontWeight: 800 }}>Dr. Amit Agarkar – </span>
+                        <span style={{ color: '#00A0E3', fontWeight: 800 }}>Hair Transplant &amp; Restoration Expert</span>
+                      </h1>
                   </div>
                   <div
                     className="text-2-section-4-htw"

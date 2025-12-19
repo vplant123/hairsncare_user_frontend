@@ -120,7 +120,7 @@ export default function About() {
       </div>
       <div className="about-section-2 container">
         <LeftAnimatedDiv className="item-2">
-          <h2 style={{ fontSize: "32px" }}>{content?.section2?.title}</h2>
+          <h2 className="hnc-about-section2-title">{content?.section2?.title}</h2>
           <span>{content?.section2?.shortDesc}</span>
           <p>{content?.section2?.longDesc}</p>
         </LeftAnimatedDiv>
@@ -134,8 +134,8 @@ export default function About() {
       </div>
       <div className="section-3-wrapper">
         <div className="container">
-          <div>
-            <h2 className="content-3-heading">{content?.section3?.title}</h2>
+            <div>
+            <h2 className="content-3-heading hnc-about-section3-title">{content?.section3?.title}</h2>
           </div>
           <div className="content-3">
             <ZoomInDiv className="content-container ">
@@ -198,11 +198,11 @@ export default function About() {
                   <img alt={dd[ind]?.alt} src={e?.img} title={dd[ind]?.title} />
                 </div>
                 <div className="circle-conta">
-                  <button className="circle-4">
-                    <h3>{e?.title}</h3>
+                  <button className="circle-4 circle-button">
+                    <h3 className="hnc-commit-sub-title">{e?.title}</h3>
                   </button>
                 </div>
-                <p>{e?.desc}</p>
+                <p style={{ height: "100%"}}>{e?.desc}</p>
               </RightAnimatedDiv>
             );
           })}

@@ -7,6 +7,8 @@
   display: flex;
   flex-direction: column;
   align-items: center; /* Center content horizontally */
+  width: 100%;
+  max-width: 320px;
 }
 
 .product-card img {
@@ -106,4 +108,99 @@
 .slick-prev {
   right: auto;
   left: -50px;
+}
+
+/* Carousel styles */
+.product-carousel-container {
+  position: relative;
+  padding: 0;
+  margin-bottom: 2rem;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.carousel-wrapper {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.carousel-track {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+  flex-shrink: 0;
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.carousel-slide > div {
+  flex: 0 0 auto;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(75, 85, 92, 0.8);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-size: 18px;
+}
+
+.carousel-arrow:hover:not(:disabled) {
+  background: rgba(75, 85, 92, 1);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-arrow:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.carousel-arrow-prev {
+  left: -45px;
+}
+
+.carousel-arrow-next {
+  right: -45px;
+}
+
+@media (max-width: 768px) {
+  .product-carousel-container {
+    padding: 0 40px;
+  }
+  
+  .carousel-arrow {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+  
+  .carousel-arrow-prev {
+    left: 5px;
+  }
+  
+  .carousel-arrow-next {
+    right: 5px;
+  }
+  
+  .carousel-slide {
+    flex-direction: column;
+    align-items: center;
+  }
 }

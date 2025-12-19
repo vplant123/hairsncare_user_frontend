@@ -5,9 +5,16 @@
 }
 .book-appointment-container{
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem; /* increase spacing between the three child divs (title, image, description) */
   
+}
+
+/* Ensure each of the three columns centers its content vertically */
+.book-appointment-container > * {
+  display: flex;
+  align-items: center;
 }
 .get-in{
     background: url("https://hairsncares.com/assets/img/contact/info-bg.jpg");
@@ -18,15 +25,23 @@
     margin-bottom: 1rem;
 }
 .contect-us-heading{
-    font-size: 3.625rem;
-    color: white;
-    font-weight: 500;
+  font-size: 2.8rem; /* reduced from 3.625rem */
+  color: white;
+  font-weight: 600;
+  margin: 0; /* ensure consistent alignment */
+  line-height: 1.1;
+  text-wrap: nowrap;
 }
 .cont-head-2{
-    font-size: 1.875rem;
+  font-size: 1.5rem;
 }
 .sub-had-2{
-    font-size: 1.25rem;
+  font-size: 1.125rem;
+  margin: 0;
+  font-weight: 700;
+  color: #333;
+  line-height: 1.4;
+  white-space: nowrap;
 }
 .touch-container{
     display: flex;
@@ -57,106 +72,190 @@
     max-width: 1280px; /* Ensure the container does not exceed this width */
     margin: 0 auto; /* Center the container horizontally */
     margin-top: 3rem;
-    gap: 2rem;
+    gap: 2.5rem;
+    padding: 2rem ;
   }
   
   .contect-input div {
     flex: 1; /* Use flex-grow to distribute available space equally among child elements */
-    border: 1px solid gray;
-    border-radius: 9px;
-    padding: 3rem;
+    background: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 2rem;
     box-sizing: border-box; /* Ensure padding is included in the element's width */
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 1rem;
   }
   .text-center{
     text-align: center;
   }
   .contect-input h2{
-    margin-bottom: 1.5rem;
+    margin-bottom: 3rem;
+    color: #3d5a80;
+    font-size: 24px;
+    font-weight: 600;
   }
   .input-content input{
      display: block;
      border-top: none;
-     border-left: none;border-right: none;
+     border-left: none;
+     border-right: none;
      width: 100%;
-     margin-bottom: 1.5rem;
-     height: 2rem;
+     margin-bottom: 1.8rem;
+     height: 2.2rem;
      outline: none;
-     border-bottom: 1px solid black !important;
+     border-bottom: 1px solid #e8e8e8 !important;
+     background: transparent;
+     color: #666;
+     font-size: 14px;
+     padding-left: 30px;
+  }
+  
+  .input-with-icon {
+    position: relative;
+    margin-bottom: 0;
+  }
+  
+  .input-with-icon input {
+    margin-bottom: 0;
+  }
+  
+  .input-icon {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #a0a0a0;
+    font-size: 18px;
+    pointer-events: none;
+    stroke-width: 1.5;
+  }
+  
+  .textarea-with-icon {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  
+  .textarea-with-icon textarea {
+    margin-bottom: 0;
+  }
+  
+  .textarea-icon {
+    position: absolute;
+    left: 0;
+    top: 8px;
+    color: #a0a0a0;
+    font-size: 18px;
+    pointer-events: none;
+    stroke-width: 1.5;
+  }
+  .input-content input::placeholder{
+    color: #a8a8a8;
+    font-size: 14px;
   }
   .input-content input:hover{
     border: none !important;
     outline: none !important;
-     border-bottom: 1px solid black !important;
-   
+    border-bottom: 1px solid #d0d0d0 !important;
   }
   .input-content input:focus{
-    border-bottom: 1px solid #03a0d5 !important;
+    border-bottom: 1px solid #0d7fc3 !important;
   }
   .input-content textarea{
     width: 100%;
-    height: 7rem;
+    height: 5rem;
     outline: none;
     border-top: none;
-    border-left: none;border-right: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
     margin-bottom: 1rem;
+    background: transparent;
+    color: #666;
+    font-size: 14px;
+    resize: none;
+    padding-left: 30px;
+  }
+  .input-content textarea::placeholder{
+    color: #a8a8a8;
+    font-size: 14px;
   }
   .input-content textarea:focus{
-    border-bottom: 1px solid #03a0d5 !important;
-
+    border-bottom: 1px solid #0d7fc3 !important;
   }
 
   .input-button-content{
-    display:block;
+    display: block;
     width: 100%;
-    margin-top: 3rem;
-    margin-bottom: 1rem;
-    padding: .7rem;
+    margin-top: 2rem;
+    margin-bottom: 0;
+    padding: 0.8rem;
     color: white;
-    border-radius: 9px;
-    font-size: 1.5rem;
-    font-weight: 500;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     border: none;
-    background-image: linear-gradient(to top, #03a0d5, #03a2d7, #04a5da, #04a7dc, #05aade);
-   
+    background: #0d7fc3;
+    transition: background 0.3s ease;
   }
   .input-button-content:hover{
     cursor: pointer;
-    background-image: linear-gradient(to top, #0682ab, #1080a5, #026b8f, #0379a1, #05aade);
+    background: #0a6ba8;
   }
 
   .text-list span{
-  
     background: #F2D487;
-    padding: .3rem;
+    padding: 0;
     border-radius: 100%;
-    width: 2rem;
-    height: 2rem;
+    min-width: 2.2rem;
+    width: 2.2rem;
+    height: 2.2rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-weight: 700;
+    font-size: 13px;
+    color: #333;
+    flex-shrink: 0;
   }
   .text-list{
     display: flex;
     gap: 1rem;
-    align-items: center;
+    align-items: flex-start;
     margin-top: 1rem;
+  }
+  .text-list h3{
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    line-height: 1.6;
   }
   .check-contact{
     display: flex;
     align-items: center;
     gap: .5rem;
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 400;
     margin-top: .3rem;
   }
   .check-contact input{
-    width: 1.3rem;
+    width: 1rem;
     margin: 0;
   }
   .item-i{
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
+  }
+  
+  .input-content form p{
+    font-size: 13px;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 0.5rem;
   }
 
   .contact-img{
@@ -192,7 +291,7 @@
     .contect-input {
       flex-direction: column;
       gap: 2rem;
-      padding: 1rem;
+      padding: 2rem;
     }
     .text-center img{
       max-width: 100%;
@@ -217,4 +316,37 @@
 
 .pt-70 {
   padding-top: 70px;
+}
+
+/* Center image in right column and align content */
+.contect-input > div:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contect-input > div:last-child h2 {
+  align-self: flex-start;
+  width: 100%;
+}
+
+.contect-input > div:last-child figure {
+  margin: 1rem 0 1.5rem 0;
+  max-width: 100%;
+}
+
+.contect-input > div:last-child figure img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.contect-input > div:last-child .text-list {
+  width: 100%;
+  max-width: 100%;
+}
+
+.inputwith-icons{
+  box-shadow: none !important;
+  padding: 0.5rem !important;
 }

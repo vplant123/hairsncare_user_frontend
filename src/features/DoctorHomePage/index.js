@@ -197,7 +197,7 @@ function DoctorHomepage() {
                 className="doctor-head-2-section-2-htw"
                 style={{ textAlign: "left", color: "white" }}
               >
-                <h2>
+                <h2 className="hnc-doctor-heading-bold">
                 Dr. Amit  Agarkar
                 </h2>
               </ZoomInDiv2>

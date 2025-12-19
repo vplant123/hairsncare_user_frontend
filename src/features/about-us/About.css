@@ -16,6 +16,12 @@
 .about-section-2 {
   display: flex;
 }
+
+/* Unique class for About page section 2 H2 to avoid collisions */
+.hnc-about-section2-title {
+  font-size: 32px;
+  font-weight: 700 !important;
+}
 .item-2 {
   display: flex;
   flex-direction: column;
@@ -90,6 +96,11 @@
   padding: 3rem 0 1rem 0;
 }
 
+/* Unique class for About page section 3 H2 to avoid collisions */
+.hnc-about-section3-title {
+  font-weight: 700 !important;
+}
+
 .content-3-heading::before,
 .content-3-heading::after {
   content: "";
@@ -147,14 +158,17 @@
   display: flex;
   margin-top: 3rem;
   gap: 2rem; /* Adjust the gap between items */
+  overflow: hidden;
 }
 
 .items-con {
   flex: 1; /* Each div takes up an equal amount of space */
   background-image: linear-gradient(to bottom, transparent, #fdf4c9);
+  cursor: pointer;
+}
 
   /* Add padding to create some space inside each div */
-}
+
 .circle-4 {
   padding: 1.5rem;
   background-color: #fdf4c9;
@@ -213,6 +227,7 @@
   gap: 1rem;
   color: #08baed;
 }
+
 .commit-con {
   display: flex;
   gap: 2rem;
@@ -353,3 +368,43 @@
     font-size: 0.9rem;
   }
 }
+
+.hnc-commit-sub-title {
+  display: inline-block;
+  max-width: 150px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px !important;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.items-con{
+  transition: all 0.5s ease;
+}
+
+.items-con .circle-4,
+.items-con .circle-conta,
+.items-con p,
+.items-con .circle-button {
+  transition: all 0.5s ease;
+}
+
+.items-con:hover .circle-4{
+ background-color: #1283c1;
+}
+.items-con:hover .circle-conta {
+ background-color: #1283c1 !important;
+}
+.items-con:hover p{
+ background-color: #1283c1;
+ color: white
+}
+
+.items-con:hover .circle-button{
+ background-color: #000000;
+ color: white
+}
+
+

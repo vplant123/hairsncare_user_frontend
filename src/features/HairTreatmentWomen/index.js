@@ -42,6 +42,15 @@ const styleHeadingText = (htmlContent) => {
     return styledContent;
   }
 
+  // 3) "Hair Loss in Women Can Impact Your Confidence and Well-Being" -> make "Women" and "Well-Being" blue
+  const pattern3 = /Hair\s+Loss\s+in\s+Women\s+Can\s+Impact\s+Your\s+Confidence\s+and\s+Well-Being/gi;
+  if (pattern3.test(styledContent)) {
+    styledContent = styledContent.replace(pattern3, (match) => {
+      return `<span style="color: #0e0e0e; font-weight: 700; font-size: 50px">Hair Loss in </span><span style="color: #00A0E3; font-weight: 700; font-size: 50px">Women</span><span style="color: #0e0e0e; font-weight: 700; font-size: 50px"> Can Impact Your Confidence and </span><span style="color: #00A0E3; font-size: 50px; font-weight: 700;">Well-Being</span>`;
+    });
+    return styledContent;
+  }
+
   // Generic keyword highlighting (order matters - longer phrases first)
   const keywords = [
     /Female Hair Loss Treatment/gi,

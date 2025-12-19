@@ -12,6 +12,10 @@
 .trust-care {
   flex: 1;
   padding: 2rem;
+  padding-left: 6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .care2 div {
   height: 100px;

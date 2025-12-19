@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./BookAppointment.css";
 import { CgFormatBold } from "react-icons/cg";
+import { FiUser, FiMail, FiPhone, FiMessageSquare } from "react-icons/fi";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BASE_URL from "../../Config";
@@ -90,7 +91,11 @@ function BookAppointment() {
 
           <RightAnimatedDiv>
             <div>
-              <h4 className="sub-had-2" style={{ fontSize: "2rem" }}>{content?.section1?.description}</h4>
+              <h4 className="sub-had-2">
+                {content?.section1?.description?.split('WE ARE HERE TO HELP')[0]}
+                <br />
+                <span style={{ fontSize : "28px"}}>WE ARE HERE TO HELP</span>
+              </h4>
             </div>
           </RightAnimatedDiv>
         </div>
@@ -197,12 +202,24 @@ function BookAppointment() {
       <div className="contect-input container " id="section3">
         <LeftAnimatedDiv className="input-content ">
 
-          <h2>Book a Quick Online Appointment</h2>
-          <input placeholder="Your Name" onChange={(e) => setName(e.target.value)} />
-          <input placeholder="Your Email" onChange={(e) => setemail(e.target.value)} />
-          <input placeholder="Your Phone" onChange={(e) => setPhone(e.target.value)} />
+          <h2>Book an Appointment</h2>
+          <div className="input-with-icon inputwith-icons">
+            <FiUser className="input-icon" />
+            <input placeholder="Your Name" onChange={(e) => setName(e.target.value)} />
+          </div>
+          <div className="input-with-icon inputwith-icons">
+            <FiMail className="input-icon" />
+            <input placeholder="Your Email" onChange={(e) => setemail(e.target.value)} />
+          </div>
+          <div className="input-with-icon inputwith-icons">
+            <FiPhone className="input-icon" />
+            <input placeholder="Your Phone" onChange={(e) => setPhone(e.target.value)} />
+          </div>
 
-          <textarea placeholder="Your Message" onChange={(e) => setMsg(e.target.value)} />
+          <div className="textarea-with-icon inputwith-icons">
+            <FiMessageSquare className="textarea-icon" />
+            <textarea placeholder="Your Message" onChange={(e) => setMsg(e.target.value)} />
+          </div>
           <form>
             <p>Preferred</p>
             <i className="item-i"> <label className="check-contact">
@@ -232,7 +249,8 @@ function BookAppointment() {
               title="Virtual Consultation"
               src={content?.section3?.img} />
           </figure>
-          {
+         <div  style={{paddingLeft: "80px", boxShadow: "none"}}>
+           {
             content?.section3?.data?.map((item, i) => {
               return (
                 <>
@@ -243,6 +261,7 @@ function BookAppointment() {
               )
             })
           }
+         </div>
         </RightAnimatedDiv>
       </div>
       <ToastContainer position="bottom-right" />

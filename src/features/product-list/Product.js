@@ -126,8 +126,8 @@ const ProductCard = ({ product, index, cart, setCart }) => {
         ...TRANSITION,
         delay: index * 0.2,
       }}
-      style={{ cursor: "pointer" }}
-      className="col-12 col-md-4 "
+      style={{ cursor: "pointer", maxWidth: "320px", flex: "0 0 auto" }}
+      className="col-12 col-md-3 "
     >
       <div
         className="product-card"
@@ -310,9 +310,16 @@ const ProductCard = ({ product, index, cart, setCart }) => {
           <div
             className="btn-container"
             style={{ margin: 0 }}
-            onClick={() => handleAddToCart()}
           >
-            <button className="btn primary">ADD TO CART</button>
+            <button 
+              className="btn primary" 
+              onClick={(e) => {
+                e.stopPropagation();
+                handleAddToCart();
+              }}
+            >
+              ADD TO CART
+            </button>
           </div>
         </div>
       </div>
@@ -320,9 +327,13 @@ const ProductCard = ({ product, index, cart, setCart }) => {
   );
 };
 
-const ProductList = ({ products, cart, setCart }) => {
+const ProductList = ({ products, cart, setCart, currentSlide }) => {
   return (
-    <div className="col-12 row">
+    <div className="col-12 row carousel-track" style={{ 
+      display: 'flex',
+      transition: 'transform 0.5s ease-in-out',
+      transform: `translateX(-${currentSlide * 100}%)`
+    }}>
       {products?.map((item, index) => (
         <ProductCard
           key={index}
@@ -367,35 +378,36 @@ function Product(props) {
 
   const [products, setProducts] = useState([]);
   const [status, setStatus] = useState("idle");
-  const [cur, setCur] = useState(1);
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [slide] = useState(3);
+  const [isHovered, setIsHovered] = useState(false);
 
+  // Auto-slide effect
   useEffect(() => {
-    if (products?.length >= 5) {
+    if (products?.length > slide && !isHovered) {
+      const maxSlide = Math.ceil(products?.length / slide) - 1;
       let timeout = setTimeout(
         () =>
-          setCur((prevIndex) =>
-            prevIndex === Math.ceil(products?.length / slide)
-              ? 1
-              : prevIndex + 1
+          setCurrentSlide((prevSlide) =>
+            prevSlide >= maxSlide ? 0 : prevSlide + 1
           ),
-        15000
+        3000 // Auto-slide every 3 seconds
       );
 
       return () => {
         clearTimeout(timeout);
       };
     }
-  }, [cur, products]);
+  }, [currentSlide, products, slide, isHovered]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       setStatus("loading");
       try {
-        const response = await fetch(`${BASE_URL}/admin/product?review=4`);
+        const response = await fetch(`${BASE_URL}/admin/product?review=&lessPrice=0&morePrice=50000&type=0&filter=&display=1`);
         const data = await response.json();
         console.log("Products fetched:", data);
-        setProducts([...data.message]);
+        setProducts([...data.message].slice(0, 9));
         setStatus("idle");
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -409,18 +421,29 @@ function Product(props) {
   const isLargeScreen = useMediaQuery("(min-width:1200px)");
   const isMobile = useMediaQuery("(max-width: 768px)");
 
-  // useEffect(() => {
-  //   if (isLargeScreen) {
-  //     setSlide(0);
-  //   } else {
-  //     setSlide(0);
-  //   }
-  // }, [isMobile, isLargeScreen]);
+  // Navigation handlers
+  const goToNextSlide = () => {
+    const maxSlide = Math.ceil(products?.length / slide) - 1;
+    setCurrentSlide((prev) => (prev >= maxSlide ? 0 : prev + 1));
+  };
 
-  const paginatedProducts = useMemo(
-    () => products?.slice((cur - 1) * slide, cur * slide),
-    [cur, products, slide]
-  );
+  const goToPrevSlide = () => {
+    const maxSlide = Math.ceil(products?.length / slide) - 1;
+    setCurrentSlide((prev) => (prev <= 0 ? maxSlide : prev - 1));
+  };
+
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+  };
+
+  // Get all products grouped by slide
+  const allProductSlides = useMemo(() => {
+    const slides = [];
+    for (let i = 0; i < products?.length; i += slide) {
+      slides.push(products.slice(i, i + slide));
+    }
+    return slides;
+  }, [products, slide]);
 
   return (
     <div>
@@ -430,16 +453,80 @@ function Product(props) {
       >
         Our Products
       </h2>
-      <div className="product-container container row">
-        <ProductList
-          products={paginatedProducts}
-          cart={cart}
-          setCart={setCart}
-        />
+      <div 
+        className="product-carousel-container"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {/* Navigation Arrows */}
+        {products?.length > slide && (
+          <>
+            <button 
+              className="carousel-arrow carousel-arrow-prev"
+              onClick={goToPrevSlide}
+              aria-label="Previous slide"
+              disabled={currentSlide === 0}
+              style={{ opacity: currentSlide === 0 ? 0.4 : 1, cursor: currentSlide === 0 ? 'not-allowed' : 'pointer' }}
+            >
+              <i className="fas fa-chevron-left"></i>
+            </button>
+            <button 
+              className="carousel-arrow carousel-arrow-next"
+              onClick={goToNextSlide}
+              aria-label="Next slide"
+              disabled={currentSlide === Math.ceil(products?.length / slide) - 1}
+              style={{ opacity: currentSlide === Math.ceil(products?.length / slide) - 1 ? 0.4 : 1, cursor: currentSlide === Math.ceil(products?.length / slide) - 1 ? 'not-allowed' : 'pointer' }}
+            >
+              <i className="fas fa-chevron-right"></i>
+            </button>
+          </>
+        )}
+        
+        {/* Carousel Track */}
+        <div className="carousel-wrapper">
+          <div className="product-container container" style={{ padding: 0 }}>
+            <div 
+              className="carousel-track row"
+              style={{
+                transform: `translateX(-${currentSlide * 100}%)`,
+                transition: 'transform 0.5s ease-in-out',
+                display: 'flex',
+                flexWrap: 'nowrap',
+                margin: 0
+              }}
+            >
+              {allProductSlides.map((slideProducts, slideIndex) => (
+                <div 
+                  key={slideIndex}
+                  className="carousel-slide"
+                  style={{
+                    minWidth: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: '1rem',
+                    flexShrink: 0
+                  }}
+                >
+                  {slideProducts.map((product, index) => (
+                    <ProductCard
+                      key={product._id || index}
+                      product={product}
+                      index={index}
+                      cart={cart}
+                      setCart={setCart}
+                    />
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        
+        {/* Pagination Dots */}
         <Pagination
           length={Math.ceil(products?.length / slide)}
-          cur={cur}
-          setCur={setCur}
+          cur={currentSlide + 1}
+          setCur={(page) => goToSlide(page - 1)}
         />
       </div>
       <div

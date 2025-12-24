@@ -144,6 +144,15 @@
   font-weight: 600;
   color: #ffffff;
 }
+.sub-text-title-htw{
+  font-size: 22px;
+  font-weight: 700;
+}
+.sub-text-desc-htw{
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
 
 .sub-text-1-section-3-htw {
   font-weight: 400 !important;

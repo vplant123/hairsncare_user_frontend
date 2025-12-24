@@ -23,3 +23,23 @@
   color: #00A0E3 !important;
   font-weight: 700 !important;
 }
+
+.mfs-1 { font-size: 1rem; }
+
+/* decrease FAQ question size on laptop/desktop */
+@media (min-width: 1024px) {
+  .mfs-1 { font-size: 1.1rem; } /* adjust value as needed */
+}
+
+/* Default (desktop) – keeps current spacing */
+.text-3-section-2-htw {
+  line-height: 1.6;
+}
+
+/* Mobile only – reduce gap between lines */
+@media (max-width: 768px) {
+  .text-3-section-2-htw {
+    line-height: 1.3;
+    font-size: 14px; /* optional: slightly smaller text */
+  }
+}

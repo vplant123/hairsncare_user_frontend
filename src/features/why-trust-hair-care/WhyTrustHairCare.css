@@ -25,8 +25,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 16px;
 }
 .trust-care h1 {
+  margin-bottom: 2rem;
+}
+.trust-care h2 {
   margin-bottom: 2rem;
 }
 .care2 {

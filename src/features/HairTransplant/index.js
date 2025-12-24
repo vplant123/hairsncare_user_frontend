@@ -185,11 +185,7 @@ export default function HairTransplant(props) {
                   <h1><div dangerouslySetInnerHTML={{ __html: styleHeadingText("Advanced Hair Transplant Techniques") }} /></h1>
                 </div>
                 <div className="text-3-section-1-htw-left">
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: content?.section1?.desc,
-                    }}
-                  />
+                  <div>{content?.section1?.desc?.replace(/<[^>]+>/g, '')}</div>
                 </div>
                 <div className="">
                   <button
@@ -239,9 +235,7 @@ export default function HairTransplant(props) {
                 className="text-3-section-2-htw main-section-2-htw-right d-flex flex-column"
                 style={{ gap: "10px" }}
               >
-                <div
-                  dangerouslySetInnerHTML={{ __html: content?.section2?.desc }}
-                />
+                <div>{content?.section2?.desc?.replace(/<[^>]+>/g, '')}</div>
                 <strong>
                   Some common issues I hear in consultations include:
                 </strong>
@@ -266,7 +260,7 @@ export default function HairTransplant(props) {
                         className="text-3-section-2-htw"
                         style={{ color: "black", width: "80%" }}
                       >
-                        <div dangerouslySetInnerHTML={{ __html: item.title }} />
+                        <div>{item.title?.replace(/<[^>]+>/g, '')}</div>
                       </div>
                     </ZoomInDiv>
                   );
@@ -332,14 +326,10 @@ export default function HairTransplant(props) {
                         />
                       </div>
                       <div className="sub-text-1-section-3-htw1">
-                        <h3>
-                          <div
-                            dangerouslySetInnerHTML={{ __html: item.title }}
-                          />
-                        </h3>
+                        <h3>{item.title?.replace(/<[^>]+>/g, '')}</h3>
                       </div>
                       <div className="sub-text-2-section-3-htw">
-                        <div dangerouslySetInnerHTML={{ __html: item.desc }} />
+                        <div>{item.desc?.replace(/<[^>]+>/g, '')}</div>
                       </div>
                     </ZoomInDiv2>
                   );
@@ -424,13 +414,13 @@ export default function HairTransplant(props) {
                         className="mini-card-text-1-section-4-htw"
                         style={{ textAlign: "left" }}
                       >
-                        <div dangerouslySetInnerHTML={{ __html: item.title }} />
+                        <div>{item.title?.replace(/<[^>]+>/g, '')}</div>
                       </div>
                       <div
                         className="mini-card-text-2-section-4-htw"
                         style={{ textAlign: "left" }}
                       >
-                        <div dangerouslySetInnerHTML={{ __html: item.desc }} />
+                        <div>{item.desc?.replace(/<[^>]+>/g, '')}</div>
                       </div>
                     </ZoomInDiv>
                   );
@@ -521,11 +511,7 @@ export default function HairTransplant(props) {
                           color: indx + 1 == selectSec ? "#FFFFFF" : "black",
                         }}
                       >
-                        <h3>
-                          <div
-                            dangerouslySetInnerHTML={{ __html: item.title }}
-                          />
-                        </h3>
+                        <h3>{item.title?.replace(/<[^>]+>/g, '')}</h3>
                       </div>
                       <div
                         className="mini-card-text-2-section-4-htw"
@@ -536,7 +522,7 @@ export default function HairTransplant(props) {
                               : "rgba(97, 97, 97, 1)",
                         }}
                       >
-                        <div dangerouslySetInnerHTML={{ __html: item.desc }} />
+                        <div>{item.desc?.replace(/<[^>]+>/g, '')}</div>
                       </div>
                     </ZoomInDiv>
                   );
@@ -630,11 +616,7 @@ export default function HairTransplant(props) {
                         className="d-flex flex-column"
                       >
                         <div className="sub-text-1-section-4-htw">
-                          <h3>
-                            <div
-                              dangerouslySetInnerHTML={{ __html: item.title }}
-                            />
-                          </h3>
+                          <h3>{item.title?.replace(/<[^>]+>/g, '')}</h3>
                         </div>
                         <div className="sub-text-2-section-4-htw">
                           <div

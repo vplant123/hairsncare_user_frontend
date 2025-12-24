@@ -227,7 +227,7 @@ export default function HairTreatmentMen() {
                       className="text-3-section-2-htw"
                       style={{ width: "90%" }}
                     >
-                      <h3 dangerouslySetInnerHTML={{ __html: item.title }} />
+                      <h3>{item.title?.replace(/<[^>]+>/g, '')}</h3>
                       <div dangerouslySetInnerHTML={{ __html: item.desc }} />
                     </div>
                   </div>
@@ -250,7 +250,7 @@ export default function HairTreatmentMen() {
                       className="text-3-section-2-htw"
                       style={{ width: "90%" }}
                     >
-                      <h3 dangerouslySetInnerHTML={{ __html: item.title }} />
+                      <h3>{item.title?.replace(/<[^>]+>/g, '')}</h3>
                       <div dangerouslySetInnerHTML={{ __html: item.desc }} />
                     </div>
                   </div>
@@ -325,7 +325,8 @@ export default function HairTreatmentMen() {
                       }}
                     >
                       {/* FIX: Use dangerouslySetInnerHTML directly on h3 */}
-                      <h3 className="m-text-left" dangerouslySetInnerHTML={{ __html: item.title }} />
+                      {/* <h3 className="m-text-left" dangerouslySetInnerHTML={{ __html: item.title }} /> */}
+                      <h3 className="m-text-left">{item.title?.replace(/<[^>]+>/g, '')}</h3>
                     </div>
                     <div
                       className="mini-card-text-2-section-4-htw m-text-left"
@@ -377,7 +378,7 @@ export default function HairTreatmentMen() {
                       className="text-3-section-2-htw"
                       style={{ width: "90%" }}
                     >
-                      <h3 dangerouslySetInnerHTML={{ __html: item.title }} />
+                      <h3>{item.title?.replace(/<[^>]+>/g, '')}</h3>
                       <div dangerouslySetInnerHTML={{ __html: item.desc }} />
                     </div>
                   </div>
@@ -400,7 +401,7 @@ export default function HairTreatmentMen() {
                       className="text-3-section-2-htw"
                       style={{ width: "90%" }}
                     >
-                      <h3 dangerouslySetInnerHTML={{ __html: item.title }} />
+                      <h3>{item.title?.replace(/<[^>]+>/g, '')}</h3>
                       <div dangerouslySetInnerHTML={{ __html: item.desc }} />
                     </div>
                   </div>
@@ -472,7 +473,7 @@ export default function HairTreatmentMen() {
                       }}
                     >
                       {/* FIX: Use dangerouslySetInnerHTML directly on h3 */}
-                      <h3 dangerouslySetInnerHTML={{ __html: item.title }} />
+                      <h3>{item.title?.replace(/<[^>]+>/g, '')}</h3>
                     </div>
                     <div
                       className="mini-card-text-2-section-4-htw"
@@ -507,8 +508,8 @@ export default function HairTreatmentMen() {
                     <div
                       className="main-heading-text-section-8-htw faq-text"
                       style={{ padding: "10px" }}
-                    >
-                      <h3 className="mfs-2">{item?.desc}</h3>
+                      >
+                      <h3 className="mfs-1">{item?.desc?.replace(/<[^>]+>/g, '')}</h3>
                     </div>
                     <div
                       style={{
@@ -533,7 +534,7 @@ export default function HairTreatmentMen() {
                   </div>
                   {selectedQ == indx + 1 ? (
                     <div className="main-sub-heading-text-section-8-htw mfs-3">
-                      {item?.text}
+                      {item?.text?.replace(/<[^>]+>/g, '')}
                     </div>
                   ) : null}
                 </div>

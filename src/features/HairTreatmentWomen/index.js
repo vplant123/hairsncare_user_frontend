@@ -243,9 +243,7 @@ export default function HairTreatmentWomen() {
                 />
               </div>
               <div className="text-3-section-1-htw-left">
-                <div
-                  dangerouslySetInnerHTML={{ __html: content?.section1?.desc }}
-                />
+                <div>{content?.section1?.desc?.replace(/<[^>]+>/g, '')}</div>
               </div>
             </ZoomInDiv>
             <RightAnimatedDiv className="d-flex flex-column main-section-1-htw-right">
@@ -279,15 +277,9 @@ export default function HairTreatmentWomen() {
               />
             </LeftAnimatedDiv>
             <RightAnimatedDiv className="text-3-section-2-htw main-section-2-htw-right strong-black m-0">
-              <div
-                dangerouslySetInnerHTML={{ __html: content?.section2?.desc }}
-              />
-              <div
-                dangerouslySetInnerHTML={{ __html: content?.section2?.desc1 }}
-              />
-              <div
-                dangerouslySetInnerHTML={{ __html: content?.section2?.desc2 }}
-              />
+              <div>{content?.section2?.desc?.replace(/<[^>]+>/g, '')}</div>
+              <div>{content?.section2?.desc1?.replace(/<[^>]+>/g, '')}</div>
+              <div>{content?.section2?.desc2?.replace(/<[^>]+>/g, '')}</div>
             </RightAnimatedDiv>
           </div>
         </div>
@@ -313,9 +305,7 @@ export default function HairTreatmentWomen() {
             </ZoomInDiv2>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <div className="text-3-section-3-htw width-for-text-heading-75 m-text-left">
-                <div
-                  dangerouslySetInnerHTML={{ __html: content?.section3?.desc }}
-                />
+                <div>{content?.section3?.desc?.replace(/<[^>]+>/g, '')}</div>
               </div>
             </div>
 
@@ -337,14 +327,20 @@ export default function HairTreatmentWomen() {
                       }}
                       className="d-flex flex-column horizontal-card-text div2"
                     >
-                      <h5 className="mfs-2 sub-text-1-section-3-htw">
-                        <div
-                          dangerouslySetInnerHTML={{ __html: item.description }}
-                        />
-                      </h5>
-                      <div className="sub-text-2-section-3-htw mfs-1">
-                        <div dangerouslySetInnerHTML={{ __html: item.title }} />
+
+                      <div className="sub-text-1-section-3-htw mfs-2">
+
+                        <div className="sub-text-title-htw mfs-1">
+                          {item.title?.replace(/<[^>]+>/g, '')}
+                        </div>
+
+                        <div className="sub-text-desc-htw mfs-2">
+                          {item.description?.replace(/<[^>]+>/g, '')}
+                        </div>
+
                       </div>
+
+
                     </div>
                   </ZoomInDiv>
                 );
@@ -401,9 +397,7 @@ export default function HairTreatmentWomen() {
             </LeftAnimatedDiv>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <div className="text-3-section-4-htw width-for-text-heading-75 m-text-left">
-                <div
-                  dangerouslySetInnerHTML={{ __html: content?.section4?.desc }}
-                />
+                <div>{content?.section4?.desc?.replace(/<[^>]+>/g, '')}</div>
               </div>
             </div>
 
@@ -428,18 +422,12 @@ export default function HairTreatmentWomen() {
                     >
                       <div className="sub-text-1-section-4-htw">
                         <h5 className="mfs-1 new-section4-htw">
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: item?.description,
-                            }}
-                          />
+                          <div>{item?.description?.replace(/<[^>]+>/g, '')}</div>
                         </h5>
                       </div>
-                      <div className="sub-text-2-section-4-htw">
-                        <div
-                          dangerouslySetInnerHTML={{ __html: item?.title }}
-                        />
-                      </div>
+                        <div className="sub-text-2-section-4-htw">
+                          <div>{item?.title?.replace(/<[^>]+>/g, '')}</div>
+                        </div>
                     </div>
                   </ZoomInDiv>
                 );
@@ -483,9 +471,7 @@ export default function HairTreatmentWomen() {
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <div className="text-3-section-5-htw width-for-text-heading-75">
-                <div
-                  dangerouslySetInnerHTML={{ __html: content?.section5?.desc }}
-                />
+                <div>{content?.section5?.desc?.replace(/<[^>]+>/g, '')}</div>
               </div>
             </div>
 
@@ -520,7 +506,7 @@ export default function HairTreatmentWomen() {
                         color: section5Sel == indx ? "#FFFFFF" : "black",
                       }}
                     >
-                      <h3><div dangerouslySetInnerHTML={{ __html: item?.title }} /></h3>
+                      <h3>{item?.title?.replace(/<[^>]+>/g, '')}</h3>
                     </div>
                     <div
                       className="mini-card-text-2-section-4-htw"
@@ -528,7 +514,7 @@ export default function HairTreatmentWomen() {
                         color: section5Sel == indx ? "#FFFFFF" : "rgba(97, 97, 97, 1)",
                       }}
                     >
-                      <div dangerouslySetInnerHTML={{ __html: item?.description }} />
+                      <div>{item?.description?.replace(/<[^>]+>/g, '')}</div>
                     </div>
                   </ZoomInDiv>
                 );
@@ -593,10 +579,7 @@ export default function HairTreatmentWomen() {
                 />
               </ZoomInDiv2>
               <div className="text-3-section-2-htw">
-                <div
-                  dangerouslySetInnerHTML={{ __html: content?.section6?.desc }}
-                  style={{ lineHeight: "25px" }}
-                />
+                <div style={{ lineHeight: "25px" }}>{content?.section6?.desc?.replace(/<[^>]+>/g, '')}</div>
                 <br />
                 <br />
                 <div
@@ -628,10 +611,7 @@ export default function HairTreatmentWomen() {
                 <h2>Conclusion</h2>
               </ZoomInDiv>
               <div className="text-3-section-1-htw-left">
-                <div
-                  dangerouslySetInnerHTML={{ __html: content?.section7?.desc }}
-                  style={{ lineHeight: "25px" }}
-                />
+                <div style={{ lineHeight: "25px" }}>{content?.section7?.desc?.replace(/<[^>]+>/g, '')}</div>
                 <br />
                 <br />
                 <div

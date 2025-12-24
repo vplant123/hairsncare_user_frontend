@@ -93,15 +93,18 @@ export default function WhyTrustEdit({section4,
       <div className="trust-care">
         <input 
           type="text" 
-          defaultValue={section4?.title} 
-          onChange={(e) => setSection4({...section4,title : e?.target?.value})} 
+          value={section4?.title || ""} 
+          onChange={(e) =>
+            setSection4({ ...section4, title: e.target.value })
+          } 
           className="title-input"
         />
-        <br/>
-        <br/>
+
         <textarea
-          defaultValue={section4?.desc}
-          onChange={(e) => setSection4({...section4,desc : e?.target?.value})} 
+          value={section4?.desc || ""}
+          onChange={(e) =>
+            setSection4({ ...section4, desc: e.target.value })
+          }
           className="description-textarea"
         />
       </div>

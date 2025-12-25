@@ -43,6 +43,7 @@ Allow: /contact-hair-experts
 Allow: /effective-hair-loss-treatment-men
 Allow: /hair-loss-women-causes-treatments-remedies
 Allow: /online-hair-loss-treatment-bangalore
+Allow: /online-hair-loss-treatment-delhi
 Allow: /hair-transplants-fue-dhi-mhi-natural-restoration
 Allow: /advanced-hair-loss-solutions-prp-smp-cloning-systems
 Allow: /online-hair-loss-test-diagnosis-treatment

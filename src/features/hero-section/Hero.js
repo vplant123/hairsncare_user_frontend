@@ -187,8 +187,7 @@ const Hero = () => {
     },
     {
       id: 2,
-      title:
-        "Unveil the power of Modern Medicine with AI-driven hair diagnostic tool to unlock effective Hair Growth secrets",
+      title:"Unveil the power of Modern Medicine with AI-driven hair diagnostic tool to unlock effective Hair Growth secrets",
       subtitle: "Witness remarkable outcomes in just few months!",
       imageSrc: "/uploads/admprhero-banner-two.png",
     },

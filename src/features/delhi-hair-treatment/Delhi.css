@@ -1,0 +1,1897 @@
+/* delhi Hair Treatment Page Styles */
+/* Based on About Us page styling pattern */
+
+.delhi-treatment {
+  background: linear-gradient(
+    135deg,
+    rgb(142, 208, 235) 33%,
+    rgb(249, 235, 206) 66%
+  );
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.delhi-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 2rem;
+
+}
+
+/* Hero Section */
+.delhi-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  margin: 1rem 0 3rem 0;
+  padding: 3rem 2rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+/* Reset hero content to normal flow */
+.delhi-hero .hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.delhi-hero .hero-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.delhi-hero .hero-img {
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(8, 186, 237, 0.15);
+  transition: transform 0.25s ease;
+}
+
+.delhi-hero .hero-img:hover { transform: translateY(-4px); }
+.delhi-hero .hero-img:hover { transform: none !important; }
+.delhi-feature-card:hover { transform: none !important; }
+.delhi-service-card:hover { transform: none !important; }
+
+.delhi-hero .hero-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  
+  /* line-height: 1.2; */
+  text-align: left;
+}
+
+.delhi-hero .hero-subtitle {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #08baed;
+  margin-left: -12rem;
+  text-align: left;
+}
+
+.delhi-hero .hero-description {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #475569;
+  margin: 0 0 1rem 0;
+  text-align: left;
+}
+
+.delhi-hero .hero-description strong {
+  color: #1e293b;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 1.15rem;
+}
+
+.delhi-hero .hero-cta {
+  margin-top: 1.5rem;
+  margin-left: -26.3rem;
+  text-align: left;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* CTA Buttons */
+.delhi-cta-button {
+  background: #08baed;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.delhi-cta-button:hover {
+  background: #0ea5d9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(8, 186, 237, 0.4);
+}
+
+.delhi-cta-button.large {
+  padding: 16px 32px;
+  font-size: 1.1rem;
+}
+
+/* Section Titles */
+.delhi-section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #1e293b;
+  line-height: 1.15;
+  /* Layout the decorative lines and title on one row */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  position: relative;
+  white-space: nowrap; /* keep the heading in a single row on wide screens */
+}
+#successdelhi{
+  color: black;
+}
+
+.delhi-services-section .delhi-section-title {
+  color: white;
+}
+
+.delhi-services-section .delhi-section-title::before,
+.delhi-services-section .delhi-section-title::after {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.delhi-section-title::before,
+.delhi-section-title::after {
+  content: "";
+  flex: 1 1 16%;
+  height: 2px;
+  background-color: #08baed;
+  min-width: 40px;
+  max-width: 220px;
+}
+
+.delhi-section-description {
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #4a5568;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.delhi-section-note {
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #718096;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.delhi-section-cta {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Why Choose Section */
+.delhi-why-choose-section {
+  margin-bottom: 3rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 3rem 2rem;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 15px 50px rgba(8, 186, 237, 0.1);
+}
+
+/* Slider: features wrapper and horizontally scrollable grid */
+.delhi-features-wrapper {
+  position: relative;
+  max-width: 1160px;
+  margin: 0 auto 1.5rem auto;
+}
+
+.features-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #08baed;
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 6px 18px rgba(8,186,237,0.2);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.features-prev { left: -22px; }
+.features-next { right: -22px; }
+
+.delhi-features-grid {
+  --features-gap: 1rem;
+  display: flex;
+  gap: var(--features-gap);
+  overflow-x: auto;
+  padding: 0.75rem 0.25rem;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  align-items: stretch; /* ensure children stretch to same height */
+}
+
+/* hide native scrollbar while keeping scroll functionality */
+.delhi-features-grid::-webkit-scrollbar { height: 10px; }
+.delhi-features-grid::-webkit-scrollbar-track { background: transparent; }
+.delhi-features-grid::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 8px; }
+
+/* Hide scrollbar across browsers while keeping scroll functionality */
+.delhi-features-grid { -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.delhi-features-grid::-webkit-scrollbar { display: none; height: 0; }
+
+.delhi-feature-card {
+  background: rgba(255, 255, 255, 0.98);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 22px rgba(8, 186, 237, 0.07);
+  border-left: 3px solid #08baed;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  min-height: 480px;
+  flex: 0 0 calc(33.333% - var(--features-gap));
+  max-width: calc(33.333% - var(--features-gap));
+  scroll-snap-align: start;
+  overflow: hidden;
+}
+
+.delhi-feature-image {
+  width: 100%;
+  height: 140px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background: rgba(8, 186, 237, 0.05); */
+}
+
+.delhi-feature-image img {
+  width: 100%;
+  height: 100%;
+  /* object-fit: cover; */
+  object-position: center;
+  border-radius: 8px;
+}
+
+.delhi-feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(8, 186, 237, 0.2);
+}
+
+.delhi-feature-number {
+  position: absolute;
+  top: -12px;
+  right: 20px;
+  background: #08baed;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(8, 186, 237, 0.25);
+}
+
+.delhi-feature-title {
+  font-size: 1.1rem; /* slightly reduced */
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.6rem;
+  line-height: 1.25;
+}
+
+.delhi-feature-description {
+  font-size: 0.95rem;
+  color: #4a5568;
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.delhi-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.delhi-feature-list li {
+  padding: 0.5rem 0;
+  color: #2d3748;
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* allow the list area to scroll inside the card if content is long */
+.delhi-feature-list {
+  overflow: auto;
+}
+
+/* hide inner scrollbar for feature lists while keeping scroll */
+.delhi-feature-list { -ms-overflow-style: none; scrollbar-width: none; }
+.delhi-feature-list::-webkit-scrollbar { display: none; height: 0; }
+
+.delhi-feature-list li:before {
+  content: "✓";
+  color: #08baed;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+}
+
+.delhi-feature-note {
+  font-size: 0.88rem;
+  color: #08baed;
+  font-weight: 600;
+  font-style: italic;
+  margin-top: auto; /* push note to bottom of the card */
+  padding: 0.5rem 0.6rem;
+  background: rgba(8, 186, 237, 0.08);
+  border-radius: 6px;
+  border-left: 3px solid #08baed;
+  align-self: stretch; /* make note full-width inside card */
+  box-sizing: border-box;
+  margin-bottom: 4px; /* smaller vertical gap between multiple notes */
+}
+
+.delhi-feature-note:last-child { margin-bottom: 0; }
+
+/* tighten spacing between consecutive notes */
+.delhi-feature-note + .delhi-feature-note {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  padding-top: 0.45rem;
+  padding-bottom: 0.45rem;
+}
+
+/* Services Section */
+.delhi-services-section {
+  margin-bottom: 3rem;
+  padding: 4rem 2rem;
+  background-image: url('https://res.cloudinary.com/drkpwvnun/image/upload/v1729420244/hair-assessment/ivsqcr1epbgymuxowzwn.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+  position: relative;
+}
+
+.delhi-services-grid {
+  /* show services as a single horizontal row */
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  padding: 0.75rem 0.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Marquee styles for Services: continuous right->left scroll */
+.delhi-services-marquee {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+.delhi-marquee-track {
+  display: flex;
+  gap: 1rem;
+  align-items: stretch;
+  /* duplicated content means track is 200% of the visible set; animate translateX -50% */
+  animation: marquee linear infinite;
+  animation-duration: var(--marquee-duration, 30s);
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* make the service-cards inside marquee the same visual as before */
+.delhi-services-marquee .delhi-service-card {
+  flex: 0 0 300px;
+  min-width: 260px;
+  height: 360px;
+}
+
+/* pause on hover and focus for readability */
+.delhi-services-marquee:hover .delhi-marquee-track,
+.delhi-services-marquee:focus-within .delhi-marquee-track {
+  animation-play-state: paused;
+}
+
+/* respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .delhi-marquee-track { animation: none; }
+}
+
+/* On small screens disable marquee and allow manual swipe */
+@media screen and (max-width: 768px) {
+  .delhi-marquee-track { animation: none; display: flex; overflow-x: auto; }
+  .delhi-services-marquee { overflow-x: auto; }
+}
+
+.delhi-service-card {
+  flex: 0 0 300px; /* fixed width so they display in a single row */
+  min-width: 260px;
+  background: white;
+  padding: 1.25rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  position: relative;
+  border-top: 3px solid #08baed;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  height: 360px; /* increase height slightly to fit content */
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.delhi-service-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.delhi-service-number {
+  position: absolute;
+  top: -10px;
+  left: 15px;
+  background: #08baed;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* hide service numbers visually (user requested) */
+.delhi-service-number { display: none; }
+
+/* hide scrollbar for services row while keeping scroll functionality */
+.delhi-services-grid { -ms-overflow-style: none; scrollbar-width: none; }
+.delhi-services-grid::-webkit-scrollbar { display: none; height: 0; }
+
+.delhi-service-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1b1b1b;
+  margin-bottom: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.delhi-service-description {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+  flex: 0 0 auto;
+}
+
+.delhi-service-features {
+  list-style: none;
+  padding: 0;
+  margin-top: 0.5rem;
+  flex: 1 1 auto; /* allow features area to grow and scroll */
+  overflow: auto;
+}
+
+.delhi-service-features li {
+  padding: 0.4rem 0;
+  color: #666;
+  position: relative;
+  padding-left: 1.25rem;
+  font-size: 0.9rem;
+}
+
+/* hide scrollbar for inner service features list while keeping scroll */
+.delhi-service-features { -ms-overflow-style: none; scrollbar-width: none; }
+.delhi-service-features::-webkit-scrollbar { display: none; height: 0; }
+
+.delhi-service-features li:before {
+  content: "→";
+  color: #08baed;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+/* Causes Section */
+.delhi-causes-section {
+  margin-bottom: 3rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 3rem 2rem;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 15px 50px rgba(8, 186, 237, 0.1);
+}
+
+.delhi-causes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.delhi-cause-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  min-width: 200px;
+  flex: 0 0 auto;
+}
+
+.delhi-cause-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.delhi-cause-bullet {
+  color: #08baed;
+  font-size: 1.2rem;
+  margin-right: 1rem;
+  font-weight: bold;
+}
+
+.delhi-cause-text {
+  font-size: 1rem;
+  color: #555;
+  font-weight: 500;
+}
+
+/* How It Works Section */
+.delhi-how-it-works-section {
+  margin-bottom: 3rem;
+  padding: 4rem 2rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+}
+
+.delhi-steps-container {
+  display: block;
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  counter-reset: step;
+}
+
+.delhi-step-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.delhi-step-image {
+  width: 100%;
+  height: 140px;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background: rgba(8, 186, 237, 0.05); */
+  margin-bottom: 0.5rem;
+}
+
+.delhi-step-image img {
+  width: 100%;
+  height: 100%;
+  /* object-fit: cover; */
+  object-position: center;
+  border-radius: 8px;
+  
+}
+
+.delhi-step-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.delhi-step-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.delhi-step-number {
+  background: linear-gradient(45deg, #08baed, #0ea5d9);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: auto;
+  text-align: center;
+}
+
+.delhi-step-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1b1b1b;
+}
+
+.delhi-step-description {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.delhi-step-arrow {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #08baed;
+  margin: 0.75rem 0;
+}
+
+/* Desktop: lay out steps horizontally with arrows between them */
+@media screen and (min-width: 1024px) {
+  /* centered vertical timeline */
+  .delhi-steps-container::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, rgba(8,186,237,0.25), rgba(8,186,237,0.08));
+    transform: translateX(-50%);
+    border-radius: 4px;
+  }
+
+  .delhi-step-row {
+    display: grid;
+    grid-template-columns: 1fr 140px 1fr;
+    align-items: center;
+    width: 100%;
+    margin: 2.25rem 0;
+    position: relative;
+  }
+
+  /* badge on center line using counter so it sits on the spine, not the card */
+  .delhi-step-row::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #08baed, #0ea5d9);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    box-shadow: 0 8px 24px rgba(8,186,237,0.18);
+    transform: translate(-50%, -50%);
+    z-index: 3;
+  }
+
+  .delhi-step-row.left .delhi-step-card {
+    grid-column: 1 / 2;
+    justify-self: end;
+  }
+
+  .delhi-step-row.right .delhi-step-card {
+    grid-column: 3 / 4;
+    justify-self: start;
+  }
+
+  .delhi-step-card {
+    width: 360px;
+    max-width: 90vw;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    position: relative;
+  }
+
+  /* horizontal connector from card to center line */
+  .delhi-step-card::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 70px;
+    height: 6px;
+    background: linear-gradient(90deg, rgba(8,186,237,0.9), rgba(14,165,217,0.8));
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(8,186,237,0.08);
+  }
+
+  .delhi-step-row.left .delhi-step-card::after {
+    right: -70px;
+  }
+
+  .delhi-step-row.right .delhi-step-card::after {
+    left: -70px;
+  }
+
+  /* hide in-card badge on desktop so only the spine badge shows */
+  .delhi-step-card .delhi-step-number {
+    display: none;
+  }
+
+  /* remove extra arrow icon */
+  .delhi-step-arrow { display: none; }
+}
+
+/* Who Can Use Section */
+.delhi-who-can-use-section {
+  margin-bottom: 3rem;
+  padding: 2rem 0;
+}
+
+.delhi-conditions-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.delhi-condition-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  min-width: 180px;
+  flex: 0 0 auto;
+}
+
+.delhi-condition-bullet {
+  color: #08baed;
+  font-size: 1rem;
+  margin-right: 0.75rem;
+  font-weight: bold;
+}
+
+.delhi-condition-text {
+  font-size: 0.95rem;
+  color: #555;
+  font-weight: 500;
+}
+
+/* Why Works Section */
+.delhi-why-works-section {
+  margin-bottom: 3rem;
+  padding: 2rem 0;
+}
+
+.delhi-benefits-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.delhi-benefit-item {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  text-align: center;
+  font-size: 0.95rem;
+  color: #555;
+  border-left: 3px solid #08baed;
+  font-weight: 500;
+  min-width: 160px;
+  flex: 0 0 auto;
+}
+
+/* Success Section */
+.delhi-success-section {
+  margin-bottom: 3rem;
+  background: linear-gradient(
+    135deg,
+    rgba(8, 186, 237, 0.15),
+    rgba(14, 165, 217, 0.1)
+  );
+  padding: 3rem 2rem;
+  border-radius: 25px;
+  color: black;
+  /* box-shadow: 0 15px 40px rgba(8, 186, 237, 0.3); */
+  text-align: center;
+}
+
+.delhi-success-section .delhi-section-title {
+  color: white;
+  margin-bottom: 2rem;
+}
+
+.delhi-success-section .delhi-section-title::before,
+.delhi-success-section .delhi-section-title::after {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.delhi-stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.delhi-stat-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  text-align: center;
+  flex-direction: column;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  min-width: 200px;
+  flex: 0 0 auto;
+}
+
+.delhi-stat-item:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-5px);
+}
+
+.delhi-stat-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.delhi-stat-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* FAQ Section */
+.delhi-faq-section {
+  margin-bottom: 3rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 3rem 2rem;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 15px 50px rgba(8, 186, 237, 0.1);
+}
+
+.delhi-faq-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.delhi-faq-item {
+  margin-bottom: 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(8, 186, 237, 0.1);
+  transition: all 0.3s ease;
+  border-left: 4px solid #08baed;
+}
+
+.delhi-faq-item:hover {
+  box-shadow: 0 8px 25px rgba(8, 186, 237, 0.2);
+  transform: translateY(-2px);
+}
+
+.delhi-faq-question {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.delhi-faq-question::after {
+  content: "▼";
+  color: #08baed;
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+.delhi-faq-question[aria-expanded="true"]::after {
+  transform: rotate(180deg);
+}
+
+.delhi-faq-answer {
+  font-size: 1rem;
+  color: #4a5568;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* Final CTA Section */
+.delhi-final-cta-section {
+  margin-bottom: 2rem;
+  background: linear-gradient(
+    135deg,
+    rgba(8, 186, 237, 0.15),
+    rgba(14, 165, 217, 0.1)
+  );
+  padding: 3rem 2rem;
+  border-radius: 25px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.delhi-final-cta-description {
+  font-size: 1.2rem;
+  color: #4a5568;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  font-weight: 500;
+}
+/* FAQ accordion behavior */
+.delhi-faq-answer { display: none; }
+.delhi-faq-answer.open { display: block; }
+.delhi-faq-item { width: 100%; }
+.delhi-faq-item .delhi-faq-question { cursor: pointer; }
+
+/* ensure page has bottom spacing so footer gap appears consistent */
+.delhi-container { padding-bottom: 4rem; }
+.delhi-final-cta-subtitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 2rem;
+}
+
+.delhi-final-cta-button {
+  margin-top: 1rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+  .delhi-hero {
+    padding: 2rem 1rem;
+  }
+
+  .delhi-features-grid { gap: 0.85rem; }
+
+  .features-nav { display: none; }
+}
+
+/* Tablet responsiveness: between mobile and desktop */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .delhi-container {
+    padding: 3rem 1.5rem;
+  }
+
+  .delhi-hero {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 2.5rem 1.5rem;
+    margin: 1rem 0 2.5rem 0;
+  }
+
+  .delhi-hero .hero-title { 
+    font-size: 2rem;
+    text-align: left;
+  }
+  .delhi-hero .hero-subtitle { 
+    font-size: 1.2rem;
+    text-align: left;
+  }
+  .delhi-hero .hero-description {
+    font-size: 0.95rem;
+    text-align: left;
+  }
+  .delhi-hero .hero-cta {
+    text-align: left;
+  }
+
+  .delhi-section-title { 
+    font-size: 1.5rem;
+    white-space: normal;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0 1rem;
+  }
+
+  .delhi-section-title::before,
+  .delhi-section-title::after {
+    flex: 0 0 50px;
+    min-width: 30px;
+    max-width: 120px;
+  }
+
+  /* features grid: 2 columns on tablet */
+  .delhi-features-grid { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 1rem;
+    overflow-x: visible;
+  }
+
+  .delhi-feature-card {
+    flex: none;
+    max-width: 100%;
+    min-height: auto;
+  }
+
+  /* services: 2 columns on tablet */
+  .delhi-services-grid,
+  .delhi-marquee-track {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    animation: none;
+    overflow-x: visible;
+  }
+
+  .delhi-service-card {
+    flex: none;
+    max-width: 100%;
+    height: auto;
+    min-height: 320px;
+  }
+
+  /* Hide duplicate marquee cards on tablet */
+  .delhi-marquee-track > .delhi-service-card:nth-child(n+5) {
+    display: none;
+  }
+
+  /* timeline adjustments: stack vertically on tablet */
+  .delhi-steps-container::before { display: none; }
+  .delhi-step-row { 
+    display: flex;
+    flex-direction: column;
+    margin: 1.25rem 0; 
+  }
+  .delhi-step-row::before { display: none; }
+  .delhi-step-card { 
+    width: 100%; 
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .delhi-step-card::after { display: none; }
+  .delhi-step-card .delhi-step-number { 
+    display: inline-flex;
+    margin-bottom: 0.5rem;
+    width: auto;
+  }
+
+  .delhi-step-title { font-size: 1.1rem; }
+  .delhi-step-description { font-size: 0.95rem; }
+
+  /* causes and conditions: 2 columns */
+  .delhi-causes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .delhi-cause-item {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .delhi-conditions-grid,
+  .delhi-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+
+  /* sections padding */
+  .delhi-why-choose-section,
+  .delhi-causes-section,
+  .delhi-services-section,
+  .delhi-how-it-works-section,
+  .delhi-who-can-use-section,
+  .delhi-why-works-section,
+  .delhi-success-section,
+  .delhi-faq-section,
+  .delhi-final-cta-section {
+    padding: 2.5rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .delhi-section-description {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+  }
+}
+
+/* Narrow phones / small tablets: 400px - 765px
+   Center key sections and make causes responsive */
+@media screen and (min-width: 400px) and (max-width: 765px) {
+  .delhi-why-choose-section {
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
+
+  .delhi-why-choose-section .delhi-section-title {
+    justify-content: center;
+    font-size: 1.55rem;
+    white-space: normal;
+  }
+
+  /* Stack causes into a single column for readability */
+  .delhi-causes-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    align-items: start;
+  }
+
+  /* Make the conditions grid responsive and centered (Who Can Use section) */
+  .delhi-conditions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+    align-items: start;
+    justify-items: center;
+  }
+
+  .delhi-cause-item {
+    width: 100%;
+    min-width: 0;
+    justify-content: flex-start;
+    padding: 0.85rem;
+  }
+
+  .delhi-cause-bullet {
+    font-size: 1.1rem;
+    margin-right: 0.65rem;
+  }
+
+  .delhi-cause-text {
+    font-size: 0.98rem;
+    text-align: left;
+    line-height: 1.45;
+  }
+
+  /* make feature/service cards fit container */
+  .delhi-feature-card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Keep services marquee behavior as the default for this range (horizontal scroll on small screens) */
+  /* No wrapping; rely on the existing small-screen marquee rules (max-width:768px) to handle swipe/scroll */
+
+  /* modest heading scaling for this range */
+  .delhi-hero .hero-title { font-size: 2rem; }
+  .delhi-hero .hero-subtitle { font-size: 1.1rem; }
+
+  /* keep timeline stacked and readable */
+  .delhi-step-row { grid-template-columns: 1fr; }
+  .delhi-step-card { width: 100%; }
+  .delhi-step-card .delhi-step-number { display: inline-flex; margin-bottom: 0.5rem; width: auto; }
+  .delhi-step-card::after { display: none; }
+}
+
+/* Fix section-heading wrapping and marquee duplicates for narrow devices (400-765px) */
+@media screen and (min-width: 400px) and (max-width: 765px) {
+  /* Keep the title and decorative lines on a single row */
+  .delhi-section-title {
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .delhi-section-title::before,
+  .delhi-section-title::after {
+    flex: 1 1 12%;
+    min-width: 28px;
+    max-width: 160px;
+    height: 2px;
+  }
+
+  /* For the services marquee on narrow devices: do not show the duplicated cards
+     (the track is duplicated in JS for desktop marquee). Hide second half so only
+     the original set is visible and the layout scrolls/swallows properly. */
+  .delhi-marquee-track {
+    animation: none; /* keep manual swipe/scroll behaviour */
+    display: flex;
+    overflow-x: auto;
+  }
+
+  /* assuming original services list is 4 items, hide duplicates (items 5+)
+     so mobile shows only the primary set and avoids duplicate cards */
+  .delhi-marquee-track > .delhi-service-card:nth-child(n+5) {
+    display: none;
+  }
+}
+
+/* Improve visibility of decorative lines for headings in narrow/tablet ranges */
+@media screen and (min-width: 400px) and (max-width: 1024px) {
+  .delhi-how-it-works-section .delhi-section-title::before,
+  .delhi-how-it-works-section .delhi-section-title::after,
+  .delhi-services-section .delhi-section-title::before,
+  .delhi-services-section .delhi-section-title::after {
+    flex: 1 1 18%;
+    min-width: 60px;
+    max-width: 220px;
+  }
+}
+
+/* Also ensure the section headings and descriptions are centered in this narrow range */
+@media screen and (min-width: 400px) and (max-width: 765px) {
+  .delhi-how-it-works-section .delhi-section-title,
+  .delhi-who-can-use-section .delhi-section-title,
+  .delhi-why-works-section .delhi-section-title,
+  .delhi-why-choose-section .delhi-section-title {
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .delhi-how-it-works-section .delhi-section-description,
+  .delhi-who-can-use-section .delhi-section-description,
+  .delhi-why-works-section .delhi-section-description,
+  .delhi-why-choose-section .delhi-section-description {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 95%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .delhi-container {
+    padding: 2rem 1rem;
+  }
+
+  /* Make hero single column on mobile */
+  .delhi-hero {
+    grid-template-columns: 1fr;
+    padding: 1.5rem 1rem;
+    gap: 1.5rem;
+    margin: 1rem 0 2rem 0;
+  }
+
+  .delhi-hero .hero-content {
+    text-align: left;
+    order: 1;
+  }
+
+  .delhi-hero .hero-image {
+    order: 2;
+  }
+
+  .delhi-hero .hero-title {
+    font-size: 1.75rem;
+    text-align: left;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .delhi-hero .hero-subtitle {
+    font-size: 1.15rem;
+    text-align: left;
+    margin: 0 0 1rem 0;
+  }
+
+  .delhi-hero .hero-description {
+    font-size: 0.95rem;
+    text-align: left;
+  }
+
+  .delhi-hero .hero-cta {
+    text-align: left;
+  }
+
+  /* center headings and reduce sizing for better mobile fit */
+  .delhi-why-choose-section,
+  .delhi-causes-section,
+  .delhi-services-section,
+  .delhi-how-it-works-section,
+  .delhi-who-can-use-section,
+  .delhi-why-works-section,
+  .delhi-success-section,
+  .delhi-faq-section,
+  .delhi-final-cta-section {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .delhi-section-title {
+    font-size: 1.25rem;
+    justify-content: center;
+    white-space: normal;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .delhi-section-title::before,
+  .delhi-section-title::after {
+    flex: 0 0 30px;
+    min-width: 20px;
+    max-width: 60px;
+  }
+
+  .delhi-section-description {
+    font-size: 0.95rem;
+    padding: 0 0.5rem;
+  }
+
+  /* tighten marquee spacing on mobile */
+  .delhi-services-marquee {
+    margin: 1rem 0;
+  }
+
+  .delhi-marquee-track {
+    animation: none;
+    overflow-x: auto;
+  }
+
+  /* add breathing room between stacked steps */
+  .delhi-step-row {
+    margin: 1rem 0;
+  }
+
+  .delhi-step-card {
+    padding: 1rem;
+  }
+
+  .delhi-features-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-x: visible;
+  }
+
+  .delhi-feature-card {
+    flex: 1 1 auto;
+    max-width: 100%;
+    min-width: auto;
+    min-height: auto;
+  }
+
+  .delhi-services-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .delhi-service-card {
+    flex: 1 1 auto;
+    max-width: 100%;
+    min-width: auto;
+    height: auto;
+    min-height: 280px;
+  }
+
+  .delhi-feature-image,
+  .delhi-step-image {
+    height: 100px;
+  }
+
+  .delhi-causes-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .delhi-cause-item {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .delhi-conditions-grid,
+  .delhi-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .delhi-condition-item,
+  .delhi-benefit-item {
+    min-width: auto;
+  }
+
+  .delhi-stats-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .delhi-stat-item {
+    min-width: auto;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .delhi-cta-button {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  .delhi-cta-button.large {
+    padding: 12px 24px;
+    font-size: 1rem;
+  }
+
+  /* Stack timeline vertically */
+  .delhi-steps-container::before { display: none; }
+  .delhi-step-row { 
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: 1fr; 
+  }
+  .delhi-step-row::before { display: none; }
+  .delhi-step-card { 
+    width: 100%; 
+    text-align: left; 
+  }
+  .delhi-step-number { 
+    position: relative; 
+    transform: none; 
+    left: auto; 
+    top: auto; 
+    margin-bottom: 0.5rem; 
+    display: inline-flex;
+    width: auto;
+  }
+  .delhi-step-card::after { display: none; }
+}
+
+@media screen and (max-width: 480px) {
+  .delhi-container { 
+    padding: 1.5rem 0.75rem; 
+  }
+
+  .delhi-hero {
+    padding: 1.25rem 0.75rem;
+    gap: 1rem;
+    margin: 0.5rem 0 1.5rem 0;
+  }
+
+  .delhi-hero .hero-title {
+    font-size: 1.5rem;
+  }
+
+  .delhi-hero .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .delhi-hero .hero-description {
+    font-size: 0.9rem;
+  }
+
+  /* stack timeline vertically on small screens */
+  .delhi-steps-container::before { display: none; }
+  .delhi-step-row { 
+    justify-content: center; 
+    grid-template-columns: 1fr; 
+    margin: 0.75rem 0;
+  }
+  .delhi-step-row::before { display: none; }
+  .delhi-step-card { 
+    width: 100%; 
+    text-align: left; 
+    padding: 1rem;
+  }
+  .delhi-step-number { 
+    position: relative; 
+    transform: none; 
+    left: auto; 
+    top: auto; 
+    margin-bottom: 0.5rem; 
+    display: inline-flex;
+    width: auto;
+  }
+  .delhi-step-card::after { display: none; }
+
+  .delhi-step-title { font-size: 1rem; }
+  .delhi-step-description { font-size: 0.9rem; line-height: 1.5; }
+
+  .delhi-section-title {
+    font-size: 1.1rem;
+    gap: 0.35rem;
+  }
+
+  .delhi-section-title::before,
+  .delhi-section-title::after {
+    flex: 0 0 20px;
+    min-width: 15px;
+    max-width: 40px;
+  }
+
+  .delhi-section-description {
+    font-size: 0.9rem;
+  }
+
+  .delhi-feature-number {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+
+  .delhi-service-number {
+    width: 25px;
+    height: 25px;
+    font-size: 0.8rem;
+  }
+
+  .delhi-why-choose-section,
+  .delhi-causes-section,
+  .delhi-services-section,
+  .delhi-how-it-works-section,
+  .delhi-who-can-use-section,
+  .delhi-why-works-section,
+  .delhi-success-section,
+  .delhi-faq-section,
+  .delhi-final-cta-section {
+    padding: 1.25rem 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .delhi-feature-card,
+  .delhi-service-card {
+    padding: 1rem;
+  }
+
+  .delhi-feature-title,
+  .delhi-service-title {
+    font-size: 1rem;
+  }
+
+  .delhi-feature-description,
+  .delhi-service-description {
+    font-size: 0.9rem;
+  }
+
+  .delhi-cta-button {
+    padding: 10px 16px;
+    font-size: 0.85rem;
+  }
+
+  .delhi-cta-button.large {
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+
+  .delhi-conditions-grid,
+  .delhi-benefits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .delhi-faq-question {
+    font-size: 1rem;
+  }
+
+  .delhi-faq-answer {
+    font-size: 0.9rem;
+  }
+}
+
+/* Remove the numbered badge in the corner */
+.delhi-feature-number { display: none; }
+
+/* Extra small devices (320px and below) */
+@media screen and (max-width: 360px) {
+  .delhi-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .delhi-hero {
+    padding: 1rem 0.5rem;
+    margin: 0.5rem 0 1rem 0;
+  }
+
+  .delhi-hero .hero-title {
+    font-size: 1.35rem;
+  }
+
+  .delhi-hero .hero-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .delhi-section-title {
+    font-size: 1rem;
+    gap: 0.25rem;
+  }
+
+  .delhi-section-title::before,
+  .delhi-section-title::after {
+    flex: 0 0 15px;
+    min-width: 10px;
+    max-width: 30px;
+  }
+
+  .delhi-section-description {
+    font-size: 0.85rem;
+  }
+
+  .delhi-feature-card,
+  .delhi-service-card,
+  .delhi-step-card {
+    padding: 0.75rem;
+  }
+
+  .delhi-feature-title,
+  .delhi-service-title,
+  .delhi-step-title {
+    font-size: 0.95rem;
+  }
+
+  .delhi-feature-description,
+  .delhi-service-description,
+  .delhi-step-description {
+    font-size: 0.85rem;
+  }
+
+  .delhi-cta-button {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+  }
+
+  .delhi-cta-button.large {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+  }
+
+  .delhi-faq-question {
+    font-size: 0.95rem;
+  }
+
+  .delhi-faq-answer {
+    font-size: 0.85rem;
+  }
+
+  .delhi-stat-text {
+    font-size: 0.95rem;
+  }
+}
+
+/* Tablet title fix: ensure long section titles wrap and stay within viewport
+   Target range: 765px .. 1024px */
+@media screen and (min-width: 765px) and (max-width: 1024px) {
+  .delhi-why-choose-section .delhi-section-title,
+  .delhi-how-it-works-section .delhi-section-title,
+  .delhi-why-works-section .delhi-section-title {
+    white-space: normal;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0 1rem;
+    font-size: 1.4rem;
+    justify-content: center;
+    align-items: center;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .delhi-section-title::before,
+  .delhi-section-title::after {
+    flex: 0 0 40px;
+    min-width: 30px;
+    max-width: 100px;
+  }
+
+  .delhi-section-description {
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+  }
+}
+
+/* Make the SEO Link Hub behave as a single column on narrow laptops/tablets
+   Target range: 600px .. 800px so delhi page matches product pages */
+@media screen and (min-width: 600px) and (max-width: 800px) {
+  .delhi-container .seo-link-container {
+    padding: 1rem 0.75rem;
+    overflow-x: hidden;
+  }
+
+  .delhi-container .seo-link-container .links-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+    align-items: stretch;
+  }
+
+  .delhi-container .seo-link-container .seo-link-card,
+  .delhi-container .seo-link-container .seo-link-item {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  .delhi-container .seo-link-container .seo-link-card .seo-link-content,
+  .delhi-container .seo-link-container .seo-link-item .seo-link-content {
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .delhi-container .seo-link-container .seo-link-icon {
+    min-width: 44px;
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+  }
+
+  .delhi-container .seo-link-container .seo-link-title {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .delhi-container .seo-link-container .seo-link-desc {
+    font-size: 0.95rem;
+  }
+}
+
+/* Hero subtitle & CTA adjustments for tablet and mobile
+   Reset negative left margins and ensure proper alignment on smaller devices */
+@media screen and (max-width: 768px) {
+  .delhi-hero .hero-subtitle {
+    margin-left: 0 !important;
+    text-align: left !important;
+    font-size: 1.15rem !important;
+  }
+
+  .delhi-hero .hero-cta {
+    margin-left: 0 !important;
+    text-align: left !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    padding-left: 0 !important;
+  }
+}
+
+/* Small-desktop / large laptop tuning: 1024px .. 1400px
+   Reduce extreme negative offsets on subtitle and CTA so content aligns neatly
+   while preserving the two-column hero layout and overall visual style. */
+@media screen and (min-width: 1024px) and (max-width: 1400px) {
+  .delhi-hero {
+    padding: 2.5rem 1.5rem;
+    gap: 2rem;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* reset large negative offsets used for very wide layouts */
+  .delhi-hero .hero-subtitle {
+    margin-left: 0;
+    font-size: 1.4rem;
+    text-align: left;
+    color: #08baed;
+  }
+
+  /* CTA should align with left column content and not overflow */
+  .delhi-hero .hero-cta {
+    margin-left: 0;
+    margin-top: 1rem;
+    text-align: left;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 0;
+  }
+
+  /* make the CTA button slightly larger on these widths for balance */
+  .delhi-hero .delhi-cta-button {
+    padding: 14px 28px;
+  }
+}
+
+/* Small-laptop / tablet tuning: 765px .. 1024px
+   Reset subtitle & CTA offsets so the two-column hero reads well on these widths */
+@media screen and (min-width: 765px) and (max-width: 1024px) {
+  .delhi-hero {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 2rem 1.25rem;
+  }
+
+  .delhi-hero .hero-subtitle {
+    margin-left: 0 !important;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    text-align: left;
+    color: #08baed;
+  }
+
+  .delhi-hero .hero-cta {
+    margin-left: 0 !important;
+    margin-top: 1rem;
+    text-align: left;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 0;
+  }
+
+  /* Slightly scale CTA button to balance with subtitle size */
+  .delhi-hero .delhi-cta-button {
+    padding: 13px 26px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .delhi-hero .hero-subtitle {
+    margin-left: 0 !important;
+    text-align: left !important;
+    font-size: 1rem !important;
+  }
+
+  .delhi-hero .hero-cta {
+    margin-left: 0 !important;
+    text-align: left !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    padding-left: 0 !important;
+  }
+}

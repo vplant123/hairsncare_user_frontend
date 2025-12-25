@@ -2,11 +2,16 @@
   font-weight: 700;
   font-size: 45px;
   text-transform: uppercase;
+  text-align: left;
+  margin-bottom: 10px;
 }
 .hero-heading span {
   font-weight: 600;
   /* font-size: 1.4rem; */
   text-transform: uppercase;
+  text-align: left;
+  display: block;
+  margin-bottom: 8px;
 }
 
 .hero-des-1 {
@@ -14,10 +19,17 @@
   font-size: 2rem;
   font-weight: 700;
   margin-top: 10px;
+  text-align: left;
 }
 
 .hero-title-1 {
   font-size: 1.4rem;
+  text-align: left;
+}
+.hero-title-1 h2 {
+  font-size: 1.1rem !important;
+  line-height: 1.2;
+  margin: 0 0 8px 0;
 }
 .btn {
   height: 45px;
@@ -43,6 +55,7 @@
   flex-direction: row;
   gap: 15px;
   margin-top: 2rem;
+  justify-content: flex-start;
 }
 
 .hero-container {
@@ -89,6 +102,12 @@
 
 .hero-heading {
   width: 50%;
+  text-align: left;
+}
+.hero-heading h2 {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-size: 1.6rem;
 }
 
 .hero-image {
@@ -145,13 +164,23 @@
 
 .hero-image-wrapper {
   height: 80%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 .second-image-t1 {
   font-size: 1.4rem;
 }
+.second-image-t1 h2 {
+  max-width: 650px;
+  line-height: 1.2;
+  margin-bottom: 5px;
+  font-size: 1.2rem !important;
+}
 .second-image-t2 {
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 700;
+  margin-top: 10px;
 }
 
 .btn11 {

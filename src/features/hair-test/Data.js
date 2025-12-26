@@ -862,7 +862,7 @@ options:'input'
                 },
                 {
                     ques: 'Do you have PCOD (Polycystic Ovarian Disease) ?',
-                    options: ['Yes',  'Not Sure'],
+                    options: ['Yes', { name: 'Not Sure', src: '/assets/img/not-sure.png' }],
                     title: ['',''],
                     subQuestions:[
                         {
@@ -897,7 +897,7 @@ options:'input'
                 },
                 {
                     ques: 'Do you have signs of Thyroid?',
-                    options: ['Yes', 'No', 'Not Sure'],
+                    options: ['Yes', 'No', { name: 'Not Sure', src: '/assets/img/not-sure.png' }],
                     title: ['','',''],
 
                     subQuestions:[
@@ -943,7 +943,7 @@ options:'input'
                 },
                 {
                     ques: 'Do you have low hemoglobin? (Anemia)',
-                    options: ['Not Sure', 'No', 'Yes'],
+                    options: [{ name: 'Not Sure', src: '/assets/img/not-sure.png' }, 'No', 'Yes'],
                     title: ['','', ''],
                     subQuestions:[
                         {

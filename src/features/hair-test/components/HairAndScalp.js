@@ -1881,6 +1881,10 @@ export default function HairAndScalp({male,scrollToTop,data,testId, selectedOpti
     setShowGrayHairManagement(false);
   };
 
+  const isValidImageSrc = (src) => {
+    if (!src || typeof src !== 'string') return false;
+    return /\.(png|jpe?g|gif|svg|webp)(\?.*)?$/i.test(src);
+  };
 
   return (
     <div className='hair-scalp' id = "target-element">
@@ -1908,7 +1912,7 @@ export default function HairAndScalp({male,scrollToTop,data,testId, selectedOpti
                       selectedOption.option == option
                   )
               );
-              console.log("jijewijre",isSelected,question,question.ques)
+              // console.log("jijewijre",isSelected,question,question.ques)
 
               // For only two questions we want triangle visuals. Others remain circle.
               const isTriangleQuestion =
@@ -1945,12 +1949,12 @@ export default function HairAndScalp({male,scrollToTop,data,testId, selectedOpti
                       </>
                     ) : (
                       <label>
-                        {option.src ? (
+                        {option.src && isValidImageSrc(option.src) ? (
                           <>
                             <Tooltip title={question?.title ? question?.title[optionIndex] : ''}>
                               <img
                                 loading="lazy"
-                                className={isTriangleQuestion ? (option?.name === 'Not Sure' || option?.name === 'None' || option?.name === 'Other' ? 'triangle-02' : 'triangle-01') : (option?.name === 'Not Sure' || option?.name === 'None' || option?.name === 'Other' ? 'circle-02' : 'circle-01')}
+                                className={isTriangleQuestion ? (isSpecialOption ? 'triangle-02' : 'triangle-01') : (isSpecialOption ? 'circle-02' : 'circle-01')}
                                 src={option.src}
                                 alt={option.name}
                                 style={{ border: option.name == 'Normal' ? '1px solid' : '' }}
@@ -1959,14 +1963,14 @@ export default function HairAndScalp({male,scrollToTop,data,testId, selectedOpti
                           </>
                         ) : (
                           isTriangleQuestion ? (
-                            <div className={`triangle-01 no-image option`} data-text={option.name} />
+                            <div className={`${isSpecialOption ? 'triangle-02' : 'triangle-01'} no-image option`} data-text={option.name} />
                           ) : (
-                            <div className={`circle-01 no-image option`}>
+                            <div className={`${isSpecialOption ? 'circle-02' : 'circle-01'} no-image option`}>
                               {option.name}
                             </div>
                           )
                         )}
-                        <div>{option.name}</div>
+                        {/* <div>{option.name}</div> */}
                       </label>
                     )}
                   </div>
@@ -2064,9 +2068,9 @@ export default function HairAndScalp({male,scrollToTop,data,testId, selectedOpti
                                         >
                                           <div
                                             className={`${
-                                              subOption?.name == "Not Sure" ||
-                                              subOption?.name == "None" ||
-                                              subOption?.name == "Other"
+                                              // subOption == "Not Sure" ||
+                                              subOption == "None" ||
+                                              subOption == "Other"
                                                 ? "circle-02"
                                                 : "circle-01"
                                             }`}
@@ -2087,28 +2091,28 @@ export default function HairAndScalp({male,scrollToTop,data,testId, selectedOpti
                                     ) : (
                                       <label>
                                         
-                                        {subOption.src ? (
+                                        {subOption.src && isValidImageSrc(subOption.src) ? (
                                           <>
-                                                                                  <Tooltip
-                                          title={
-                                            subQuestion?.title
-                                              ? subQuestion?.title[
-                                                  subOptionIndex
-                                                ]
-                                              : ""
-                                          }
-                                        >
-                                            <img loading="lazy"
-                                              className={`${
-                                                subOption?.name == "Not Sure" ||
-                                                subOption?.name == "None" ||
-                                                subOption?.name == "Other"
-                                                  ? "circle-02"
-                                                  : "circle-01"
-                                              }`}
-                                              src={subOption.src}
-                                              alt={subOption.name}
-                                            />
+                                            <Tooltip
+                                              title={
+                                                subQuestion?.title
+                                                  ? subQuestion?.title[
+                                                      subOptionIndex
+                                                    ]
+                                                  : ""
+                                              }
+                                            >
+                                              <img loading="lazy"
+                                                className={`${
+                                                  subOption?.name == "Not Sure" ||
+                                                  subOption?.name == "None" ||
+                                                  subOption?.name == "Other"
+                                                    ? "circle-02"
+                                                    : "circle-01"
+                                                }`}
+                                                src={subOption.src}
+                                                alt={subOption.name}
+                                              />
                                             </Tooltip>
                                           </>
                                         ) : (

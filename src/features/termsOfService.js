@@ -3,6 +3,7 @@ import Navbar from "./nav/Navbar";
 import Footer from "./footer/Footer";
 import SEO from "../components/SEO";
 import LegalPagesLinks from "../components/LegalPagesLinks";
+import SeoLinksMarquee from "../components/SeoLinksMarquee";
 function TermsOfService(props) {
 
   useEffect(() => {
@@ -1108,6 +1109,7 @@ function TermsOfService(props) {
         
         {/* Strategic Internal and External Links for SEO */}
         <LegalPagesLinks currentPage="/terms-of-service" />
+        <SeoLinksMarquee />
       </div>
       <Footer />
     </Navbar>

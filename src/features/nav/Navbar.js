@@ -16,7 +16,6 @@ import SearchProduct from "../SearchProduct";
 import { useMediaQuery } from "@mui/material";
 
 function Navbar({ children, cart, setCart }) {
-  console.log("jofewjpoe", cart, setCart);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const dispatch = useDispatch();
@@ -28,58 +27,33 @@ function Navbar({ children, cart, setCart }) {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const handleMobileMenuToggle = () => {
-    console.log("jojeojfer", showMobileMenu);
-    setShowMobileMenu(!showMobileMenu);
-  };
+  const handleMobileMenuToggle = () => setShowMobileMenu(!showMobileMenu);
 
   const handleLogout = () => {
     setShowLogout(false);
     localStorage.removeItem("User343");
     toast("Logout Successfully");
     dispatch(getCartItems());
-    // setCart([])
     navigate("/");
     window.location.reload();
   };
 
-  const goToDash = () => {
-    navigate("/cart");
-  };
-
-  const handleLoginClick = () => {
-    dispatch(toggleLogin());
-  };
-
-  const handleTestHair = () => {
-    navigate("/take-hair-test");
-  };
-
-  const handleSignupClick = () => {
-    setShowSignup(!showSignup);
-  };
+  const goToDash = () => navigate("/cart");
+  const handleLoginClick = () => dispatch(toggleLogin());
+  const handleTestHair = () => navigate("/take-hair-test");
+  const handleSignupClick = () => setShowSignup(!showSignup);
 
   let storedUserData = JSON.parse(localStorage.getItem("User343"));
-  // console.log(storedUserData, "userData");
 
   useEffect(() => {
-    console.log("ksorkjoer", cart?.length);
     if (storedUserData) {
       setShowLogout(true);
       dispatch(getCartItems(storedUserData.logedInUser.user._id));
     }
   }, [dispatch, cart?.length]);
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-      /* you can also use 'auto' behaviour 
-         in place of 'smooth' */
-    });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
-  const isLargeScreen = useMediaQuery("(min-width:1200px)");
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
@@ -106,28 +80,25 @@ function Navbar({ children, cart, setCart }) {
               title="Hairsncares Brand Logo"
             />
           </div>
+
           <div
             className={`nav-link ${showMobileMenu ? "show" : ""}`}
             style={{ zIndex: showMobileMenu ? 1 : "" }}
           >
-            <a>
-              <NavLink to="/" activeClassName="active">
-                HOME
-              </NavLink>
-            </a>
-            <a className="who-we-link">
+            <NavLink to="/" activeClassName="active">
+              HOME
+            </NavLink>
+
+            <div className="who-we-link">
               <NavLink
                 to="/about-us-quality-hair-loss-scalp-care"
                 activeClassName="active"
               >
                 WHO WE ARE+
               </NavLink>
+
               <div className="sub-link-2">
-                <p
-                  onClick={() =>
-                    navigate("/about-us-quality-hair-loss-scalp-care")
-                  }
-                >
+                <p onClick={() => navigate("/about-us-quality-hair-loss-scalp-care")}>
                   About Us
                 </p>
                 <p
@@ -139,11 +110,9 @@ function Navbar({ children, cart, setCart }) {
                   Our specialists
                 </p>
               </div>
-            </a>
-            <a className="who-we-link-1">
-              {/* "OUR EXPERTISE" is a toggle that shows sub-links. Previously it used a NavLink without a `to` prop which could be
-                  treated as active (especially with older react-router versions). Replace with a button and compute active state
-                  based on the current pathname so it only appears active when on one of the expertise child routes. */}
+            </div>
+
+            <div className="who-we-link-1">
               {(() => {
                 const expertisePaths = [
                   "/effective-hair-loss-treatment-men",
@@ -160,17 +129,22 @@ function Navbar({ children, cart, setCart }) {
                     type="button"
                     className={isExpertiseActive ? "active" : ""}
                     onClick={() => setActive(!active)}
-                    style={{ background: "transparent", border: "none", cursor: "pointer" }}
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      cursor: "pointer",
+                    }}
                   >
                     OUR EXPERTISE
                   </button>
                 );
               })()}
 
-              <div className="sub-link-3" style={{ display: active ? "block" : "none" }}>
-                <p
-                  onClick={() => navigate("/effective-hair-loss-treatment-men")}
-                >
+              <div
+                className="sub-link-3"
+                style={{ display: active ? "block" : "none" }}
+              >
+                <p onClick={() => navigate("/effective-hair-loss-treatment-men")}>
                   Hair Loss in Men
                 </p>
                 <p
@@ -202,117 +176,55 @@ function Navbar({ children, cart, setCart }) {
                   Other Procedures
                 </p>
               </div>
-            </a>
-            <a>
-              <NavLink
-                to="/best-hair-care-products-hair-loss-scalp-health"
-                activeClassName="active"
-              >
-                PRODUCTS
-              </NavLink>
-            </a>
-            <a>
-              <NavLink to="/contact-hair-experts" activeClassName="active">
-                CONTACT US
-              </NavLink>
-            </a>
+            </div>
 
+            <NavLink
+              to="/best-hair-care-products-hair-loss-scalp-health"
+              activeClassName="active"
+            >
+              PRODUCTS
+            </NavLink>
+
+            <NavLink to="/contact-hair-experts" activeClassName="active">
+              CONTACT US
+            </NavLink>
+
+            {/* Mobile-only links remain unchanged */}
             {isMobile && (
-              <a>
-                <NavLink
-                  to="/effective-hair-loss-treatment-men"
-                  activeClassName="active"
-                >
+              <>
+                <NavLink to="/effective-hair-loss-treatment-men">
                   Hair Loss in Men
                 </NavLink>
-              </a>
-            )}
-
-            {isMobile && (
-              <a>
-                <NavLink
-                  to="/hair-loss-women-causes-treatments-remedies"
-                  activeClassName="active"
-                >
+                <NavLink to="/hair-loss-women-causes-treatments-remedies">
                   Hair Loss in Women
                 </NavLink>
-              </a>
-            )}
-
-            {isMobile && (
-              <a>
-                <NavLink
-                  to="/hair-transplants-fue-dhi-mhi-natural-restoration"
-                  activeClassName="active"
-                >
+                <NavLink to="/hair-transplants-fue-dhi-mhi-natural-restoration">
                   Hair Transplant
                 </NavLink>
-              </a>
-            )}
-
-            {isMobile && (
-              <a>
-                <NavLink
-                  to="/advanced-hair-loss-solutions-prp-smp-cloning-systems"
-                  activeClassName="active"
-                >
+                <NavLink to="/advanced-hair-loss-solutions-prp-smp-cloning-systems">
                   Other Procedures
                 </NavLink>
-              </a>
-            )}
-
-            {isMobile && (
-              <a>
-                <NavLink
-                  to="/online-hair-loss-test-diagnosis-treatment"
-                  activeClassName="active"
-                >
+                <NavLink to="/online-hair-loss-test-diagnosis-treatment">
                   Hair Loss Test
                 </NavLink>
-              </a>
-            )}
-
-            {isMobile && (
-              <a>
-                <NavLink
-                  to="/dr-amit-agarkar-hair-restoration-expert"
-                  activeClassName="active"
-                >
+                <NavLink to="/dr-amit-agarkar-hair-restoration-expert">
                   Dermatologist
                 </NavLink>
-              </a>
-            )}
-
-            {isMobile && (
-              <a>
-                <NavLink to="/hair-care-blogs" activeClassName="active">
-                  Blogs
-                </NavLink>
-              </a>
-            )}
-
-            {isMobile && (
-              <a>
-                <NavLink to="/policy" activeClassName="active">
-                  Privacy Policy
-                </NavLink>
-              </a>
-            )}
-
-            {isMobile && (
-              <a>
-                <NavLink to="/terms-of-service" activeClassName="active">
-                  Terms of Service
-                </NavLink>
-              </a>
+                <NavLink to="/hair-care-blogs">Blogs</NavLink>
+                <NavLink to="/policy">Privacy Policy</NavLink>
+                <NavLink to="/terms-of-service">Terms of Service</NavLink>
+              </>
             )}
           </div>
+
+          {/* Right Side */}
           <div className="nav-right">
             {!location.pathname.includes("/take-hair-test") && (
               <button onClick={handleTestHair} className="btn-test">
                 TAKE A HAIR TEST
               </button>
             )}
+
             <div className="nav-icons">
               <div className="user-svg">
                 {showSearch ? (
@@ -323,12 +235,10 @@ function Navbar({ children, cart, setCart }) {
                     setCart={setCart}
                   />
                 ) : (
-                  <FaSearch
-                    onClick={() => setShowSearch(!showSearch)}
-                    size={20}
-                  />
+                  <FaSearch onClick={() => setShowSearch(!showSearch)} size={20} />
                 )}
               </div>
+
               <div className="cart-icon" onClick={goToDash}>
                 <Badge
                   color="secondary"
@@ -341,15 +251,11 @@ function Navbar({ children, cart, setCart }) {
                 >
                   <ShoppingCartIcon />
                 </Badge>
-                {/* <FaShoppingCart onClick={goToDash} size={20} /> */}
-                {/* {(cartItems?.length > 0 || cart?.length > 0) && <span className="cart-count">{cartItems?.length || cart?.length}</span>} */}
               </div>
+
               <div className="user-svg">
                 <FaRegUser size={20} />
-                <div
-                  className="sub-link"
-                  style={{ width: "135px", padding: "1rem" }}
-                >
+                <div className="sub-link" style={{ width: "135px", padding: "1rem" }}>
                   {showLogout ? (
                     <div>
                       <p
@@ -366,26 +272,22 @@ function Navbar({ children, cart, setCart }) {
                       </p>
                     </div>
                   ) : (
-                    <div>
-                      <p
-                        onClick={handleLoginClick}
-                        style={{ textAlign: "center" }}
-                      >
+                    <>
+                      <p onClick={handleLoginClick} style={{ textAlign: "center" }}>
                         Login
                       </p>
-                      <p
-                        onClick={handleSignupClick}
-                        style={{ textAlign: "center" }}
-                      >
+                      <p onClick={handleSignupClick} style={{ textAlign: "center" }}>
                         Signup
                       </p>
-                    </div>
+                    </>
                   )}
                 </div>
               </div>
+
               <div className="menubar" onClick={handleMobileMenuToggle}>
                 <FiMenu />
               </div>
+
               {showLogin && (
                 <Login
                   onClose={handleLoginClick}
@@ -403,6 +305,7 @@ function Navbar({ children, cart, setCart }) {
           </div>
         </div>
       </div>
+
       <div className="main">{children}</div>
     </>
   );

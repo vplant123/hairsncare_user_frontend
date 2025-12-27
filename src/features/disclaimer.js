@@ -27,6 +27,7 @@ function Disclaimer(props) {
           Disclaimer
         </h1>
 
+
         <h2
           style={{
             margin: "20px 0 10px 0",
@@ -248,6 +249,42 @@ function Disclaimer(props) {
           services.
         </div>
         <div style={{ margin: "40px 0 20px 0", textAlign: "center" }}>
+          {/* ========= Added Internal Links (SEO – No visual change) ========= */}
+          <p
+            style={{
+              textAlign: "center",
+              fontSize: "14px",
+              lineHeight: "22px",
+              color: "#000",
+              marginTop: "10px",
+              marginBottom: "10px",
+            }}
+          >
+            Learn more about our{" "}
+            <a
+              href="/online-hair-loss-test-diagnosis-treatment"
+              style={{ color: "#000", textDecoration: "none" }}
+            >
+              online hair loss treatment plans
+            </a>
+            , meet our{" "}
+            <a
+              href="/hair-loss-treatment-experts-dermatologists"
+              style={{ color: "#000", textDecoration: "none" }}
+            >
+              hair loss specialists
+            </a>{" "}
+            or{" "}
+            <a
+              href="/contact-hair-experts"
+              style={{ color: "#000", textDecoration: "none" }}
+            >
+              contact our experts
+            </a>{" "}
+            for guidance.
+          </p>
+          {/* =============================================================== */}
+          
           <button
             style={{
               padding: "8px 16px",
@@ -265,6 +302,8 @@ function Disclaimer(props) {
             &#8592; Buy Products
           </button>
         </div>
+
+        
 
         {/* Strategic Internal and External Links for SEO */}
         <LegalPagesLinks currentPage="/disclaimer" />

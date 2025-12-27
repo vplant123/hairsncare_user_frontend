@@ -9,6 +9,7 @@ import {
 } from "../../componet/Animation";
 // import AboutUsLinks from "./components/AboutUsLinks";
 import SEOLinkHub from '../../components/SEOLinkHub';
+import SeoLinksMarquee from "../../components/SeoLinksMarquee";
 
 export default function About() {
   const navigate = useNavigate();
@@ -221,6 +222,7 @@ export default function About() {
           </button>
         </div>
       </div>
+      <SeoLinksMarquee />
       <div className="our-commitment-container">
         <div className="container">
           <h2 style={{ paddingTop: "6rem", marginBottom: "3rem" }}>

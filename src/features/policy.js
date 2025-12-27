@@ -3,6 +3,7 @@ import Navbar from "./nav/Navbar";
 import Footer from "./footer/Footer";
 import SEO from "../components/SEO";
 import LegalPagesLinks from "../components/LegalPagesLinks";
+import SeoLinksMarquee from "../components/SeoLinksMarquee";
 function Policy(props) {
   useEffect(() => {
     if (props?.setTitle) props?.setTitle(window.location.pathname);
@@ -158,6 +159,7 @@ function Policy(props) {
           
           {/* Strategic Internal and External Links for SEO */}
           <LegalPagesLinks currentPage="/policy" />
+          <SeoLinksMarquee />
         </div>
         <Footer />
       </Navbar>

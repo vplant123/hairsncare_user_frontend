@@ -12,8 +12,6 @@ const Footer = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
-      /* you can also use 'auto' behaviour 
-         in place of 'smooth' */
     });
   };
 
@@ -43,6 +41,7 @@ const Footer = () => {
             <p>hairsncares@gmail.com</p>
           </div>
         </div>
+
         <div className="footer-item">
           <h3>SUPPORT</h3>
 
@@ -55,132 +54,128 @@ const Footer = () => {
                 color: "#1b1b1bff",
                 textDecoration: "none",
                 fontSize: "20px",
-                // fontWeight: "bold",
               }}
             >
               Blogs
             </a>
           </h5>
 
-          <h5
-            onClick={() => {
-              scrollToTop();
-              navigate("/disclaimer");
-            }}
-            style={{ cursor: "pointer" }}
-            className="com-con"
-          >
-            Disclaimer
+          <h5 className="com-con">
+            <a
+              href="/disclaimer"
+              onClick={scrollToTop}
+              style={{ color: "#000", textDecoration: "none", cursor: "pointer" }}
+            >
+              Disclaimer
+            </a>
           </h5>
 
-          <h5
-            onClick={() => {
-              scrollToTop();
-              navigate("/policy");
-            }}
-            style={{ cursor: "pointer" }}
-            className="com-con"
-          >
-            Privacy Policy
+          <h5 className="com-con">
+            <a
+              href="/policy"
+              onClick={scrollToTop}
+              style={{ color: "#000", textDecoration: "none", cursor: "pointer" }}
+            >
+              Privacy Policy
+            </a>
           </h5>
 
-          <h5
-            onClick={() => {
-              scrollToTop();
-              navigate("/terms-of-service");
-            }}
-            style={{ cursor: "pointer" }}
-            className="com-con"
-          >
-            Terms of Service
+          <h5 className="com-con">
+            <a
+              href="/terms-of-service"
+              onClick={scrollToTop}
+              style={{ color: "#000", textDecoration: "none", cursor: "pointer" }}
+            >
+              Terms of Service
+            </a>
           </h5>
 
-          <h5
-            onClick={() => {
-              scrollToTop();
-              navigate("/return-policy");
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            Cancellation/Refund Policy
+          <h5 className="com-con">
+            <a
+              href="/return-policy"
+              onClick={scrollToTop}
+              style={{ color: "#000", textDecoration: "none", cursor: "pointer" }}
+            >
+              Cancellation/Refund Policy
+            </a>
           </h5>
         </div>
 
         <div className="footer-item">
           <h3>COMPANY</h3>
-          <h5
-            className="com-con"
-            onClick={() => {
-              window.location = "/";
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            HOME
+
+          <h5 className="com-con">
+            <a
+              href="/"
+              style={{ color: "#000", textDecoration: "none", cursor: "pointer" }}
+            >
+              HOME
+            </a>
           </h5>
-          <h5
-            className="com-con"
-            onClick={() => {
-              window.location = "/about-us-quality-hair-loss-scalp-care";
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            ABOUT
+
+          <h5 className="com-con">
+            <a
+              href="/about-us-quality-hair-loss-scalp-care"
+              style={{ color: "#000", textDecoration: "none", cursor: "pointer" }}
+            >
+              ABOUT
+            </a>
           </h5>
-          <h5
-            className="com-con"
-            onClick={() => {
-              window.location = "/hair-loss-treatment-experts-dermatologists";
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            OUR SPECIALIST
+
+          <h5 className="com-con">
+            <a
+              href="/hair-loss-treatment-experts-dermatologists"
+              style={{ color: "#000", textDecoration: "none", cursor: "pointer" }}
+            >
+              OUR SPECIALIST
+            </a>
           </h5>
-          <h5
-            className="com-con"
-            onClick={() => {
-              window.location = "/contact-hair-experts";
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            CONTACT US
+
+          <h5 className="com-con">
+            <a
+              href="/contact-hair-experts"
+              style={{ color: "#000", textDecoration: "none", cursor: "pointer" }}
+            >
+              CONTACT US
+            </a>
           </h5>
-          <h5
-            className="com-con"
-            onClick={() => {
-              window.location = "/online-hair-loss-test-diagnosis-treatment";
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            HAIR LOSS TEST
+
+          <h5 className="com-con">
+            <a
+              href="/online-hair-loss-test-diagnosis-treatment"
+              style={{ color: "#000", textDecoration: "none", cursor: "pointer" }}
+            >
+              HAIR LOSS TEST
+            </a>
           </h5>
-          <h5
-            className="com-con"
-            onClick={() => {
-              window.location = "/dr-amit-agarkar-hair-restoration-expert";
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            DERMATOLOGIST
+
+          <h5 className="com-con">
+            <a
+              href="/dr-amit-agarkar-hair-restoration-expert"
+              style={{ color: "#000", textDecoration: "none", cursor: "pointer" }}
+            >
+              DERMATOLOGIST
+            </a>
           </h5>
-          <h5
-            className="com-con"
-            onClick={() => {
-              scrollToTop();
-              navigate("/online-hair-loss-treatment-bangalore");
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            BANGALORE TREATMENT
+
+          <h5 className="com-con">
+            <a
+              href="/online-hair-loss-treatment-bangalore"
+              onClick={scrollToTop}
+              style={{ color: "#000", textDecoration: "none", cursor: "pointer" }}
+            >
+              BANGALORE TREATMENT
+            </a>
           </h5>
-          <h5
-            className="com-con"
-            onClick={() => {
-              scrollToTop();
-              navigate("/online-hair-loss-treatment-delhi");
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            DELHI TREATMENT
+
+          <h5 className="com-con">
+            <a
+              href="/online-hair-loss-treatment-delhi"
+              onClick={scrollToTop}
+              style={{ color: "#000", textDecoration: "none", cursor: "pointer" }}
+            >
+              DELHI TREATMENT
+            </a>
           </h5>
         </div>
 
@@ -201,7 +196,6 @@ const Footer = () => {
             <div
               class="btn-footer"
               onClick={() => {
-                console.log("wnkefnwei");
                 window.open("mailto:hairsncares@gmail.com");
               }}
             >
@@ -210,7 +204,6 @@ const Footer = () => {
                 type="submit"
                 value="news_submit"
                 id="news_submit"
-                // disabled="disabled"
               >
                 <RiSendPlaneLine size={20} />
               </button>
@@ -218,6 +211,7 @@ const Footer = () => {
           </form>
         </div>
       </footer>
+
       <div className="row">
         <div className="copyright col-12">
           {new Date().getFullYear()} Copyrights with HairsNcares.com

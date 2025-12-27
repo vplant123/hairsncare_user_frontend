@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import BASE_URL from "../../Config";
 import { LeftAnimatedDiv, RightAnimatedDiv, ZoomInDiv } from "../../componet/Animation";
 import { useSelector } from "react-redux";
+import SeoLinksMarquee from "../../components/SeoLinksMarquee";
 
 function BookAppointment() {
 
@@ -264,6 +265,7 @@ function BookAppointment() {
          </div>
         </RightAnimatedDiv>
       </div>
+      <SeoLinksMarquee />
       <ToastContainer position="bottom-right" />
 
     </>

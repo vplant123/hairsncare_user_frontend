@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Container, Typography, Box } from "@mui/material";
 import Footer from "./footer/Footer";
 import Navbar from "./nav/Navbar";
@@ -12,7 +12,6 @@ const ReturnPolicy = (props) => {
 
   return (
     <>
-      {" "}
       <Navbar>
         <SEO useRouteData={true} />
         <Container>
@@ -25,69 +24,38 @@ const ReturnPolicy = (props) => {
           >
             <h1>Return Policy</h1>
 
-            {/* <p>At Vplant Speciality Clinic ("Hairsncares"), we prioritize customer satisfaction and aim to provide a smooth and hassle-free experience. Our Refund Policy allows for full refunds under specific conditions outlined below:</p>
-
-          <ul>
-            <li><strong>Incorrect Product Received:</strong> If you receive an incorrect product.</li>
-            <li><strong>Missing Products:</strong> If any product(s) are missing from your order.</li>
-            <li><strong>Lost or Damaged in Transit:</strong> If the ordered product(s) were lost or damaged during transit.</li>
-            <li><strong>Expired Products:</strong> If the product(s) delivered are past their expiry date.</li>
-            <li><strong>Allergic Reactions:</strong> In rare cases, if the product causes allergic reactions or is unsuitable for your body.</li>
-          </ul>
-
-          <p>To be eligible for a refund, requests must be submitted within 15 days of delivery, and you must provide clear images of the product(s) highlighting the issue. For claims of missing products, we will review the packing video to confirm that all ordered items were included before dispatch. We may also ask you to share images of the entire package received when submitting your request.</p>
-
-          <p>For non-defective products, we may accept returns of sealed and unused items provided we are notified within 15 days of receipt. We will initiate a pickup once your return request is received within the specified timeframe.</p>
-
-          <h2>How to Request a Refund</h2>
-          <p>To request a refund, please contact our customer care team between 10 AM and 7 PM Monday to Saturday via:</p>
-          <ul>
-            <li><strong>Email:</strong> hairsncares@gmail.com</li>
-            <li><strong>WhatsApp:</strong> +91 9136028327</li>
-          </ul>
-          <p>When contacting us, include your order ID, reason for the refund, specified product(s), and an image of the product(s) in question.</p>
-          <h2>Shipping Policy</h2>
-          <p>Hairsncares ships products across India through trusted delivery partners. Orders are typically processed within 1–2 business days and delivered within 2–10 business days depending on the location. Shipping is free for orders above ₹2000; for others, nominal charges apply as shown at checkout. Once dispatched, a Shipment Confirmation with tracking details is sent via SMS, Whatsapp or email. Customers must ensure their contact details are accurate and be available to receive the delivery—three attempts are usually made. Unsuccessful deliveries due to incorrect details or unavailability may lead to cancellation or re-delivery with extra charges. In case of damaged, tampered, or incorrect deliveries, customers must report the issue with supporting photos within 48 hours for resolution. Prescription-based products are shipped only after valid prescription verification. Hairsncares is not liable for delays caused by third-party couriers or events beyond control. Please refer to our Return, Refund, and Cancellation Policy for related terms.</p>
-          <h2>Return Processing</h2>
-          <p>Customers must return the products within 2 days of receiving the delivery of products. Once we receive a return request, we will arrange for our logistics partner to pick up the product, typically within 2 working days.</p>
-          <p>Once we receive a return request, we will arrange for our logistics partner to pick up the product, typically within 2 working days. The timeline may vary based on logistics partner availability, location, and public holidays. Refunds for returned products are initiated after a Quality Check. The product must be returned with all original packaging and materials to pass the Quality Check.</p>
-          <p><strong>Quality Check:</strong> This is conducted by the delivery partner during pickup to ensure the returned product is in its original condition, sealed, unused, and with no signs of tampering or usage. If the product passes the Quality Check, we will process the refund to your original payment method. For Cash on Delivery (COD) orders, a refund link will be provided to select your preferred refund method and submit the necessary details.</p>
-
-          <h2>Cancellation of Orders</h2>
-          <p>To cancel your order, please contact us via:</p>
-          <ul>
-            <li><strong>Email:</strong> hairsncares@gmail.com</li>
-            <li><strong>WhatsApp:</strong> +91 9136028327</li>
-          </ul>
-          <p>If our courier partner attempts delivery for orders canceled before delivery, please decline acceptance. If delivery is accepted, we will arrange a reverse pickup, ensuring the products remain sealed and unused.</p> */}
-
             <h2 className="mb-4 text-md">Processing of Refunds</h2>
             <p>
               Refund processing times depend on the original payment method:
-              <br></br>
-              Credit/Debit Card or Net Banking: <br></br>Allow 5 to 7 working
-              days for the credit to appear.<br></br>
-              <br></br>
-              Cash on Delivery (COD): <br></br>May require an image of a voided
-              cheque leaf, bank statement, or bank details. COD refunds may take
-              up to 3 weeks.<br></br>
+              <br />
+              Credit/Debit Card or Net Banking: <br />Allow 5 to 7 working
+              days for the credit to appear.
+              <br />
+              <br />
+              Cash on Delivery (COD): <br />
+              May require an image of a voided cheque leaf, bank statement, or
+              bank details. COD refunds may take up to 3 weeks.
+              <br />
               UPI (Unified Payments Interface): Refunds via UPI are typically
               credited within 2 to 5 working days, depending on your bank and
               UPI service provider.
             </p>
-            <br></br>
+
+            <br />
+
             <p>
               Please note that refund processing times may be delayed due to
               factors such as bank policies or circumstances beyond our control.
               We apologize for any inconvenience caused.
             </p>
+
             <p>
               This revised policy provides a clear and concise outline of the
               refund, return, and cancellation processes at Vplant Speciality
               Clinic ("Hairsncares").
             </p>
 
-            {/* External link for security/trust */}
+            {/* External link (kept as-is) */}
             <Box mt={4}>
               <Typography variant="body1">
                 <a
@@ -98,15 +66,61 @@ const ReturnPolicy = (props) => {
                 ></a>
               </Typography>
             </Box>
+
+            {/* 🔥 SEO Internal Links — visually neutral */}
+            <div
+              style={{
+                marginTop: "25px",
+                fontSize: "14px",
+              }}
+            >
+              <span>Related Pages:&nbsp;</span>
+
+              <a
+                href="/effective-hair-loss-treatment-men"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Men's Hair Loss Treatment
+              </a>
+              {" • "}
+              <a
+                href="/hair-loss-women-causes-treatments-remedies"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Women's Hair Loss Treatment
+              </a>
+              {" • "}
+              <a
+                href="/hair-transplants-fue-dhi-mhi-natural-restoration"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Hair Transplant Solutions
+              </a>
+              {" • "}
+              <a
+                href="/advanced-hair-loss-solutions-prp-smp-cloning-systems"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Advanced Hair Loss Solutions
+              </a>
+              {" • "}
+              <a
+                href="/hair-loss-treatment-experts-dermatologists"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Meet Our Doctors
+              </a>
+              {" • "}
+              <a
+                href="/about-us-quality-hair-loss-scalp-care"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                About Us
+              </a>
+            </div>
           </div>
-          {/* <p>Refund processing times depend on the original payment method:</p>
-          <ul>
-            <li><strong>Credit/Debit Card or Net Banking:</strong> Allow 5 to 7 working days for the credit to appear.</li>
-            <li><strong>Cash on Delivery (COD):</strong> May require an image of a voided cheque leaf, bank statement, or bank details. COD refunds may take up to 3 weeks.</li>
-          </ul>
-          </div>*/}
-          
-          {/* Strategic Internal and External Links for SEO */}
+
+          {/* already-present SEO links */}
           <LegalPagesLinks currentPage="/return-policy" />
         </Container>
         <Footer />

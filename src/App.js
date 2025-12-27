@@ -81,6 +81,196 @@ import Blog from "./features/Blogs/Blog";
 import BangaloreHairTreatmentPage from "./pages/BangaloreHairTreatmentPage";
 import DelhiHairTreatmentPage from "./pages/DelhiHairTreatmentPage";
 
+
+let y =
+  "Discover customized hair loss treatments and accurate diagnosis with Hairsncares. Our expert services and advanced hair tests provide personalized solutions for effective hair restoration. Start your journey to fuller, healthier hair today!";
+let z = "HairsNcares";
+
+function App() {
+  const [title, setTitle] = useState();
+  const [desc, setDesc] = useState();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUtilityContentData());
+  }, []);
+
+  useEffect(() => {
+    const currentRoute = routes.find((route) =>
+      route.exact
+        ? route.path === window.location.pathname
+        : window.location.pathname.startsWith(route.path)
+    );
+
+    document.title = currentRoute?.title || title || "hairsncares";
+
+    const metaDescription = document.querySelector("meta[name='description']");
+    if (metaDescription) {
+      metaDescription.setAttribute("content", currentRoute?.desc || desc || y);
+    } else {
+      const meta = document.createElement("meta");
+      meta.name = "description";
+      meta.content = currentRoute?.desc || desc || y;
+      document.head.appendChild(meta);
+    }
+
+    const metaKeywords = document.querySelector("meta[name='keywords']");
+    if (metaKeywords) {
+      metaKeywords.setAttribute("content", currentRoute?.keywords || z);
+    } else {
+      const meta = document.createElement("meta");
+      meta.name = "keywords";
+      meta.content = currentRoute?.keywords || z;
+      document.head.appendChild(meta);
+    }
+
+    const updateMetaTag = (property, content) => {
+      let meta = document.querySelector(`meta[property="${property}"]`);
+      if (meta) {
+        meta.setAttribute("content", content);
+      } else {
+        meta = document.createElement("meta");
+        meta.setAttribute("property", property);
+        meta.setAttribute("content", content);
+        document.head.appendChild(meta);
+      }
+    };
+
+    const updateTwitterTag = (name, content) => {
+      let meta = document.querySelector(`meta[name="${name}"]`);
+      if (meta) {
+        meta.setAttribute("content", content);
+      } else {
+        meta = document.createElement("meta");
+        meta.setAttribute("name", name);
+        meta.setAttribute("content", content);
+        document.head.appendChild(meta);
+      }
+    };
+
+    updateMetaTag("og:title", currentRoute?.title || title || "HairsnCares");
+    updateMetaTag("og:description", currentRoute?.desc || desc || y);
+    updateMetaTag("og:url", window.location.href);
+
+    updateTwitterTag(
+      "twitter:title",
+      currentRoute?.title || title || "HairsnCares"
+    );
+    updateTwitterTag("twitter:description", currentRoute?.desc || desc || y);
+  }, [title, desc]);
+
+  const [cart, setCart] = useState(
+    JSON.parse(localStorage.getItem("cart")) || []
+  );
+
+  return (
+    <HelmetProvider>
+      <div style={{ overflowX: "hidden" }} className="root-mobile">
+        <Router>
+          <Routes>
+
+            {/* Main */}
+            <Route path="/" element={<HomePage setTitle={setTitle} cart={cart} setCart={setCart} />} />
+            <Route path="/status/:slug" element={<Status />} />
+            <Route path="/payment-status/:slug" element={<PaymentStatus />} />
+            <Route path="/success/:id" element={<Success />} />
+            <Route path="/failure/:id" element={<Failure />} />
+            <Route path="/login" element={<Login />} />
+
+            {/* Non-duplicate static pages */}
+            <Route path="/take-hair-test" element={<HairTestPage setTitle={setTitle} />} />
+            <Route path="/about-us-quality-hair-loss-scalp-care" element={<AboutUsPage setTitle={setTitle} />} />
+            <Route path="/terms-of-service" element={<TermsOfService setTitle={setTitle} />} />
+            <Route path="/disclaimer" element={<Disclaimer setTitle={setTitle} />} />
+            <Route path="/hair-loss-women-causes-treatments-remedies" element={<HairTreatmentWomen setTitle={setTitle} cart={cart} setCart={setCart} />} />
+            <Route path="/return-policy" element={<ReturnPolicy setTitle={setTitle} />} />
+            <Route path="/our-expertise" element={<OurExpertisePage setTitle={setTitle} />} />
+            <Route path="/contact-hair-experts" element={<BookAppointmentPage setTitle={setTitle} />} />
+            <Route path="/hair-loss-treatment-experts-dermatologists" element={<OurSpecialistsPage setTitle={setTitle} />} />
+            <Route path="/dr-amit-agarkar-hair-restoration-expert" element={<Dermatologist setTitle={setTitle} cart={cart} setCart={setCart} />} />
+            <Route path="/best-hair-care-products-hair-loss-scalp-health" element={<ProductPage setTitle={setTitle} cart={cart} setCart={setCart} />} />
+            <Route path="/policy" element={<Policy setTitle={setTitle} />} />
+            <Route path="/hair-transplants-fue-dhi-mhi-natural-restoration" element={<HairTransplant setTitle={setTitle} cart={cart} setCart={setCart} />} />
+            <Route path="/advanced-hair-loss-solutions-prp-smp-cloning-systems" element={<OtherProcedure setTitle={setTitle} cart={cart} setCart={setCart} />} />
+            <Route path="/online-hair-loss-test-diagnosis-treatment" element={<OnlineHairTest setTitle={setTitle} cart={cart} setCart={setCart} />} />
+
+            {/* Blogs */}
+            <Route path="/hair-care-blogs" element={<AllBlogs setTitle={setTitle} cart={cart} setCart={setCart} desc={desc} setDesc={setDesc} />} />
+            <Route path="/hair-care-blogs/:id1/:id" element={<Blog setTitle={setTitle} cart={cart} setCart={setCart} desc={desc} setDesc={setDesc} />} />
+            <Route path="/hair-care-blogs/:id1" element={<AllBlogs setTitle={setTitle} cart={cart} setCart={setCart} desc={desc} setDesc={setDesc} />} />
+
+            {/* Product Details */}
+            <Route path="/product-detail/:id" element={<ProductDetail setTitle={setTitle} setDesc={setDesc} cart={cart} setCart={setCart} />} />
+
+            {/* Checkout / User */}
+            <Route path="/user-profile" element={<MyReportsPages setTitle={setTitle} />} />
+            <Route path="/user-profile/:id" element={<UserProfilePage setTitle={setTitle} />} />
+            <Route path="/unauthorized" element={<Unauthorized setTitle={setTitle} />} />
+            <Route path="/doctor/report/:id" element={<Report setTitle={setTitle} />} />
+            <Route path="/doctor-analyse-report/:id" element={<DoctorAnalyseReport setTitle={setTitle} />} />
+            <Route path="/address" element={<Address setTitle={setTitle} />} />
+            <Route path="/management-report/:id" element={<ManagementReport setTitle={setTitle} />} />
+            <Route path="/my-orders" element={<MyOrders setTitle={setTitle} />} />
+            <Route path="/create-order" element={<CreateOrder setTitle={setTitle} />} />
+            <Route path="/cart" element={<Cart setTitle={setTitle} cart={cart} setCart={setCart} />} />
+            <Route path="/coupon" element={<Coupons setTitle={setTitle} cart={cart} setCart={setCart} />} />
+            <Route path="/invoiceView/:id" element={<InvoiceView />} />
+
+            {/* Locations */}
+            <Route path="/online-hair-loss-treatment-bangalore" element={<BangaloreHairTreatmentPage setTitle={setTitle} cart={cart} setCart={setCart} />} />
+            <Route path="/online-hair-loss-treatment-delhi" element={<DelhiHairTreatmentPage setTitle={setTitle} cart={cart} setCart={setCart} />} />
+
+            {/* Doctor routes */}
+            <Route element={<RoleBasedRoutes allowedRoles={["doctor"]} />}>
+              <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
+              <Route path="/patient-list" element={<PatientList />} />
+              <Route path="/appointment" element={<AppointmentList />} />
+              <Route path="/patient-test-result/:id" element={<PatientTestResult />} />
+              <Route path="/analysis/:id" element={<Analysis />} />
+            </Route>
+
+            {/* Admin routes */}
+            <Route element={<RoleBasedRoutes allowedRoles={["admin"]} />}>
+              <Route path="/admin-dashboard" element={<AdminDashboard />} />
+              <Route path="/pending-appointments" element={<PendingDashboard />} />
+              <Route path="/all-patient-list" element={<AllPatientList />} />
+              <Route path="/test-result/:id" element={<TestResults />} />
+              <Route path="/pending-test-result/:id" element={<PendingTestResults />} />
+              <Route path="/assign-appointment" element={<AssignAppointment />} />
+              <Route path="/add-doctor" element={<AddDoctor />} />
+              <Route path="/edit-doctor/:id" element={<EditDoctor />} />
+              <Route path="/all-doctor" element={<AllDoctorList />} />
+              <Route path="/all-hair-test-result" element={<AllHairTest />} />
+              <Route path="/manage-website" element={<ManageWebsite />} />
+              <Route path="/all-contact-us-form-result" element={<AllContactUs />} />
+              <Route path="/reviews" element={<AllReviews />} />
+              <Route path="/add-product" element={<AddProduct />} />
+              <Route path="/edit-delete-product" element={<EditDeleteProduct />} />
+              <Route path="/manage-order" element={<ManageOrder />} />
+              <Route path="/all-coupons" element={<AllCoupons />} />
+            </Route>
+
+            {/* 404 */}
+            <Route path="*" element={<ErrorPage />} />
+
+          </Routes>
+        </Router>
+        {/* {market && <MarketPop setMarket={setMarket} />} */}
+        <ToastContainer />
+      </div>
+    </HelmetProvider>
+  );
+}
+
+export default App;
+
+
+
+
+
+
+
+
 // const routes = [
 //   {
 //     path: "/",
@@ -196,529 +386,436 @@ import DelhiHairTreatmentPage from "./pages/DelhiHairTreatmentPage";
 //     desc: "Read our return & refund policy for hair treatment products. Hassle-free process to ensure customer satisfaction with every purchase",
 //   },
 // ];
+// {/* <Router>
+//           <Routes>
+//             <Route
+//               path="/"
+//               element={
+//                 <HomePage setTitle={setTitle} cart={cart} setCart={setCart} />
+//               }
+//             />
+//             <Route path="/status/:slug" element={<Status />} />
+//             <Route path="/payment-status/:slug" element={<PaymentStatus />} />
+//             <Route path="/success/:id" element={<Success />} />
+//             <Route path="/failure/:id" element={<Failure />} />
+//             <Route path="/login" element={<Login />} />
 
-let y =
-  "Discover customized hair loss treatments and accurate diagnosis with Hairsncares. Our expert services and advanced hair tests provide personalized solutions for effective hair restoration. Start your journey to fuller, healthier hair today!";
-let z = "HairsNcares";
+//             {/* These are changible orphan pages  */}
+//             <Route
+//               path="/take-hair-test"
+//               element={<HairTestPage setTitle={setTitle} />}
+//             />
+//             <Route
+//               path="/about-us-quality-hair-loss-scalp-care"
+//               element={<AboutUsPage setTitle={setTitle} />}
+//             />
+//             <Route
+//               path="/terms-of-service"
+//               element={<TermsOfService setTitle={setTitle} />}
+//             />
+//             <Route
+//               path="/disclaimer"
+//               element={<Disclaimer setTitle={setTitle} />}
+//             />
+//             <Route
+//               path="/hair-loss-women-causes-treatments-remedies"
+//               element={
+//                 <HairTreatmentWomen
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                 />
+//               }
+//             />
+//             <Route
+//               path="/return-policy"
+//               element={<ReturnPolicy setTitle={setTitle} />}
+//             />
+//             <Route
+//               path="/our-expertise"
+//               element={<OurExpertisePage setTitle={setTitle} />}
+//             />
+//             <Route
+//               path="/contact-hair-experts"
+//               element={<BookAppointmentPage setTitle={setTitle} />}
+//             />
+//             <Route
+//               path="/hair-loss-treatment-experts-dermatologists"
+//               element={<OurSpecialistsPage setTitle={setTitle} />}
+//             />
+//             <Route
+//               path="/dr-amit-agarkar-hair-restoration-expert"
+//               element={
+//                 <Dermatologist
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                 />
+//               }
+//             />
+//             <Route
+//               path="/best-hair-care-products-hair-loss-scalp-health"
+//               element={
+//                 <ProductPage
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                 />
+//               }
+//             />
+//             <Route path="/policy" element={<Policy setTitle={setTitle} />} />
+//             <Route
+//               path="/hair-transplants-fue-dhi-mhi-natural-restoration"
+//               element={
+//                 <HairTransplant
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                 />
+//               }
+//             />
+//             <Route
+//               path="/advanced-hair-loss-solutions-prp-smp-cloning-systems"
+//               element={
+//                 <OtherProcedure
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                 />
+//               }
+//             />
+//             <Route
+//               path="/online-hair-loss-test-diagnosis-treatment"
+//               element={
+//                 <OnlineHairTest
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                 />
+//               }
+//             />
+//             <Route
+//               path="/hair-care-blogs"
+//               element={
+//                 <AllBlogs
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                   desc={desc}
+//                   setDesc={setDesc}
+//                 />
+//               }
+//             />
+//             <Route
+//               path="/hair-care-blogs/:id1/:id"
+//               element={
+//                 <Blog
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                   desc={desc}
+//                   setDesc={setDesc}
+//                 />
+//               }
+//             />
+//             <Route
+//               path="/hair-care-blogs/:id1"
+//               element={
+//                 <AllBlogs
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                   desc={desc}
+//                   setDesc={setDesc}
+//                 />
+//               }
+//             />
+//             <Route path="/invoiceView/:id" element={<InvoiceView />} />
 
-function App() {
-  const [title, setTitle] = useState();
-  const [desc, setDesc] = useState();
-  const dispatch = useDispatch();
+//             <Route
+//               path="/disclaimer"
+//               element={<Disclaimer />}
+//               setTitle={setTitle}
+//             />
+//             <Route
+//               path="/terms-of-service"
+//               element={<TermsOfService />}
+//               setTitle={setTitle}
+//             />
+//             <Route
+//               path="/return-policy"
+//               element={<ReturnPolicy />}
+//               setTitle={setTitle}
+//             />
+//             <Route path="/policy" element={<Policy />} setTitle={setTitle} />
 
-  useEffect(() => {
-    dispatch(getUtilityContentData());
-  }, []);
+//             <Route
+//               path="/best-hair-care-products-hair-loss-scalp-health"
+//               element={
+//                 <ProductPage
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                 />
+//               }
+//             />
+//             <Route
+//               path="/contact-hair-experts"
+//               element={<BookAppointmentPage setTitle={setTitle} />}
+//             />
+//             <Route
+//               path="/about-us-quality-hair-loss-scalp-care"
+//               element={<AboutUsPage setTitle={setTitle} />}
+//             />
+//             <Route
+//               path="/product-detail/:id"
+//               element={
+//                 <ProductDetail
+//                   setTitle={setTitle}
+//                   setDesc={setDesc}
+//                   cart={cart}
+//                   setCart={setCart}
+//                 />
+//               }
+//             />
+//             <Route
+//               path="/hair-loss-treatment-experts-dermatologists"
+//               element={<OurSpecialistsPage setTitle={setTitle} />}
+//             />
+//             <Route
+//               path="/our-expertise"
+//               element={<OurExpertisePage setTitle={setTitle} />}
+//             />
+//             <Route
+//               path="/user-profile"
+//               element={<MyReportsPages setTitle={setTitle} />}
+//             />
+//             <Route
+//               path="/user-profile/:id"
+//               element={<UserProfilePage setTitle={setTitle} />}
+//             />
+//             <Route
+//               path="/unauthorized"
+//               element={<Unauthorized setTitle={setTitle} />}
+//             />
+//             <Route
+//               path="/take-hair-test"
+//               element={<HairTestPage setTitle={setTitle} />}
+//             />
 
-  useEffect(() => {
-    const currentRoute = routes.find((route) =>
-      route.exact
-        ? route.path === window.location.pathname
-        : window.location.pathname.startsWith(route.path)
-    );
+//             <Route
+//               path="/doctor/report/:id"
+//               element={<Report setTitle={setTitle} />}
+//             />
+//             <Route
+//               path="/doctor-analyse-report/:id"
+//               element={<DoctorAnalyseReport setTitle={setTitle} />}
+//             />
+//             <Route path="/address" element={<Address setTitle={setTitle} />} />
+//             <Route
+//               path="management-report/:id"
+//               element={<ManagementReport setTitle={setTitle} />}
+//             />
+//             <Route
+//               path="my-orders"
+//               element={<MyOrders setTitle={setTitle} />}
+//             />
+//             <Route
+//               path="create-order"
+//               element={<CreateOrder setTitle={setTitle} />}
+//             />
+//             <Route
+//               path="cart"
+//               element={
+//                 <Cart setTitle={setTitle} cart={cart} setCart={setCart} />
+//               }
+//             />
+//             <Route
+//               path="coupon"
+//               element={
+//                 <Coupons setTitle={setTitle} cart={cart} setCart={setCart} />
+//               }
+//             />
 
-    document.title = currentRoute?.title || title || "hairsncares";
+//             <Route
+//               path="hair-loss-women-causes-treatments-remedies"
+//               element={
+//                 <HairTreatmentWomen
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                 />
+//               }
+//             />
+//             <Route
+//               path="effective-hair-loss-treatment-men"
+//               element={
+//                 <HairTreatmentMen
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                 />
+//               }
+//             />
+//             <Route
+//               path="hair-transplants-fue-dhi-mhi-natural-restoration"
+//               element={
+//                 <HairTransplant
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                 />
+//               }
+//             />
+//             <Route
+//               path="advanced-hair-loss-solutions-prp-smp-cloning-systems"
+//               element={
+//                 <OtherProcedure
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                 />
+//               }
+//             />
 
-    const metaDescription = document.querySelector("meta[name='description']");
-    if (metaDescription) {
-      metaDescription.setAttribute("content", currentRoute?.desc || desc || y);
-    } else {
-      const meta = document.createElement("meta");
-      meta.name = "description";
-      meta.content = currentRoute?.desc || desc || y;
-      document.head.appendChild(meta);
-    }
+//             <Route
+//               path="online-hair-loss-test-diagnosis-treatment"
+//               element={
+//                 <OnlineHairTest
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                 />
+//               }
+//             />
+//             <Route
+//               path="dr-amit-agarkar-hair-restoration-expert"
+//               element={
+//                 <Dermatologist
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                 />
+//               }
+//             />
+//             <Route
+//               path="online-hair-loss-treatment-bangalore"
+//               element={
+//                 <BangaloreHairTreatmentPage
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                 />
+//               }
+//             />
+//             <Route
+//               path="online-hair-loss-treatment-delhi"
+//               element={
+//                 <DelhiHairTreatmentPage
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                 />
+//               }
+//             />
+//             <Route
+//               path="/hair-care-blogs"
+//               element={
+//                 <BangaloreHairTreatmentPage
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                 />
+//               }
+//             />
+//             <Route
+//               path="/hair-care-blogs"
+//               element={
+//                 <AllBlogs
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                   desc={desc}
+//                   setDesc={setDesc}
+//                 />
+//               }
+//             />
+//             <Route
+//               exact
+//               path="/hair-care-blogs/:id1/:id"
+//               element={
+//                 <Blog
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                   desc={desc}
+//                   setDesc={setDesc}
+//                 />
+//               }
+//             />
+//             <Route
+//               exact
+//               path="/hair-care-blogs/:id1"
+//               element={
+//                 <AllBlogs
+//                   setTitle={setTitle}
+//                   cart={cart}
+//                   setCart={setCart}
+//                   desc={desc}
+//                   setDesc={setDesc}
+//                 />
+//               }
+//             />
 
-    const metaKeywords = document.querySelector("meta[name='keywords']");
-    if (metaKeywords) {
-      metaKeywords.setAttribute("content", currentRoute?.keywords || z);
-    } else {
-      const meta = document.createElement("meta");
-      meta.name = "keywords";
-      meta.content = currentRoute?.keywords || z;
-      document.head.appendChild(meta);
-    }
+//             <Route path="/invoiceView/:id" element={<InvoiceView />} />
 
-    const updateMetaTag = (property, content) => {
-      let meta = document.querySelector(`meta[property="${property}"]`);
-      if (meta) {
-        meta.setAttribute("content", content);
-      } else {
-        meta = document.createElement("meta");
-        meta.setAttribute("property", property);
-        meta.setAttribute("content", content);
-        document.head.appendChild(meta);
-      }
-    };
+//             <Route element={<RoleBasedRoutes allowedRoles={["doctor"]} />}>
+//               <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
+//               <Route path="/patient-list" element={<PatientList />} />
+//               <Route path="/appointment" element={<AppointmentList />} />
+//               <Route
+//                 path="/patient-test-result/:id"
+//                 element={<PatientTestResult />}
+//               />
+//               <Route path="/analysis/:id" element={<Analysis />} />
+//             </Route>
 
-    const updateTwitterTag = (name, content) => {
-      let meta = document.querySelector(`meta[name="${name}"]`);
-      if (meta) {
-        meta.setAttribute("content", content);
-      } else {
-        meta = document.createElement("meta");
-        meta.setAttribute("name", name);
-        meta.setAttribute("content", content);
-        document.head.appendChild(meta);
-      }
-    };
+//             <Route element={<RoleBasedRoutes allowedRoles={["admin"]} />}>
+//               <Route path="/admin-dashboard" element={<AdminDashboard />} />
+//               <Route
+//                 path="/pending-appointments"
+//                 element={<PendingDashboard />}
+//               />
+//               <Route path="/all-patient-list" element={<AllPatientList />} />
+//               <Route path="/test-result/:id" element={<TestResults />} />
+//               <Route
+//                 path="/pending-test-result/:id"
+//                 element={<PendingTestResults />}
+//               />
 
-    updateMetaTag("og:title", currentRoute?.title || title || "HairsnCares");
-    updateMetaTag("og:description", currentRoute?.desc || desc || y);
-    updateMetaTag("og:url", window.location.href);
+//               <Route
+//                 path="/assign-appointment"
+//                 element={<AssignAppointment />}
+//               />
+//               <Route path="/add-doctor" element={<AddDoctor />} />
+//               <Route path="/edit-doctor/:id" element={<EditDoctor />} />
+//               <Route path="/all-doctor" element={<AllDoctorList />} />
+//               <Route path="/all-hair-test-result" element={<AllHairTest />} />
+//               <Route path="/manage-website" element={<ManageWebsite />} />
+//               <Route
+//                 path="/all-contact-us-form-result"
+//                 element={<AllContactUs />}
+//               />
+//               <Route path="/reviews" element={<AllReviews />} />
 
-    updateTwitterTag(
-      "twitter:title",
-      currentRoute?.title || title || "HairsnCares"
-    );
-    updateTwitterTag("twitter:description", currentRoute?.desc || desc || y);
-  }, [title, desc]);
-
-  const [cart, setCart] = useState(
-    JSON.parse(localStorage.getItem("cart")) || []
-  );
-
-  return (
-    <HelmetProvider>
-      <div style={{ overflowX: "hidden" }} className="root-mobile">
-        <Router>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <HomePage setTitle={setTitle} cart={cart} setCart={setCart} />
-              }
-            />
-            <Route path="/status/:slug" element={<Status />} />
-            <Route path="/payment-status/:slug" element={<PaymentStatus />} />
-            <Route path="/success/:id" element={<Success />} />
-            <Route path="/failure/:id" element={<Failure />} />
-            <Route path="/login" element={<Login />} />
-
-            {/* These are changible orphan pages  */}
-            <Route
-              path="/take-hair-test"
-              element={<HairTestPage setTitle={setTitle} />}
-            />
-            <Route
-              path="/about-us-quality-hair-loss-scalp-care"
-              element={<AboutUsPage setTitle={setTitle} />}
-            />
-            <Route
-              path="/terms-of-service"
-              element={<TermsOfService setTitle={setTitle} />}
-            />
-            <Route
-              path="/disclaimer"
-              element={<Disclaimer setTitle={setTitle} />}
-            />
-            <Route
-              path="/hair-loss-women-causes-treatments-remedies"
-              element={
-                <HairTreatmentWomen
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                />
-              }
-            />
-            <Route
-              path="/return-policy"
-              element={<ReturnPolicy setTitle={setTitle} />}
-            />
-            <Route
-              path="/our-expertise"
-              element={<OurExpertisePage setTitle={setTitle} />}
-            />
-            <Route
-              path="/contact-hair-experts"
-              element={<BookAppointmentPage setTitle={setTitle} />}
-            />
-            <Route
-              path="/hair-loss-treatment-experts-dermatologists"
-              element={<OurSpecialistsPage setTitle={setTitle} />}
-            />
-            <Route
-              path="/dr-amit-agarkar-hair-restoration-expert"
-              element={
-                <Dermatologist
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                />
-              }
-            />
-            <Route
-              path="/best-hair-care-products-hair-loss-scalp-health"
-              element={
-                <ProductPage
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                />
-              }
-            />
-            <Route path="/policy" element={<Policy setTitle={setTitle} />} />
-            <Route
-              path="/hair-transplants-fue-dhi-mhi-natural-restoration"
-              element={
-                <HairTransplant
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                />
-              }
-            />
-            <Route
-              path="/advanced-hair-loss-solutions-prp-smp-cloning-systems"
-              element={
-                <OtherProcedure
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                />
-              }
-            />
-            <Route
-              path="/online-hair-loss-test-diagnosis-treatment"
-              element={
-                <OnlineHairTest
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                />
-              }
-            />
-            <Route
-              path="/hair-care-blogs"
-              element={
-                <AllBlogs
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                  desc={desc}
-                  setDesc={setDesc}
-                />
-              }
-            />
-            <Route
-              path="/hair-care-blogs/:id1/:id"
-              element={
-                <Blog
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                  desc={desc}
-                  setDesc={setDesc}
-                />
-              }
-            />
-            <Route
-              path="/hair-care-blogs/:id1"
-              element={
-                <AllBlogs
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                  desc={desc}
-                  setDesc={setDesc}
-                />
-              }
-            />
-            <Route path="/invoiceView/:id" element={<InvoiceView />} />
-
-            <Route
-              path="/disclaimer"
-              element={<Disclaimer />}
-              setTitle={setTitle}
-            />
-            <Route
-              path="/terms-of-service"
-              element={<TermsOfService />}
-              setTitle={setTitle}
-            />
-            <Route
-              path="/return-policy"
-              element={<ReturnPolicy />}
-              setTitle={setTitle}
-            />
-            <Route path="/policy" element={<Policy />} setTitle={setTitle} />
-
-            <Route
-              path="/best-hair-care-products-hair-loss-scalp-health"
-              element={
-                <ProductPage
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                />
-              }
-            />
-            <Route
-              path="/contact-hair-experts"
-              element={<BookAppointmentPage setTitle={setTitle} />}
-            />
-            <Route
-              path="/about-us-quality-hair-loss-scalp-care"
-              element={<AboutUsPage setTitle={setTitle} />}
-            />
-            <Route
-              path="/product-detail/:id"
-              element={
-                <ProductDetail
-                  setTitle={setTitle}
-                  setDesc={setDesc}
-                  cart={cart}
-                  setCart={setCart}
-                />
-              }
-            />
-            <Route
-              path="/hair-loss-treatment-experts-dermatologists"
-              element={<OurSpecialistsPage setTitle={setTitle} />}
-            />
-            <Route
-              path="/our-expertise"
-              element={<OurExpertisePage setTitle={setTitle} />}
-            />
-            <Route
-              path="/user-profile"
-              element={<MyReportsPages setTitle={setTitle} />}
-            />
-            <Route
-              path="/user-profile/:id"
-              element={<UserProfilePage setTitle={setTitle} />}
-            />
-            <Route
-              path="/unauthorized"
-              element={<Unauthorized setTitle={setTitle} />}
-            />
-            <Route
-              path="/take-hair-test"
-              element={<HairTestPage setTitle={setTitle} />}
-            />
-
-            <Route
-              path="/doctor/report/:id"
-              element={<Report setTitle={setTitle} />}
-            />
-            <Route
-              path="/doctor-analyse-report/:id"
-              element={<DoctorAnalyseReport setTitle={setTitle} />}
-            />
-            <Route path="/address" element={<Address setTitle={setTitle} />} />
-            <Route
-              path="management-report/:id"
-              element={<ManagementReport setTitle={setTitle} />}
-            />
-            <Route
-              path="my-orders"
-              element={<MyOrders setTitle={setTitle} />}
-            />
-            <Route
-              path="create-order"
-              element={<CreateOrder setTitle={setTitle} />}
-            />
-            <Route
-              path="cart"
-              element={
-                <Cart setTitle={setTitle} cart={cart} setCart={setCart} />
-              }
-            />
-            <Route
-              path="coupon"
-              element={
-                <Coupons setTitle={setTitle} cart={cart} setCart={setCart} />
-              }
-            />
-
-            <Route
-              path="hair-loss-women-causes-treatments-remedies"
-              element={
-                <HairTreatmentWomen
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                />
-              }
-            />
-            <Route
-              path="effective-hair-loss-treatment-men"
-              element={
-                <HairTreatmentMen
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                />
-              }
-            />
-            <Route
-              path="hair-transplants-fue-dhi-mhi-natural-restoration"
-              element={
-                <HairTransplant
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                />
-              }
-            />
-            <Route
-              path="advanced-hair-loss-solutions-prp-smp-cloning-systems"
-              element={
-                <OtherProcedure
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                />
-              }
-            />
-
-            <Route
-              path="online-hair-loss-test-diagnosis-treatment"
-              element={
-                <OnlineHairTest
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                />
-              }
-            />
-            <Route
-              path="dr-amit-agarkar-hair-restoration-expert"
-              element={
-                <Dermatologist
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                />
-              }
-            />
-            <Route
-              path="online-hair-loss-treatment-bangalore"
-              element={
-                <BangaloreHairTreatmentPage
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                />
-              }
-            />
-            <Route
-              path="online-hair-loss-treatment-delhi"
-              element={
-                <DelhiHairTreatmentPage
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                />
-              }
-            />
-            <Route
-              path="/hair-care-blogs"
-              element={
-                <BangaloreHairTreatmentPage
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                />
-              }
-            />
-            <Route
-              path="/hair-care-blogs"
-              element={
-                <AllBlogs
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                  desc={desc}
-                  setDesc={setDesc}
-                />
-              }
-            />
-            <Route
-              exact
-              path="/hair-care-blogs/:id1/:id"
-              element={
-                <Blog
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                  desc={desc}
-                  setDesc={setDesc}
-                />
-              }
-            />
-            <Route
-              exact
-              path="/hair-care-blogs/:id1"
-              element={
-                <AllBlogs
-                  setTitle={setTitle}
-                  cart={cart}
-                  setCart={setCart}
-                  desc={desc}
-                  setDesc={setDesc}
-                />
-              }
-            />
-
-            <Route path="/invoiceView/:id" element={<InvoiceView />} />
-
-            <Route element={<RoleBasedRoutes allowedRoles={["doctor"]} />}>
-              <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
-              <Route path="/patient-list" element={<PatientList />} />
-              <Route path="/appointment" element={<AppointmentList />} />
-              <Route
-                path="/patient-test-result/:id"
-                element={<PatientTestResult />}
-              />
-              <Route path="/analysis/:id" element={<Analysis />} />
-            </Route>
-
-            <Route element={<RoleBasedRoutes allowedRoles={["admin"]} />}>
-              <Route path="/admin-dashboard" element={<AdminDashboard />} />
-              <Route
-                path="/pending-appointments"
-                element={<PendingDashboard />}
-              />
-              <Route path="/all-patient-list" element={<AllPatientList />} />
-              <Route path="/test-result/:id" element={<TestResults />} />
-              <Route
-                path="/pending-test-result/:id"
-                element={<PendingTestResults />}
-              />
-
-              <Route
-                path="/assign-appointment"
-                element={<AssignAppointment />}
-              />
-              <Route path="/add-doctor" element={<AddDoctor />} />
-              <Route path="/edit-doctor/:id" element={<EditDoctor />} />
-              <Route path="/all-doctor" element={<AllDoctorList />} />
-              <Route path="/all-hair-test-result" element={<AllHairTest />} />
-              <Route path="/manage-website" element={<ManageWebsite />} />
-              <Route
-                path="/all-contact-us-form-result"
-                element={<AllContactUs />}
-              />
-              <Route path="/reviews" element={<AllReviews />} />
-
-              <Route path="/add-product" element={<AddProduct />} />
-              <Route
-                path="/edit-delete-product"
-                element={<EditDeleteProduct />}
-              />
-              <Route path="/manage-order" element={<ManageOrder />} />
-              <Route path="/all-coupons" element={<AllCoupons />} />
-            </Route>
-            <Route path="*" element={<ErrorPage />} />
-          </Routes>
-        </Router>
-        {/* {market && <MarketPop setMarket={setMarket} />} */}
-        <ToastContainer />
-      </div>
-    </HelmetProvider>
-  );
-}
-
-export default App;
+//               <Route path="/add-product" element={<AddProduct />} />
+//               <Route
+//                 path="/edit-delete-product"
+//                 element={<EditDeleteProduct />}
+//               />
+//               <Route path="/manage-order" element={<ManageOrder />} />
+//               <Route path="/all-coupons" element={<AllCoupons />} />
+//             </Route>
+//             <Route path="*" element={<ErrorPage />} />
+//           </Routes>
+//         </Router> */}

@@ -104,15 +104,28 @@ function App() {
 
     document.title = currentRoute?.title || title || "hairsncares";
 
+    // const metaDescription = document.querySelector("meta[name='description']");
+    // if (metaDescription) {
+    //   metaDescription.setAttribute("content", currentRoute?.desc || desc || y);
+    // } else {
+    //   const meta = document.createElement("meta");
+    //   meta.name = "description";
+    //   meta.content = currentRoute?.desc || desc || y;
+    //   document.head.appendChild(meta);
+    // }
+
     const metaDescription = document.querySelector("meta[name='description']");
+    const descriptionContent = desc || currentRoute?.desc || y;
+
     if (metaDescription) {
-      metaDescription.setAttribute("content", currentRoute?.desc || desc || y);
+      metaDescription.setAttribute("content", descriptionContent);
     } else {
       const meta = document.createElement("meta");
       meta.name = "description";
-      meta.content = currentRoute?.desc || desc || y;
+      meta.content = descriptionContent;
       document.head.appendChild(meta);
     }
+
 
     const metaKeywords = document.querySelector("meta[name='keywords']");
     if (metaKeywords) {

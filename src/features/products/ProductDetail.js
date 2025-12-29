@@ -124,7 +124,7 @@ function ProductDetail(props) {
     comment: "",
   });
 
-  console.log("product", query);
+  // console.log("product", query);
 
   const [loader, setLoader] = useState(false); // New state for discount
   const [openReview, setOpenReview] = useState(false);

@@ -1919,8 +1919,11 @@ export default function HairAndScalp({male,scrollToTop,data,testId, selectedOpti
                 question.ques === 'Course of Hair Loss?' ||
                 question.ques === 'Describe the rate at which your hair loss has occurred?';
 
+              
+
               const isSpecialOption =
-                (typeof option === 'string' && (option === 'Not Sure' || option === 'None' || option === 'Other')) ||
+                // (typeof option === 'string' && (option === 'Not Sure' || option === 'None' || option === 'Other')) ||
+                (typeof option === 'string' && (option === 'None' || option === 'Other')) ||
                 (typeof option !== 'string' && (option?.name === 'Not Sure' || option?.name === 'None' || option?.name === 'Other'));
 
               const baseShapeClass = isTriangleQuestion
@@ -1970,7 +1973,7 @@ export default function HairAndScalp({male,scrollToTop,data,testId, selectedOpti
                             </div>
                           )
                         )}
-                        {/* <div>{option.name}</div> */}
+                        <div>{option.name}</div>
                       </label>
                     )}
                   </div>

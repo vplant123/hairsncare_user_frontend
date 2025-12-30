@@ -102,7 +102,7 @@ function App() {
         : window.location.pathname.startsWith(route.path)
     );
 
-    document.title = currentRoute?.title || title || "hairsncares";
+    document.title = title || currentRoute?.title || "hairsncares";
 
     // const metaDescription = document.querySelector("meta[name='description']");
     // if (metaDescription) {

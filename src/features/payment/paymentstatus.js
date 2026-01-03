@@ -65,16 +65,23 @@ function PaymentStatus() {
       }
 
       const data = await response.json();
-      
+
+      // Handle specific error codes even when HTTP status is 200
+      const upperCode = String(data?.code || "").toUpperCase();
+      if (upperCode === "ORDER_NOT_FOUND") {
+        throw new Error("Order not found. Please check your order ID.");
+      }
+
       // Check if the response has the expected structure
-      if (!data || typeof data.status === 'undefined') {
+      if (!data || typeof data.status === "undefined") {
         throw new Error("Invalid response from payment server");
       }
-      
-      const paymentState = data.status;
+
+      const paymentState = String(data.status).toLowerCase();
       setStatus(paymentState);
 
-      if (data.success && paymentState === "completed") {
+      // Treat both "completed" and "success" as successful payment states
+      if (data.success && (paymentState === "completed" || paymentState === "success")) {
         const planId = localStorage.getItem("CheckoutPlanId");
         const storedUserData = JSON.parse(localStorage.getItem("User343"));
         const token = storedUserData?.logedInUser?.accessToken;
@@ -97,7 +104,9 @@ function PaymentStatus() {
           }
         );
 
-        const updateData = await updateResponse.json();
+        // const updateData = await updateResponse.json();
+        const updateData =
+          updateResponse.status === 204 ? null : await updateResponse.json();
 
         if (!updateResponse.ok || updateData?.statusCode !== 200) {
           throw new Error(

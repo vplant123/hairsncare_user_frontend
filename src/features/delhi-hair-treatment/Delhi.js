@@ -1,12 +1,57 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import "./Delhi.css";
 import { useNavigate } from "react-router-dom";
-import SEOLinkHub from '../../components/SEOLinkHub';
+import SEOLinkHub from "../../components/SEOLinkHub";
 
-export default function Delhi({ city = "Delhi" }) {
+export default function Delhi() {
   const navigate = useNavigate();
-  const featuresRef = useRef(null);
   const [openFaq, setOpenFaq] = useState(null);
+
+  const MarqueeCards = ({ items, duration = "26s" }) => {
+    return (
+      <div className="delhi-cards-marquee" aria-label="Scrolling highlights">
+        <div
+          className="delhi-cards-track"
+          style={{ "--marquee-duration": duration }}
+        >
+          {items.map((item, index) => (
+            <div key={`a-${index}`} className="delhi-card">
+              {item?.imageSrc ? (
+                <img
+                  className="delhi-card-img"
+                  src={item.imageSrc}
+                  alt={item.text}
+                  loading="lazy"
+                  onError={(e) => {
+                    e.target.style.display = "none";
+                  }}
+                />
+              ) : null}
+              <span className="delhi-card-text">{item.text}</span>
+            </div>
+          ))}
+          <div className="delhi-cards-dup" aria-hidden="true">
+            {items.map((item, index) => (
+              <div key={`b-${index}`} className="delhi-card">
+                {item?.imageSrc ? (
+                  <img
+                    className="delhi-card-img"
+                    src={item.imageSrc}
+                    alt={item.text}
+                    loading="lazy"
+                    onError={(e) => {
+                      e.target.style.display = "none";
+                    }}
+                  />
+                ) : null}
+                <span className="delhi-card-text">{item.text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -20,169 +65,41 @@ export default function Delhi({ city = "Delhi" }) {
     navigate("/take-hair-test");
   };
 
-  const treatmentFeatures = [
-    {
-      title: "Personalized Hair Loss Diagnosis",
-      description: "There are no two hair loss issues identical. The treatment starts by providing a thorough analysis of hair loss to identify the root cause, whether it's due to stress, genetics, hormone imbalance, pollution, or lifestyle.",
-      image: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729423548/hair-assessment/gctpdtkibo3nen5zcnhm.png",
-      details: [
-        "Stress-related hair loss analysis",
-        "Genetic factors evaluation",
-        "Hormone imbalance assessment",
-        "Pollution impact study",
-        "Lifestyle factors review",
-        "Complete root cause identification"
-      ]
-    },
-    {
-      title: "Tried & Tested Allopathy Medicines",
-      description: "Our main USP is easy and effective allopathic medicine that has been scientifically tested and proven to be effective. Effective and quick hair loss solutions recommended by doctors' procedures. We're focused on outcomes, not experiments.",
-      image: "/Doctor-Approved Allopathy Treatments.png",
-      details: [
-        "Scientifically tested solutions",
-        "Doctor-recommended procedures",
-        "Proven effectiveness",
-        "Quick and noticeable outcomes",
-        "Results-focused approach",
-        "No experimental treatments"
-      ]
-    },
-    {
-      title: "Customized Hair Care Solutions",
-      description: "Based on the results of your examination, we design custom hair care products which help hair growth as well as strengthen roots and enhance the condition of your scalp.",
-      image: "/Tailored Plans for Bangalore Conditions.png",
-      details: [
-        "Custom hair care products",
-        "Hair growth promotion",
-        "Root strengthening",
-        "Scalp condition enhancement",
-        "Personalized treatment plans",
-        "Diagnosis-based solutions"
-      ]
-    },
-    {
-      title: "Long-Term Solutions For Managing Hair Loss",
-      description: "We do not only prevent hair loss, but we also provide the needed help to manage your scalp over the long term through continued support from our trained staff and ongoing treatment optimisation.",
-      image: "https://res.cloudinary.com/drkpwvnun/image/upload/v1729423530/hair-assessment/zl161vfmpve9bnjc3eqs.png",
-      details: [
-        "Hair loss prevention",
-        "Long-term scalp management",
-        "Continued support from trained staff",
-        "Ongoing treatment optimisation",
-        "Sustained results maintenance",
-        "Professional guidance throughout"
-      ]
-    }
-  ];
-
-  const services = [
-    {
-      title: "Hair loss treatment",
-      description: "Specialised Treatment For Reducing Hair Loss, Increasing The Density (Amount of Hair) On Your Scalp.",
-      features: [
-        "Specialised hair loss reduction",
-        "Scalp density improvement",
-        "Targeted hair fall control",
-        "Visible density increase"
-      ]
-    },
-    {
-      title: "Hair Growth Solutions",
-      description: "Innovative hair growth treatments which stimulate hair follicles to stimulate healthy, denser hair growth.",
-      features: [
-        "Hair follicle stimulation",
-        "Healthy hair growth promotion",
-        "Denser hair development",
-        "Innovative treatment methods"
-      ]
-    },
-    {
-      title: "Hair Loss Diagnosis",
-      description: "An in-depth analysis of hair and scalp to pinpoint the reason for hair loss and develop the best treatment.",
-      features: [
-        "In-depth hair analysis",
-        "Scalp condition evaluation",
-        "Root cause identification",
-        "Best treatment development"
-      ]
-    },
-    {
-      title: "Hair Loss Management",
-      description: "There are regular care schedules to maintain the results and prevent future hair losses.",
-      features: [
-        "Regular care schedules",
-        "Results maintenance",
-        "Future hair loss prevention",
-        "Ongoing monitoring support"
-      ]
-    },
-    {
-      title: "Personalized Hair Care Solutions",
-      description: "Custom-designed routines according to your hair type, scalp condition, environment exposure, and lifestyle in Delhi.",
-      features: [
-        "Hair type-specific routines",
-        "Scalp condition adaptation",
-        "Environment exposure consideration",
-        "Delhi lifestyle customization"
-      ]
-    }
-  ];
-
-  const hairConditions = [
-    "Loss of hair that is too severe",
-    "Hair that is thin",
-    "Pattern hair loss",
-    "Stress-related hair loss",
-    "Hair loss problems due to pollution",
-    "Slow or reduced growth of hair",
-    "Beginning stages of hair loss",
-    "Long-term loss of hair"
-  ];
-
   const faqs = [
     {
-      question: `Do you have a clinic in ${city}?`,
-      answer: `No. We provide only online treatment for ${city} residents.`
+      question: "Q. Do you have a physical clinic in Delhi?",
+      answer:
+        "No. We provide online consultations and home-delivered treatments across Delhi.",
     },
     {
-      question: "Do I need to visit anywhere?",
-      answer: "No. Everything is online."
+      question: "Q. Are the medicines safe?",
+      answer:
+        "Yes. We use try-and-tested allopathy medicines prescribed by professionals.",
     },
     {
-      question: "Are the medicines safe?",
-      answer: "Yes. We use clinically tested allopathy medicines."
+      question: "Q. How soon can I see results?",
+      answer:
+        "Results vary by stage, but many patients notice reduced hair fall within weeks.",
     },
     {
-      question: "When will I see results?",
-      answer: "Most users see improvement in 4–6 weeks."
+      question: "Q. Is this suitable for both men and women?",
+      answer:
+        "Yes, our hair loss treatments are customised for both men and women.",
     },
-    {
-      question: "Will you deliver medicines?",
-      answer: `Yes. We deliver to all locations in ${city}.`
-    }
   ];
 
   return (
     <>
       <div className="delhi-treatment">
         <div className="delhi-container">
-          {/* Hero Section */}
+          {/* Hero / Intro Section */}
           <div className="delhi-hero">
             <div className="hero-content">
               <h1 className="hero-title">
-                Online Hair Loss Treatment in {city}
+                Best Hair Loss Treatment in Delhi - Personalized Hair Care Solutions
               </h1>
-              <h2 className="hero-subtitle">
-                Personalized Hair Care Solutions
-              </h2>
               <p className="hero-description">
-                <strong>Effective & Personalized Hair Loss Treatment in {city}</strong>
-              </p>
-              <p className="hero-description">
-                Delhi's lifestyle brings its own hair challenges – pollution, stress, hard water, irregular routines, and weather changes can seriously impact hair health. We at Hairs n Cares provide customised hair loss treatment in {city} with the help of the most effective and scientifically tested allopathy solutions that deliver faster, noticeable outcomes.
-              </p>
-              <p className="hero-description">
-                If you're in search of the most effective hair loss treatment in {city} that is guided by experts and specifically tailored for your lifestyle and scalp You're in the right spot.
+                Are you searching for the most effective treatments for hair loss in Delhi without having to visit an actual clinic? Hairsncares offers scientifically backed, customized hair care products delivered right to your residence. Our process combines professional hair loss diagnostics, tried-and-tested allopathy treatments, and ongoing online medical support to assist you in achieving rapid and noticeable outcomes in hair growth.
               </p>
               <div className="hero-cta">
                 <button
@@ -196,218 +113,196 @@ export default function Delhi({ city = "Delhi" }) {
             <div className="hero-image">
               <img
                 src="/Online hair solution.png"
-                alt={`Online Hair Loss Treatment in ${city} - Professional Dermatologist Consultation`}
+                alt="Online Hair Loss Treatment - Professional Dermatologist Consultation"
                 className="hero-img"
                 onError={(e) => {
-                  e.target.style.display = 'none';
+                  e.target.style.display = "none";
                 }}
               />
             </div>
           </div>
 
-          {/* Why Choose Us Section */}
-          <div className="delhi-why-choose-section">
+          {/* Online Consultation Section */}
+          <section className="delhi-section delhi-why-choose-section">
             <h2 className="delhi-section-title">
-              Why Choose Hairs n Cares for Hair Loss Treatment in Delhi?
-            </h2>
-
-            {/* Slider wrapper with nav buttons */}
-            <div className="delhi-features-wrapper">
-              <button
-                className="features-nav features-prev"
-                onClick={() => {
-                  const el = featuresRef.current;
-                  if (!el) return;
-                  const amount = el.clientWidth;
-                  el.scrollBy({ left: -amount, behavior: "smooth" });
-                }}
-                aria-label="Previous"
-              >
-                ‹
-              </button>
-
-              <div className="delhi-features-grid" ref={featuresRef}>
-                {treatmentFeatures.map((feature, index) => (
-                  <div key={index} className="delhi-feature-card">
-                    <div className="delhi-feature-image">
-                      <img
-                        src={feature.image}
-                        alt={feature.title}
-                        loading="lazy"
-                      />
-                    </div>
-                    <div className="delhi-feature-number">{index + 1}</div>
-                    <h3 className="delhi-feature-title">{feature.title}</h3>
-                    <p className="delhi-feature-description">{feature.description}</p>
-                    <ul className="delhi-feature-list">
-                      {feature.details.map((detail, idx) => (
-                        <li key={idx}>{detail}</li>
-                      ))}
-                    </ul>
-                    {feature.title === "Personalized Hair Loss Diagnosis" && (
-                      <p className="delhi-feature-note">
-                        No two hair loss issues are identical. We identify your specific root cause.
-                      </p>
-                    )}
-                    {feature.title === "Tried & Tested Allopathy Medicines" && (
-                      <p className="delhi-feature-note">
-                        Scientifically tested, proven effective, and focused on outcomes.
-                      </p>
-                    )}
-                    {feature.title === "Customized Hair Care Solutions" && (
-                      <p className="delhi-feature-note">
-                        Custom products designed based on your specific diagnosis results.
-                      </p>
-                    )}
-                    {feature.title === "Long-Term Solutions For Managing Hair Loss" && (
-                      <p className="delhi-feature-note">
-                        Continued support and ongoing treatment optimisation for sustained results.
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              <button
-                className="features-nav features-next"
-                onClick={() => {
-                  const el = featuresRef.current;
-                  if (!el) return;
-                  const amount = el.clientWidth;
-                  el.scrollBy({ left: amount, behavior: "smooth" });
-                }}
-                aria-label="Next"
-              >
-                ›
-              </button>
-            </div>
-
-            <div className="delhi-section-cta">
-              <button
-                className="delhi-cta-button"
-                onClick={handleTakeHairTest}
-              >
-                Take a Hair Test
-              </button>
-            </div>
-          </div>
-
-          {/* Services Section */}
-          <div className="delhi-services-section">
-            <h2 className="delhi-section-title">
-              Our Hair Loss Treatments in Delhi
-            </h2>
-
-            {/* Marquee-style continuous scroll: duplicate items for smooth loop */}
-            <div className="delhi-services-marquee" aria-hidden={false}>
-              <div className="delhi-marquee-track" style={{"--marquee-duration": "30s"}}>
-                {services.concat(services).map((service, index) => (
-                  <div key={index} className="delhi-service-card">
-                    <h3 className="delhi-service-title">{service.title}</h3>
-                    <p className="delhi-service-description">{service.description}</p>
-                    {service.features && (
-                      <ul className="delhi-service-features">
-                        {service.features.map((feature, idx) => (
-                          <li key={idx}>{feature}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="delhi-section-cta">
-              <button
-                className="delhi-cta-button"
-                onClick={handleTakeHairTest}
-              >
-                Take a Hair Test
-              </button>
-            </div>
-          </div>
-
-          {/* Who Can Use Section */}
-          <div className="delhi-who-can-use-section">
-            <h2 className="delhi-section-title">
-              Who Should Choose Our Hair Care Solutions?
+              Personalized Hair Loss Treatment in Delhi (Online Consultation)
             </h2>
             <p className="delhi-section-description">
-              Our solutions for hair loss in Delhi are the most effective for people who suffer from:
+              Hair loss could be a result of genetics, hormonal imbalance, stress nutrition deficiency, stress, or medical issues. At Hairsncares we do not believe in a one-size-fits-all solution. Our treatment for hair loss for Delhi patients is entirely customized and administered on the internet.
             </p>
-            <div className="delhi-conditions-grid">
-              {hairConditions.map((condition, index) => (
-                <div key={index} className="delhi-condition-item">
-                  <span className="delhi-condition-bullet">✓</span>
-                  <span className="delhi-condition-text">{condition}</span>
-                </div>
-              ))}
+            <MarqueeCards
+              items={[
+                { text: "Hair loss online treatment by experts", imageSrc: "/Online Consultation.png" },
+                { text: "The most effective allopathy-based medicine that has been tested for speedier results", imageSrc: "/Doctor-Approved Allopathy Treatments.png" },
+                { text: "Customized hair treatment plans", imageSrc: "/Personalised Treatment Plan.png" },
+                { text: "Home delivery throughout Delhi", imageSrc: "/RX.png" },
+                { text: "Continuous progress tracking and assistance", imageSrc: "/Regular Follow-Ups.png" },
+              ]}
+              duration="24s"
+            />
+            <p className="delhi-section-description">
+              You don't have to visit an office for diagnosis - all of the tests as well as treatment and follow-ups can be done on the internet.
+            </p>
+          </section>
+
+          {/* Diagnosis Process Section */}
+          <section className="delhi-section delhi-causes-section">
+            <h2 className="delhi-section-title">
+              Our Hair Loss Diagnosis Process (100% Online)
+            </h2>
+            <p className="delhi-section-description">
+              We start with a comprehensive hair loss diagnosis that includes:
+            </p>
+            <MarqueeCards
+              items={[
+                { text: "Consultation online with hair experts", imageSrc: "/Online Consultation.png" },
+                { text: "Scalp & hair analysis (photos + questionnaire)", imageSrc: "/scalp-examination.png" },
+                { text: "Lifestyle, medical history & diet evaluation", imageSrc: "/sample--overall-health.jpg" },
+                { text: "The identification of the stage of hair loss and the root of the cause", imageSrc: "/Hair-Quality.png" },
+              ]}
+              duration="22s"
+            />
+            <p className="delhi-section-description">
+              On this basis, we create customized solutions to reduce hair loss that are tailored to your specific needs.
+            </p>
+          </section>
+
+          {/* Hair Loss Stages Section */}
+          <section className="delhi-section delhi-success-section delhi-stages-section">
+            <h2 className="delhi-section-title">
+              Hair Loss Stages &amp; Personalized Treatment Solutions
+            </h2>
+            <p className="delhi-section-description">
+              The effectiveness of hair loss management depends on identifying the right stage. Below is a clear breakdown of hair loss stages and treatments we provide for Delhi patients.
+            </p>
+
+            <div className="delhi-stages-table-wrapper">
+              <table className="delhi-stages-table">
+                <thead>
+                  <tr>
+                    <th>Hair Loss Stage</th>
+                    <th>Common Problems</th>
+                    <th>Personalized Hair Treatment Solution</th>
+                    <th>Expected Results Timeline</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Stage 1: Early Hair Fall</td>
+                    <td>Mild hair fall, thinning, weak roots</td>
+                    <td>Preventive hair loss treatment, nutrition correction, medicated shampoos, oral supplements</td>
+                    <td>Hair fall reduction in 4–6 weeks, visible strengthening in 2–3 months</td>
+                  </tr>
+                  <tr>
+                    <td>Stage 2: Noticeable Thinning</td>
+                    <td>Increased hair fall, reduced density</td>
+                    <td>Targeted allopathy medicines, scalp treatment, hair growth solutions, lifestyle guidance</td>
+                    <td>Hair fall control in 6–8 weeks, density improvement in 3–4 months</td>
+                  </tr>
+                  <tr>
+                    <td>Stage 3: Visible Scalp Areas</td>
+                    <td>Receding hairline, widening part</td>
+                    <td>Stronger hair loss management plan, advanced hair treatment medicines, growth stimulants</td>
+                    <td>New hair growth signs in 3–4 months, visible coverage in 5–6 months</td>
+                  </tr>
+                  <tr>
+                    <td>Stage 4: Advanced Hair Loss</td>
+                    <td>Bald patches, significant density loss</td>
+                    <td>Intensive personalized hair care solutions, long-term treatment plan, regrowth-focused medicines</td>
+                    <td>Slowed hair loss in 2–3 months, partial regrowth in 6–9 months</td>
+                  </tr>
+                  <tr>
+                    <td>Stage 5: Severe Hair Loss</td>
+                    <td>Large bald areas</td>
+                    <td>Hair loss control, regrowth support where possible, expert guidance on future options</td>
+                    <td>Hair preservation in 3 months, improvement depends on individual condition</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+
             <p className="delhi-section-note">
-              If you're in the beginning stages or suffering from a long-term loss of hair We offer the most effective treatment for hair loss that is specifically designed to meet your needs.
+              Early diagnosis gives the fastest and best results.
             </p>
-          </div>
+          </section>
 
-          {/* Why It Works Section */}
-          <div className="delhi-why-works-section">
+          {/* Why Choose Section */}
+          <section className="delhi-section delhi-why-works-section">
             <h2 className="delhi-section-title">
-              Best Hair Loss Treatment in {city} - Designed for the City Lifestyle
+              Why choose Hairsncares as a Hair Loss Therapy in Delhi 
             </h2>
+            <MarqueeCards
+              items={[
+                { text: "Best Hair Loss Treatment utilizing tested allopathy remedies", imageSrc: "/Doctor-Approved Allopathy Treatments.png" },
+                { text: "Solutions that are 100% customized (no product that is generic)", imageSrc: "/Personalised Treatment Plan.png" },
+                { text: "Online diagnosis & doctor consultation", imageSrc: "/Online Consultation.png" },
+                { text: "Rapid results using tried-and-tested treatment strategies", imageSrc: "/Hair-Density.png" },
+                { text: "Home delivery throughout Delhi", imageSrc: "/RX.png" },
+                { text: "For both genders.", imageSrc: "/Hair-Breakage.png" },
+              ]}
+              duration="26s"
+            />
             <p className="delhi-section-description">
-              Delhi's pollution, the high quality of water, and an extremely fast-paced lifestyle require a fresh approach to treating hair. The treatments we offer have been designed keeping the local context in mind. They help to make them more effective and ecologically sustainable.
+              Our treatments are specifically designed to stop the loss of hair, enhance the health of your scalp and encourage hair growth in a way that is effective.
             </p>
-            <p className="delhi-section-description">
-              <strong>With Hairs n Cares You get:</strong>
-            </p>
-            <div className="delhi-benefits-grid">
-              <div className="delhi-benefit-item">Accurate hair loss diagnosis</div>
-              <div className="delhi-benefit-item">Hair treatment using allopathy, which has a quick-acting</div>
-              <div className="delhi-benefit-item">Solutions specifically designed to meet your needs and not merely general advice</div>
-              <div className="delhi-benefit-item">Professional hair loss management</div>
-              <div className="delhi-benefit-item">The improvement is obvious and lasts for a long period of time</div>
+            <div className="delhi-section-cta">
+              <button className="delhi-cta-button" onClick={handleTakeHairTest}>
+                Take a Hair Test
+              </button>
             </div>
-          </div>
+          </section>
 
-          {/* FAQ Section */}
-          <div className="delhi-faq-section">
-            <h2 className="delhi-section-title">FAQs</h2>
-            <div className="delhi-faq-container">
-              {faqs.map((faq, index) => {
-                const isOpen = openFaq === index;
-                return (
-                  <div key={index} className={`delhi-faq-item ${isOpen ? 'open' : ''}`}>
-                    <h3
-                      className="delhi-faq-question"
-                      role="button"
-                      tabIndex={0}
-                      aria-expanded={isOpen}
-                      onClick={() => setOpenFaq(isOpen ? null : index)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') setOpenFaq(isOpen ? null : index);
-                      }}
-                    >
-                      {index + 1}. {faq.question}
-                    </h3>
-                    <p className={`delhi-faq-answer ${isOpen ? 'open' : ''}`}>
-                      {faq.answer}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          {/* Hair Growth Solutions Section */}
+          <section className="delhi-section delhi-services-section">
+            <h2 className="delhi-section-title">Hair Growth Solutions That Work</h2>
+            <p className="delhi-section-description">
+              Hair growth products that we offer concentrate on:
+            </p>
+            <MarqueeCards
+              items={[
+                { text: "The hair follicles are strengthened", imageSrc: "/Hair-Quality.png" },
+                { text: "Improved circulation of the scalp", imageSrc: "/moisture-&-hydration-of-hair.png" },
+                { text: "Reduce excessive hair loss", imageSrc: "/Hair-Breakage.png" },
+                { text: "Inspiring natural hair growth", imageSrc: "/Hair-Density.png" },
+              ]}
+              duration="18s"
+            />
+            <p className="delhi-section-description">
+              Every plan is re-designed according to progress, which results in more long-term success.
+            </p>
+          </section>
+
+          {/* Who Benefits Section */}
+          <section className="delhi-section delhi-who-can-use-section">
+            <h2 className="delhi-section-title">
+              Who is the most likely to benefit from our Hair Care Solutions?
+            </h2>
+            <MarqueeCards
+              items={[
+                { text: "Women and men who are facing hair fall-related problems", imageSrc: "/Hair-Quality.png" },
+                { text: "Hair loss cases that start early", imageSrc: "/Hair-Density.png" },
+                { text: "Hair loss due to hormonal or genetic causes", imageSrc: "/Overall-Health-Checkbox1.jpg" },
+                { text: "Hair problems caused by stress or lifestyle", imageSrc: "/sample--overall-health.jpg" },
+                { text: "Anyone who is looking for customized solutions for hair loss in Delhi without having to visit a clinic", imageSrc: "/Online hair solution.png" },
+              ]}
+              duration="26s"
+            />
+          </section>
 
           {/* Final CTA Section */}
-          <div className="delhi-final-cta-section">
+          <section className="delhi-section delhi-final-cta-section">
             <h2 className="delhi-section-title">
-              Take the First Step Toward Healthier Hair
+              Start Your Personalized Hair Loss Treatment Today
             </h2>
             <p className="delhi-final-cta-description">
-              Don't let hair loss affect your confidence. Select Hairs n Cares for personalised, professional and quick-result haircare options in Delhi.
+              Do not wait for the loss of hair to increase. The earlier you begin the better the outcomes.
             </p>
             <h3 className="delhi-final-cta-subtitle">
-              Get Your Personalised Hair Loss Treatment Plan Today
+              Book Your Free Online Hair Consultation Now
             </h3>
+            <p className="delhi-final-cta-description">
+              Expert diagnosis, customized hair treatment, and efficient solutions for hair growth - delivered right to your doorstep in Delhi.
+            </p>
             <div className="delhi-final-cta-button">
               <button
                 className="delhi-cta-button large"
@@ -416,7 +311,60 @@ export default function Delhi({ city = "Delhi" }) {
                 Take a Hair Test
               </button>
             </div>
-          </div>
+          </section>
+
+          {/* FAQ Section */}
+          <section className="delhi-faq-section">
+            <h2 className="delhi-section-title">Frequently Asked Questions (FAQs)</h2>
+            <div className="delhi-faq-container">
+              {faqs.map((faq, index) => {
+                const isOpen = openFaq === index;
+                return (
+                  <div
+                    key={index}
+                    className={`delhi-faq-item ${isOpen ? "open" : ""}`}
+                  >
+                    <h3
+                      className="delhi-faq-question"
+                      role="button"
+                      tabIndex={0}
+                      aria-expanded={isOpen}
+                      onClick={() => setOpenFaq(isOpen ? null : index)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          setOpenFaq(isOpen ? null : index);
+                        }
+                      }}
+                    >
+                      {faq.question}
+                    </h3>
+                    <p className={`delhi-faq-answer ${isOpen ? "open" : ""}`}>
+                      {faq.answer}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* Brand Statement */}
+          <section className="delhi-section delhi-brand-section">
+            <h3 className="delhi-brand-title">
+              Hairsncares – Trusted Personalized Hair Care Solutions for Delhi
+            </h3>
+          </section>
+
+          {/* Final Bottom CTA */}
+          <section className="delhi-section delhi-bottom-cta-section">
+            <div className="delhi-final-cta-button">
+              <button
+                className="delhi-cta-button large"
+                onClick={handleTakeHairTest}
+              >
+                Take a Hair Test
+              </button>
+            </div>
+          </section>
 
           {/* SEO Links */}
           <SEOLinkHub
@@ -427,13 +375,15 @@ export default function Delhi({ city = "Delhi" }) {
                 to: "/online-hair-loss-test-diagnosis-treatment",
                 text: "Online Hair Loss Diagnosis",
                 icon: "💻",
-                description: "Get expert hair loss diagnosis online with personalized treatment",
+                description:
+                  "Get expert hair loss diagnosis online with personalized treatment",
               },
               {
                 to: "/contact-hair-experts",
                 text: "Contact Hair Experts",
                 icon: "👨‍⚕️",
-                description: "Connect with our hair care specialists for consultation",
+                description:
+                  "Connect with our hair care specialists for consultation",
               },
             ]}
           />

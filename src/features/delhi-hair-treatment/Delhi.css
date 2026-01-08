@@ -188,6 +188,250 @@
   margin-top: 2rem;
 }
 
+/* Generic content section wrapper for new Delhi page layout */
+.delhi-section {
+  margin-bottom: 3rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 3rem 2rem;
+  border-radius: 24px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 15px 45px rgba(8, 186, 237, 0.1);
+}
+
+/* Bullet lists used in textual sections */
+.delhi-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem auto 0 auto;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem 1.25rem;
+}
+
+.delhi-list li {
+  position: relative;
+  padding: 1rem 1.5rem 1rem 2.25rem;
+  font-size: 1rem;
+  color: #1f2933;
+  line-height: 1.6;
+  font-weight: 500;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  border-left: 4px solid #08baed;
+}
+
+.delhi-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #08baed;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* Hair loss stages table styling */
+.delhi-stages-section {
+  overflow: hidden;
+}
+
+.delhi-stages-table-wrapper {
+  margin-top: 1.5rem;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+}
+
+.delhi-stages-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+}
+
+.delhi-stages-table thead {
+  background: linear-gradient(135deg, #08baed, #0ea5d9);
+  color: #ffffff;
+}
+
+.delhi-stages-table th,
+.delhi-stages-table td {
+  padding: 1rem 1.25rem;
+  text-align: left;
+  font-size: 0.98rem;
+  vertical-align: top;
+}
+
+.delhi-stages-table th {
+  font-weight: 700;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.delhi-stages-table tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+.delhi-stages-table tbody tr:nth-child(odd) {
+  background: #ffffff;
+}
+
+.delhi-stages-table tbody tr:hover {
+  background: #e0f7ff;
+}
+
+.delhi-stages-table td {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+@media screen and (max-width: 768px) {
+  .delhi-section {
+    padding: 2rem 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .delhi-list {
+    max-width: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  .delhi-stages-table-wrapper {
+    border-radius: 14px;
+    overflow-x: auto;
+  }
+
+  .delhi-stages-table {
+    min-width: 640px;
+  }
+}
+
+/* Marquee-style cards used by new content blocks */
+.delhi-cards-marquee {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 0.75rem 0;
+  margin-top: 1.25rem;
+}
+
+.delhi-cards-track {
+  display: flex;
+  align-items: stretch;
+  gap: 1rem;
+  animation: delhiCardsMarquee linear infinite;
+  animation-duration: var(--marquee-duration, 24s);
+  will-change: transform;
+}
+
+.delhi-cards-dup {
+  display: flex;
+  gap: 1rem;
+}
+
+@keyframes delhiCardsMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.delhi-card {
+  flex: 0 0 auto;
+  min-width: 280px;
+  max-width: 320px;
+  padding: 1.5rem 1.5rem;
+  min-height: 260px;
+  background: #ffffff;
+  border-radius: 14px;
+  border-left: 4px solid #08baed;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  font-size: 1rem;
+  color: #1f2933;
+  font-weight: 600;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.9rem;
+}
+
+.delhi-card-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 16px;
+  object-fit: cover;
+  flex: 0 0 auto;
+  box-shadow: 0 6px 18px rgba(8, 186, 237, 0.18);
+  background: rgba(8, 186, 237, 0.08);
+}
+
+.delhi-card-text {
+  display: block;
+  margin-top: 0.15rem;
+}
+
+/* Pause on hover/focus for readability */
+.delhi-cards-marquee:hover .delhi-cards-track,
+.delhi-cards-marquee:focus-within .delhi-cards-track {
+  animation-play-state: paused;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .delhi-cards-track { animation: none; }
+  .delhi-cards-marquee { overflow-x: auto; }
+}
+
+@media screen and (max-width: 768px) {
+  .delhi-cards-track { animation: none; }
+  .delhi-cards-marquee { overflow-x: auto; }
+  .delhi-card { min-width: 240px; min-height: 240px; padding: 1.25rem 1.4rem; }
+
+  .delhi-card-img {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+  }
+
+  /* Hide duplicate track on small screens to avoid repeated items */
+  .delhi-cards-dup { display: none; }
+}
+
+/* Reduce pinkish shade and keep table clean/neutral */
+.delhi-stages-section .delhi-stages-table-wrapper {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.delhi-stages-section .delhi-stages-table thead {
+  background: #ffffff;
+  color: #1e293b;
+}
+
+.delhi-stages-section .delhi-stages-table th {
+  border-bottom: 2px solid rgba(8, 186, 237, 0.25);
+}
+
+.delhi-stages-section .delhi-stages-table tbody tr:hover {
+  background: rgba(8, 186, 237, 0.08);
+}
+
+/* Brand strip & bottom CTA alignment */
+.delhi-brand-section {
+  text-align: center;
+}
+
+.delhi-brand-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.delhi-bottom-cta-section {
+  text-align: center;
+  padding-top: 0;
+}
+
 /* Why Choose Section */
 .delhi-why-choose-section {
   margin-bottom: 3rem;

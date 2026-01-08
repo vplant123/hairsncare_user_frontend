@@ -155,7 +155,7 @@ export default function Delhi() {
             </p>
             <MarqueeCards
               items={[
-                { text: "Consultation online with hair experts", imageSrc: "/Online Consultation.png" },
+                { text: "Consultation online with hair experts", imageSrc: "/Diagnosis.png" },
                 { text: "Scalp & hair analysis (photos + questionnaire)", imageSrc: "/scalp-examination.png" },
                 { text: "Lifestyle, medical history & diet evaluation", imageSrc: "/sample--overall-health.jpg" },
                 { text: "The identification of the stage of hair loss and the root of the cause", imageSrc: "/Hair-Quality.png" },
@@ -233,11 +233,11 @@ export default function Delhi() {
             </h2>
             <MarqueeCards
               items={[
-                { text: "Best Hair Loss Treatment utilizing tested allopathy remedies", imageSrc: "/Doctor-Approved Allopathy Treatments.png" },
-                { text: "Solutions that are 100% customized (no product that is generic)", imageSrc: "/Personalised Treatment Plan.png" },
-                { text: "Online diagnosis & doctor consultation", imageSrc: "/Online Consultation.png" },
+                { text: "Best Hair Loss Treatment utilizing tested allopathy remedies", imageSrc: "/medical-prescription-pharmaceutical-drug-pharmacy-symbol-clip-art-rx-logo-image-b7b1ba0f952be8c1872ae92a48af3874.png" },
+                { text: "Solutions that are 100% customized (no product that is generic)", imageSrc: "/Tailored Plans for Bangalore Conditions.png" },
+                { text: "Online diagnosis & doctor consultation", imageSrc: "/pngwing.com.png" },
                 { text: "Rapid results using tried-and-tested treatment strategies", imageSrc: "/Hair-Density.png" },
-                { text: "Home delivery throughout Delhi", imageSrc: "/RX.png" },
+                { text: "Home delivery throughout Delhi", imageSrc: "/Medicine Delivery'.png" },
                 { text: "For both genders.", imageSrc: "/Hair-Breakage.png" },
               ]}
               duration="26s"
@@ -260,10 +260,10 @@ export default function Delhi() {
             </p>
             <MarqueeCards
               items={[
-                { text: "The hair follicles are strengthened", imageSrc: "/Hair-Quality.png" },
+                { text: "The hair follicles are strengthened", imageSrc: "/color-vibrancy.png" },
                 { text: "Improved circulation of the scalp", imageSrc: "/moisture-&-hydration-of-hair.png" },
-                { text: "Reduce excessive hair loss", imageSrc: "/Hair-Breakage.png" },
-                { text: "Inspiring natural hair growth", imageSrc: "/Hair-Density.png" },
+                { text: "Reduce excessive hair loss", imageSrc: "/2.png" },
+                { text: "Inspiring natural hair growth", imageSrc: "/3.png" },
               ]}
               duration="18s"
             />
@@ -279,10 +279,10 @@ export default function Delhi() {
             </h2>
             <MarqueeCards
               items={[
-                { text: "Women and men who are facing hair fall-related problems", imageSrc: "/Hair-Quality.png" },
-                { text: "Hair loss cases that start early", imageSrc: "/Hair-Density.png" },
-                { text: "Hair loss due to hormonal or genetic causes", imageSrc: "/Overall-Health-Checkbox1.jpg" },
-                { text: "Hair problems caused by stress or lifestyle", imageSrc: "/sample--overall-health.jpg" },
+                { text: "Women and men who are facing hair fall-related problems", imageSrc: "/Overall-Health-Checkbox1.jpg" },
+                { text: "Hair loss cases that start early", imageSrc: "/IMG_20240418_201628.png" },
+                { text: "Hair loss due to hormonal or genetic causes", imageSrc: "/IMG_20240425_085350.jpg" },
+                { text: "Hair problems caused by stress or lifestyle", imageSrc: "/IMG_20240425_100125.png" },
                 { text: "Anyone who is looking for customized solutions for hair loss in Delhi without having to visit a clinic", imageSrc: "/Online hair solution.png" },
               ]}
               duration="26s"

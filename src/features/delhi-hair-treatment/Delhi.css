@@ -166,6 +166,17 @@
   font-size: 1.1rem;
   text-align: center;
   margin-bottom: 2rem;
+  color: #4a5568;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  font-weight: 500;
+}
+.delhi-section-description-Hair-Growth {
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 2rem;
   color: #ffffff;
   max-width: 800px;
   margin-left: auto;

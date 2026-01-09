@@ -255,7 +255,7 @@ export default function Delhi() {
           {/* Hair Growth Solutions Section */}
           <section className="delhi-section delhi-services-section">
             <h2 className="delhi-section-title">Hair Growth Solutions That Work</h2>
-            <p className="delhi-section-description">
+            <p className="delhi-section-description-Hair-Growth">
               Hair growth products that we offer concentrate on:
             </p>
             <MarqueeCards
@@ -267,7 +267,7 @@ export default function Delhi() {
               ]}
               duration="18s"
             />
-            <p className="delhi-section-description">
+            <p className="delhi-section-description-Hair-Growth">
               Every plan is re-designed according to progress, which results in more long-term success.
             </p>
           </section>

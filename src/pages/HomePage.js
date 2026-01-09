@@ -37,7 +37,8 @@ function HomePage(props) {
   let { cart, setCart } = props;
 
   useEffect(() => {
-    if (props?.setTitle) props?.setTitle(window.location.pathname);
+    // if (props?.setTitle) props?.setTitle(window.location.pathname);
+    if (props?.setTitle) props?.setTitle(document.title);
   }, []);
 
   const content = useSelector((state) => state.content.home);

@@ -101,7 +101,7 @@ function App() {
         ? route.path === window.location.pathname
         : window.location.pathname.startsWith(route.path)
     );
-
+    
     document.title = title || currentRoute?.title || "hairsncares";
 
     // const metaDescription = document.querySelector("meta[name='description']");

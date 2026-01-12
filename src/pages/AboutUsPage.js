@@ -8,6 +8,7 @@ import Breadcrumb from "../components/Breadcrumb";
 
 export default function AboutUsPage(props) {
   useEffect(() => {
+    console.log("props: ", props )
     if (props?.setTitle) props?.setTitle(window.location.pathname);
   }, []);
 

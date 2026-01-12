@@ -101,8 +101,8 @@ function App() {
         ? route.path === window.location.pathname
         : window.location.pathname.startsWith(route.path)
     );
-    
-    document.title = title || currentRoute?.title || "hairsncares";
+
+    document.title = currentRoute?.title || title || "hairsncares";
 
     // const metaDescription = document.querySelector("meta[name='description']");
     // if (metaDescription) {
@@ -203,6 +203,7 @@ function App() {
             <Route path="/dr-amit-agarkar-hair-restoration-expert" element={<Dermatologist setTitle={setTitle} cart={cart} setCart={setCart} />} />
             <Route path="/best-hair-care-products-hair-loss-scalp-health" element={<ProductPage setTitle={setTitle} cart={cart} setCart={setCart} />} />
             <Route path="/policy" element={<Policy setTitle={setTitle} />} />
+            <Route path="effective-hair-loss-treatment-men" element={<HairTreatmentMen setTitle={setTitle} cart={cart} setcart={setCart} />} />
             <Route path="/hair-transplants-fue-dhi-mhi-natural-restoration" element={<HairTransplant setTitle={setTitle} cart={cart} setCart={setCart} />} />
             <Route path="/advanced-hair-loss-solutions-prp-smp-cloning-systems" element={<OtherProcedure setTitle={setTitle} cart={cart} setCart={setCart} />} />
             <Route path="/online-hair-loss-test-diagnosis-treatment" element={<OnlineHairTest setTitle={setTitle} cart={cart} setCart={setCart} />} />

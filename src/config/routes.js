@@ -188,14 +188,14 @@ export const routes = [
   },
   {
     path: "/online-hair-loss-treatment-bangalore",
-    title: "Online Hair Loss Treatment in Bangalore | Personalized Hair Care Solutions",
-    desc: "Online hair loss treatment for Bangalore residents. Get personalized diagnosis, doctor-approved treatments, and medicines delivered to your home. No clinic visit needed.",
+    title: "Online Hair Loss Treatment Bangalore | Personalized Care",
+    desc: "Get online hair loss treatment in Bangalore with expert doctors, personalised plans and proven medicines to stop hair fall and regrow hair from home.",
     keywords: "hair loss treatment Bangalore, online hair treatment Bangalore, hair care Bangalore, hair fall treatment, dermatologist Bangalore, hair loss consultation online"
   },
   {
     path: "/online-hair-loss-treatment-delhi",
-    title: "Online Hair Loss Treatment in Delhi | Personalized Hair Care Solutions",
-    desc: "Online hair loss treatment for Delhi residents. Get personalized diagnosis, doctor-approved treatments, and medicines delivered to your home. No clinic visit needed.",
+    title: "Online Hair Loss Treatment Delhi | Expert Care Online",
+    desc: "Looking for online hair loss treatment in Delhi? Consult experienced doctors online and get personalized solutions for hair loss.",
     keywords: "hair loss treatment Delhi, online hair treatment Delhi, hair care Delhi, hair fall treatment, dermatologist Delhi, hair loss consultation online"
   },
 ];

@@ -80,6 +80,8 @@
   color: #475569;
   margin: 0 0 1rem 0;
   text-align: left;
+  width: 100%;
+  align-self: flex-start;
 }
 
 .delhi-hero .hero-description strong {
@@ -1576,6 +1578,7 @@
   }
 
   .delhi-hero .hero-content {
+    justify-content: left !important;
     text-align: left;
     order: 1;
   }

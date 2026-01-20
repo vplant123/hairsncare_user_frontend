@@ -105,7 +105,10 @@ export default function Delhi() {
                 <strong>Your Trusted Online Hair Loss Treatment for Delhi Residents</strong>
               </p>
               <p className="hero-description">
-                Are you searching for the most effective treatments for hair loss in Delhi without having to visit an actual clinic? Hairsncares offers scientifically backed, customized hair care products delivered right to your residence. Our process combines professional hair loss diagnostics, tried-and-tested allopathy treatments, and ongoing online medical support to assist you in achieving rapid and noticeable outcomes in hair growth.
+                Are you searching for the most effective treatments for hair loss in Delhi without having to visit an actual clinic? Hairsncares offers scientifically backed, customized hair care products delivered right to your residence.
+              </p>
+              <p className="hero-description">
+                Our process combines professional hair loss diagnostics, tried-and-tested allopathy treatments, and ongoing online medical support to assist you in achieving rapid and noticeable outcomes in hair growth.
               </p>
               <div className="hero-cta">
                 <button

@@ -177,6 +177,15 @@ const Footer = () => {
               DELHI TREATMENT
             </a>
           </h5>
+          <h5 className="com-con">
+            <a
+              href="/online-hair-loss-treatment-chennai"
+              onClick={scrollToTop}
+              style={{ color: "#000", textDecoration: "none", cursor: "pointer" }}
+            >
+              CHENNAI TREATMENT
+            </a>
+          </h5>
         </div>
 
         <div className="footer-item">

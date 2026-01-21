@@ -198,6 +198,12 @@ export const routes = [
     desc: "Looking for online hair loss treatment in Delhi? Consult experienced doctors online and get personalized solutions for hair loss.",
     keywords: "hair loss treatment Delhi, online hair treatment Delhi, hair care Delhi, hair fall treatment, dermatologist Delhi, hair loss consultation online"
   },
+  {
+    path: "/online-hair-loss-treatment-chennai",
+    title: "Online Hair Loss Treatment Chennai | Expert Care Online",
+    desc: "Looking for online hair loss treatment in Chennai? Consult experienced doctors online and get personalized solutions for hair loss.",
+    keywords: "hair loss treatment Chennai, online hair treatment Chennai, hair care Chennai, hair fall treatment, dermatologist Chennai, hair loss consultation online"
+  }
 ];
 
 // Function to get route data by path

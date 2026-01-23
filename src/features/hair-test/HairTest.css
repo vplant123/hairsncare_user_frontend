@@ -138,6 +138,7 @@
   .circle {
    
     height: 100px;
+    width: 100px;
     border-radius: 50%;
     background-color: #dcdcdc;
     display: flex;
@@ -147,6 +148,23 @@
     font-weight: bold;
     
   }
+
+  .rectangle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100px;           /* match circle height */
+    padding: 10px 20px;
+    background-color: #dcdcdc;   /* same as circle */
+    border-radius: 10px;          /* subtle rounded corners */
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.2;
+    max-width: 250px;             /* optional max width */
+    word-wrap: break-word;        /* wrap long text */
+  }
+
   
   .option img {
     max-width: 100px; /* Adjusted image width */

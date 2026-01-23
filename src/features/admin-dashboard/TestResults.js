@@ -242,22 +242,53 @@ console.log(data1[0],"api data")
                   <>
                   {typeof e == 'object' ?  <label>
                   <img loading="lazy"  src={e?.src} alt={e?.name} />
-                  <p>{e?.name}</p>
-                </label>  : <label>{e}</label>}
+                  {e?.name && !['none', 'normal'].includes(e.name.toLowerCase()) && (
+                    <p>{e.name}</p>
+                  )}
+                </label>  : <div className="option">
+                {e.length <= 10 ? (
+                  // Short text: perfect circle
+                  <div className="circle">
+                    {e}
+                  </div>
+                ) : (
+                  // Long text: rectangle
+                  <div className="rectangle">
+                    {e}
+                  </div>
+                )}
+              </div>}
                   </>
                  
                 )
               })       :            <label>
               <img loading="lazy"  src={question.option.src} alt={question.option.name} />
-              <p>{question.option.name}</p>
+              {question.option.name && !['none', 'normal'].includes(question.option.name.toLowerCase()) && (
+                    <p>{question.option.name}</p>
+                  )}
+              
             </label>
 
             ) : (
-              <div className={`option ${typeof question.option === 'string' ? 'circle' : ''}`}>
-                <div className="circle">
-                  {question.option}
-                </div>
+              // <div className={`option ${typeof question.option === 'string' ? 'circle' : ''}`}>
+              //   <div className="circle">
+              //     {question.option}
+              //   </div>
+              // </div>
+              <div className="option">
+                {question.option.length <= 10 ? (
+                  // Short text: perfect circle
+                  <div className="circle">
+                    {question.option}
+                  </div>
+                ) : (
+                  // Long text: rectangle
+                  <div className="rectangle">
+                    {question.option}
+                  </div>
+                )}
               </div>
+
             )}
           </div>
           {/* Render subquestions if available */}

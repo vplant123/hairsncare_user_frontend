@@ -107,7 +107,22 @@ const HeroSection = ({
                     TAKE A HAIR TEST
                   </h2>
                 </button>
-                <button className="btn">
+
+                <button
+                  onClick={() => navigate("/contact-hair-experts/#section3")}
+                  className="btn11 primary"
+                >
+                  <h2
+                    style={{
+                      marginTop: "5px",
+                      fontSize: "16px",
+                      fontWeight: "700",
+                    }}
+                  >
+                    BOOK AN APPOINTMENT
+                  </h2>
+                </button>
+                {/* <button className="btn">
                   <HashLink
                     smooth
                     to="/contact-hair-experts/#section3"
@@ -121,7 +136,7 @@ const HeroSection = ({
                     {" "}
                     BOOK AN APPOINTMENT{" "}
                   </HashLink>
-                </button>
+                </button> */}
               </motion.div>
             </motion.div>
             <motion.div

@@ -1,12 +1,44 @@
 /* Footer.css */
 .footer-container {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 2fr;
-    gap: 1.5rem;
-    padding-top: 2rem;
-    margin-top: 1rem;
-   /* Adjust gap as needed */
-  }
+  width: 100%;
+  background: #fff;
+}
+
+.footer-inner {
+  max-width: 1200px;   /* 👈 controls white space */
+  margin: 0 auto;      /* centers content */
+  padding: 2rem 1.5rem;
+
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 1.5rem;
+
+  overflow: visible;
+}
+
+
+.footer-dropdown {
+  width: 100%;
+  max-width: 200px;
+  font-size: 14px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  margin-top: 6px;
+  outline: none;
+  background-color: #fff;
+  box-sizing: border-box; /* VERY important */
+  position: relative;
+  z-index: 10;  
+}
+
+.footer-dropdown:focus {
+  border-color: #2563eb; /* blue focus */
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+
   
   .footer-item {
     /* Just for visualization */

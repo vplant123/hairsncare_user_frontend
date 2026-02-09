@@ -40,14 +40,15 @@ export default function HairAnalysis() {
         <p>{content?.section7?.desc}</p>
         <div className='hero-btn'>
           <button onClick={() => navigate('/take-hair-test')} className='btn primary'>TAKE A HAIR TEST</button>
-          <button onClick={() => {
+          <button onClick={() => navigate('/contact-hair-experts/#section3')} className='btn primary'>BOOK AN APPOINTMENT</button>
+          {/* <button onClick={() => {
 
           }} className='btn'>
             <HashLink smooth to='/contact-hair-experts/#section3' style={{
               textDecoration: "none",
               color: "black"
             }}> BOOK AN APPOINTMENT </HashLink>
-          </button>
+          </button> */}
         </div>
       </motion.div>
     </div>

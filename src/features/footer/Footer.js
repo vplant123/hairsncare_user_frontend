@@ -18,6 +18,7 @@ const Footer = () => {
   return (
     <div>
       <footer className="footer-container container">
+        <div className="footer-inner">
         <div className="footer-item">
           <img
             loading="lazy"
@@ -45,10 +46,12 @@ const Footer = () => {
         <div className="footer-item">
           <h3>SUPPORT</h3>
 
-          <h5 style={{ cursor: "pointer" }} className="com-con">
+          {/* <h5 style={{ cursor: "pointer" }} className="com-con"> */}
+          {/* <p>
             <a
               href="https://blogs.hairsncares.com/"
               target="_blank"
+              
               rel="noopener noreferrer"
               style={{
                 color: "#1b1b1bff",
@@ -58,9 +61,22 @@ const Footer = () => {
             >
               Blogs
             </a>
-          </h5>
+          </p> */}
+          {/* </h5> */}
+          
+          <p>
+            <a
+              href="https://blogs.hairsncares.com/"
+              target="_blank"
+              onClick={scrollToTop}
+              style={{ color: "#000", textDecoration: "none", cursor: "pointer" }} rel="noreferrer"
+            >
+              Blogs
+            </a>
+          </p>
 
-          <h5 className="com-con">
+          {/* <h5 className="com-con"> */}
+          <p>
             <a
               href="/disclaimer"
               onClick={scrollToTop}
@@ -68,9 +84,10 @@ const Footer = () => {
             >
               Disclaimer
             </a>
-          </h5>
+          </p>
+          {/* </h5> */}
 
-          <h5 className="com-con">
+          <p>
             <a
               href="/policy"
               onClick={scrollToTop}
@@ -78,9 +95,9 @@ const Footer = () => {
             >
               Privacy Policy
             </a>
-          </h5>
+          </p>
 
-          <h5 className="com-con">
+          <p>    
             <a
               href="/terms-of-service"
               onClick={scrollToTop}
@@ -88,9 +105,9 @@ const Footer = () => {
             >
               Terms of Service
             </a>
-          </h5>
+          </p>
 
-          <h5 className="com-con">
+          <p>  
             <a
               href="/return-policy"
               onClick={scrollToTop}
@@ -98,67 +115,95 @@ const Footer = () => {
             >
               Cancellation/Refund Policy
             </a>
-          </h5>
+          </p>
         </div>
 
         <div className="footer-item">
           <h3>COMPANY</h3>
 
-          <h5 className="com-con">
+          <p>
             <a
               href="/"
               style={{ color: "#000", textDecoration: "none", cursor: "pointer" }}
             >
               HOME
             </a>
-          </h5>
+          </p>
 
-          <h5 className="com-con">
+          <p>
             <a
               href="/about-us-quality-hair-loss-scalp-care"
               style={{ color: "#000", textDecoration: "none", cursor: "pointer" }}
             >
               ABOUT
             </a>
-          </h5>
+          </p>
 
-          <h5 className="com-con">
+          <p>
             <a
               href="/hair-loss-treatment-experts-dermatologists"
               style={{ color: "#000", textDecoration: "none", cursor: "pointer" }}
             >
               OUR SPECIALIST
             </a>
-          </h5>
+          </p>
 
-          <h5 className="com-con">
-            <a
+          <p>            <a
               href="/contact-hair-experts"
               style={{ color: "#000", textDecoration: "none", cursor: "pointer" }}
             >
               CONTACT US
             </a>
-          </h5>
+          </p>
 
-          <h5 className="com-con">
+          <p>
             <a
               href="/online-hair-loss-test-diagnosis-treatment"
               style={{ color: "#000", textDecoration: "none", cursor: "pointer" }}
             >
               HAIR LOSS TEST
             </a>
-          </h5>
+          </p>
 
-          <h5 className="com-con">
+          <p>
             <a
               href="/dr-amit-agarkar-hair-restoration-expert"
               style={{ color: "#000", textDecoration: "none", cursor: "pointer" }}
             >
               DERMATOLOGIST
             </a>
-          </h5>
+          </p>
+          
+        <div>
+        <p>Online Hair Test Across India
 
-          <h5 className="com-con">
+          <select
+            className="footer-dropdown"
+            defaultValue=""
+            onChange={(e) => {
+              if (e.target.value) {
+                scrollToTop();
+                window.location.href = e.target.value;
+              }
+            }}
+          >
+            <option value="" disabled>
+              Select a city
+            </option>
+            <option value="/online-hair-loss-treatment-bangalore">
+              Bangalore
+            </option>
+            <option value="/online-hair-loss-treatment-delhi">
+              Delhi
+            </option>
+            <option value="/online-hair-loss-treatment-chennai">
+              Chennai
+            </option>
+          </select>
+        </p>
+        </div>
+
+          {/* <h5 className="com-con">
             <a
               href="/online-hair-loss-treatment-bangalore"
               onClick={scrollToTop}
@@ -185,10 +230,11 @@ const Footer = () => {
             >
               CHENNAI TREATMENT
             </a>
-          </h5>
+          </h5> */}
+        </div>
         </div>
 
-        <div className="footer-item">
+        {/* <div className="footer-item">
           <h3>NEWSLETTER</h3>
           <p className="com-con">
             Subscribe to our weekly Newsletter and receive updates via email
@@ -218,7 +264,7 @@ const Footer = () => {
               </button>
             </div>
           </form>
-        </div>
+        </div> */}
       </footer>
 
       <div className="row">

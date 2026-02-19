@@ -199,6 +199,9 @@ const Footer = () => {
             <option value="/online-hair-loss-treatment-chennai">
               Chennai
             </option>
+            <option value="/online-hair-loss-treatment-hyderabad">
+              Hyderabad
+            </option>
           </select>
         </p>
         </div>

@@ -1,0 +1,2155 @@
+/* hyderabad Hair Treatment Page Styles */
+/* Based on About Us page styling pattern */
+
+.hyderabad-treatment {
+  background: linear-gradient(
+    135deg,
+    rgb(142, 208, 235) 33%,
+    rgb(249, 235, 206) 66%
+  );
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.hyderabad-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 2rem;
+
+}
+
+/* Hero Section */
+.hyderabad-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  margin: 1rem 0 3rem 0;
+  padding: 3rem 2rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+/* Reset hero content to normal flow */
+.hyderabad-hero .hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.hyderabad-hero .hero-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.hyderabad-hero .hero-img {
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(8, 186, 237, 0.15);
+  transition: transform 0.25s ease;
+}
+
+.hyderabad-hero .hero-img:hover { transform: translateY(-4px); }
+.hyderabad-hero .hero-img:hover { transform: none !important; }
+.hyderabad-feature-card:hover { transform: none !important; }
+.hyderabad-service-card:hover { transform: none !important; }
+
+.hyderabad-hero .hero-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  
+  /* line-height: 1.2; */
+  text-align: left;
+}
+
+.hyderabad-hero .hero-subtitle {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #08baed;
+  margin-left: -12rem;
+  text-align: left;
+}
+
+.hyderabad-hero .hero-description {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #475569;
+  margin: 0 0 1rem 0;
+  text-align: left;
+  width: 100%;
+  align-self: flex-start;
+}
+
+.hyderabad-hero .hero-description strong {
+  color: #1e293b;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 1.15rem;
+}
+
+.hyderabad-hero .hero-cta {
+  margin-top: 1.5rem;
+  margin-left: -26.3rem;
+  text-align: left;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* CTA Buttons */
+.hyderabad-cta-button {
+  background: #08baed;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.hyderabad-cta-button:hover {
+  background: #0ea5d9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(8, 186, 237, 0.4);
+}
+
+.hyderabad-cta-button.large {
+  padding: 16px 32px;
+  font-size: 1.1rem;
+}
+
+/* Section Titles */
+.hyderabad-section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #1e293b;
+  line-height: 1.15;
+  /* Layout the decorative lines and title on one row */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  position: relative;
+  white-space: nowrap; /* keep the heading in a single row on wide screens */
+}
+#successhyderabad{
+  color: black;
+}
+
+.hyderabad-services-section .hyderabad-section-title {
+  color: white;
+}
+
+.hyderabad-services-section .hyderabad-section-title::before,
+.hyderabad-services-section .hyderabad-section-title::after {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.hyderabad-section-title::before,
+.hyderabad-section-title::after {
+  content: "";
+  flex: 1 1 16%;
+  height: 2px;
+  background-color: #08baed;
+  min-width: 40px;
+  max-width: 220px;
+}
+
+.hyderabad-section-description {
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #4a5568;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  font-weight: 500;
+}
+.hyderabad-section-description-Hair-Growth {
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #ffffff;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.hyderabad-section-note {
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #718096;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.hyderabad-section-cta {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Generic content section wrapper for new hyderabad page layout */
+.hyderabad-section {
+  margin-bottom: 3rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 3rem 2rem;
+  border-radius: 24px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 15px 45px rgba(8, 186, 237, 0.1);
+}
+
+/* Bullet lists used in textual sections */
+.hyderabad-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem auto 0 auto;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem 1.25rem;
+}
+
+.hyderabad-list li {
+  position: relative;
+  padding: 1rem 1.5rem 1rem 2.25rem;
+  font-size: 1rem;
+  color: #1f2933;
+  line-height: 1.6;
+  font-weight: 500;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  border-left: 4px solid #08baed;
+}
+
+.hyderabad-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #08baed;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* Hair loss stages table styling */
+.hyderabad-stages-section {
+  overflow: hidden;
+}
+
+.hyderabad-stages-table-wrapper {
+  margin-top: 1.5rem;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+}
+
+.hyderabad-stages-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+}
+
+.hyderabad-stages-table thead {
+  background: linear-gradient(135deg, #08baed, #0ea5d9);
+  color: #ffffff;
+}
+
+.hyderabad-stages-table th,
+.hyderabad-stages-table td {
+  padding: 1rem 1.25rem;
+  text-align: left;
+  font-size: 0.98rem;
+  vertical-align: top;
+}
+
+.hyderabad-stages-table th {
+  font-weight: 700;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.hyderabad-stages-table tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+.hyderabad-stages-table tbody tr:nth-child(odd) {
+  background: #ffffff;
+}
+
+.hyderabad-stages-table tbody tr:hover {
+  background: #e0f7ff;
+}
+
+.hyderabad-stages-table td {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+@media screen and (max-width: 768px) {
+  .hyderabad-section {
+    padding: 2rem 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .hyderabad-list {
+    max-width: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  .hyderabad-stages-table-wrapper {
+    border-radius: 14px;
+    overflow-x: auto;
+  }
+
+  .hyderabad-stages-table {
+    min-width: 640px;
+  }
+}
+
+/* Marquee-style cards used by new content blocks */
+.hyderabad-cards-marquee {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 0.75rem 0;
+  margin-top: 1.25rem;
+}
+
+.hyderabad-cards-track {
+  display: flex;
+  align-items: stretch;
+  gap: 1rem;
+  animation: hyderabadCardsMarquee linear infinite;
+  animation-duration: var(--marquee-duration, 24s);
+  will-change: transform;
+}
+
+.hyderabad-cards-dup {
+  display: flex;
+  gap: 1rem;
+}
+
+@keyframes hyderabadCardsMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.hyderabad-card {
+  flex: 0 0 auto;
+  min-width: 280px;
+  max-width: 320px;
+  padding: 1.5rem 1.5rem;
+  min-height: 260px;
+  background: #ffffff;
+  border-radius: 14px;
+  border-left: 4px solid #08baed;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  font-size: 1rem;
+  color: #1f2933;
+  font-weight: 600;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.9rem;
+}
+
+.hyderabad-card-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 16px;
+  object-fit: cover;
+  flex: 0 0 auto;
+  box-shadow: 0 6px 18px rgba(8, 186, 237, 0.18);
+  background: rgba(8, 186, 237, 0.08);
+}
+
+.hyderabad-card-text {
+  display: block;
+  margin-top: 0.15rem;
+}
+
+/* Pause on hover/focus for readability */
+.hyderabad-cards-marquee:hover .hyderabad-cards-track,
+.hyderabad-cards-marquee:focus-within .hyderabad-cards-track {
+  animation-play-state: paused;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hyderabad-cards-track { animation: none; }
+  .hyderabad-cards-marquee { overflow-x: auto; }
+}
+
+@media screen and (max-width: 768px) {
+  .hyderabad-cards-track { animation: none; }
+  .hyderabad-cards-marquee { overflow-x: auto; }
+  .hyderabad-card { min-width: 240px; min-height: 240px; padding: 1.25rem 1.4rem; }
+
+  .hyderabad-card-img {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+  }
+
+  /* Hide duplicate track on small screens to avoid repeated items */
+  .hyderabad-cards-dup { display: none; }
+}
+
+/* Reduce pinkish shade and keep table clean/neutral */
+.hyderabad-stages-section .hyderabad-stages-table-wrapper {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.hyderabad-stages-section .hyderabad-stages-table thead {
+  background: #ffffff;
+  color: #1e293b;
+}
+
+.hyderabad-stages-section .hyderabad-stages-table th {
+  border-bottom: 2px solid rgba(8, 186, 237, 0.25);
+}
+
+.hyderabad-stages-section .hyderabad-stages-table tbody tr:hover {
+  background: rgba(8, 186, 237, 0.08);
+}
+
+/* Brand strip & bottom CTA alignment */
+.hyderabad-brand-section {
+  text-align: center;
+}
+
+.hyderabad-brand-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.hyderabad-bottom-cta-section {
+  text-align: center;
+  padding-top: 0;
+}
+
+/* Why Choose Section */
+.hyderabad-why-choose-section {
+  margin-bottom: 3rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 3rem 2rem;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 15px 50px rgba(8, 186, 237, 0.1);
+}
+
+/* Slider: features wrapper and horizontally scrollable grid */
+.hyderabad-features-wrapper {
+  position: relative;
+  max-width: 1160px;
+  margin: 0 auto 1.5rem auto;
+}
+
+.features-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #08baed;
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 6px 18px rgba(8,186,237,0.2);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.features-prev { left: -22px; }
+.features-next { right: -22px; }
+
+.hyderabad-features-grid {
+  --features-gap: 1rem;
+  display: flex;
+  gap: var(--features-gap);
+  overflow-x: auto;
+  padding: 0.75rem 0.25rem;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  align-items: stretch; /* ensure children stretch to same height */
+}
+
+/* hide native scrollbar while keeping scroll functionality */
+.hyderabad-features-grid::-webkit-scrollbar { height: 10px; }
+.hyderabad-features-grid::-webkit-scrollbar-track { background: transparent; }
+.hyderabad-features-grid::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 8px; }
+
+/* Hide scrollbar across browsers while keeping scroll functionality */
+.hyderabad-features-grid { -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.hyderabad-features-grid::-webkit-scrollbar { display: none; height: 0; }
+
+.hyderabad-feature-card {
+  background: rgba(255, 255, 255, 0.98);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 22px rgba(8, 186, 237, 0.07);
+  border-left: 3px solid #08baed;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  min-height: 480px;
+  flex: 0 0 calc(33.333% - var(--features-gap));
+  max-width: calc(33.333% - var(--features-gap));
+  scroll-snap-align: start;
+  overflow: hidden;
+}
+
+.hyderabad-feature-image {
+  width: 100%;
+  height: 140px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background: rgba(8, 186, 237, 0.05); */
+}
+
+.hyderabad-feature-image img {
+  width: 100%;
+  height: 100%;
+  /* object-fit: cover; */
+  object-position: center;
+  border-radius: 8px;
+}
+
+.hyderabad-feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(8, 186, 237, 0.2);
+}
+
+.hyderabad-feature-number {
+  position: absolute;
+  top: -12px;
+  right: 20px;
+  background: #08baed;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(8, 186, 237, 0.25);
+}
+
+.hyderabad-feature-title {
+  font-size: 1.1rem; /* slightly reduced */
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.6rem;
+  line-height: 1.25;
+}
+
+.hyderabad-feature-description {
+  font-size: 0.95rem;
+  color: #4a5568;
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.hyderabad-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.hyderabad-feature-list li {
+  padding: 0.5rem 0;
+  color: #2d3748;
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* allow the list area to scroll inside the card if content is long */
+.hyderabad-feature-list {
+  overflow: auto;
+}
+
+/* hide inner scrollbar for feature lists while keeping scroll */
+.hyderabad-feature-list { -ms-overflow-style: none; scrollbar-width: none; }
+.hyderabad-feature-list::-webkit-scrollbar { display: none; height: 0; }
+
+.hyderabad-feature-list li:before {
+  content: "✓";
+  color: #08baed;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+}
+
+.hyderabad-feature-note {
+  font-size: 0.88rem;
+  color: #08baed;
+  font-weight: 600;
+  font-style: italic;
+  margin-top: auto; /* push note to bottom of the card */
+  padding: 0.5rem 0.6rem;
+  background: rgba(8, 186, 237, 0.08);
+  border-radius: 6px;
+  border-left: 3px solid #08baed;
+  align-self: stretch; /* make note full-width inside card */
+  box-sizing: border-box;
+  margin-bottom: 4px; /* smaller vertical gap between multiple notes */
+}
+
+.hyderabad-feature-note:last-child { margin-bottom: 0; }
+
+/* tighten spacing between consecutive notes */
+.hyderabad-feature-note + .hyderabad-feature-note {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  padding-top: 0.45rem;
+  padding-bottom: 0.45rem;
+}
+
+/* Services Section */
+.hyderabad-services-section {
+  margin-bottom: 3rem;
+  padding: 4rem 2rem;
+  background-image: url('https://res.cloudinary.com/drkpwvnun/image/upload/v1729420244/hair-assessment/ivsqcr1epbgymuxowzwn.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+  position: relative;
+}
+
+.hyderabad-services-grid {
+  /* show services as a single horizontal row */
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  padding: 0.75rem 0.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Marquee styles for Services: continuous right->left scroll */
+.hyderabad-services-marquee {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+.hyderabad-marquee-track {
+  display: flex;
+  gap: 1rem;
+  align-items: stretch;
+  /* duplicated content means track is 200% of the visible set; animate translateX -50% */
+  animation: marquee linear infinite;
+  animation-duration: var(--marquee-duration, 30s);
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* make the service-cards inside marquee the same visual as before */
+.hyderabad-services-marquee .hyderabad-service-card {
+  flex: 0 0 300px;
+  min-width: 260px;
+  height: 360px;
+}
+
+/* pause on hover and focus for readability */
+.hyderabad-services-marquee:hover .hyderabad-marquee-track,
+.hyderabad-services-marquee:focus-within .hyderabad-marquee-track {
+  animation-play-state: paused;
+}
+
+/* respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .hyderabad-marquee-track { animation: none; }
+}
+
+/* On small screens disable marquee and allow manual swipe */
+@media screen and (max-width: 768px) {
+  .hyderabad-marquee-track { animation: none; display: flex; overflow-x: auto; }
+  .hyderabad-services-marquee { overflow-x: auto; }
+}
+
+.hyderabad-service-card {
+  flex: 0 0 300px; /* fixed width so they display in a single row */
+  min-width: 260px;
+  background: white;
+  padding: 1.25rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  position: relative;
+  border-top: 3px solid #08baed;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  height: 360px; /* increase height slightly to fit content */
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.hyderabad-service-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.hyderabad-service-number {
+  position: absolute;
+  top: -10px;
+  left: 15px;
+  background: #08baed;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* hide service numbers visually (user requested) */
+.hyderabad-service-number { display: none; }
+
+/* hide scrollbar for services row while keeping scroll functionality */
+.hyderabad-services-grid { -ms-overflow-style: none; scrollbar-width: none; }
+.hyderabad-services-grid::-webkit-scrollbar { display: none; height: 0; }
+
+.hyderabad-service-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1b1b1b;
+  margin-bottom: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.hyderabad-service-description {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+  flex: 0 0 auto;
+}
+
+.hyderabad-service-features {
+  list-style: none;
+  padding: 0;
+  margin-top: 0.5rem;
+  flex: 1 1 auto; /* allow features area to grow and scroll */
+  overflow: auto;
+}
+
+.hyderabad-service-features li {
+  padding: 0.4rem 0;
+  color: #666;
+  position: relative;
+  padding-left: 1.25rem;
+  font-size: 0.9rem;
+}
+
+/* hide scrollbar for inner service features list while keeping scroll */
+.hyderabad-service-features { -ms-overflow-style: none; scrollbar-width: none; }
+.hyderabad-service-features::-webkit-scrollbar { display: none; height: 0; }
+
+.hyderabad-service-features li:before {
+  content: "→";
+  color: #08baed;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+/* Causes Section */
+.hyderabad-causes-section {
+  margin-bottom: 3rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 3rem 2rem;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 15px 50px rgba(8, 186, 237, 0.1);
+}
+
+.hyderabad-causes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.hyderabad-cause-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  min-width: 200px;
+  flex: 0 0 auto;
+}
+
+.hyderabad-cause-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.hyderabad-cause-bullet {
+  color: #08baed;
+  font-size: 1.2rem;
+  margin-right: 1rem;
+  font-weight: bold;
+}
+
+.hyderabad-cause-text {
+  font-size: 1rem;
+  color: #555;
+  font-weight: 500;
+}
+
+/* How It Works Section */
+.hyderabad-how-it-works-section {
+  margin-bottom: 3rem;
+  padding: 4rem 2rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+}
+
+.hyderabad-steps-container {
+  display: block;
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  counter-reset: step;
+}
+
+.hyderabad-step-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.hyderabad-step-image {
+  width: 100%;
+  height: 140px;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background: rgba(8, 186, 237, 0.05); */
+  margin-bottom: 0.5rem;
+}
+
+.hyderabad-step-image img {
+  width: 100%;
+  height: 100%;
+  /* object-fit: cover; */
+  object-position: center;
+  border-radius: 8px;
+  
+}
+
+.hyderabad-step-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.hyderabad-step-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.hyderabad-step-number {
+  background: linear-gradient(45deg, #08baed, #0ea5d9);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: auto;
+  text-align: center;
+}
+
+.hyderabad-step-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1b1b1b;
+}
+
+.hyderabad-step-description {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.hyderabad-step-arrow {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #08baed;
+  margin: 0.75rem 0;
+}
+
+/* Desktop: lay out steps horizontally with arrows between them */
+@media screen and (min-width: 1024px) {
+  /* centered vertical timeline */
+  .hyderabad-steps-container::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, rgba(8,186,237,0.25), rgba(8,186,237,0.08));
+    transform: translateX(-50%);
+    border-radius: 4px;
+  }
+
+  .hyderabad-step-row {
+    display: grid;
+    grid-template-columns: 1fr 140px 1fr;
+    align-items: center;
+    width: 100%;
+    margin: 2.25rem 0;
+    position: relative;
+  }
+
+  /* badge on center line using counter so it sits on the spine, not the card */
+  .hyderabad-step-row::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #08baed, #0ea5d9);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    box-shadow: 0 8px 24px rgba(8,186,237,0.18);
+    transform: translate(-50%, -50%);
+    z-index: 3;
+  }
+
+  .hyderabad-step-row.left .hyderabad-step-card {
+    grid-column: 1 / 2;
+    justify-self: end;
+  }
+
+  .hyderabad-step-row.right .hyderabad-step-card {
+    grid-column: 3 / 4;
+    justify-self: start;
+  }
+
+  .hyderabad-step-card {
+    width: 360px;
+    max-width: 90vw;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    position: relative;
+  }
+
+  /* horizontal connector from card to center line */
+  .hyderabad-step-card::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 70px;
+    height: 6px;
+    background: linear-gradient(90deg, rgba(8,186,237,0.9), rgba(14,165,217,0.8));
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(8,186,237,0.08);
+  }
+
+  .hyderabad-step-row.left .hyderabad-step-card::after {
+    right: -70px;
+  }
+
+  .hyderabad-step-row.right .hyderabad-step-card::after {
+    left: -70px;
+  }
+
+  /* hide in-card badge on desktop so only the spine badge shows */
+  .hyderabad-step-card .hyderabad-step-number {
+    display: none;
+  }
+
+  /* remove extra arrow icon */
+  .hyderabad-step-arrow { display: none; }
+}
+
+/* Who Can Use Section */
+.hyderabad-who-can-use-section {
+  margin-bottom: 3rem;
+  padding: 2rem 0;
+}
+
+.hyderabad-conditions-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.hyderabad-condition-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  min-width: 180px;
+  flex: 0 0 auto;
+}
+
+.hyderabad-condition-bullet {
+  color: #08baed;
+  font-size: 1rem;
+  margin-right: 0.75rem;
+  font-weight: bold;
+}
+
+.hyderabad-condition-text {
+  font-size: 0.95rem;
+  color: #555;
+  font-weight: 500;
+}
+
+/* Why Works Section */
+.hyderabad-why-works-section {
+  margin-bottom: 3rem;
+  padding: 2rem 0;
+}
+
+.hyderabad-benefits-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.hyderabad-benefit-item {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  text-align: center;
+  font-size: 0.95rem;
+  color: #555;
+  border-left: 3px solid #08baed;
+  font-weight: 500;
+  min-width: 160px;
+  flex: 0 0 auto;
+}
+
+/* Success Section */
+.hyderabad-success-section {
+  margin-bottom: 3rem;
+  background: linear-gradient(
+    135deg,
+    rgba(8, 186, 237, 0.15),
+    rgba(14, 165, 217, 0.1)
+  );
+  padding: 3rem 2rem;
+  border-radius: 25px;
+  color: black;
+  /* box-shadow: 0 15px 40px rgba(8, 186, 237, 0.3); */
+  text-align: center;
+}
+
+.hyderabad-success-section .hyderabad-section-title {
+  color: white;
+  margin-bottom: 2rem;
+}
+
+.hyderabad-success-section .hyderabad-section-title::before,
+.hyderabad-success-section .hyderabad-section-title::after {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.hyderabad-stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.hyderabad-stat-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  text-align: center;
+  flex-direction: column;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  min-width: 200px;
+  flex: 0 0 auto;
+}
+
+.hyderabad-stat-item:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-5px);
+}
+
+.hyderabad-stat-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.hyderabad-stat-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* FAQ Section */
+.hyderabad-faq-section {
+  margin-bottom: 3rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 3rem 2rem;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 15px 50px rgba(8, 186, 237, 0.1);
+}
+
+.hyderabad-faq-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hyderabad-faq-item {
+  margin-bottom: 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(8, 186, 237, 0.1);
+  transition: all 0.3s ease;
+  border-left: 4px solid #08baed;
+}
+
+.hyderabad-faq-item:hover {
+  box-shadow: 0 8px 25px rgba(8, 186, 237, 0.2);
+  transform: translateY(-2px);
+}
+
+.hyderabad-faq-question {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.hyderabad-faq-question::after {
+  content: "▼";
+  color: #08baed;
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+.hyderabad-faq-question[aria-expanded="true"]::after {
+  transform: rotate(180deg);
+}
+
+.hyderabad-faq-answer {
+  font-size: 1rem;
+  color: #4a5568;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* Final CTA Section */
+.hyderabad-final-cta-section {
+  margin-bottom: 2rem;
+  background: linear-gradient(
+    135deg,
+    rgba(8, 186, 237, 0.15),
+    rgba(14, 165, 217, 0.1)
+  );
+  padding: 3rem 2rem;
+  border-radius: 25px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.hyderabad-final-cta-description {
+  font-size: 1.2rem;
+  color: #4a5568;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  font-weight: 500;
+}
+/* FAQ accordion behavior */
+.hyderabad-faq-answer { display: none; }
+.hyderabad-faq-answer.open { display: block; }
+.hyderabad-faq-item { width: 100%; }
+.hyderabad-faq-item .hyderabad-faq-question { cursor: pointer; }
+
+/* ensure page has bottom spacing so footer gap appears consistent */
+.hyderabad-container { padding-bottom: 4rem; }
+.hyderabad-final-cta-subtitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 2rem;
+}
+
+.hyderabad-final-cta-button {
+  margin-top: 1rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+  .hyderabad-hero {
+    padding: 2rem 1rem;
+  }
+
+  .hyderabad-features-grid { gap: 0.85rem; }
+
+  .features-nav { display: none; }
+}
+
+/* Tablet responsiveness: between mobile and desktop */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .hyderabad-container {
+    padding: 3rem 1.5rem;
+  }
+
+  .hyderabad-hero {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 2.5rem 1.5rem;
+    margin: 1rem 0 2.5rem 0;
+  }
+
+  .hyderabad-hero .hero-title { 
+    font-size: 2rem;
+    text-align: left;
+  }
+  .hyderabad-hero .hero-subtitle { 
+    font-size: 1.2rem;
+    text-align: left;
+  }
+  .hyderabad-hero .hero-description {
+    font-size: 0.95rem;
+    text-align: left;
+  }
+  .hyderabad-hero .hero-cta {
+    text-align: left;
+  }
+
+  .hyderabad-section-title { 
+    font-size: 1.5rem;
+    white-space: normal;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0 1rem;
+  }
+
+  .hyderabad-section-title::before,
+  .hyderabad-section-title::after {
+    flex: 0 0 50px;
+    min-width: 30px;
+    max-width: 120px;
+  }
+
+  /* features grid: 2 columns on tablet */
+  .hyderabad-features-grid { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 1rem;
+    overflow-x: visible;
+  }
+
+  .hyderabad-feature-card {
+    flex: none;
+    max-width: 100%;
+    min-height: auto;
+  }
+
+  /* services: 2 columns on tablet */
+  .hyderabad-services-grid,
+  .hyderabad-marquee-track {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    animation: none;
+    overflow-x: visible;
+  }
+
+  .hyderabad-service-card {
+    flex: none;
+    max-width: 100%;
+    height: auto;
+    min-height: 320px;
+  }
+
+  /* Hide duplicate marquee cards on tablet */
+  .hyderabad-marquee-track > .hyderabad-service-card:nth-child(n+5) {
+    display: none;
+  }
+
+  /* timeline adjustments: stack vertically on tablet */
+  .hyderabad-steps-container::before { display: none; }
+  .hyderabad-step-row { 
+    display: flex;
+    flex-direction: column;
+    margin: 1.25rem 0; 
+  }
+  .hyderabad-step-row::before { display: none; }
+  .hyderabad-step-card { 
+    width: 100%; 
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .hyderabad-step-card::after { display: none; }
+  .hyderabad-step-card .hyderabad-step-number { 
+    display: inline-flex;
+    margin-bottom: 0.5rem;
+    width: auto;
+  }
+
+  .hyderabad-step-title { font-size: 1.1rem; }
+  .hyderabad-step-description { font-size: 0.95rem; }
+
+  /* causes and conditions: 2 columns */
+  .hyderabad-causes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .hyderabad-cause-item {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .hyderabad-conditions-grid,
+  .hyderabad-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+
+  /* sections padding */
+  .hyderabad-why-choose-section,
+  .hyderabad-causes-section,
+  .hyderabad-services-section,
+  .hyderabad-how-it-works-section,
+  .hyderabad-who-can-use-section,
+  .hyderabad-why-works-section,
+  .hyderabad-success-section,
+  .hyderabad-faq-section,
+  .hyderabad-final-cta-section {
+    padding: 2.5rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .hyderabad-section-description {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+  }
+}
+
+/* Narrow phones / small tablets: 400px - 765px
+   Center key sections and make causes responsive */
+@media screen and (min-width: 400px) and (max-width: 765px) {
+  .hyderabad-why-choose-section {
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
+
+  .hyderabad-why-choose-section .hyderabad-section-title {
+    justify-content: center;
+    font-size: 1.55rem;
+    white-space: normal;
+  }
+
+  /* Stack causes into a single column for readability */
+  .hyderabad-causes-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    align-items: start;
+  }
+
+  /* Make the conditions grid responsive and centered (Who Can Use section) */
+  .hyderabad-conditions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+    align-items: start;
+    justify-items: center;
+  }
+
+  .hyderabad-cause-item {
+    width: 100%;
+    min-width: 0;
+    justify-content: flex-start;
+    padding: 0.85rem;
+  }
+
+  .hyderabad-cause-bullet {
+    font-size: 1.1rem;
+    margin-right: 0.65rem;
+  }
+
+  .hyderabad-cause-text {
+    font-size: 0.98rem;
+    text-align: left;
+    line-height: 1.45;
+  }
+
+  /* make feature/service cards fit container */
+  .hyderabad-feature-card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Keep services marquee behavior as the default for this range (horizontal scroll on small screens) */
+  /* No wrapping; rely on the existing small-screen marquee rules (max-width:768px) to handle swipe/scroll */
+
+  /* modest heading scaling for this range */
+  .hyderabad-hero .hero-title { font-size: 2rem; }
+  .hyderabad-hero .hero-subtitle { font-size: 1.1rem; }
+
+  /* keep timeline stacked and readable */
+  .hyderabad-step-row { grid-template-columns: 1fr; }
+  .hyderabad-step-card { width: 100%; }
+  .hyderabad-step-card .hyderabad-step-number { display: inline-flex; margin-bottom: 0.5rem; width: auto; }
+  .hyderabad-step-card::after { display: none; }
+}
+
+/* Fix section-heading wrapping and marquee duplicates for narrow devices (400-765px) */
+@media screen and (min-width: 400px) and (max-width: 765px) {
+  /* Keep the title and decorative lines on a single row */
+  .hyderabad-section-title {
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .hyderabad-section-title::before,
+  .hyderabad-section-title::after {
+    flex: 1 1 12%;
+    min-width: 28px;
+    max-width: 160px;
+    height: 2px;
+  }
+
+  /* For the services marquee on narrow devices: do not show the duplicated cards
+     (the track is duplicated in JS for desktop marquee). Hide second half so only
+     the original set is visible and the layout scrolls/swallows properly. */
+  .hyderabad-marquee-track {
+    animation: none; /* keep manual swipe/scroll behaviour */
+    display: flex;
+    overflow-x: auto;
+  }
+
+  /* assuming original services list is 4 items, hide duplicates (items 5+)
+     so mobile shows only the primary set and avoids duplicate cards */
+  .hyderabad-marquee-track > .hyderabad-service-card:nth-child(n+5) {
+    display: none;
+  }
+}
+
+/* Improve visibility of decorative lines for headings in narrow/tablet ranges */
+@media screen and (min-width: 400px) and (max-width: 1024px) {
+  .hyderabad-how-it-works-section .hyderabad-section-title::before,
+  .hyderabad-how-it-works-section .hyderabad-section-title::after,
+  .hyderabad-services-section .hyderabad-section-title::before,
+  .hyderabad-services-section .hyderabad-section-title::after {
+    flex: 1 1 18%;
+    min-width: 60px;
+    max-width: 220px;
+  }
+}
+
+/* Also ensure the section headings and descriptions are centered in this narrow range */
+@media screen and (min-width: 400px) and (max-width: 765px) {
+  .hyderabad-how-it-works-section .hyderabad-section-title,
+  .hyderabad-who-can-use-section .hyderabad-section-title,
+  .hyderabad-why-works-section .hyderabad-section-title,
+  .hyderabad-why-choose-section .hyderabad-section-title {
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .hyderabad-how-it-works-section .hyderabad-section-description,
+  .hyderabad-who-can-use-section .hyderabad-section-description,
+  .hyderabad-why-works-section .hyderabad-section-description,
+  .hyderabad-why-choose-section .hyderabad-section-description {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 95%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .hyderabad-container {
+    padding: 2rem 1rem;
+  }
+
+  /* Make hero single column on mobile */
+  .hyderabad-hero {
+    grid-template-columns: 1fr;
+    padding: 1.5rem 1rem;
+    gap: 1.5rem;
+    margin: 1rem 0 2rem 0;
+  }
+
+  .hyderabad-hero .hero-content {
+    justify-content: left !important;
+    text-align: left;
+    order: 1;
+  }
+
+  .hyderabad-hero .hero-image {
+    order: 2;
+  }
+
+  .hyderabad-hero .hero-title {
+    font-size: 1.75rem;
+    text-align: left;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .hyderabad-hero .hero-subtitle {
+    font-size: 1.15rem;
+    text-align: left;
+    margin: 0 0 1rem 0;
+  }
+
+  .hyderabad-hero .hero-description {
+    font-size: 0.95rem;
+    text-align: left;
+  }
+
+  .hyderabad-hero .hero-cta {
+    text-align: left;
+  }
+
+  /* center headings and reduce sizing for better mobile fit */
+  .hyderabad-why-choose-section,
+  .hyderabad-causes-section,
+  .hyderabad-services-section,
+  .hyderabad-how-it-works-section,
+  .hyderabad-who-can-use-section,
+  .hyderabad-why-works-section,
+  .hyderabad-success-section,
+  .hyderabad-faq-section,
+  .hyderabad-final-cta-section {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hyderabad-section-title {
+    font-size: 1.25rem;
+    justify-content: center;
+    white-space: normal;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .hyderabad-section-title::before,
+  .hyderabad-section-title::after {
+    flex: 0 0 30px;
+    min-width: 20px;
+    max-width: 60px;
+  }
+
+  .hyderabad-section-description {
+    font-size: 0.95rem;
+    padding: 0 0.5rem;
+  }
+
+  /* tighten marquee spacing on mobile */
+  .hyderabad-services-marquee {
+    margin: 1rem 0;
+  }
+
+  .hyderabad-marquee-track {
+    animation: none;
+    overflow-x: auto;
+  }
+
+  /* add breathing room between stacked steps */
+  .hyderabad-step-row {
+    margin: 1rem 0;
+  }
+
+  .hyderabad-step-card {
+    padding: 1rem;
+  }
+
+  .hyderabad-features-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-x: visible;
+  }
+
+  .hyderabad-feature-card {
+    flex: 1 1 auto;
+    max-width: 100%;
+    min-width: auto;
+    min-height: auto;
+  }
+
+  .hyderabad-services-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .hyderabad-service-card {
+    flex: 1 1 auto;
+    max-width: 100%;
+    min-width: auto;
+    height: auto;
+    min-height: 280px;
+  }
+
+  .hyderabad-feature-image,
+  .hyderabad-step-image {
+    height: 100px;
+  }
+
+  .hyderabad-causes-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .hyderabad-cause-item {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .hyderabad-conditions-grid,
+  .hyderabad-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .hyderabad-condition-item,
+  .hyderabad-benefit-item {
+    min-width: auto;
+  }
+
+  .hyderabad-stats-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hyderabad-stat-item {
+    min-width: auto;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .hyderabad-cta-button {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  .hyderabad-cta-button.large {
+    padding: 12px 24px;
+    font-size: 1rem;
+  }
+
+  /* Stack timeline vertically */
+  .hyderabad-steps-container::before { display: none; }
+  .hyderabad-step-row { 
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: 1fr; 
+  }
+  .hyderabad-step-row::before { display: none; }
+  .hyderabad-step-card { 
+    width: 100%; 
+    text-align: left; 
+  }
+  .hyderabad-step-number { 
+    position: relative; 
+    transform: none; 
+    left: auto; 
+    top: auto; 
+    margin-bottom: 0.5rem; 
+    display: inline-flex;
+    width: auto;
+  }
+  .hyderabad-step-card::after { display: none; }
+}
+
+@media screen and (max-width: 480px) {
+  .hyderabad-container { 
+    padding: 1.5rem 0.75rem; 
+  }
+
+  .hyderabad-hero {
+    padding: 1.25rem 0.75rem;
+    gap: 1rem;
+    margin: 0.5rem 0 1.5rem 0;
+  }
+
+  .hyderabad-hero .hero-title {
+    font-size: 1.5rem;
+  }
+
+  .hyderabad-hero .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .hyderabad-hero .hero-description {
+    font-size: 0.9rem;
+  }
+
+  /* stack timeline vertically on small screens */
+  .hyderabad-steps-container::before { display: none; }
+  .hyderabad-step-row { 
+    justify-content: center; 
+    grid-template-columns: 1fr; 
+    margin: 0.75rem 0;
+  }
+  .hyderabad-step-row::before { display: none; }
+  .hyderabad-step-card { 
+    width: 100%; 
+    text-align: left; 
+    padding: 1rem;
+  }
+  .hyderabad-step-number { 
+    position: relative; 
+    transform: none; 
+    left: auto; 
+    top: auto; 
+    margin-bottom: 0.5rem; 
+    display: inline-flex;
+    width: auto;
+  }
+  .hyderabad-step-card::after { display: none; }
+
+  .hyderabad-step-title { font-size: 1rem; }
+  .hyderabad-step-description { font-size: 0.9rem; line-height: 1.5; }
+
+  .hyderabad-section-title {
+    font-size: 1.1rem;
+    gap: 0.35rem;
+  }
+
+  .hyderabad-section-title::before,
+  .hyderabad-section-title::after {
+    flex: 0 0 20px;
+    min-width: 15px;
+    max-width: 40px;
+  }
+
+  .hyderabad-section-description {
+    font-size: 0.9rem;
+  }
+
+  .hyderabad-feature-number {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+
+  .hyderabad-service-number {
+    width: 25px;
+    height: 25px;
+    font-size: 0.8rem;
+  }
+
+  .hyderabad-why-choose-section,
+  .hyderabad-causes-section,
+  .hyderabad-services-section,
+  .hyderabad-how-it-works-section,
+  .hyderabad-who-can-use-section,
+  .hyderabad-why-works-section,
+  .hyderabad-success-section,
+  .hyderabad-faq-section,
+  .hyderabad-final-cta-section {
+    padding: 1.25rem 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .hyderabad-feature-card,
+  .hyderabad-service-card {
+    padding: 1rem;
+  }
+
+  .hyderabad-feature-title,
+  .hyderabad-service-title {
+    font-size: 1rem;
+  }
+
+  .hyderabad-feature-description,
+  .hyderabad-service-description {
+    font-size: 0.9rem;
+  }
+
+  .hyderabad-cta-button {
+    padding: 10px 16px;
+    font-size: 0.85rem;
+  }
+
+  .hyderabad-cta-button.large {
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+
+  .hyderabad-conditions-grid,
+  .hyderabad-benefits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hyderabad-faq-question {
+    font-size: 1rem;
+  }
+
+  .hyderabad-faq-answer {
+    font-size: 0.9rem;
+  }
+}
+
+/* Remove the numbered badge in the corner */
+.hyderabad-feature-number { display: none; }
+
+/* Extra small devices (320px and below) */
+@media screen and (max-width: 360px) {
+  .hyderabad-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .hyderabad-hero {
+    padding: 1rem 0.5rem;
+    margin: 0.5rem 0 1rem 0;
+  }
+
+  .hyderabad-hero .hero-title {
+    font-size: 1.35rem;
+  }
+
+  .hyderabad-hero .hero-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .hyderabad-section-title {
+    font-size: 1rem;
+    gap: 0.25rem;
+  }
+
+  .hyderabad-section-title::before,
+  .hyderabad-section-title::after {
+    flex: 0 0 15px;
+    min-width: 10px;
+    max-width: 30px;
+  }
+
+  .hyderabad-section-description {
+    font-size: 0.85rem;
+  }
+
+  .hyderabad-feature-card,
+  .hyderabad-service-card,
+  .hyderabad-step-card {
+    padding: 0.75rem;
+  }
+
+  .hyderabad-feature-title,
+  .hyderabad-service-title,
+  .hyderabad-step-title {
+    font-size: 0.95rem;
+  }
+
+  .hyderabad-feature-description,
+  .hyderabad-service-description,
+  .hyderabad-step-description {
+    font-size: 0.85rem;
+  }
+
+  .hyderabad-cta-button {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+  }
+
+  .hyderabad-cta-button.large {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+  }
+
+  .hyderabad-faq-question {
+    font-size: 0.95rem;
+  }
+
+  .hyderabad-faq-answer {
+    font-size: 0.85rem;
+  }
+
+  .hyderabad-stat-text {
+    font-size: 0.95rem;
+  }
+}
+
+/* Tablet title fix: ensure long section titles wrap and stay within viewport
+   Target range: 765px .. 1024px */
+@media screen and (min-width: 765px) and (max-width: 1024px) {
+  .hyderabad-why-choose-section .hyderabad-section-title,
+  .hyderabad-how-it-works-section .hyderabad-section-title,
+  .hyderabad-why-works-section .hyderabad-section-title {
+    white-space: normal;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0 1rem;
+    font-size: 1.4rem;
+    justify-content: center;
+    align-items: center;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .hyderabad-section-title::before,
+  .hyderabad-section-title::after {
+    flex: 0 0 40px;
+    min-width: 30px;
+    max-width: 100px;
+  }
+
+  .hyderabad-section-description {
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+  }
+}
+
+/* Make the SEO Link Hub behave as a single column on narrow laptops/tablets
+   Target range: 600px .. 800px so hyderabad page matches product pages */
+@media screen and (min-width: 600px) and (max-width: 800px) {
+  .hyderabad-container .seo-link-container {
+    padding: 1rem 0.75rem;
+    overflow-x: hidden;
+  }
+
+  .hyderabad-container .seo-link-container .links-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+    align-items: stretch;
+  }
+
+  .hyderabad-container .seo-link-container .seo-link-card,
+  .hyderabad-container .seo-link-container .seo-link-item {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  .hyderabad-container .seo-link-container .seo-link-card .seo-link-content,
+  .hyderabad-container .seo-link-container .seo-link-item .seo-link-content {
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .hyderabad-container .seo-link-container .seo-link-icon {
+    min-width: 44px;
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+  }
+
+  .hyderabad-container .seo-link-container .seo-link-title {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .hyderabad-container .seo-link-container .seo-link-desc {
+    font-size: 0.95rem;
+  }
+}
+
+/* Hero subtitle & CTA adjustments for tablet and mobile
+   Reset negative left margins and ensure proper alignment on smaller devices */
+@media screen and (max-width: 768px) {
+  .hyderabad-hero .hero-subtitle {
+    margin-left: 0 !important;
+    text-align: left !important;
+    font-size: 1.15rem !important;
+  }
+
+  .hyderabad-hero .hero-cta {
+    margin-left: 0 !important;
+    text-align: left !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    padding-left: 0 !important;
+  }
+}
+
+/* Small-desktop / large laptop tuning: 1024px .. 1400px
+   Reduce extreme negative offsets on subtitle and CTA so content aligns neatly
+   while preserving the two-column hero layout and overall visual style. */
+@media screen and (min-width: 1024px) and (max-width: 1400px) {
+  .hyderabad-hero {
+    padding: 2.5rem 1.5rem;
+    gap: 2rem;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* reset large negative offsets used for very wide layouts */
+  .hyderabad-hero .hero-subtitle {
+    margin-left: 0;
+    font-size: 1.4rem;
+    text-align: left;
+    color: #08baed;
+  }
+
+  /* CTA should align with left column content and not overflow */
+  .hyderabad-hero .hero-cta {
+    margin-left: 0;
+    margin-top: 1rem;
+    text-align: left;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 0;
+  }
+
+  /* make the CTA button slightly larger on these widths for balance */
+  .hyderabad-hero .hyderabad-cta-button {
+    padding: 14px 28px;
+  }
+}
+
+/* Small-laptop / tablet tuning: 765px .. 1024px
+   Reset subtitle & CTA offsets so the two-column hero reads well on these widths */
+@media screen and (min-width: 765px) and (max-width: 1024px) {
+  .hyderabad-hero {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 2rem 1.25rem;
+  }
+
+  .hyderabad-hero .hero-subtitle {
+    margin-left: 0 !important;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    text-align: left;
+    color: #08baed;
+  }
+
+  .hyderabad-hero .hero-cta {
+    margin-left: 0 !important;
+    margin-top: 1rem;
+    text-align: left;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 0;
+  }
+
+  /* Slightly scale CTA button to balance with subtitle size */
+  .hyderabad-hero .hyderabad-cta-button {
+    padding: 13px 26px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .hyderabad-hero .hero-subtitle {
+    margin-left: 0 !important;
+    text-align: left !important;
+    font-size: 1rem !important;
+  }
+
+  .hyderabad-hero .hero-cta {
+    margin-left: 0 !important;
+    text-align: left !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    padding-left: 0 !important;
+  }
+}

@@ -81,6 +81,7 @@ import Blog from "./features/Blogs/Blog";
 import BangaloreHairTreatmentPage from "./pages/BangaloreHairTreatmentPage";
 import DelhiHairTreatmentPage from "./pages/DelhiHairTreatmentPage";
 import ChennaiHairTreatmentPage from "./pages/ChennaiHairTreatmentPage";
+import HyderabadHairTreatmentPage from "./pages/HyderabadHairTreatmentPage";
 
 
 let y =
@@ -235,6 +236,7 @@ function App() {
             <Route path="/online-hair-loss-treatment-bangalore" element={<BangaloreHairTreatmentPage setTitle={setTitle} cart={cart} setCart={setCart} />} />
             <Route path="/online-hair-loss-treatment-delhi" element={<DelhiHairTreatmentPage setTitle={setTitle} cart={cart} setCart={setCart} />} />
             <Route path="/online-hair-loss-treatment-chennai" element={<ChennaiHairTreatmentPage setTitle={setTitle} cart={cart} setCart={setCart} />} /> 
+            <Route path="/online-hair-loss-treatment-hyderabad" element={<HyderabadHairTreatmentPage setTitle={setTitle} cart={cart} setCart={setCart} />} />
 
             {/* Doctor routes */}
             <Route element={<RoleBasedRoutes allowedRoles={["doctor"]} />}>

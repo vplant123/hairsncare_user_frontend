@@ -51,27 +51,58 @@ function HomePage(props) {
       "AiSensy Widget loaded",
       document.getElementById("aisensy-wa-widget")
     );
-    if (!document.getElementById("aisensy-wa-widget")) {
-   
-      const script = document.createElement("script");
-      script.type = "text/javascript";
-      script.src =
-        "https://d3mkw6s8thqya7.cloudfront.net/integration-plugin.js"; 
-      script.id = "aisensy-wa-widget";
-      script.async = true;
 
-      // Add the widget-id as an attribute if necessary
-      script.setAttribute("widget-id", "F19ELA"); // Replace with the actual widget ID
+    try {
+      const widgetElement = document.getElementById("aisensy-wa-widget");
+      const widgetId = widgetElement?.getAttribute("widget-id");
 
-      // Append the script to the document body or head
-      document.body.appendChild(script);
+      if (!widgetId) {
+        console.warn("Widget ID not found, skipping AiSensy widget.");
+        return; // skip loading plugin
+      }
 
-      // Optional: Initialize the widget or handle any additional setup
-      script.onload = () => {
-        console.log("AiSensy Widget loaded");
-        // You can initialize or configure the widget here if needed
-      };
+      fetch("https://d3mkw6s8thqya7.cloudfront.net/widget-plugin.js", { method: "HEAD" })
+        .then(res => {
+          if (!res.ok) {
+            console.warn("Widget plugin JS not found, skipping script load.");
+            return;
+          }
+
+          const script = document.createElement("script");
+          script.src = "https://d3mkw6s8thqya7.cloudfront.net/widget-plugin.js";
+          script.async = true;
+          script.id = "df-script";
+          document.body.appendChild(script);
+
+          script.onload = () => {
+            console.log("AiSensy Widget script loaded safely.");
+          };
+        });
+
+    } catch (err) {
+      console.error("Error loading AiSensy widget:", err);
     }
+    // if (!document.getElementById("aisensy-wa-widget")) {
+   
+    //   const script = document.createElement("script");
+    //   script.type = "text/javascript";
+    //   script.src =
+    //     "https://d3mkw6s8thqya7.cloudfront.net/integration-plugin.js"; 
+    //   script.id = "aisensy-wa-widget";
+    //   script.async = true;
+
+    //   // Add the widget-id as an attribute if necessary
+    //   script.setAttribute("widget-id", "F19ELA"); // Replace with the actual widget ID
+
+    //   // Append the script to the document body or head
+    //   document.body.appendChild(script);
+
+    //   // Optional: Initialize the widget or handle any additional setup
+    //   script.onload = () => {
+    //     console.log("AiSensy Widget loaded");
+    //     // You can initialize or configure the widget here if needed
+    //   };
+    // }
   }, []);
 
   // Generate organization schema

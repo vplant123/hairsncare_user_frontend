@@ -203,6 +203,12 @@ export const routes = [
     title: "Online Hair Loss Treatment Chennai | Expert Care Online",
     desc: "Looking for online hair loss treatment in Chennai? Consult experienced doctors online and get personalized solutions for hair loss.",
     keywords: "hair loss treatment Chennai, online hair treatment Chennai, hair care Chennai, hair fall treatment, dermatologist Chennai, hair loss consultation online"
+  },
+  {
+    path: "/online-hair-loss-treatment-hyderabad",
+    title: "Online Hair Loss Treatment Hyderabad | Expert Care Online",
+    desc: "Looking for online hair loss treatment in Hyderabad? Consult experienced doctors online and get personalized solutions for hair loss.",
+    keywords: "hair loss treatment Hyderabad, online hair treatment Hyderabad, hair care Hyderabad, hair fall treatment, dermatologist Hyderabad, hair loss consultation online"
   }
 ];
 
@@ -219,4 +225,9 @@ export const getRouteData = (pathname) => {
     desc: "Discover customized hair loss treatments and accurate diagnosis with Hairsncares. Our expert services and advanced hair tests provide personalized solutions for effective hair restoration.",
     keywords: "hair care, hair loss treatment, hair solutions, HairsNcares"
   };
+};
+
+export default {
+  routes,
+  getRouteData
 };

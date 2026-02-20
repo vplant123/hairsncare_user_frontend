@@ -207,12 +207,12 @@ export default function Hyderabad() {
                     <td>Stage 2: Noticeable Thinning</td>
                     <td>A decrease in density and shed</td>
                     <td>Specific allopathy medications for hair growth, solutions for treatments for scalp</td>
-                    <td>Hair loss is less noticeable after 6-8 weeks. Observable improvement in 3-4 mois.</td>
+                    <td>Hair loss is less noticeable after 6-8 weeks. Observable improvement in 3-4 months.</td>
                   </tr>
                   <tr>
                     <td>Stage 3: Visible Scalp Areas</td>
                     <td>Thinning crown, receding hairline</td>
-                    <td>AAdvanced hair loss management plan, growth stimulants</td>
+                    <td>Advanced hair loss management plan, growth stimulants</td>
                     <td>New growth signs appear in 3-4 months, and coverage improvements within 5 to 6 months</td>
                   </tr>
                   <tr>

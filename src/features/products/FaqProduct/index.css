@@ -63,7 +63,7 @@
 }
 
 .benefit-accordian .card .ltn__card-title {
-    padding: 18px 0;
+    padding: 18px 60px 18px 0;
     cursor: pointer;
     position: relative;
     transition: 0.3s;

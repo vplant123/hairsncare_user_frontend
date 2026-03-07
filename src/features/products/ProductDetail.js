@@ -1294,10 +1294,6 @@ function ProductDetail(props) {
                       content.section1[cur1]?.url
                     })`,
                     position: "relative",
-                    height: "300px",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    borderRadius: "8px",
                     cursor: "pointer",
                   }}
                   onClick={() => handlePlay(content.section1[cur1]?.videoUrl)}
@@ -1394,6 +1390,7 @@ function ProductDetail(props) {
           ))}
         </div>
       </div>
+      
       <div
         className="buyNow-main-div"
         ref={componentRef}

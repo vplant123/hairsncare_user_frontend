@@ -82,6 +82,10 @@ import BangaloreHairTreatmentPage from "./pages/BangaloreHairTreatmentPage";
 import DelhiHairTreatmentPage from "./pages/DelhiHairTreatmentPage";
 import ChennaiHairTreatmentPage from "./pages/ChennaiHairTreatmentPage";
 import HyderabadHairTreatmentPage from "./pages/HyderabadHairTreatmentPage";
+import HairAssessmentPrep from "./features/hair-assessment/HairAssessmentPrep";
+import HairAssessmentFlow from "./features/hair-assessment/HairAssessmentFlow";
+
+
 
 
 let y =
@@ -209,6 +213,10 @@ function App() {
             <Route path="/hair-transplants-fue-dhi-mhi-natural-restoration" element={<HairTransplant setTitle={setTitle} cart={cart} setCart={setCart} />} />
             <Route path="/advanced-hair-loss-solutions-prp-smp-cloning-systems" element={<OtherProcedure setTitle={setTitle} cart={cart} setCart={setCart} />} />
             <Route path="/online-hair-loss-test-diagnosis-treatment" element={<OnlineHairTest setTitle={setTitle} cart={cart} setCart={setCart} />} />
+            <Route path="/hair-test-assessment" element={<HairAssessmentPrep />} />
+            <Route path="/take-hair-test-premium" element={<HairAssessmentFlow />} />
+
+
 
             {/* Blogs */}
             <Route path="/hair-care-blogs" element={<AllBlogs setTitle={setTitle} cart={cart} setCart={setCart} desc={desc} setDesc={setDesc} />} />

@@ -14,6 +14,10 @@ import Badge from "@mui/material/Badge";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchProduct from "../SearchProduct";
 import { useMediaQuery } from "@mui/material";
+import NewTestButton from "../hair-assessment/components/NewTestButton";
+
+
+
 
 function Navbar({ children, cart, setCart }) {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -41,7 +45,9 @@ function Navbar({ children, cart, setCart }) {
   const goToDash = () => navigate("/cart");
   const handleLoginClick = () => dispatch(toggleLogin());
   const handleTestHair = () => navigate("/take-hair-test");
+  const handleNewTest = () => navigate("/hair-test-assessment");
   const handleSignupClick = () => setShowSignup(!showSignup);
+
 
   let storedUserData = JSON.parse(localStorage.getItem("User343"));
 
@@ -220,10 +226,16 @@ function Navbar({ children, cart, setCart }) {
           {/* Right Side */}
           <div className="nav-right">
             {!location.pathname.includes("/take-hair-test") && (
-              <button onClick={handleTestHair} className="btn-test">
-                TAKE A HAIR TEST
-              </button>
+              <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                <button onClick={handleTestHair} className="btn-test">
+                  TAKE A HAIR TEST
+                </button>
+                <NewTestButton onClick={handleNewTest} />
+              </div>
             )}
+
+
+
 
             <div className="nav-icons">
               <div className="user-svg">

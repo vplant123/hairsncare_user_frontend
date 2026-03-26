@@ -8,6 +8,8 @@
   transition: all 0.3s ease 0s;
 }
 .show-search {
+
+
   display: none;
   position: absolute;
   top: 100%;
@@ -138,6 +140,8 @@
   background-color: #08baed;
   color: white;
 }
+
+
 .nav-container {
   width: 100%;
   display: flex;
@@ -222,6 +226,8 @@
     font-size: 12px;
     line-height: 1.2;
   }
+
+
 
   .nav-link a{
     font-size: 14px;

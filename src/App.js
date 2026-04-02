@@ -82,6 +82,7 @@ import BangaloreHairTreatmentPage from "./pages/BangaloreHairTreatmentPage";
 import DelhiHairTreatmentPage from "./pages/DelhiHairTreatmentPage";
 import ChennaiHairTreatmentPage from "./pages/ChennaiHairTreatmentPage";
 import HyderabadHairTreatmentPage from "./pages/HyderabadHairTreatmentPage";
+import ReportPage from "./pages/ReportPage";
 
 
 let y =
@@ -231,6 +232,7 @@ function App() {
             <Route path="/cart" element={<Cart setTitle={setTitle} cart={cart} setCart={setCart} />} />
             <Route path="/coupon" element={<Coupons setTitle={setTitle} cart={cart} setCart={setCart} />} />
             <Route path="/invoiceView/:id" element={<InvoiceView />} />
+            <Route path="/report" element={<ReportPage setTitle={setTitle} />} />
 
             {/* Locations */}
             <Route path="/online-hair-loss-treatment-bangalore" element={<BangaloreHairTreatmentPage setTitle={setTitle} cart={cart} setCart={setCart} />} />

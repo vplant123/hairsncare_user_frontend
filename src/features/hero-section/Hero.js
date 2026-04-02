@@ -65,9 +65,8 @@ const HeroSection = ({
               transition={{ duration: 1, delay: 0.5 }}
             >
               <span
-                className={`hero-title-1 ${
-                  selectedHero == 2 ? "second-image-t1" : ""
-                }`}
+                className={`hero-title-1 ${selectedHero == 2 ? "second-image-t1" : ""
+                  }`}
               >
                 {id == 1 ? (
                   <h2 style={{ fontSize: "1.4rem" }}>{title}</h2>
@@ -154,9 +153,8 @@ const HeroSection = ({
                 loading="lazy"
                 alt={dd[id - 1]?.alt}
                 title={dd[id - 1]?.title}
-                className={`hero-image ${
-                  selectedHero == 2 ? "second-image" : ""
-                }`}
+                className={`hero-image ${selectedHero == 2 ? "second-image" : ""
+                  }`}
                 src={imageSrc}
                 style={{ maxWidth: "80%" }}
               />
@@ -202,7 +200,7 @@ const Hero = () => {
     },
     {
       id: 2,
-      title:"Unveil the power of Modern Medicine with AI-driven hair diagnostic tool to unlock effective Hair Growth secrets",
+      title: "Unveil the power of Modern Medicine with AI-driven hair diagnostic tool to unlock effective Hair Growth secrets",
       subtitle: "Witness remarkable outcomes in just few months!",
       imageSrc: "/uploads/admprhero-banner-two.png",
     },
@@ -248,22 +246,22 @@ const Hero = () => {
             ind == "0"
               ? "Facebook"
               : ind == 1
-              ? "Whatsapp"
-              : ind == 1
-              ? "Youtube"
-              : ind == 3
-              ? "Instagram"
-              : "X";
+                ? "Whatsapp"
+                : ind == 1
+                  ? "Youtube"
+                  : ind == 3
+                    ? "Instagram"
+                    : "X";
           let title =
             ind == "0"
               ? "Facebook logo"
               : ind == 1
-              ? "Whatsapp logo"
-              : ind == 1
-              ? "Youtube logo"
-              : ind == 3
-              ? "Instagram logo"
-              : "X logo";
+                ? "Whatsapp logo"
+                : ind == 1
+                  ? "Youtube logo"
+                  : ind == 3
+                    ? "Instagram logo"
+                    : "X logo";
           return (
             <div
               onClick={() => {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FaChevronLeft, FaChevronRight, FaTimes, FaCamera, FaCheckCircle, FaTrashAlt, FaClock, FaInfoCircle, FaHeart, FaCheck, FaShieldAlt, FaLightbulb, FaLock, FaMagic } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaTimes, FaCamera, FaCheckCircle, FaTrashAlt, FaClock, FaInfoCircle, FaHeart, FaCheck, FaShieldAlt, FaLightbulb, FaLock, FaMagic, FaSearchPlus, FaGift, FaHeartbeat, FaChartBar, FaStethoscope, FaCalendarAlt, FaEnvelope, FaMapMarkerAlt, FaArrowRight, FaHospital } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import './HairAssessmentFlow.css';
 
 /* Shared Shield Icon */
@@ -11,8 +12,19 @@ const ShieldIcon = () => (
   </svg>
 );
 
+const PhotoSecureIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M22 13V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H13.5" stroke="#0ED7B5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M22 17.5V18.5C22 20.43 20.43 22 18.5 22C16.57 22 15 20.43 15 18.5V17.5C15 17.22 15.22 17 15.5 17H21.5C21.78 17 22 17.22 22 17.5Z" stroke="#0ED7B5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M17 17V16C17 15.17 17.67 14.5 18.5 14.5C19.33 14.5 20 15.17 20 16V17" stroke="#0ED7B5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M10.5 8C10.5 9.38 9.38 10.5 8 10.5C6.62 10.5 5.5 9.38 5.5 8C5.5 6.62 6.62 5.5 8 5.5C9.38 5.5 10.5 6.62 10.5 8Z" stroke="#0ED7B5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M2.67 18.95L7.6 15.64C8.39 15.11 9.53 15.17 10.24 15.78L10.57 16.07C11.35 16.74 12.61 16.74 13.39 16.07" stroke="#0ED7B5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
 const HairAssessmentFlow = () => {
   const [currentView, setCurrentView] = useState("diagnostic"); // "diagnostic" or "ai-analysis"
+  const [aiSubStep, setAiSubStep] = useState('intro'); // 'intro', 'upload', 'processing', 'results'
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedOptions, setSelectedOptions] = useState({});
 
@@ -77,14 +89,41 @@ const HairAssessmentFlow = () => {
             </div>
           </div>
 
-          <div className="flow-card">
-            <div className="card-header">
-              <h3 className="card-title-main">Identity & Origin</h3>
-            </div>
-            <QuestionCard title="Q3 — Age Group" options={["Under 20", "20-30 years", "31-45 years", "46-60 years", "Over 60"]} selectedOption={selectedOptions['q3']} onSelect={(opt) => handleOptionSelect('q3', opt)} />
-            <QuestionCard title="Q4 — Biological Gender" options={["Male", "Female", "Other"]} selectedOption={selectedOptions['q4']} onSelect={(opt) => handleOptionSelect('q4', opt)} />
-            <QuestionCard title="Q5 — Ethnic Origin" options={["South Asian", "East Asian", "Caucasian", "African", "Other"]} selectedOption={selectedOptions['q5']} onSelect={(opt) => handleOptionSelect('q5', opt)} />
-          </div>
+          <QuestionCard
+            title="Q1 — Age Group"
+            subtitle="Helps determine age-related hair loss patterns"
+            options={["18-24", "25-34", "35-44", "45-54", "55+"]}
+            selectedOption={selectedOptions['q1']}
+            onSelect={(opt) => handleOptionSelect('q1', opt)}
+          />
+          <QuestionCard
+            title="Q2 — Biological Gender"
+            subtitle="Determines hormonal hair loss pathway"
+            options={["Male", "Female", "Other / Prefer not to say"]}
+            selectedOption={selectedOptions['q2']}
+            onSelect={(opt) => handleOptionSelect('q2', opt)}
+          />
+          <QuestionCard
+            title="Q3 — Climate You Live In"
+            subtitle="Environmental factors affect scalp oil balance and hair health"
+            options={["Humid / Tropical", "Dry / Arid", "Coastal / Salty air", "Moderate / Mixed"]}
+            selectedOption={selectedOptions['q3']}
+            onSelect={(opt) => handleOptionSelect('q3', opt)}
+          />
+          <QuestionCard
+            title="Q4 — Occupation Type"
+            subtitle="Stress level and physical exposure factor into hair loss"
+            options={["Office / Desk work", "High-stress role", "Field / Outdoor work", "Factory / Industrial", "Student", "Homemaker"]}
+            selectedOption={selectedOptions['q4']}
+            onSelect={(opt) => handleOptionSelect('q4', opt)}
+          />
+          <QuestionCard
+            title="Q5 — Daily Helmet / Cap Use"
+            subtitle="Trapped heat and friction can accelerate scalp issues"
+            options={["Never", "Rarely (< 2x/week)", "Often (4-5x/week)", "Daily (all day)"]}
+            selectedOption={selectedOptions['q5']}
+            onSelect={(opt) => handleOptionSelect('q5', opt)}
+          />
         </>
       );
     }
@@ -122,18 +161,27 @@ const HairAssessmentFlow = () => {
   };
 
   if (currentView === "ai-analysis") {
-    return <AiAnalysisView onBack={() => setCurrentView("diagnostic")} onNext={() => alert("Analysis started!")} />;
+    return (
+      <AiAnalysisView
+        subStep={aiSubStep}
+        setSubStep={setAiSubStep}
+        onBack={() => setCurrentView("diagnostic")}
+        onNext={() => alert("Analysis started!")}
+      />
+    );
   }
 
   return (
     <div className="hair-flow-container">
-      <header className="flow-header">
-        <button className="exit-btn" onClick={() => window.history.back()}>
-          <FaChevronLeft /> EXIT
-        </button>
-        <div className="flow-logo">
-          {/* <img src="/logo.png" alt="Logo" /> */}
-          <span style={{ fontWeight: 700, letterSpacing: '1px' }}>HAIR TEST</span>
+      <header className="prep-header">
+        <div className="header-left-group">
+          <button className="back-btn" onClick={() => window.history.back()}>
+            <FaChevronLeft /> BACK
+          </button>
+          <div className="header-divider"></div>
+          <div className="prep-logo">
+            <img src="/reportlogo.png" alt="HairSnCare" />
+          </div>
         </div>
         <div className="step-indicator">
           Step {currentStep.toString().padStart(2, '0')} / 09
@@ -255,8 +303,7 @@ const SectionProgressTracker = ({ sectionName, total, answered, numMode = true }
   </div>
 );
 
-const AiAnalysisView = ({ onBack, onNext }) => {
-  const [subStep, setSubStep] = useState('intro'); // 'intro', 'upload', 'processing'
+const AiAnalysisView = ({ subStep, setSubStep, onBack, onNext }) => {
   const [uploadedPhotos, setUploadedPhotos] = useState({
     front: '/assets/img/uploadscalp_front.png', // Simulated for sample
     top: null,
@@ -283,14 +330,17 @@ const AiAnalysisView = ({ onBack, onNext }) => {
   if (subStep === 'upload') {
     return (
       <div className="ai-analysis-container">
-        <header className="ai-header">
-          <div className="header-left" onClick={() => setSubStep('intro')}>
-            <FaChevronLeft style={{ fontSize: '12px' }} /> BACK
+        <header className="prep-header">
+          <div className="header-left-group">
+            <div className="back-btn" onClick={() => setSubStep('intro')}>
+              <FaChevronLeft /> BACK
+            </div>
+            <div className="header-divider"></div>
+            <div className="prep-logo">
+              <img src="/reportlogo.png" alt="HairSnCare" />
+            </div>
           </div>
-          <div className="header-center">
-            <img src="/assets/img/footer-logo.png" alt="Logo" />
-          </div>
-          <div className="header-right">Step 11 / 12</div>
+          <div className="header-right">AI Analysis</div>
         </header>
 
         <div className="ai-progress-status">
@@ -381,7 +431,7 @@ const AiAnalysisView = ({ onBack, onNext }) => {
             >
               Analyze Photos <SparklesIcon />
             </button>
-            <button className="skip-btn-lg" onClick={() => alert("Assessment completed!")}>
+            <button className="skip-btn-lg" onClick={() => setSubStep('results')}>
               Skip Photo Analysis
             </button>
             <p className="ai-final-note">Photo analysis improves diagnostic accuracy by up to 34%.</p>
@@ -392,19 +442,31 @@ const AiAnalysisView = ({ onBack, onNext }) => {
   }
 
   if (subStep === 'processing') {
-    return <ProcessingView onBack={() => setSubStep('upload')} onNext={onNext} />;
+    return (
+      <ProcessingView
+        onBack={() => setSubStep('upload')}
+        onComplete={() => setSubStep('results')}
+      />
+    );
+  }
+
+  if (subStep === 'results') {
+    return <ResultsView onBack={() => setSubStep('processing')} onNext={onNext} />;
   }
 
   return (
     <div className="ai-analysis-container">
-      <header className="ai-header">
-        <div className="header-left" onClick={onBack}>
-          <FaChevronLeft style={{ fontSize: '12px' }} /> BACK
+      <header className="prep-header">
+        <div className="header-left-group">
+          <div className="back-btn" onClick={onBack}>
+            <FaChevronLeft /> BACK
+          </div>
+          <div className="header-divider"></div>
+          <div className="prep-logo">
+            <img src="/reportlogo.png" alt="HairSnCare" />
+          </div>
         </div>
-        <div className="header-center">
-          <img src="/assets/img/footer-logo.png" alt="Logo" />
-        </div>
-        <div className="header-right">Step 10 / 12</div>
+        <div className="header-right">AI Analysis</div>
       </header>
 
       <div className="ai-progress-status">
@@ -501,7 +563,7 @@ const AiAnalysisView = ({ onBack, onNext }) => {
           <button className="upload-btn-lg" onClick={() => setSubStep('upload')}>
             Upload Scalp Photos <UploadIcon />
           </button>
-          <button className="skip-btn-lg" onClick={() => alert("Assessment completed!")}>
+          <button className="skip-btn-lg" onClick={() => setSubStep('results')}>
             Skip Photo Analysis
           </button>
           <p className="ai-final-note">This information helps improve the accuracy of your diagnosis.</p>
@@ -556,7 +618,7 @@ const UploadIcon = () => (
   </svg>
 );
 
-const ProcessingView = ({ onBack, onNext }) => {
+const ProcessingView = ({ onBack, onComplete }) => {
   const [progress, setProgress] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
 
@@ -565,6 +627,9 @@ const ProcessingView = ({ onBack, onNext }) => {
       setProgress(prev => {
         if (prev >= 100) {
           clearInterval(timer);
+          setTimeout(() => {
+            onComplete();
+          }, 800);
           return 100;
         }
         return prev + 1;
@@ -572,7 +637,7 @@ const ProcessingView = ({ onBack, onNext }) => {
     }, 120); // ~12 seconds total
 
     return () => clearInterval(timer);
-  }, []);
+  }, [onComplete]);
 
   useEffect(() => {
     setActiveStep(Math.min(Math.floor(progress / 20), 4));
@@ -588,12 +653,15 @@ const ProcessingView = ({ onBack, onNext }) => {
 
   return (
     <div className="ai-analysis-container">
-      <header className="ai-header">
-        <div className="header-left" onClick={onBack}>
-          <FaChevronLeft style={{ fontSize: '12px' }} /> Back
-        </div>
-        <div className="header-center">
-          <img src="/assets/img/footer-logo.png" alt="Logo" />
+      <header className="prep-header">
+        <div className="header-left-group">
+          <div className="back-btn" onClick={onBack}>
+            <FaChevronLeft /> BACK
+          </div>
+          <div className="header-divider"></div>
+          <div className="prep-logo">
+            <img src="/reportlogo.png" alt="HairSnCare" />
+          </div>
         </div>
         <div className="header-right">AI Diagnostic Processing</div>
       </header>
@@ -654,9 +722,393 @@ const ProcessingView = ({ onBack, onNext }) => {
           <p>Please keep this page open while your analysis completes.</p>
         </div>
 
-        <button className="skip-btn-lg proc-skip" onClick={onNext}>
+        <button className="skip-btn-lg proc-skip" onClick={onComplete}>
           Skip Photo Analysis
         </button>
+      </main>
+    </div>
+  );
+};
+
+const OtpModal = ({ isOpen, onClose, onVerify }) => {
+  const [otp, setOtp] = React.useState(['', '', '', '', '', '']);
+  const inputRefs = React.useRef([]);
+
+  if (!isOpen) return null;
+
+  const handleChange = (element, index) => {
+    if (isNaN(element.value)) return false;
+    const newOtp = [...otp];
+    newOtp[index] = element.value;
+    setOtp(newOtp);
+
+    if (element.value !== "" && index < 5) {
+      inputRefs.current[index + 1].focus();
+    }
+  };
+
+  const handleKeyDown = (e, index) => {
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      inputRefs.current[index - 1].focus();
+    }
+  };
+
+  const isFilled = otp.every(v => v !== "");
+
+  return (
+    <div className="otp-overlay">
+      <div className="otp-modal-card">
+        <div className="otp-modal-header">
+          <div className="otp-header-left">
+            <div className="otp-header-shield">
+              <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.4141 0.833292L17.2624 2.34996C17.4513 2.3944 17.6068 2.4944 17.729 2.64996C17.8512 2.80551 17.9123 2.97774 17.9123 3.16663V11.4833C17.9123 12.3277 17.7151 13.1166 17.3207 13.85C16.9264 14.5833 16.3793 15.1833 15.6795 15.65L10.4141 19.1666L5.14879 15.65C4.44897 15.1833 3.90188 14.5833 3.50753 13.85C3.11319 13.1166 2.91602 12.3277 2.91602 11.4833V3.16663C2.91602 2.97774 2.97711 2.80551 3.0993 2.64996C3.22149 2.4944 3.37701 2.3944 3.56585 2.34996L10.4141 0.833292ZM10.4141 2.53329L4.58227 3.83329V11.4833C4.58227 12.05 4.71279 12.5777 4.97383 13.0666C5.23488 13.5555 5.59868 13.9555 6.06523 14.2666L10.4141 17.1666L14.7631 14.2666C15.2296 13.9555 15.5934 13.5555 15.8544 13.0666C16.1155 12.5777 16.246 12.05 16.246 11.4833V3.83329L10.4141 2.53329ZM14.1299 6.84996L15.2963 8.03329L9.99758 13.3333L6.46513 9.79996L7.64817 8.61663L9.99758 10.9833L14.1299 6.84996Z" fill="#0ED7B5" opacity="0.6" />
+              </svg>
+            </div>
+            <div className="otp-header-text">
+              <h4>Verify Your Number</h4>
+              <span>OTP sent to +91 1234567890</span>
+            </div>
+          </div>
+          <button className="otp-close-btn" onClick={onClose}>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z" fill="#3A5A80" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="otp-body">
+          <p className="otp-instruct">Enter the 6-digit code sent to +91 1234567890</p>
+          <div className="otp-inputs-row">
+            {otp.map((data, index) => (
+              <input
+                key={index}
+                type="text"
+                maxLength="1"
+                ref={el => inputRefs.current[index] = el}
+                value={data}
+                onChange={e => handleChange(e.target, index)}
+                onKeyDown={e => handleKeyDown(e, index)}
+                className={`otp-digit-input ${data ? 'is-filled' : ''}`}
+                onFocus={(e) => e.target.select()}
+              />
+            ))}
+          </div>
+
+          <button
+            className={`otp-verify-btn ${isFilled ? 'active' : ''}`}
+            onClick={() => isFilled && onVerify(otp.join(''))}
+            disabled={!isFilled}
+          >
+            <div className="btn-l-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.00008 1.58342L12.7934 2.64508C12.9255 2.67619 13.0344 2.74619 13.1199 2.85508C13.2054 2.96397 13.2482 3.08453 13.2482 3.21675V9.03841C13.2482 9.62953 13.1102 10.1817 12.8342 10.6951C12.5582 11.2084 12.1753 11.6284 11.6854 11.9551L8.00008 14.4167L4.31473 11.9551C3.8249 11.6284 3.44198 11.2084 3.16597 10.6951C2.88996 10.1817 2.75195 9.62953 2.75195 9.03841V3.21675C2.75195 3.08453 2.79472 2.96397 2.88024 2.85508C2.96577 2.74619 3.07462 2.67619 3.20679 2.64508L8.00008 1.58342ZM8.00008 2.77341L3.9182 3.68341V9.03841C3.9182 9.43508 4.00956 9.80453 4.19227 10.1467C4.37498 10.489 4.62962 10.769 4.95617 10.9867L8.00008 13.0167L11.044 10.9867C11.3705 10.769 11.6252 10.489 11.8079 10.1467C11.9906 9.80453 12.082 9.43508 12.082 9.03841V3.68341L8.00008 2.77341ZM10.6008 5.79508L11.4172 6.62341L7.70852 10.3334L5.23607 7.86008L6.0641 7.03175L7.70852 8.68841L10.6008 5.79508Z" fill="currentColor" />
+              </svg>
+            </div>
+            <span>Verify & Continue</span>
+            <div className="btn-r-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.4374 7.41666L7.30021 4.29L8.12825 3.46166L12.665 8L8.12825 12.5383L7.30021 11.71L10.4374 8.58333H3.33496V7.41666H10.4374Z" fill="currentColor" />
+              </svg>
+            </div>
+          </button>
+
+          <p className="resend-timer-text">Resend OTP in <span className="blue-bold">01:34 min</span></p>
+
+          <div className="otp-security-notice">
+            <div className="notice-lock-v">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.11969 4.25V3.75C3.11969 3.21 3.25089 2.70667 3.51329 2.24C3.76929 1.78667 4.11489 1.42667 4.55009 1.16C4.99809 0.886667 5.48129 0.75 5.99969 0.75C6.51809 0.75 7.00129 0.886667 7.44929 1.16C7.88449 1.42667 8.23009 1.78667 8.48609 2.24C8.74849 2.70667 8.87969 3.21 8.87969 3.75V4.25H9.83969C9.97409 4.25 10.0877 4.29833 10.1805 4.395C10.2733 4.49167 10.3197 4.61 10.3197 4.75V10.75C10.3197 10.89 10.2733 11.0083 10.1805 11.105C10.0877 11.2017 9.97409 11.25 9.83969 11.25H2.15969C2.02529 11.25 1.91169 11.2017 1.81889 11.105C1.72609 11.0083 1.67969 10.89 1.67969 10.75V4.75C1.67969 4.61 1.72609 4.49167 1.81889 4.395C1.91169 4.29833 2.02529 4.25 2.15969 4.25H3.11969ZM9.35969 5.25H2.63969V10.25H9.35969V5.25ZM5.51969 8.12C5.37249 8.02667 5.25569 7.90333 5.16929 7.75C5.08289 7.59667 5.03969 7.43 5.03969 7.25C5.03969 7.07 5.08289 6.90333 5.16929 6.75C5.25569 6.59667 5.37249 6.475 5.51969 6.385C5.66689 6.295 5.82689 6.25 5.99969 6.25C6.17249 6.25 6.33249 6.295 6.47969 6.385C6.62689 6.475 6.74369 6.59667 6.83009 6.75C6.91649 6.90333 6.95969 7.07 6.95969 7.25C6.95969 7.43 6.91649 7.59667 6.83009 7.75C6.74369 7.90333 6.62689 8.02667 6.47969 8.12V9.25H5.51969V8.12ZM4.07969 4.25H7.91969V3.75C7.91969 3.39 7.83329 3.05667 7.66049 2.75C7.48769 2.44333 7.25409 2.2 6.95969 2.02C6.66529 1.84 6.34529 1.75 5.99969 1.75C5.65409 1.75 5.33409 1.84 5.03969 2.02C4.74529 2.2 4.51169 2.44333 4.33889 2.75C4.16609 3.05667 4.07969 3.39 4.07969 3.75V4.25Z" fill="#0ED7B5" fill-opacity="0.3" />
+              </svg>
+            </div>
+            <span>Your information is secure and will not be shared.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ResultsView = ({ onBack, onNext }) => {
+  const [isOtpOpen, setIsOtpOpen] = React.useState(false);
+
+  const handleUnlockClick = () => {
+    setIsOtpOpen(true);
+  };
+
+  return (
+    <div className="ai-results-container">
+      <header className="prep-header">
+        <div className="header-left-group">
+          <div className="prep-logo">
+            <Link to="/">
+              <img src="/logo.png" alt="HairSnCare" />
+            </Link>
+          </div>
+        </div>
+        <div className="res-status-pill">
+          <span className="pill-dot"></span>
+          Analysis Complete
+        </div>
+      </header>
+
+      <main className="res-content-main">
+        <div className="res-hero">
+          <div className="res-badge-gold">
+            <SparklesIcon />
+            Hair Intelligence Report Prepared
+          </div>
+          <h1 className="res-hero-title">
+            Your <span className="text-cyan">FREE</span> Hair Analysis <span className="text-gold">Is Ready</span>
+          </h1>
+          <p className="res-hero-subtitle">
+            Your personalized Hair Intelligence Report is prepared. Unlock it to view your complete results.
+          </p>
+          <div className="res-step-indicator">
+            <div className="step-dot-success"></div>
+            <div className="res-step-pill-wrapper">
+              <div className="res-step-pill-fill"></div>
+            </div>
+            <span className="res-step-text">Step 2 of 2</span>
+          </div>
+        </div>
+
+        <div className="res-grid-layout">
+          {/* Left Column - Preview */}
+          <div className="res-col-left">
+            <div className="res-preview-title-row">
+              <div className="title-indicator-cyan"></div>
+              <span>Your Report Preview</span>
+            </div>
+
+            <div className="res-preview-card locked">
+              <div className="locked-report-bg">
+                <img src="/yourreportpreview.png" alt="Report Preview" />
+              </div>
+
+              <div className="lock-overlay">
+                <div className="floating-badges-stack">
+                  <div className="f-badge badge-amber">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M11.4285 10.6016L13.9243 13.0983L13.0963 13.9266L10.6005 11.43C10.1418 11.7955 9.64027 12.0755 9.09602 12.27C8.52067 12.4722 7.92977 12.5733 7.32332 12.5733C6.37477 12.5733 5.49231 12.3361 4.67593 11.8616C3.88288 11.395 3.257 10.765 2.79827 9.97164C2.31622 9.15497 2.0752 8.27219 2.0752 7.3233C2.0752 6.37441 2.31622 5.49164 2.79827 4.67497C3.257 3.88164 3.88288 3.25552 4.67593 2.79664C5.49231 2.31441 6.37477 2.0733 7.32332 2.0733C8.27187 2.0733 9.15433 2.31441 9.97071 2.79664C10.7638 3.25552 11.3935 3.88164 11.86 4.67497C12.3343 5.49164 12.5714 6.37441 12.5714 7.3233C12.5714 7.92997 12.4704 8.52108 12.2682 9.09664C12.0738 9.64108 11.7939 10.1427 11.4285 10.6016ZM10.2506 10.17C10.616 9.79664 10.8998 9.36886 11.102 8.88664C11.3041 8.38886 11.4052 7.86775 11.4052 7.3233C11.4052 6.58441 11.2186 5.89608 10.8454 5.2583C10.4877 4.64386 10.0018 4.15775 9.38758 3.79997C8.75003 3.42664 8.06195 3.23997 7.32332 3.23997C6.5847 3.23997 5.89661 3.42664 5.25906 3.79997C4.64483 4.15775 4.1589 4.64386 3.80125 5.2583C3.42805 5.89608 3.24145 6.58441 3.24145 7.3233C3.24145 8.06219 3.42805 8.75052 3.80125 9.3883C4.1589 10.0027 4.64483 10.4889 5.25906 10.8466C5.89661 11.22 6.5847 11.4066 7.32332 11.4066C7.86757 11.4066 8.3885 11.3055 8.8861 11.1033C9.36815 10.9011 9.79577 10.6172 10.169 10.2516L10.2506 10.17ZM8.01141 5.09497C7.80926 5.1883 7.64404 5.33025 7.51575 5.5208C7.38746 5.71136 7.32332 5.9233 7.32332 6.15664C7.32332 6.36664 7.3758 6.56108 7.48076 6.73997C7.58573 6.91886 7.72762 7.0608 7.90645 7.1658C8.08527 7.2708 8.27965 7.3233 8.48957 7.3233C8.72282 7.3233 8.93469 7.26108 9.12518 7.13664C9.31566 7.01219 9.45756 6.84497 9.55086 6.63497C9.62083 6.86052 9.65582 7.08997 9.65582 7.3233C9.65582 7.7433 9.55086 8.13219 9.34093 8.48997C9.13101 8.84775 8.84722 9.13164 8.48957 9.34164C8.13192 9.55164 7.74317 9.65664 7.32332 9.65664C6.90347 9.65664 6.51472 9.55164 6.15707 9.34164C5.79942 9.13164 5.51563 8.84775 5.30571 8.48997C5.09578 8.13219 4.99082 7.7433 4.99082 7.3233C4.99082 6.9033 5.09578 6.51441 5.30571 6.15664C5.51563 5.79886 5.79942 5.51497 6.15707 5.30497C6.51472 5.09497 6.90347 4.98997 7.32332 4.98997C7.55657 4.98997 7.78593 5.02497 8.01141 5.09497Z" fill="#F4C430" />
+                    </svg>
+
+                    <span>Hair Loss Pattern Identified</span>
+                  </div>
+                  <div className="f-badge badge-cyan">
+                    <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7.79026 1.90167L13.3533 11.5267C13.431 11.6589 13.4485 11.8028 13.4058 11.9583C13.363 12.1139 13.2716 12.2345 13.1317 12.32C13.0462 12.3745 12.949 12.4017 12.8401 12.4017H1.73742C1.57415 12.4017 1.43614 12.3433 1.3234 12.2267C1.21067 12.11 1.1543 11.9739 1.1543 11.8183C1.1543 11.7095 1.17762 11.6122 1.22427 11.5267L6.78728 1.90167C6.86503 1.76167 6.98166 1.67028 7.13716 1.62751C7.29266 1.58473 7.44038 1.60223 7.58033 1.68001C7.67363 1.73445 7.74361 1.80834 7.79026 1.90167ZM2.7404 11.235H11.8371L7.28877 3.36001L2.7404 11.235ZM6.70565 9.48501H7.8719V10.6517H6.70565V9.48501ZM6.70565 5.40167H7.8719V8.31834H6.70565V5.40167Z" fill="#00E5FF" />
+                    </svg>
+
+                    <span>Multiple contributing factors detected</span>
+                  </div>
+                </div>
+
+                <div className="lock-center-badge">
+                  <div className="lock-circle-premium">
+                    <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20.7914 10.6641H21.8577C22.1562 10.6641 22.4086 10.7671 22.6147 10.9733C22.8209 11.1795 22.9239 11.4319 22.9239 11.7305V22.3945C22.9239 22.6931 22.8209 22.9455 22.6147 23.1517C22.4086 23.3579 22.1562 23.4609 21.8577 23.4609H4.7977C4.49915 23.4609 4.2468 23.3579 4.04066 23.1517C3.83452 22.9455 3.73145 22.6931 3.73145 22.3945V11.7305C3.73145 11.4319 3.83452 11.1795 4.04066 10.9733C4.2468 10.7671 4.49915 10.6641 4.7977 10.6641H5.86395V9.59766C5.86395 8.24687 6.20515 6.98852 6.88755 5.82258C7.54151 4.6993 8.43005 3.81063 9.55317 3.15656C10.7189 2.47406 11.9771 2.13281 13.3277 2.13281C14.6783 2.13281 15.9365 2.47406 17.1022 3.15656C18.2253 3.81063 19.1139 4.6993 19.7678 5.82258C20.4502 6.98852 20.7914 8.24687 20.7914 9.59766V10.6641ZM18.6589 10.6641V9.59766C18.6589 8.63078 18.4208 7.73855 17.9446 6.92098C17.4683 6.1034 16.8214 5.45645 16.004 4.98012C15.1865 4.50379 14.2944 4.26562 13.3277 4.26562C12.361 4.26562 11.4689 4.50379 10.6514 4.98012C9.83395 5.45645 9.18709 6.1034 8.71083 6.92098C8.23457 7.73855 7.99645 8.63078 7.99645 9.59766V10.6641H18.6589ZM12.2614 14.9297V19.1953H14.3939V14.9297H12.2614Z" fill="#F4C430" />
+                    </svg>
+
+                  </div>
+                  <div className="lock-text-box">
+                    <h3 className="lock-title-text">Your full report is locked</h3>
+                    <p className="lock-subtitle-text">Unlock to view your complete diagnosis and personalized treatment plan.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column - Form */}
+          <div className="res-col-right">
+            <div className="unlock-card-header">
+              <div className="title-indicator-gold"></div>
+              <span>Unlock Access</span>
+            </div>
+            <div className="res-unlock-card">
+
+              <div className="unlock-benefits-list">
+                <h4 className="benefit-title">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.91996 1.66668C10.3808 1.66668 10.8074 1.78668 11.2 2.02668C11.5925 2.26668 11.904 2.59112 12.1344 3.00001C12.3648 3.4089 12.48 3.85334 12.48 4.33334C12.48 4.81334 12.3648 5.25779 12.1344 5.66668H15.04V7.00001H13.76V13.6667C13.76 13.8533 13.6981 14.0111 13.5744 14.14C13.4506 14.2689 13.2992 14.3333 13.12 14.3333H2.87996C2.70076 14.3333 2.54929 14.2689 2.42556 14.14C2.30183 14.0111 2.23996 13.8533 2.23996 13.6667V7.00001H0.959961V5.66668H3.86556C3.63516 5.25779 3.51996 4.81334 3.51996 4.33334C3.51996 3.85334 3.63516 3.4089 3.86556 3.00001C4.09596 2.59112 4.40743 2.26668 4.79996 2.02668C5.19249 1.78668 5.61916 1.66668 6.07996 1.66668C6.45543 1.66668 6.80956 1.74668 7.14236 1.90668C7.47516 2.06668 7.76103 2.2889 7.99996 2.57334C8.23889 2.2889 8.52476 2.06668 8.85756 1.90668C9.19036 1.74668 9.54449 1.66668 9.91996 1.66668ZM7.35996 7.00001H3.51996V13H7.35996V7.00001ZM12.48 7.00001H8.63996V13H12.48V7.00001ZM6.07996 3.00001C5.84956 3.00001 5.63623 3.06001 5.43996 3.18001C5.24369 3.30001 5.08796 3.46223 4.97276 3.66668C4.85756 3.87112 4.79996 4.09334 4.79996 4.33334C4.79996 4.68001 4.91516 4.98223 5.14556 5.24001C5.37596 5.49779 5.65756 5.64001 5.99036 5.66668H7.35996V4.33334C7.35996 4.00445 7.25543 3.71557 7.04636 3.46668C6.83729 3.21779 6.57916 3.06668 6.27196 3.01334L6.07996 3.00001ZM9.91996 3.00001C9.58716 3.00001 9.29703 3.12001 9.04956 3.36001C8.80209 3.60001 8.66556 3.89334 8.63996 4.24001V5.66668H9.91996C10.2528 5.66668 10.5429 5.54668 10.7904 5.30668C11.0378 5.06668 11.1744 4.77334 11.2 4.42668V4.33334C11.2 4.09334 11.1424 3.87112 11.0272 3.66668C10.912 3.46223 10.7562 3.30001 10.56 3.18001C10.3637 3.06001 10.1504 3.00001 9.91996 3.00001Z" fill="#F4C430" />
+                  </svg>
+                  <span>What You'll Unlock</span>
+                </h4>
+                <div className="benefit-items">
+                  <div className="benefit-item b-score">
+                    <div className="b-icon-v">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 8C0 3.58172 3.58172 0 8 0H16C20.4183 0 24 3.58172 24 8V16C24 20.4183 20.4183 24 16 24H8C3.58172 24 0 20.4183 0 16V8Z" fill="#020A18" fill-opacity="0.4" />
+                        <path d="M14.5 7.37C15 7.37 15.46 7.5 15.88 7.76C16.3 8.02 16.63 8.37333 16.87 8.82C17.1233 9.28666 17.25 9.80333 17.25 10.37C17.25 11.1433 17.07 11.8867 16.71 12.6C16.4033 13.2067 15.9667 13.79 15.4 14.35C14.96 14.79 14.4367 15.22 13.83 15.64C13.49 15.8733 13.0433 16.1533 12.49 16.48L12.25 16.62L12.01 16.48C11.43 16.14 10.9633 15.8467 10.61 15.6C9.97667 15.16 9.43333 14.7067 8.98 14.24C8.40667 13.64 7.97333 13.02 7.68 12.38L6.75 12.37V11.37L7.36 11.38C7.28667 11.0467 7.25 10.71 7.25 10.37C7.25 9.80333 7.37667 9.28666 7.63 8.82C7.87 8.37333 8.2 8.02 8.62 7.76C9.04 7.5 9.5 7.37 10 7.37C10.4333 7.37 10.8633 7.47666 11.29 7.69C11.65 7.86333 11.97 8.09 12.25 8.37C12.53 8.09 12.85 7.86333 13.21 7.69C13.6367 7.47666 14.0667 7.37 14.5 7.37ZM14.5 8.37C14.2333 8.37 13.9633 8.435 13.69 8.565C13.4167 8.695 13.1733 8.86666 12.96 9.08L12.25 9.79L11.54 9.08C11.3267 8.86666 11.0833 8.695 10.81 8.565C10.5367 8.435 10.2667 8.37 10 8.37C9.68 8.37 9.38667 8.45666 9.12 8.63C8.85333 8.80333 8.64167 9.04166 8.485 9.345C8.32833 9.64833 8.25 9.99333 8.25 10.38C8.25 10.7133 8.29333 11.0467 8.38 11.38L9.47 11.37L10.5 9.65L12 12.15L12.47 11.37H14.75V12.37H13.03L12 14.1L10.5 11.6L10.03 12.37L8.8 12.38C9.18667 13.0467 9.77667 13.6967 10.57 14.33C10.9233 14.61 11.3267 14.8933 11.78 15.18C11.92 15.2667 12.0767 15.36 12.25 15.46C12.4233 15.36 12.58 15.2667 12.72 15.18C13.1733 14.8933 13.5767 14.61 13.93 14.33C14.69 13.7233 15.2633 13.1 15.65 12.46C16.05 11.7933 16.25 11.1 16.25 10.38C16.25 9.99333 16.1733 9.64666 16.02 9.34C15.8667 9.03333 15.6567 8.79666 15.39 8.63C15.1233 8.46333 14.8267 8.37666 14.5 8.37Z" fill="#F4C430" />
+                      </svg>
+                    </div>
+                    <span>Hair Health Score & Risk Level</span>
+                    <div className="b-check-v">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.98249 7.59001L9.39849 2.99001L10.0705 3.70001L4.98249 9.01001L1.92969 5.82001L2.60169 5.12001L4.98249 7.59001Z" fill="#2E4A66" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="benefit-item b-stage">
+                    <div className="b-icon-v">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 8C0 3.58172 3.58172 0 8 0H16C20.4183 0 24 3.58172 24 8V16C24 20.4183 20.4183 24 16 24H8C3.58172 24 0 20.4183 0 16V8Z" fill="#020A18" fill-opacity="0.4" />
+                        <path d="M7.25 12.25H8.25V16.75H7.25V12.25ZM8.75 13.25H9.75V16.75H8.75V13.25ZM14.25 10.25H15.25V16.75H14.25V10.25ZM15.75 11.25H16.75V16.75H15.75V11.25ZM10.75 7.25H11.75V16.75H10.75V7.25ZM12.25 8.25H13.25V16.75H12.25V8.25Z" fill="#00E5FF" />
+                      </svg>
+                    </div>
+                    <span>Hair Loss Stage (Norwood / Ludwig)</span>
+                    <div className="b-check-v">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.98249 7.59001L9.39849 2.99001L10.0705 3.70001L4.98249 9.01001L1.92969 5.82001L2.60169 5.12001L4.98249 7.59001Z" fill="#2E4A66" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="benefit-item b-root">
+                    <div className="b-icon-v">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 8C0 3.58172 3.58172 0 8 0H16C20.4183 0 24 3.58172 24 8V16C24 20.4183 20.4183 24 16 24H8C3.58172 24 0 20.4183 0 16V8Z" fill="#020A18" fill-opacity="0.4" />
+                        <path d="M12.6 7.31999L14.22 10.13C14.2933 10.25 14.3117 10.3767 14.275 10.51C14.2383 10.6433 14.16 10.7433 14.04 10.81L13.39 11.19L13.89 12.06L13.02 12.56L12.52 11.69L11.88 12.06C11.76 12.1333 11.6333 12.1517 11.5 12.115C11.3667 12.0783 11.2633 12 11.19 11.88L10.27 10.29C9.93 10.3967 9.62667 10.5667 9.36 10.8C9.09333 11.0333 8.88333 11.3133 8.73 11.64C8.57667 11.9667 8.5 12.3133 8.5 12.68C8.5 12.9867 8.55333 13.2833 8.66 13.57C9.06667 13.31 9.51333 13.18 10 13.18C10.4133 13.18 10.7983 13.275 11.155 13.465C11.5117 13.655 11.8067 13.9133 12.04 14.24L15.88 12.02L16.38 12.88L12.44 15.16C12.48 15.3333 12.5 15.5067 12.5 15.68C12.5 15.8533 12.4833 16.02 12.45 16.18H16.5V17.18H8C7.84 16.9667 7.71667 16.7333 7.63 16.48C7.54333 16.2267 7.5 15.96 7.5 15.68C7.5 15.1867 7.63667 14.7333 7.91 14.32C7.63667 13.8067 7.5 13.26 7.5 12.68C7.5 12.1933 7.59667 11.7267 7.79 11.28C7.98333 10.8467 8.25 10.4683 8.59 10.145C8.93 9.82166 9.32 9.57666 9.76 9.40999L9.57 9.06999C9.47667 8.90999 9.43 8.74166 9.43 8.56499C9.43 8.38833 9.475 8.22333 9.565 8.06999C9.655 7.91666 9.77667 7.79333 9.93 7.69999L11.23 6.94999C11.39 6.85666 11.5583 6.81166 11.735 6.81499C11.9117 6.81833 12.0767 6.86333 12.23 6.94999C12.3833 7.03666 12.5067 7.15999 12.6 7.31999ZM10 14.18C9.72667 14.18 9.475 14.2483 9.245 14.385C9.015 14.5217 8.83333 14.705 8.7 14.935C8.56667 15.165 8.5 15.4133 8.5 15.68C8.5 15.8533 8.53 16.02 8.59 16.18H11.41C11.47 16.02 11.5 15.8533 11.5 15.68C11.5 15.4133 11.4333 15.165 11.3 14.935C11.1667 14.705 10.985 14.5217 10.755 14.385C10.525 14.2483 10.2733 14.18 10 14.18ZM11.73 7.81999L10.43 8.56999L11.81 10.95L13.11 10.2L11.73 7.81999Z" fill="#0ED7B5" />
+                      </svg>
+                    </div>
+                    <span>Root Cause Analysis</span>
+                    <div className="b-check-v">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.98249 7.59001L9.39849 2.99001L10.0705 3.70001L4.98249 9.01001L1.92969 5.82001L2.60169 5.12001L4.98249 7.59001Z" fill="#2E4A66" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="benefit-item b-plan">
+                    <div className="b-icon-v">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 8C0 3.58172 3.58172 0 8 0H16C20.4183 0 24 3.58172 24 8V16C24 20.4183 20.4183 24 16 24H8C3.58172 24 0 20.4183 0 16V8Z" fill="#020A18" fill-opacity="0.4" />
+                        <path d="M15.8905 8.11002C16.2771 8.49669 16.5371 8.95002 16.6705 9.47002C16.8038 9.97669 16.8038 10.4834 16.6705 10.99C16.5371 11.5167 16.2771 11.97 15.8905 12.35L12.3505 15.89C11.9705 16.2767 11.5171 16.5367 10.9905 16.67C10.4838 16.8034 9.97714 16.8034 9.47047 16.67C8.95047 16.5367 8.49714 16.2767 8.11047 15.89C7.7238 15.5034 7.4638 15.05 7.33047 14.53C7.19714 14.0234 7.19714 13.5167 7.33047 13.01C7.4638 12.4834 7.7238 12.03 8.11047 11.65L11.6505 8.11002C12.0305 7.72335 12.4838 7.46335 13.0105 7.33002C13.5171 7.19669 14.0238 7.19669 14.5305 7.33002C15.0505 7.46335 15.5038 7.72335 15.8905 8.11002ZM13.0605 13.77L10.2305 10.94L8.82047 12.35C8.56047 12.61 8.38547 12.9117 8.29547 13.255C8.20547 13.5984 8.20547 13.9417 8.29547 14.285C8.38547 14.6284 8.5588 14.9284 8.81547 15.185C9.07214 15.4417 9.37214 15.615 9.71547 15.705C10.0588 15.795 10.4021 15.795 10.7455 15.705C11.0888 15.615 11.3905 15.44 11.6505 15.18L13.0605 13.77ZM15.1805 8.82002C14.9271 8.56002 14.6288 8.38502 14.2855 8.29502C13.9421 8.20502 13.5988 8.20502 13.2555 8.29502C12.9121 8.38502 12.6105 8.56002 12.3505 8.82002L10.9405 10.23L13.7705 13.06L15.1805 11.65C15.4405 11.39 15.6155 11.0884 15.7055 10.745C15.7955 10.4017 15.7955 10.0584 15.7055 9.71502C15.6155 9.37169 15.4405 9.07335 15.1805 8.82002Z" fill="#F4C430" />
+                      </svg>
+                    </div>
+                    <span>Personalized Treatment Plan</span>
+                    <div className="b-check-v">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.98249 7.59001L9.39849 2.99001L10.0705 3.70001L4.98249 9.01001L1.92969 5.82001L2.60169 5.12001L4.98249 7.59001Z" fill="#2E4A66" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="benefit-item b-recovery">
+                    <div className="b-icon-v">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 8C0 3.58172 3.58172 0 8 0H16C20.4183 0 24 3.58172 24 8V16C24 20.4183 20.4183 24 16 24H8C3.58172 24 0 20.4183 0 16V8Z" fill="#020A18" fill-opacity="0.4" />
+                        <path d="M10.5 7V8H13.5V7H14.5V8H16.5C16.64 8 16.7583 8.04833 16.855 8.145C16.9517 8.24167 17 8.36 17 8.5V16.5C17 16.64 16.9517 16.7583 16.855 16.855C16.7583 16.9517 16.64 17 16.5 17H7.5C7.36 17 7.24167 16.9517 7.145 16.855C7.04833 16.7583 7 16.64 7 16.5V8.5C7 8.36 7.04833 8.24167 7.145 8.145C7.24167 8.04833 7.36 8 7.5 8H9.5V7H10.5ZM16 11.5H8V16H16V11.5ZM13.52 12.07L14.22 12.78L11.75 15.25L9.98 13.48L10.69 12.78L11.75 13.84L13.52 12.07ZM9.5 9H8V10.5H16V9H14.5V9.5H13.5V9H10.5V9.5H9.5V9Z" fill="#00E5FF" />
+                      </svg>
+                    </div>
+                    <span>12-Month Recovery Plan</span>
+                    <div className="b-check-v">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.98249 7.59001L9.39849 2.99001L10.0705 3.70001L4.98249 9.01001L1.92969 5.82001L2.60169 5.12001L4.98249 7.59001Z" fill="#2E4A66" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="res-form-section">
+                <h3 className="form-heading">Unlock Your Full Report</h3>
+                <p className="form-subheading">Fill in your details to receive your report.</p>
+
+                <div className="res-input-row">
+                  <label>Full Name</label>
+                  <input type="text" placeholder="Name auto filled" defaultValue="Name auto filled" readOnly className="auto-filled-input" />
+                </div>
+
+                <div className="res-input-row">
+                  <label>Mobile Number</label>
+                  <input type="text" placeholder="Number auto filled" defaultValue="Number auto filled" readOnly className="auto-filled-input" />
+                </div>
+
+                <div className="res-input-row">
+                  <label>Email Address</label>
+                  <div className="input-with-icon">
+                    <div className="i-icon">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.23961 2H13.7596C13.9388 2 14.0903 2.06444 14.214 2.19333C14.3377 2.32222 14.3996 2.48 14.3996 2.66667V13.3333C14.3996 13.52 14.3377 13.6778 14.214 13.8067C14.0903 13.9356 13.9388 14 13.7596 14H2.23961C2.06041 14 1.90894 13.9356 1.78521 13.8067C1.66148 13.6778 1.59961 13.52 1.59961 13.3333V2.66667C1.59961 2.48 1.66148 2.32222 1.78521 2.19333C1.90894 2.06444 2.06041 2 2.23961 2ZM13.1196 4.82667L8.05081 9.56L2.87961 4.81333V12.6667H13.1196V4.82667ZM3.21241 3.33333L8.03801 7.77333L12.7996 3.33333H3.21241Z" fill="#2E4A66" />
+                      </svg>
+                    </div>
+                    <input type="email" placeholder="Enter your email" />
+                  </div>
+                </div>
+
+                <div className="res-input-row">
+                  <label>City</label>
+                  <div className="input-with-icon">
+                    <div className="i-icon">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8.00023 13.36L11.1618 10.0533C11.7421 9.45777 12.1346 8.75555 12.3394 7.94666C12.5357 7.15555 12.5357 6.36443 12.3394 5.57332C12.1346 4.76443 11.7442 4.05999 11.1682 3.45999C10.5922 2.85999 9.91597 2.45332 9.13943 2.23999C8.37997 2.03555 7.6205 2.03555 6.86103 2.23999C6.0845 2.45332 5.40823 2.85999 4.83223 3.45999C4.25623 4.05999 3.86583 4.76443 3.66103 5.57332C3.46477 6.36443 3.46477 7.15555 3.66103 7.94666C3.86583 8.75555 4.25837 9.45777 4.83863 10.0533L8.00023 13.36ZM8.00023 15.24L3.92983 11C3.18743 10.2355 2.68823 9.32888 2.43223 8.27999C2.17623 7.26666 2.17623 6.25332 2.43223 5.23999C2.68823 4.1911 3.1853 3.28221 3.92343 2.51332C4.66157 1.74443 5.5341 1.22221 6.54103 0.946656C7.51383 0.688879 8.48663 0.688879 9.45943 0.946656C10.4664 1.22221 11.3389 1.74443 12.077 2.51332C12.8152 3.28221 13.3122 4.1911 13.5682 5.23999C13.8242 6.25332 13.8242 7.26666 13.5682 8.27999C13.3122 9.32888 12.813 10.2355 12.0706 11L8.00023 15.24ZM8.00023 8.09332C8.23063 8.09332 8.44397 8.03332 8.64023 7.91332C8.8365 7.79332 8.99223 7.6311 9.10743 7.42666C9.22263 7.22221 9.28023 6.99999 9.28023 6.75999C9.28023 6.51999 9.22263 6.29777 9.10743 6.09332C8.99223 5.88888 8.8365 5.72666 8.64023 5.60666C8.44397 5.48666 8.23063 5.42666 8.00023 5.42666C7.76983 5.42666 7.5565 5.48666 7.36023 5.60666C7.16397 5.72666 7.00823 5.88888 6.89303 6.09332C6.77783 6.29777 6.72023 6.51999 6.72023 6.75999C6.72023 6.99999 6.77783 7.22221 6.89303 7.42666C7.00823 7.6311 7.16397 7.79332 7.36023 7.91332C7.5565 8.03332 7.76983 8.09332 8.00023 8.09332ZM8.00023 9.42666C7.53943 9.42666 7.11277 9.30666 6.72023 9.06666C6.3277 8.82666 6.01623 8.50221 5.78583 8.09332C5.55543 7.68443 5.44023 7.23777 5.44023 6.75332C5.44023 6.26888 5.55543 5.82443 5.78583 5.41999C6.01623 5.01555 6.3277 4.69332 6.72023 4.45332C7.11277 4.21332 7.53943 4.09332 8.00023 4.09332C8.46103 4.09332 8.8877 4.21332 9.28023 4.45332C9.67277 4.69332 9.98423 5.01555 10.2146 5.41999C10.445 5.82443 10.5602 6.26888 10.5602 6.75332C10.5602 7.23777 10.445 7.68443 10.2146 8.09332C9.98423 8.50221 9.67277 8.82666 9.28023 9.06666C8.8877 9.30666 8.46103 9.42666 8.00023 9.42666Z" fill="#2E4A66" />
+                      </svg>
+                    </div>
+                    <input type="text" placeholder="Enter your city" />
+                  </div>
+                </div>
+
+                <div className="form-notice">
+                  <FaInfoCircle />
+                  <span>We use your details to generate and securely deliver your personalized report.</span>
+                </div>
+
+                <button className="btn-unlock-gold" onClick={handleUnlockClick}>
+                  Unlock My Report
+                </button>
+
+                <div className="btn-lock-sec">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3.11969 4.25V3.75C3.11969 3.21 3.25089 2.70667 3.51329 2.24C3.76929 1.78667 4.11489 1.42667 4.55009 1.16C4.99809 0.886667 5.48129 0.75 5.99969 0.75C6.51809 0.75 7.00129 0.886667 7.44929 1.16C7.88449 1.42667 8.23009 1.78667 8.48609 2.24C8.74849 2.70667 8.87969 3.21 8.87969 3.75V4.25H9.83969C9.97409 4.25 10.0877 4.29833 10.1805 4.395C10.2733 4.49167 10.3197 4.61 10.3197 4.75V10.75C10.3197 10.89 10.2733 11.0083 10.1805 11.105C10.0877 11.2017 9.97409 11.25 9.83969 11.25H2.15969C2.02529 11.25 1.91169 11.2017 1.81889 11.105C1.72609 11.0083 1.67969 10.89 1.67969 10.75V4.75C1.67969 4.61 1.72609 4.49167 1.81889 4.395C1.91169 4.29833 2.02529 4.25 2.15969 4.25H3.11969ZM9.35969 5.25H2.63969V10.25H9.35969V5.25ZM5.51969 8.12C5.37249 8.02667 5.25569 7.90333 5.16929 7.75C5.08289 7.59667 5.03969 7.43 5.03969 7.25C5.03969 7.07 5.08289 6.90333 5.16929 6.75C5.25569 6.59667 5.37249 6.475 5.51969 6.385C5.66689 6.295 5.82689 6.25 5.99969 6.25C6.17249 6.25 6.33249 6.295 6.47969 6.385C6.62689 6.475 6.74369 6.59667 6.83009 6.75C6.91649 6.90333 6.95969 7.07 6.95969 7.25C6.95969 7.43 6.91649 7.59667 6.83009 7.75C6.74369 7.90333 6.62689 8.02667 6.47969 8.12V9.25H5.51969V8.12ZM4.07969 4.25H7.91969V3.75C7.91969 3.39 7.83329 3.05667 7.66049 2.75C7.48769 2.44333 7.25409 2.2 6.95969 2.02C6.66529 1.84 6.34529 1.75 5.99969 1.75C5.65409 1.75 5.33409 1.84 5.03969 2.02C4.74529 2.2 4.51169 2.44333 4.33889 2.75C4.16609 3.05667 4.07969 3.39 4.07969 3.75V4.25Z" fill="#0ED7B5" fillOpacity="0.3" />
+                  </svg>
+                  <span>Your information is secure and will not be shared.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <OtpModal
+          isOpen={isOtpOpen}
+          onClose={() => setIsOtpOpen(false)}
+          onVerify={(code) => alert(`Verifying: ${code}`)}
+        />
+
+        {/* Feature Footer */}
+        <div className="res-features-footer">
+          <div className="res-feat-item">
+            <div className="feat-icon-v b-sec">
+              <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.4141 0.833292L17.2624 2.34996C17.4513 2.3944 17.6068 2.4944 17.729 2.64996C17.8512 2.80551 17.9123 2.97774 17.9123 3.16663V11.4833C17.9123 12.3277 17.7151 13.1166 17.3207 13.85C16.9264 14.5833 16.3793 15.1833 15.6795 15.65L10.4141 19.1666L5.14879 15.65C4.44897 15.1833 3.90188 14.5833 3.50753 13.85C3.11319 13.1166 2.91602 12.3277 2.91602 11.4833V3.16663C2.91602 2.97774 2.97711 2.80551 3.0993 2.64996C3.22149 2.4944 3.37701 2.3944 3.56585 2.34996L10.4141 0.833292ZM10.4141 2.53329L4.58227 3.83329V11.4833C4.58227 12.05 4.71279 12.5777 4.97383 13.0666C5.23488 13.5555 5.59868 13.9555 6.06523 14.2666L10.4141 17.1666L14.7631 14.2666C15.2296 13.9555 15.5934 13.5555 15.8544 13.0666C16.1155 12.5777 16.246 12.05 16.246 11.4833V3.83329L10.4141 2.53329ZM14.1299 6.84996L15.2963 8.03329L9.99758 13.3333L6.46513 9.79996L7.64817 8.61663L9.99758 10.9833L14.1299 6.84996Z" fill="#00E5FF" />
+              </svg>
+            </div>
+            <div className="feat-text-v">
+              <h4>Secure & Private</h4>
+              <p>End-to-end encrypted</p>
+            </div>
+          </div>
+          <div className="res-feat-item">
+            <div className="feat-icon-v b-storage">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 12V7C19 5.89543 18.1046 5 17 5H12L10 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H18M19 12L22 15M19 12L16 15M13.5 13C13.5 14.3807 12.3807 15.5 11 15.5C9.61929 15.5 8.5 14.3807 8.5 13C8.5 11.6193 9.61929 10.5 11 10.5C12.3807 10.5 13.5 11.6193 13.5 13Z" stroke="#F4C430" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+            <div className="feat-text-v">
+              <h4>No Photo Storage</h4>
+              <p>Images never saved</p>
+            </div>
+          </div>
+          <div className="res-feat-item">
+            <div className="feat-icon-v b-clinic">
+              <svg width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.83188 15V10H12.4969V15H14.9963V1.66667H3.3325V15H5.83188ZM7.49813 15H10.8306V11.6667H7.49813V15ZM16.6625 15H18.3288V16.6667H0V15H1.66625V0.833334C1.66625 0.6 1.74679 0.402779 1.90786 0.241667C2.06893 0.080555 2.2661 0 2.49938 0H15.8294C16.0627 0 16.2598 0.080555 16.4209 0.241667C16.582 0.402779 16.6625 0.6 16.6625 0.833334V15ZM8.33125 5V3.33333H9.9975V5H11.6638V6.66667H9.9975V8.33333H8.33125V6.66667H6.665V5H8.33125Z" fill="#0ED7B5" />
+              </svg>
+            </div>
+            <div className="feat-text-v">
+              <h4>Clinic-Grade AI</h4>
+              <p>Used by professionals</p>
+            </div>
+          </div>
+        </div>
       </main>
     </div>
   );

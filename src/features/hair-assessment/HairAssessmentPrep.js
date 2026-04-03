@@ -1,7 +1,7 @@
 import React from "react";
 import "./HairAssessmentPrep.css";
-import { FaArrowLeft } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { FaChevronLeft } from "react-icons/fa";
+import { useNavigate, Link } from "react-router-dom";
 
 const HairAssessmentPrep = () => {
   const navigate = useNavigate();
@@ -10,11 +10,16 @@ const HairAssessmentPrep = () => {
     <div className="hair-assessment-prep-container">
       {/* Header */}
       <header className="prep-header">
-        <button className="back-btn" onClick={() => navigate(-1)}>
-          <FaArrowLeft /> Back
-        </button>
-        <div className="prep-logo">
-          <img src="/assets/img/logo.png" alt="Hairsncares" />
+        <div className="header-left-group">
+          <button className="back-btn" onClick={() => navigate(-1)}>
+            <FaChevronLeft /> BACK
+          </button>
+          <div className="header-divider"></div>
+          <div className="prep-logo">
+            <Link to="/">
+              <img src="/logo.png" alt="HairSnCare" />
+            </Link>
+          </div>
         </div>
       </header>
 

@@ -21,6 +21,18 @@
   border-bottom: 1px solid #054358;
 }
 
+.header-left-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(127, 166, 217, 0.2);
+}
+
 .back-btn {
   background: none;
   border: none;
@@ -529,5 +541,201 @@
     max-width: 280px;
     margin: 0 auto;
     line-height: 1.4;
+  }
+}
+/* Branding Refinement */
+.prep-logo img {
+  width: 213px;
+  height: 39px;
+  object-fit: contain;
+}
+
+/* Standardized Back Button */
+.back-btn, .exit-btn {
+  background: none;
+  border: none;
+  color: #7FA6D9;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.back-btn:hover, .exit-btn:hover {
+  color: #FFFFFF;
+  background: rgba(127, 166, 217, 0.1);
+}
+
+/* === Unified Diagnostic Header (prep-header) === */
+.prep-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px;
+  background-color: #041126;
+  border-bottom: 1px solid rgba(5, 67, 88, 0.5);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+.header-left-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(127, 166, 217, 0.2);
+}
+
+.header-brand-logo {
+  width: 213px;
+  height: 39px;
+  object-fit: contain;
+  display: block;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #7FA6D9;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0;
+}
+
+.back-btn:hover {
+  color: #FFFFFF;
+  transform: translateX(-2px);
+}
+
+.back-btn svg {
+  font-size: 14px;
+}
+
+/* Final Branding Standards */
+.prep-logo img {
+  width: 213px;
+  height: 39px;
+  object-fit: contain;
+  display: block;
+}
+
+
+
+
+/* FINAL MOBILE HEADER RESPONSIVITY - ABSOLUTE FIX */
+@media (max-width: 1024px) {
+  .prep-header {
+    padding: 10px 20px !important;
+  }
+  .prep-logo img {
+    max-width: 150px !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .prep-header {
+    padding: 10px 12px !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .header-left-group {
+    gap: 8px !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .prep-logo {
+    min-width: 0 !important;
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .prep-logo img {
+    max-width: 120px !important;
+    width: auto !important;
+    height: 28px !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
+
+  .header-divider {
+    height: 20px !important;
+    width: 1px !important;
+    margin: 0 4px !important;
+    background: rgba(127, 166, 217, 0.2) !important;
+    flex-shrink: 0 !important;
+  }
+
+  .back-btn {
+    font-size: 11px !important;
+    gap: 4px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    padding: 0 !important;
+  }
+
+  .step-indicator, .header-right {
+    font-size: 10px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    padding: 4px 8px !important;
+    background: rgba(0, 229, 255, 0.05) !important;
+    border-radius: 4px !important;
+    color: #7FA6D9 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .prep-header {
+    padding: 8px 10px !important;
+  }
+
+  .prep-logo img {
+    max-width: 100px !important;
+    height: 22px !important;
+  }
+
+  .header-divider {
+    display: none !important;
+  }
+
+  .back-btn {
+     font-size: 10px !important;
+     padding: 0 !important;
+  }
+  
+  .step-indicator {
+    max-width: 70px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    padding: 2px 6px !important;
   }
 }

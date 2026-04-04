@@ -8732,3 +8732,210 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
       font-size: 9px !important;
    }
 }
+
+/* =========================================================
+   Extra mobile hardening (phone widths only)
+========================================================= */
+@media (max-width: 480px) {
+   .test-report-page.container {
+      padding-left: 12px;
+      padding-right: 12px;
+   }
+
+   .diagnostic-header-section {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+   }
+
+   .questionnaire-pill {
+      align-self: flex-start;
+   }
+
+   .report-main-heading {
+      font-size: 22px;
+      line-height: 1.2;
+   }
+
+   .nutritional-protocol-header,
+   .daily-protocol-header,
+   .personalised-plan-header,
+   .lifestyle-risk-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+   }
+
+   .nutritional-protocol-panel,
+   .meal-plan-panel,
+   .avoid-habits-panel,
+   .daily-routine-panel,
+   .weekly-schedule-panel {
+      padding: 12px;
+   }
+
+   .avoid-habits-panel {
+      padding: 21px;
+   }
+
+   .nutritional-card-grid,
+   .avoid-habits-grid,
+   .weekly-schedule-grid {
+      grid-template-columns: 1fr;
+   }
+
+   .avoid-habits-grid {
+      min-width: 0;
+   }
+
+   
+
+   .nutritional-card {
+      padding: 12px;
+   }
+
+   .nutritional-card-title-wrap h5 {
+      font-size: 11px;
+      line-height: 1.35;
+   }
+
+   .nutritional-food-pill {
+      min-height: 24px;
+      height: auto;
+      padding: 4px 8px;
+   }
+
+   .meal-plan-row {
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr);
+      align-items: start;
+      padding: 10px 12px;
+      gap: 10px;
+      min-width: 0;
+   }
+
+   .meal-plan-row-icon {
+      width: 24px;
+      height: 24px;
+      flex: 0 0 24px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 229, 255, 0.15);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+   }
+
+   .meal-plan-row-icon svg {
+      width: 13px;
+      height: 12px;
+      display: block;
+   }
+
+   .meal-plan-row p {
+      display: block;
+      margin: 0;
+      color: #9FB4D0 !important;
+      font-family: Roboto, sans-serif !important;
+      font-size: 12px !important;
+      font-style: normal !important;
+      font-weight: 400 !important;
+      line-height: 16px !important;
+      white-space: normal;
+      overflow: visible;
+      text-wrap: wrap;
+   }
+
+   .meal-plan-label {
+      display: inline;
+      margin-bottom: 0;
+      margin-right: 8px;
+      font-family: Roboto, sans-serif;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 16px;
+      white-space: nowrap;
+   }
+
+   .meal-plan-row p span {
+      display: inline;
+      color: #9FB4D0 !important;
+      font-family: Roboto, sans-serif !important;
+      font-size: 12px !important;
+      font-style: normal !important;
+      font-weight: 400 !important;
+      line-height: 16px !important;
+      overflow: visible;
+      text-overflow: clip;
+      white-space: normal;
+   }
+
+   .avoid-habit-card {
+      padding: 10px 12px;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+   }
+
+   .avoid-habit-head h5 {
+      font-size: 12px;
+      line-height: 16px;
+   }
+
+   .avoid-habit-card p {
+      display: block;
+      min-width: 0;
+      max-width: 100%;
+      color: #9fb4d0;
+      font-family: Roboto, sans-serif;
+      font-size: 11px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 17.875px;
+      overflow: visible;
+      text-overflow: clip;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+   }
+
+   .scalp-recovery-grid {
+      grid-template-columns: 1fr !important;
+   }
+
+   .treatment-engine-card-top {
+      grid-template-columns: 1fr !important;
+   }
+
+   .treatment-engine-side {
+      width: 100% !important;
+      align-items: flex-start !important;
+   }
+
+   .treatment-engine-meta-grid {
+      grid-template-columns: 1fr !important;
+   }
+}
+
+@media (max-width: 360px) {
+   .clinician-pill,
+   .questionnaire-pill,
+   .verified-pill {
+      font-size: 9px;
+   }
+
+   .report-main-heading {
+      font-size: 20px;
+   }
+
+   .meal-plan-row-icon,
+   .nutritional-card-icon {
+      width: 24px;
+      height: 24px;
+   }
+
+   .nutritional-card-desc {
+      font-size: 10px;
+   }
+}

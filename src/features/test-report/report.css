@@ -8731,4 +8731,129 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    .treatment-engine-meta-card p {
       font-size: 9px !important;
    }
+
+   /* Personalised 12-Month Plan Mobile Optimization */
+   .personalised-phase-card {
+      padding: 16px !important;
+   }
+
+   .personalised-phase-top {
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 12px !important;
+   }
+
+   .personalised-phase-image {
+      display: none !important;
+   }
+
+   .personalised-phase-headline-wrap h4 {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 2px !important;
+      font-size: 14px !important;
+   }
+
+   .personalised-phase-headline-wrap h4 span {
+      font-size: 11px !important;
+      font-weight: 700 !important;
+   }
+
+   .personalised-phase-headline-wrap h4 span::before {
+      content: '· ' !important;
+      opacity: 0.6 !important;
+   }
+
+   .personalised-phase-list {
+      margin-top: 16px !important;
+      gap: 8px !important;
+   }
+
+   .personalised-phase-list p {
+      font-size: 11px !important;
+      line-height: 1.5 !important;
+   }
+
+   /* Lifestyle Assessment Mobile Optimization */
+   .lifestyle-risk-header {
+      gap: 10px;
+      margin-bottom: 14px;
+   }
+
+   .lifestyle-risk-head-copy h3 {
+      font-size: 16px;
+      line-height: 1.3;
+   }
+
+   .lifestyle-risk-head-copy p {
+      font-size: 11px;
+      line-height: 1.4;
+   }
+
+   .lifestyle-risk-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+   }
+
+   .lifestyle-risk-card {
+      padding: 12px 10px;
+      border-radius: 12px;
+   }
+
+   .lifestyle-risk-card-head h4 {
+      font-size: 11px;
+   }
+
+   .lifestyle-risk-pill {
+      height: 18px;
+      padding: 0 8px;
+      font-size: 8px;
+   }
+
+   .lifestyle-risk-track {
+      margin-top: 10px;
+      height: 4px;
+   }
+
+   .lifestyle-impact-card {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      margin-top: 16px;
+   }
+
+   .lifestyle-impact-main {
+      display: contents;
+   }
+
+   .lifestyle-impact-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+   }
+
+   .lifestyle-impact-copy h4 {
+      font-size: 12px;
+      line-height: 1.3;
+   }
+
+   .lifestyle-impact-copy p {
+      font-size: 10px;
+      line-height: 1.4;
+      margin-top: 2px;
+   }
+
+   .lifestyle-impact-image {
+      width: 60px;
+      height: 44px;
+      margin-top: 0;
+      border-radius: 10px;
+   }
+
+   .nutritional-card-image {
+      height: 61px;
+   }
 }

@@ -53,6 +53,11 @@
 /* =========================================================
    Page shell + top header
 ========================================================= */
+
+.test-report-page {
+   margin-top: 30px;
+}
+
 .title-wrapper {
    display: flex;
    gap: 15px;
@@ -352,11 +357,12 @@
    Diagnostic Panel (New Structured Body)
 ========================================================= */
 .report-diagnostic-panel {
-   background: #020b18;
+   background: #061a2e;
    border: 1px solid rgba(0, 229, 255, 0.12);
    border-radius: 20px;
    padding: 24px;
    overflow: hidden;
+   margin-bottom: 24px;
 }
 
 .diagnostic-header-section {
@@ -375,15 +381,15 @@
 }
 
 .id-icon-wrap {
-   width: 42px;
-   height: 42px;
-   min-width: 42px;
-   background: #051d38;
-   border-radius: 50%;
+   width: 30px;
+   height: 30px;
+   min-width: 30px;
+   background: rgba(0, 229, 255, 0.10);
+   border-radius: 15px;
    display: flex;
    align-items: center;
    justify-content: center;
-   border: 1px solid rgba(0, 229, 255, 0.2);
+   /* border: 1px solid rgba(0, 229, 255, 0.2); */
 }
 
 .report-series-title {
@@ -412,6 +418,24 @@
    padding: 0 24px 30px 24px;
 }
 
+/* For large screens, arrange pills in a single row */
+@media (min-width: 769px) {
+   .diagnostic-status-grid {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+   }
+
+   .status-pills-wrap {
+      flex: 1;
+   }
+
+   .date-pill-wrap {
+      flex-shrink: 0;
+   }
+}
+
 .status-pills-wrap {
    display: flex;
    gap: 10px;
@@ -426,6 +450,13 @@
    border-radius: 8px;
    font-size: 12px;
    font-weight: 500;
+   cursor: pointer;
+   transition: all 0.2s ease;
+}
+
+.clinician-pill:hover {
+   transform: translateY(-1px);
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .clinician-pill.success-tone {
@@ -442,6 +473,36 @@
 
 .clinical-hero-copy {
    margin-bottom: 32px;
+}
+
+/* Add profile image placeholder for large screens */
+@media (min-width: 769px) {
+   .clinical-hero-copy {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+   }
+
+   .clinical-hero-copy::before {
+      content: "";
+      width: 102px;
+      height: 97px;
+      min-width: 102px;
+      border-radius: 14px;
+      border: 2px solid #00e5ff;
+      background-image: linear-gradient(45deg, #dde5ee 25%, transparent 25%),
+         linear-gradient(-45deg, #dde5ee 25%, transparent 25%),
+         linear-gradient(45deg, transparent 75%, #dde5ee 75%),
+         linear-gradient(-45deg, transparent 75%, #dde5ee 75%);
+      background-size: 18px 18px;
+      background-position: 0 0, 0 9px, 9px -9px, -9px 0;
+      flex-shrink: 0;
+   }
+
+   .clinical-hero-content {
+      flex: 1;
+      min-width: 0;
+   }
 }
 
 .report-main-heading {
@@ -465,6 +526,19 @@
    gap: 16px;
 }
 
+/* For large screens, display cards horizontally */
+@media (min-width: 769px) {
+   .diagnostic-insight-stack {
+      flex-direction: row;
+      gap: 16px;
+   }
+
+   .clinical-insight-card {
+      flex: 1;
+      min-width: 0;
+   }
+}
+
 .clinical-insight-card {
    padding: 20px;
    border-radius: 16px;
@@ -473,6 +547,12 @@
    display: flex;
    flex-direction: column;
    gap: 12px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+}
+
+.clinical-insight-card:hover {
+   transform: translateY(-4px);
 }
 
 .clinical-insight-card.amber-theme {
@@ -482,6 +562,11 @@
 
 }
 
+.clinical-insight-card.amber-theme:hover {
+   box-shadow: 0px 0px 24px 0px #F4C43040, 0 8px 16px rgba(244, 196, 48, 0.2);
+   border-color: #f3b63f;
+}
+
 .clinical-insight-card.cyan-theme {
    background: linear-gradient(118.52deg, #001E28 0%, #001520 100%);
    border: 1px solid #00E5FF;
@@ -489,11 +574,21 @@
 
 }
 
+.clinical-insight-card.cyan-theme:hover {
+   box-shadow: 0px 0px 32px 0px #00E5FF40, 0 8px 16px rgba(0, 229, 255, 0.2);
+   border-color: #00E5FF;
+}
+
 .clinical-insight-card.green-theme {
    background: linear-gradient(118.04deg, #001A0F 0%, #001008 100%);
    border: 1px solid #10B981;
    box-shadow: 0px 0px 16px 0px #10B98114;
 
+}
+
+.clinical-insight-card.green-theme:hover {
+   box-shadow: 0px 0px 24px 0px #10B98140, 0 8px 16px rgba(16, 185, 129, 0.2);
+   border-color: #10B981;
 }
 
 .card-top-label {
@@ -1140,6 +1235,7 @@
    background: #061a2e;
    border-radius: 16px;
    overflow: hidden;
+   margin-bottom: 24px;
 }
 
 .medical-card-head {
@@ -1440,6 +1536,7 @@
    display: grid;
    grid-template-columns: 1.06fr 0.94fr;
    gap: 16px;
+   margin-bottom: 30px;
 }
 
 @media (max-width: 992px) {
@@ -2081,6 +2178,7 @@
 ========================================================= */
 .ai-photo-analysis-section {
    margin-top: 12px;
+   margin-bottom: 24px;
    display: grid;
    gap: 12px;
 }
@@ -2650,6 +2748,7 @@
 ========================================================= */
 .deep-metric-section {
    margin-top: 14px;
+   margin-bottom: 24px;
 }
 
 .deep-metric-header {
@@ -3008,6 +3107,7 @@
 ========================================================= */
 .regional-analysis-section {
    margin-top: 12px;
+   margin-bottom: 24px;
 }
 
 .regional-analysis-card {
@@ -3300,6 +3400,7 @@
 ========================================================= */
 .root-cause-section {
    margin-top: 14px;
+   margin-bottom: 24px;
 }
 
 .root-cause-header {
@@ -3559,6 +3660,7 @@
 ========================================================= */
 .additional-factors-section {
    margin-top: 14px;
+   margin-bottom: 24px;
 }
 
 .additional-factors-title-row {
@@ -3710,6 +3812,7 @@
 ========================================================= */
 .scalp-recovery-section {
    margin-top: 14px;
+   margin-bottom: 24px;
 }
 
 .scalp-recovery-header h3 {
@@ -3909,6 +4012,7 @@
 ========================================================= */
 .improvement-prediction-section {
    margin-top: 18px;
+   margin-bottom: 24px;
 }
 
 .improvement-prediction-header h3 {
@@ -4124,6 +4228,7 @@
 ========================================================= */
 .treatment-engine-section {
    margin-top: 18px;
+   margin-bottom: 24px;
 }
 
 .treatment-engine-header {
@@ -4368,6 +4473,7 @@
 ========================================================= */
 .personalised-plan-section {
    margin-top: 16px;
+   margin-bottom: 24px;
 
 }
 
@@ -4568,6 +4674,7 @@
 ========================================================= */
 .lifestyle-risk-section {
    margin-top: 16px;
+   margin-bottom: 24px;
    /* padding: 10px 8px 0; */
    border-radius: 18px;
    /* background:
@@ -4791,6 +4898,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
 ========================================================= */
 .nutritional-protocol-section {
    margin-top: 16px;
+   margin-bottom: 24px;
    /* padding: 8px 10px 12px; */
    border-radius: 18px;
    /* background:
@@ -5019,6 +5127,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
 ========================================================= */
 .meal-plan-section {
    margin-top: 14px;
+   margin-bottom: 24px;
 }
 
 .meal-plan-panel {
@@ -5144,6 +5253,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
 ========================================================= */
 .avoid-habits-section {
    margin-top: 14px;
+   margin-bottom: 24px;
 }
 
 .avoid-habits-panel {
@@ -5242,6 +5352,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
 ========================================================= */
 .daily-protocol-section {
    margin-top: 16px;
+   margin-bottom: 24px;
 }
 
 .daily-protocol-header {
@@ -5489,6 +5600,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
 ========================================================= */
 .stress-protocol-section {
    margin-top: 16px;
+   margin-bottom: 24px;
 }
 
 .stress-protocol-header {
@@ -5835,6 +5947,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
 ========================================================= */
 .predictive-model-section {
    margin-top: 16px;
+   margin-bottom: 24px;
 }
 
 .predictive-model-header {
@@ -6294,6 +6407,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
 ========================================================= */
 .shaft-scalp-insights-section {
    margin-top: 16px;
+   margin-bottom: 24px;
 }
 
 .shaft-scalp-insights-header {
@@ -6607,6 +6721,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
 ========================================================= */
 .blood-investigations-section {
    margin-top: 16px;
+   margin-bottom: 24px;
 }
 
 .blood-investigations-header {
@@ -6945,6 +7060,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
 ========================================================= */
 .clinical-summary-section {
    margin-top: 12px;
+   margin-bottom: 24px;
 }
 
 .clinical-summary-card {
@@ -7028,6 +7144,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
 ========================================================= */
 .recovery-journey-section {
    margin-top: 12px;
+   margin-bottom: 24px;
 }
 
 .recovery-journey-card {
@@ -7305,8 +7422,9 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    }
 
    .daily-routine-top-row {
-      flex-direction: column;
-      align-items: flex-start;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
    }
 
    .daily-routine-row p {
@@ -7317,18 +7435,27 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
       grid-template-columns: repeat(2, minmax(0, 1fr));
    }
 
+   /* Make Sunday span full width on tablet/mobile */
+   .weekly-day-card:last-child {
+      grid-column: 1 / -1;
+   }
+
    .stress-cortisol-card {
       flex-direction: column;
-      align-items: flex-start;
+      align-items: stretch;
    }
 
    .stress-cortisol-image {
-      width: 100%;
-      max-width: 180px;
+      width: 90px;
+      height: 70px;
+      float: left;
+      margin-right: 12px;
+      margin-bottom: 6px;
    }
 
+   /* Keep stress foods grid as 2 columns */
    .stress-foods-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
    }
 
    .predictive-risk-row {
@@ -7344,12 +7471,15 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
       margin-left: 14px;
    }
 
+   /* Keep predictive summary grid as 2 columns */
    .predictive-summary-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
    }
 
+   /* Keep predictive outlook card as row layout */
    .predictive-outlook-card {
-      flex-direction: column;
+      flex-direction: row;
+      align-items: flex-start;
    }
 
    .shaft-scalp-insights-summary-row {
@@ -7393,8 +7523,9 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
       padding: 12px;
    }
 
+   /* Keep weekly schedule as 2 columns with Sunday spanning full width */
    .weekly-schedule-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
    }
 
    .regional-overall-head {
@@ -8031,6 +8162,301 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    .copy-referral-btn {
       width: 100%;
       max-width: 260px;
+   }
+}
+
+/* =========================================================
+   AI Photo Analysis Not Performed Section
+========================================================= */
+.photo-analysis-not-performed-section {
+   /* max-width: 672px; */
+   margin: 60px auto;
+   margin-bottom: 0px;
+   padding: 56px 40px;
+   border-radius: 16px;
+   border: 1px dashed rgba(0, 229, 255, 0.30);
+   background: rgba(6, 26, 46, 0.80);
+   box-shadow: 0 0 40px 0 rgba(0, 229, 255, 0.02) inset, 0 0 40px 0 rgba(0, 229, 255, 0.07);
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   text-align: center;
+}
+
+.photo-analysis-icon-wrapper {
+   width: 72px;
+   height: 72px;
+   border-radius: 16px;
+   border: 1px solid rgba(0, 229, 255, 0.22);
+   background: rgba(0, 229, 255, 0.08);
+   box-shadow: 0 0 24px 0 rgba(0, 229, 255, 0.12);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-bottom: 20px;
+}
+
+.photo-analysis-icon-wrapper svg {
+   width: 32px;
+   height: 30px;
+}
+
+.photo-analysis-badge {
+   color: #F4C430;
+   text-align: center;
+   font-family: Roboto, sans-serif;
+   font-size: 10px;
+   font-weight: 700;
+   line-height: 15px;
+   letter-spacing: 1px;
+   text-transform: uppercase;
+   margin-bottom: 12px;
+}
+
+.photo-analysis-title {
+   color: #FFF;
+   text-align: center;
+   font-family: Roboto, sans-serif;
+   font-size: 20px;
+   font-weight: 700;
+   line-height: 28px;
+   margin: 0 0 16px 0;
+}
+
+.photo-analysis-description {
+   color: #9FB4D0;
+   text-align: center;
+   font-family: Roboto, sans-serif;
+   font-size: 14px;
+   font-weight: 400;
+   line-height: 22.75px;
+   margin: 0 0 32px 0;
+   max-width: 520px;
+}
+
+.accuracy-highlight {
+   color: #00E5FF;
+   font-weight: 600;
+}
+
+.accuracy-comparison-box {
+   width: 100%;
+   max-width: 448px;
+   padding: 24px 20px;
+   border-radius: 12px;
+   background: rgba(0, 26, 46, 0.5);
+   border: 1px solid rgba(0, 229, 255, 0.08);
+   margin-bottom: 32px;
+}
+
+.accuracy-row {
+   display: flex;
+   justify-content: space-between;
+   margin-bottom: 12px;
+}
+
+.accuracy-label {
+   color: #9FB4D0;
+   text-align: center;
+   font-family: Roboto, sans-serif;
+   font-size: 12px;
+   font-weight: 400;
+   line-height: 16px;
+}
+
+.progress-bar-wrapper {
+   margin-bottom: 8px;
+}
+
+.progress-bar-track {
+   width: 100%;
+   height: 8px;
+   border-radius: 9999px;
+   background: rgba(255, 255, 255, 0.08);
+   overflow: hidden;
+   position: relative;
+}
+
+.progress-bar-fill {
+   height: 100%;
+   border-radius: 9999px;
+   background: linear-gradient(90deg, #00E5FF 0%, #0284C7 100%);
+   transition: width 0.3s ease;
+}
+
+.accuracy-percentages {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.current-percentage {
+   color: #00E5FF;
+   text-align: center;
+   font-family: Roboto, sans-serif;
+   font-size: 11px;
+   font-weight: 700;
+   line-height: 16.5px;
+}
+
+.target-percentage {
+   color: #22C55E;
+   text-align: center;
+   font-family: Roboto, sans-serif;
+   font-size: 11px;
+   font-weight: 700;
+   line-height: 16.5px;
+}
+
+.add-photo-analysis-btn {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 8px;
+   width: 100%;
+   height: 56px;
+   padding: 16px 24px;
+   border-radius: 12px;
+   background: linear-gradient(101deg, #00E5FF 0%, #0284C7 100%);
+   box-shadow: 0 0 28px 0 rgba(0, 229, 255, 0.35);
+   border: none;
+   cursor: pointer;
+   transition: transform 0.2s, box-shadow 0.2s;
+   color: #041126;
+   text-align: center;
+   text-shadow: 0 0 28px rgba(0, 229, 255, 0.35);
+   font-family: Roboto, sans-serif;
+   font-size: 16px;
+   font-weight: 700;
+   line-height: 24px;
+   margin-bottom: 16px;
+}
+
+.add-photo-analysis-btn:hover {
+   transform: translateY(-2px);
+   box-shadow: 0 0 32px 0 rgba(0, 229, 255, 0.45);
+}
+
+.add-photo-analysis-btn:active {
+   transform: translateY(0);
+}
+
+.add-photo-analysis-btn svg {
+   width: 19px;
+   height: 18px;
+}
+
+.photo-analysis-footer-text {
+   color: #4A6580;
+   text-align: center;
+   font-family: Roboto, sans-serif;
+   font-size: 11px;
+   font-weight: 400;
+   line-height: 16.5px;
+   margin: 0;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+   .photo-analysis-not-performed-section {
+      margin: 40px auto;
+      padding: 40px 20px;
+   }
+
+   .photo-analysis-icon-wrapper {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 24px;
+   }
+
+   .photo-analysis-icon-wrapper svg {
+      width: 28px;
+      height: 26px;
+   }
+
+   .photo-analysis-badge {
+      margin-bottom: 16px;
+   }
+
+   .photo-analysis-title {
+      font-size: 18px;
+      line-height: 25.2px;
+      margin-bottom: 16px;
+   }
+
+   .photo-analysis-description {
+      font-size: 13px;
+      line-height: 21.125px;
+      margin-bottom: 32px;
+   }
+
+   .accuracy-comparison-box {
+      padding: 20px 16px;
+      margin-bottom: 32px;
+   }
+
+   .add-photo-analysis-btn {
+      height: 52px;
+      font-size: 15px;
+      padding: 14px 20px;
+      margin-bottom: 20px;
+   }
+}
+
+@media (max-width: 480px) {
+   .photo-analysis-not-performed-section {
+      padding: 32px 16px;
+      margin: 32px auto;
+   }
+
+   .photo-analysis-icon-wrapper {
+      width: 56px;
+      height: 56px;
+      margin-bottom: 20px;
+   }
+
+   .photo-analysis-icon-wrapper svg {
+      width: 24px;
+      height: 22px;
+   }
+
+   .photo-analysis-badge {
+      font-size: 9px;
+      letter-spacing: 0.9px;
+      margin-bottom: 14px;
+   }
+
+   .photo-analysis-title {
+      font-size: 16px;
+      line-height: 22.4px;
+      margin-bottom: 14px;
+   }
+
+   .photo-analysis-description {
+      font-size: 12px;
+      line-height: 19.5px;
+      margin-bottom: 28px;
+   }
+
+   .accuracy-comparison-box {
+      padding: 18px 14px;
+      margin-bottom: 28px;
+   }
+
+   .accuracy-label {
+      font-size: 11px;
+      line-height: 14.667px;
+   }
+
+   .add-photo-analysis-btn {
+      height: 48px;
+      font-size: 14px;
+      margin-bottom: 16px;
+   }
+
+   .photo-analysis-footer-text {
+      font-size: 10px;
+      line-height: 15px;
    }
 }
 
@@ -8995,7 +9421,6 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    }
 
    .nutritional-protocol-header,
-   .daily-protocol-header,
    .personalised-plan-header,
    .lifestyle-risk-header {
       flex-direction: column;
@@ -9003,12 +9428,19 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
       gap: 8px;
    }
 
+   /* Keep daily-protocol-header as row layout */
+   .daily-protocol-header {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 12px;
+   }
+
    .nutritional-protocol-panel,
    .meal-plan-panel,
    .avoid-habits-panel,
    .daily-routine-panel,
    .weekly-schedule-panel {
-      padding: 12px;
+      padding: 21px;
    }
 
    .avoid-habits-panel {
@@ -9016,9 +9448,14 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    }
 
    .nutritional-card-grid,
-   .avoid-habits-grid,
-   .weekly-schedule-grid {
+   .avoid-habits-grid {
       grid-template-columns: 1fr;
+   }
+
+   /* Keep weekly schedule as 2 columns on mobile with Sunday full width */
+   .weekly-schedule-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
    }
 
    .avoid-habits-grid {
@@ -9174,5 +9611,1217 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
 
    .nutritional-card-desc {
       font-size: 10px;
+   }
+}
+
+/* =========================================================
+   Daily Protocol Section - Mobile Responsive
+========================================================= */
+@media (max-width: 768px) {
+   /* Daily Protocol Header */
+   .daily-protocol-header {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 12px;
+   }
+
+   .daily-protocol-title-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+   }
+
+   .daily-protocol-title-icon svg {
+      width: 16px;
+      height: 16px;
+   }
+
+   .daily-protocol-head-copy p {
+      font-size: 11px;
+      line-height: 14px;
+      letter-spacing: 1px;
+   }
+
+   .daily-protocol-head-copy h3 {
+      font-size: 16px;
+      line-height: 22px;
+   }
+
+   /* Daily Routine Panel */
+   .daily-routine-panel {
+      margin-top: 12px;
+      padding: 16px;
+      border-radius: 14px;
+   }
+
+   .daily-routine-top-row {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+   }
+
+   .daily-routine-top-row h4 {
+      color: #fff;
+      font-family: Roboto, sans-serif;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 20px;
+   }
+
+   .daily-routine-priority {
+      height: 22px;
+      padding: 0 10px;
+      font-size: 9px;
+      line-height: 14px;
+   }
+
+   .daily-routine-list {
+      margin-top: 10px;
+   }
+
+   .daily-routine-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(5, 67, 88, 0.6);
+   }
+
+   .daily-routine-row:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+   }
+
+   .daily-routine-dot {
+      width: 6px;
+      height: 6px;
+      margin-top: 6px;
+      flex: 0 0 6px;
+   }
+
+   .daily-routine-dot svg {
+      width: 6px;
+      height: 6px;
+   }
+
+   .daily-routine-row > p {
+      display: block;
+      margin: 0;
+      flex: 1;
+      min-width: 0;
+   }
+
+   .daily-routine-label {
+      display: inline;
+      color: #f4c430;
+      font-family: Roboto, sans-serif;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 15px;
+      letter-spacing: 1px;
+      margin-right: 8px;
+   }
+
+   .daily-routine-row p p {
+      display: inline;
+      color: #fff;
+      font-family: Roboto, sans-serif;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 16px;
+   }
+
+   .daily-routine-note {
+      display: inline;
+      color: #9fb4d0;
+      font-family: Roboto, sans-serif;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 16px;
+   }
+
+   /* Weekly Schedule Panel */
+   .weekly-schedule-panel {
+      margin-top: 12px;
+      padding: 16px;
+      border-radius: 14px;
+   }
+
+   .weekly-schedule-panel h4 {
+      color: #fff;
+      font-family: Roboto, sans-serif;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 20px;
+      margin-bottom: 4px;
+   }
+
+   .weekly-schedule-grid {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+   }
+
+   /* Make Sunday span full width */
+   .weekly-day-card:last-child {
+      grid-column: 1 / -1;
+   }
+
+   .weekly-day-card {
+      border-radius: 10px;
+      border: 1px solid #054358;
+      background: #041126;
+      padding: 12px 10px 10px;
+   }
+
+   .weekly-day-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(5, 67, 88, 0.6);
+   }
+
+   .weekly-day-head h5 {
+      margin: 0;
+      color: #f4c430;
+      font-family: Roboto, sans-serif;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 15px;
+      letter-spacing: 0.25px;
+   }
+
+   .weekly-day-lock {
+      padding: 4px;
+   }
+
+   .weekly-day-lock svg {
+      width: 6px;
+      height: 7px;
+   }
+
+   .weekly-day-card ul {
+      list-style: none;
+      margin: 10px 0 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+   }
+
+   .weekly-day-card li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+   }
+
+   .weekly-task-dot {
+      display: inline-flex;
+      margin-top: 4px;
+      flex: 0 0 auto;
+   }
+
+   .weekly-task-dot svg {
+      width: 4px;
+      height: 4px;
+   }
+
+   .weekly-day-card li span:last-child {
+      overflow: hidden;
+      color: #9fb4d0;
+      text-overflow: ellipsis;
+      font-family: Roboto, sans-serif;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 12.5px;
+   }
+
+   /* =========================================================
+      Stress Protocol Section - Mobile Responsive
+   ========================================================= */
+
+   /* Stress Protocol Header */
+   .stress-protocol-header {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 12px;
+   }
+
+   .stress-protocol-title-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+   }
+
+   .stress-protocol-title-icon svg {
+      width: 16px;
+      height: 16px;
+   }
+
+   /* Stress Cortisol Card */
+   .stress-cortisol-card {
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: 14px;
+      flex-direction: column;
+      align-items: stretch;
+   }
+
+   .stress-cortisol-top {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+   }
+
+   .stress-cortisol-icon {
+      width: 26px;
+      height: 26px;
+   }
+
+   .stress-cortisol-icon svg {
+      width: 14px;
+      height: 14px;
+   }
+
+   .stress-cortisol-title-wrap h4 {
+      font-size: 14px;
+      line-height: 20px;
+   }
+
+   .stress-level-badge {
+      height: 22px;
+      padding: 0 10px;
+      font-size: 9px;
+   }
+
+   .stress-img-info-warpper {
+      display: block;
+      margin-top: 10px;
+   }
+
+   .stress-cortisol-image {
+      width: 90px;
+      height: 70px;
+      border-radius: 10px;
+      margin-top: 0;
+      float: left;
+      margin-right: 12px;
+      margin-bottom: 6px;
+   }
+
+   .stress-cortisol-main .stress-img-info-warpper > p {
+      font-size: 12px;
+      line-height: 19.5px;
+      margin: 0;
+   }
+
+   /* Stress Techniques Section */
+   .stress-techniques-list {
+      margin-top: 10px;
+      gap: 10px;
+   }
+
+   .stress-technique-card {
+      padding: 12px;
+   }
+
+   .stress-technique-head {
+      gap: 10px;
+   }
+
+   .stress-technique-icon {
+      width: 26px;
+      height: 26px;
+   }
+
+   .stress-technique-icon svg {
+      width: 12px;
+      height: 12px;
+   }
+
+   .stress-technique-how {
+      margin: 8px 0 0;
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+      flex-wrap: wrap;
+   }
+
+   .stress-technique-how > span:first-child {
+      flex-shrink: 0;
+   }
+
+   .stress-technique-how strong {
+      flex-shrink: 0;
+   }
+
+   .stress-technique-how em {
+      flex: 1;
+      min-width: 0;
+   }
+
+   /* Stress Foods Grid */
+   .stress-foods-grid {
+      margin-top: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+   }
+
+   .stress-food-card {
+      border-radius: 10px;
+      padding: 10px;
+   }
+
+   .stress-food-head {
+      gap: 8px;
+   }
+
+   .stress-food-icon svg {
+      width: 12px;
+      height: 12px;
+   }
+
+   /* =========================================================
+      Predictive Model Section - Mobile Responsive
+   ========================================================= */
+
+   /* Predictive Model Header */
+   .predictive-model-header {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 12px;
+   }
+
+   .predictive-model-title-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+   }
+
+   .predictive-model-title-icon svg {
+      width: 16px;
+      height: 16px;
+   }
+
+   .predictive-model-head-copy h3 {
+      font-size: 18px;
+      line-height: 28px;
+   }
+
+   /* Predictive Chart Card */
+   .predictive-model-chart-card {
+      padding: 12px;
+      border-radius: 14px;
+   }
+
+   .predictive-model-chart-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+   }
+
+   .predictive-model-legend {
+      gap: 12px;
+      flex-wrap: wrap;
+   }
+
+   .predictive-model-scale {
+      margin-top: 10px;
+   }
+
+   .predictive-risk-row {
+      grid-template-columns: 50px minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+   }
+
+   .predictive-risk-bars {
+      gap: 4px;
+   }
+
+   .predictive-risk-track {
+      height: 8px;
+   }
+
+   .predictive-risk-values {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+      grid-column: 3;
+   }
+
+   .predictive-risk-value-red,
+   .predictive-risk-value-green {
+      white-space: nowrap;
+   }
+
+   /* Predictive Summary Cards */
+   .predictive-summary-grid {
+      margin-top: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+   }
+
+   .predictive-summary-card {
+      padding: 12px 10px;
+      border-radius: 14px;
+   }
+
+   .predictive-summary-card p {
+      font-size: 10px;
+      line-height: 15px;
+      letter-spacing: 1px;
+   }
+
+   .predictive-summary-card h5 {
+      font-size: 30px;
+      line-height: 36px;
+   }
+
+   .predictive-summary-card h5 span {
+      font-size: 18px;
+      line-height: 28px;
+   }
+
+   .predictive-summary-card em {
+      font-size: 10px;
+      line-height: 15px;
+   }
+
+   /* Predictive Factors Card */
+   .predictive-factors-card {
+      padding: 12px;
+      border-radius: 14px;
+   }
+
+   .predictive-factor-row {
+      gap: 8px;
+   }
+
+   .predictive-factor-left {
+      gap: 8px;
+   }
+
+   .predictive-factor-subnote {
+      margin-left: 18px;
+   }
+
+   /* Predictive Outlook Card */
+   .predictive-outlook-card {
+      padding: 12px;
+      border-radius: 14px;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 10px;
+   }
+
+   .predictive-outlook-icon {
+      width: 24px;
+      height: 24px;
+      flex: 0 0 24px;
+   }
+
+   .predictive-outlook-icon svg {
+      width: 12px;
+      height: 12px;
+   }
+
+   .predictive-outlook-copy {
+      flex: 1;
+      min-width: 0;
+   }
+
+   /* =========================================================
+      Hair Shaft & Scalp Condition Insights - Responsive
+   ========================================================= */
+   .shaft-scalp-insights-section {
+      margin-top: 14px;
+   }
+
+   .shaft-scalp-insights-header {
+      gap: 12px;
+   }
+
+   .shaft-scalp-insights-header-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+   }
+
+   .shaft-scalp-insights-header-icon svg {
+      width: 16px;
+      height: 16px;
+   }
+
+   .shaft-scalp-insights-head-copy h3 {
+      font-size: 18px;
+      line-height: 28px;
+   }
+
+   .shaft-scalp-insights-head-copy p {
+      font-size: 12px;
+      line-height: 16px;
+   }
+
+   .shaft-scalp-insights-card-list {
+      margin-top: 10px;
+      gap: 10px;
+   }
+
+   .shaft-scalp-insights-card {
+      padding: 12px;
+      border-radius: 14px;
+   }
+
+   .shaft-scalp-insights-card-head {
+      gap: 8px;
+   }
+
+   .shaft-scalp-insights-title-wrap {
+      gap: 8px;
+   }
+
+   .shaft-scalp-insights-item-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+   }
+
+   .shaft-scalp-insights-item-icon svg {
+      width: 12px;
+      height: 12px;
+   }
+
+   .shaft-scalp-insights-title-wrap h4 {
+      font-size: 14px;
+      line-height: 20px;
+   }
+
+   .shaft-scalp-insights-status {
+      height: 24px;
+      padding: 0 10px;
+      font-size: 11px;
+      line-height: 15px;
+   }
+
+   /* Image positioning for cards with image */
+   .shaft-scalp-insights-card-has-image {
+      position: relative;
+   }
+
+   .shaft-scalp-insights-card-has-image .shaft-scalp-insights-summary-row {
+      padding-right: 100px;
+   }
+
+   .shaft-scalp-insights-card-has-image .shaft-scalp-insights-image-wrap {
+      position: absolute;
+      top: 52px;
+      right: 12px;
+   }
+
+   .shaft-scalp-insights-card-has-image .shaft-scalp-insights-action-block {
+      padding-right: 0;
+   }
+
+   .shaft-scalp-insights-image-wrap {
+      width: 80px;
+      max-width: 80px;
+      margin-top: -20px;
+   }
+
+   .shaft-scalp-insights-image {
+      width: 80px;
+      height: 100px;
+      border-radius: 10px;
+   }
+
+   .shaft-scalp-insights-image-wrap figcaption {
+      font-size: 8px;
+      line-height: 10px;
+   }
+
+   .shaft-scalp-insights-summary-row {
+      margin-top: 8px;
+   }
+
+   .shaft-scalp-insights-summary-line {
+      gap: 6px;
+      font-size: 12px;
+      line-height: 19.5px;
+   }
+
+   .shaft-scalp-insights-summary-icon {
+      margin-top: 3px;
+   }
+
+   .shaft-scalp-insights-summary-icon svg {
+      width: 12px;
+      height: 12px;
+   }
+
+   .shaft-scalp-insights-action-block {
+      margin-top: 10px;
+      padding-top: 10px;
+      /* padding-right: 100px; */
+   }
+
+   .shaft-scalp-insights-action-title {
+      font-size: 10px;
+      line-height: 15px;
+      letter-spacing: 1px;
+   }
+
+   .shaft-scalp-insights-action-list {
+      margin-top: 8px;
+      gap: 6px;
+   }
+
+   .shaft-scalp-insights-action-list li {
+      gap: 6px;
+   }
+
+   .shaft-scalp-insights-action-number {
+      font-size: 10px;
+      line-height: 15px;
+   }
+
+   .shaft-scalp-insights-action-list li span:last-child {
+      font-size: 12px;
+      line-height: 19.5px;
+   }
+
+   /* Note Card */
+   .shaft-scalp-insights-note-card {
+      margin-top: 10px;
+      padding: 10px 12px 12px;
+      border-radius: 14px;
+   }
+
+   .shaft-scalp-insights-note-title {
+      gap: 8px;
+      font-size: 10px;
+      line-height: 15px;
+      letter-spacing: 1px;
+   }
+
+   .shaft-scalp-insights-note-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+   }
+
+   .shaft-scalp-insights-note-icon svg {
+      width: 12px;
+      height: 12px;
+   }
+
+   .shaft-scalp-insights-note-copy {
+      margin-top: 6px;
+      font-size: 12px;
+      line-height: 19.5px;
+   }
+
+   /* =========================================================
+      Recommended Blood Investigations - Responsive
+   ========================================================= */
+   .blood-investigations-section {
+      margin-top: 14px;
+   }
+
+   .blood-investigations-header {
+      gap: 12px;
+   }
+
+   .blood-investigations-title-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+   }
+
+   .blood-investigations-title-icon svg {
+      width: 16px;
+      height: 16px;
+   }
+
+   .blood-investigations-title-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+   }
+
+   .blood-investigations-title-row h3 {
+      font-size: 18px;
+      line-height: 28px;
+   }
+
+   .blood-investigations-chip {
+      height: 20px;
+      padding: 0 8px;
+      font-size: 8px;
+      line-height: 12px;
+      letter-spacing: 0.8px;
+   }
+
+   .blood-investigations-head-copy p {
+      font-size: 12px;
+      line-height: 16px;
+   }
+
+   .blood-investigations-divider {
+      margin-top: 8px;
+   }
+
+   /* Clinical Note Card */
+   .blood-investigations-note-card {
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 14px;
+   }
+
+   .blood-investigations-note-title {
+      gap: 8px;
+      font-size: 10px;
+      line-height: 15px;
+      letter-spacing: 1px;
+   }
+
+   .blood-investigations-note-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+   }
+
+   .blood-investigations-note-icon svg {
+      width: 12px;
+      height: 12px;
+   }
+
+   .blood-investigations-note-copy {
+      margin-top: 8px;
+      font-size: 12px;
+      line-height: 19.5px;
+   }
+
+   /* Blood Test Cards Grid - Single Column */
+   .blood-investigations-grid {
+      margin-top: 10px;
+      grid-template-columns: 1fr;
+      gap: 10px;
+   }
+
+   .blood-investigations-card {
+      padding: 12px;
+      border-radius: 14px;
+   }
+
+   .blood-investigations-card-head {
+      gap: 10px;
+   }
+
+   .blood-investigations-card-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+   }
+
+   .blood-investigations-card-icon svg {
+      width: 12px;
+      height: 12px;
+   }
+
+   .blood-investigations-card-head h4 {
+      font-size: 14px;
+      line-height: 17.5px;
+   }
+
+   .blood-investigations-card-desc {
+      margin-top: 8px;
+      font-size: 12px;
+      line-height: 19.5px;
+      min-height: auto;
+   }
+
+   .blood-investigations-card-foot {
+      margin-top: 10px;
+      padding-top: 8px;
+      gap: 8px;
+   }
+
+   .blood-investigations-status-label {
+      font-size: 10px;
+      line-height: 15px;
+      letter-spacing: 1px;
+   }
+
+   .blood-investigations-status-pill {
+      height: 22px;
+      padding: 0 10px;
+      font-size: 10px;
+      line-height: 15px;
+      letter-spacing: 0.5px;
+   }
+
+   /* Pro Tip Card */
+   .blood-investigations-tip-card {
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 14px;
+   }
+
+   .blood-investigations-tip-title {
+      gap: 8px;
+      font-size: 10px;
+      line-height: 15px;
+      letter-spacing: 1px;
+   }
+
+   .blood-investigations-tip-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 10px;
+   }
+
+   .blood-investigations-tip-icon svg {
+      width: 12px;
+      height: 12px;
+   }
+
+   .blood-investigations-tip-copy {
+      margin-top: 8px;
+      font-size: 12px;
+      line-height: 19.5px;
+   }
+
+   /* =========================================================
+      Clinical Summary - Responsive
+   ========================================================= */
+   .clinical-summary-section {
+      margin-top: 10px;
+   }
+
+   .clinical-summary-card {
+      padding: 14px 16px 12px;
+      border-radius: 16px;
+   }
+
+   .clinical-summary-chip {
+      height: 26px;
+      padding: 0 12px;
+      font-size: 9px;
+      line-height: 13.5px;
+      letter-spacing: 0.9px;
+   }
+
+   .clinical-summary-list {
+      margin-top: 10px;
+   }
+
+   .clinical-summary-item {
+      padding: 12px 0;
+      font-size: 12px;
+      line-height: 19.5px;
+   }
+
+   .clinical-summary-item+.clinical-summary-item {
+      border-top: none;
+      padding-top: 0;
+   }
+
+   .clinical-summary-item strong {
+      font-size: 12px;
+      line-height: 19.5px;
+   }
+
+   /* =========================================================
+      Begin Your Recovery Journey - Responsive
+   ========================================================= */
+   .recovery-journey-section {
+      margin-top: 10px;
+   }
+
+   .recovery-journey-card {
+      padding: 16px 14px 14px;
+      border-radius: 14px;
+   }
+
+   .recovery-journey-header h3 {
+      font-size: 24px;
+      line-height: 32px;
+      font-style: normal;
+   }
+
+   .recovery-journey-header p {
+      margin-top: 6px;
+      font-size: 12px;
+      line-height: 18px;
+   }
+
+   .recovery-journey-actions-grid {
+      margin-top: 16px;
+      grid-template-columns: 1fr;
+      gap: 10px;
+   }
+
+   .recovery-journey-action-btn {
+      height: 52px;
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 20px;
+   }
+
+   .recovery-journey-action-btn-primary {
+      font-size: 16px;
+      line-height: 24px;
+   }
+
+   .recovery-journey-action-icon svg {
+      width: 16px;
+      height: 16px;
+   }
+
+   .recovery-journey-download-btn {
+      margin-top: 12px;
+      height: 52px;
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 20px;
+   }
+
+   .recovery-journey-retake-btn {
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 20px;
+   }
+
+   /* =========================================================
+      Share Your Results - Responsive
+   ========================================================= */
+   .share-results-section {
+      margin-top: 10px;
+      padding: 24px 16px;
+      border-radius: 14px;
+   }
+
+   .share-icon-main {
+      width: 44px;
+      height: 44px;
+   }
+
+   .share-icon-main svg {
+      width: 20px;
+      height: 20px;
+   }
+
+   .share-header h2 {
+      font-size: 20px;
+      line-height: 28px;
+   }
+
+   .share-header p {
+      font-size: 12px;
+      line-height: 19.5px;
+   }
+
+   .share-header p br {
+      display: none;
+   }
+
+   .share-actions-grid {
+      margin-top: 16px;
+      flex-direction: column;
+      gap: 10px;
+   }
+
+   .share-btn {
+      width: 100%;
+      height: 52px;
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 20px;
+   }
+
+   .share-btn svg {
+      width: 16px;
+      height: 16px;
+   }
+
+   .share-btn-whatsapp svg {
+      width: 25px;
+      height: 25px;
+   }
+
+   /* Referral Card */
+   .referral-card {
+      margin-top: 12px;
+      padding: 16px;
+      border-radius: 14px;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+   }
+
+   .referral-icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      flex-shrink: 0;
+      margin-bottom: 12px;
+   }
+
+   .referral-icon-box svg {
+      width: 40px;
+      height: 40px;
+   }
+
+   .referral-content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+   }
+
+   .referral-text-stack {
+      text-align: center;
+   }
+
+   .referral-text-stack h3 {
+      font-size: 16px;
+      line-height: 24px;
+   }
+
+   .referral-text-stack p {
+      margin-top: 8px;
+      font-size: 12px;
+      line-height: 18px;
+   }
+
+   .copy-referral-btn {
+      margin-top: 16px;
+      width: 100%;
+      height: 44px;
+      border-radius: 10px;
+      font-size: 12px;
+      line-height: 16px;
+   }
+
+   .share-disclaimer {
+      margin-top: 14px;
+      font-size: 11px;
+      line-height: 16px;
+   }
+
+   /* =========================================================
+      Legal Notice Section - Responsive
+   ========================================================= */
+   .legal-notice-section {
+      margin-top: 24px;
+      padding: 0 16px 20px;
+   }
+
+   .legal-notice-header {
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+   }
+
+   .legal-icon-wrap {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+   }
+
+   .legal-icon-wrap svg {
+      width: 18px;
+      height: 18px;
+   }
+
+   .legal-notice-header h3 {
+      font-size: 16px;
+      line-height: 24px;
+   }
+
+   .legal-notice-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      height: auto;
+   }
+
+   .legal-card {
+      width: 100%;
+      height: auto;
+      padding: 16px;
+      border-radius: 14px;
+      gap: 12px;
+   }
+
+   .legal-card-head {
+      gap: 12px;
+   }
+
+   .legal-card-icon {
+      width: 32px;
+      height: 32px;
+   }
+
+   .legal-card-icon svg {
+      width: 28px;
+      height: 28px;
+   }
+
+   .legal-card-head h4 {
+      font-size: 12px !important;
+      line-height: 18px !important;
+   }
+
+   .legal-card-body {
+      font-size: 11px !important;
+      line-height: 16px !important;
+   }
+
+   /* =========================================================
+      Footer - Responsive
+   ========================================================= */
+   .report-footer {
+      margin: 24px auto 32px;
+      padding: 16px;
+      height: auto;
+      flex-direction: column;
+      gap: 12px;
+   }
+
+   .footer-links {
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 6px;
+   }
+
+   .footer-link {
+      font-size: 10px;
+      white-space: nowrap;
+   }
+
+   .footer-separator {
+      font-size: 10px;
+   }
+
+   .footer-copyright {
+      font-size: 10px;
+      text-align: center;
    }
 }

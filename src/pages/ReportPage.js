@@ -5,72 +5,79 @@ const headerLogoSvg = `<svg width="214" height="39" viewBox="0 0 214 39" fill="n
 
 export default function ReportPage(props) {
 	useEffect(() => {
-		if (props?.setTitle) props.setTitle("/report");
+		if (props?.setTitle) props.setTitle("Your Hair Intelligence Report");
 	}, [props]);
 
 	return (
 		<div className="report-page-screen">
-			{/* Header: top navigation row */}
-			<header className="report-page-header container">
-				<div className="header-left-group">
-					<button type="button" className="back-link-btn" aria-label="Back">
-						<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-							<path d="M6.65598 9.16667H16.4V10.8333H6.65598L10.96 15.3L9.82398 16.4833L3.59998 10L9.82398 3.51667L10.96 4.7L6.65598 9.16667Z" fill="#9FB4D0"/>
-						</svg>
-						<span>Back</span>
-					</button>
-					<span
-						className="report-brand-logo-svg"
-						role="img"
-						aria-label="Hairsncares"
-						dangerouslySetInnerHTML={{ __html: headerLogoSvg }}
-					/>
+			{/* New Structured Header for Mobile/Desktop flexibility */}
+			<header className="report-main-header container">
+				<div className="header-top-row">
+					<div className="header-logo-section">
+						<button type="button" className="back-link-btn desktop-only" aria-label="Back">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M6.65598 9.16667H16.4V10.8333H6.65598L10.96 15.3L9.82398 16.4833L3.59998 10L9.82398 3.51667L10.96 4.7L6.65598 9.16667Z" fill="#9FB4D0" />
+							</svg>
+						</button>
+						<span
+							className="report-brand-logo-svg"
+							role="img"
+							aria-label="Hairsncares"
+							dangerouslySetInnerHTML={{ __html: headerLogoSvg }}
+						/>
+					</div>
+
+					<div className="header-actions-section">
+						<span className="top-chip">
+							<svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+								<circle cx="4" cy="4" r="4" fill="#00E5FF" />
+							</svg>
+							Hair Intelligence Report
+						</span>
+						<button type="button" className="download-report-btn desktop-only">
+							<span>Download Report</span>
+							<svg width="21" height="20" viewBox="0 0 21 20" fill="none">
+								<path d="M11.2471 8.33333H15.4128L10.414 13.3333L5.41526 8.33333H9.58089V2.5H11.2471V8.33333ZM3.74901 15.8333H17.079V10H18.7453V16.6667C18.7453 16.9 18.6647 17.0972 18.5037 17.2583C18.3426 17.4194 18.1454 17.5 17.9121 17.5H2.91589C2.68261 17.5 2.48544 17.4194 2.32437 17.2583C2.1633 17.0972 2.08276 16.9 2.08276 16.6667V10H3.74901V15.8333Z" fill="#9FB4D0" />
+							</svg>
+						</button>
+					</div>
 				</div>
 
-				<div className="header-center-group">
-					<span className="top-chip">
-						<svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-							<path d="M0 4C0 1.79086 1.79086 0 4 0C6.20914 0 8 1.79086 8 4C8 6.20914 6.20914 8 4 8C1.79086 8 0 6.20914 0 4Z" fill="#00E5FF"/>
-						</svg>
-						Hair Intelligence Report
-					</span>
-				</div>
-
-				<div className="header-right-group">
-					<button type="button" className="download-report-btn">
-						<span>Download Report</span>
-						<svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-							<path d="M11.2471 8.33333H15.4128L10.414 13.3333L5.41526 8.33333H9.58089V2.5H11.2471V8.33333ZM3.74901 15.8333H17.079V10H18.7453V16.6667C18.7453 16.9 18.6647 17.0972 18.5037 17.2583C18.3426 17.4194 18.1454 17.5 17.9121 17.5H2.91589C2.68261 17.5 2.48544 17.4194 2.32437 17.2583C2.1633 17.0972 2.08276 16.9 2.08276 16.6667V10H3.74901V15.8333Z" fill="#9FB4D0"/>
-						</svg>
-					</button>
+				<div className="header-bottom-meta">
+					<div className="meta-left-group">
+						<span className="status-badge-highlight">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+								<rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+								<line x1="8" y1="21" x2="16" y2="21"></line>
+								<line x1="12" y1="17" x2="12" y2="21"></line>
+								<path d="M11 9l1 1l1-1M12 11v2"></path>
+								<path d="M17 5l-1 1M18 9l-1-1M7 5l1 1M6 9l1-1"></path>
+							</svg>
+							AI Assessment Complete
+						</span>
+						<span className="meta-date-chip">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9FB4D0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+								<rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+								<line x1="16" y1="2" x2="16" y2="6"></line>
+								<line x1="8" y1="22" x2="8" y2="6"></line>
+								<line x1="3" y1="10" x2="21" y2="10"></line>
+							</svg>
+							Mar 31, 2026
+						</span>
+					</div>
+					
+					<div className="meta-right-group">
+						<button className="mobile-download-square-btn" aria-label="Download PDF">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+								<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+								<polyline points="7 10 12 15 17 10"></polyline>
+								<line x1="12" y1="15" x2="12" y2="3"></line>
+							</svg>
+						</button>
+						<span className="report-id-text desktop-only">Report ID: TS-2026-A483921</span>
+					</div>
 				</div>
 			</header>
-
-			{/* Header: secondary metadata row */}
-			<div className="report-meta-row container">
-				<div className="meta-left">
-					<span className="meta-highlight">
-						<svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-							<path d="M9.86 4.81L9.73 5.1C9.70333 5.16667 9.65833 5.21167 9.595 5.235C9.53167 5.25833 9.46833 5.25833 9.405 5.235C9.34167 5.21167 9.29667 5.16667 9.27 5.1L9.14 4.81C9.03333 4.56333 8.88333 4.34167 8.69 4.145C8.49667 3.94833 8.27667 3.79667 8.03 3.69L7.65 3.52C7.58333 3.49333 7.53833 3.44667 7.515 3.38C7.49167 3.31333 7.49167 3.24667 7.515 3.18C7.53833 3.11333 7.58333 3.06667 7.65 3.04L8.01 2.88C8.26333 2.76667 8.48833 2.61 8.685 2.41C8.88167 2.21 9.03333 1.98 9.14 1.72L9.26 1.41C9.29333 1.34333 9.34167 1.29667 9.405 1.27C9.46833 1.24333 9.53167 1.24333 9.595 1.27C9.65833 1.29667 9.70667 1.34333 9.74 1.41L9.86 1.72C9.96667 1.98 10.1183 2.21 10.315 2.41C10.5117 2.61 10.7367 2.76667 10.99 2.88L11.35 3.04C11.4167 3.06667 11.4617 3.11333 11.485 3.18C11.5083 3.24667 11.5083 3.31333 11.485 3.38C11.4617 3.44667 11.4167 3.49333 11.35 3.52L10.97 3.69C10.7233 3.79667 10.5033 3.94833 10.31 4.145C10.1167 4.34167 9.96667 4.56333 9.86 4.81ZM3 2.75C2.82 2.75 2.65333 2.795 2.5 2.885C2.34667 2.975 2.225 3.09667 2.135 3.25C2.045 3.40333 2 3.57 2 3.75V8.75C2 8.93 2.045 9.09667 2.135 9.25C2.225 9.40333 2.34667 9.525 2.5 9.615C2.65333 9.705 2.82 9.75 3 9.75H9C9.18 9.75 9.34667 9.705 9.5 9.615C9.65333 9.525 9.775 9.40333 9.865 9.25C9.955 9.09667 10 8.93 10 8.75V6.25H11V8.75C11 9.11 10.91 9.44333 10.73 9.75C10.55 10.0567 10.3067 10.3 10 10.48C9.69333 10.66 9.36 10.75 9 10.75H3C2.64 10.75 2.30667 10.66 2 10.48C1.69333 10.3 1.45 10.0567 1.27 9.75C1.09 9.44333 1 9.11 1 8.75V3.75C1 3.39 1.09 3.05667 1.27 2.75C1.45 2.44333 1.69333 2.2 2 2.02C2.30667 1.84 2.64 1.75 3 1.75H6.5V2.75H3Z" fill="#00E5FF"/>
-						</svg>
-						AI Diagnostic Complete
-					</span>
-					<span className="meta-muted">
-						<svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-							<path d="M4.75 1V2H7.75V1H8.75V2H10.75C10.89 2 11.0083 2.04833 11.105 2.145C11.2017 2.24167 11.25 2.36 11.25 2.5V10.5C11.25 10.64 11.2017 10.7583 11.105 10.855C11.0083 10.9517 10.89 11 10.75 11H1.75C1.61 11 1.49167 10.9517 1.395 10.855C1.29833 10.7583 1.25 10.64 1.25 10.5V2.5C1.25 2.36 1.29833 2.24167 1.395 2.145C1.49167 2.04833 1.61 2 1.75 2H3.75V1H4.75ZM10.25 6H2.25V10H10.25V6ZM3.75 3H2.25V5H10.25V3H8.75V4H7.75V3H4.75V4H3.75V3Z" fill="#9FB4D0"/>
-						</svg>
-						Generated: Mar 18, 2026
-					</span>
-				</div>
-				<div className="meta-right">
-					<span className="meta-muted">
-						<svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-							<path d="M8.91009 6.43V6.93C8.91009 7.62333 8.83009 8.3 8.67009 8.96C8.51009 9.62 8.27342 10.2533 7.96009 10.86L7.84009 11.07L6.97009 10.58C7.55675 9.52 7.87009 8.38 7.91009 7.16V6.43H8.91009ZM5.91009 4.93H6.91009V7.12C6.89009 7.81333 6.76509 8.48167 6.53509 9.125C6.30509 9.76833 5.98009 10.36 5.56009 10.9L5.45009 11.04L4.67009 10.41C5.05675 9.94333 5.35509 9.43 5.56509 8.87C5.77509 8.31 5.89009 7.72667 5.91009 7.12V4.93ZM6.41009 2.93C6.86342 2.93 7.28175 3.04333 7.66509 3.27C8.04842 3.49667 8.35175 3.8 8.57509 4.18C8.79842 4.56 8.91009 4.97667 8.91009 5.43H7.91009C7.91009 5.16333 7.84342 4.915 7.71009 4.685C7.57675 4.455 7.39509 4.27167 7.16509 4.135C6.93509 3.99833 6.68509 3.93 6.41509 3.93C6.14509 3.93 5.89509 3.99833 5.66509 4.135C5.43509 4.27167 5.25175 4.455 5.11509 4.685C4.97842 4.915 4.91009 5.16333 4.91009 5.43V6.93C4.91009 7.49 4.81175 8.02667 4.61509 8.54C4.41842 9.05333 4.14009 9.51333 3.78009 9.92L3.67009 10.04L2.95009 9.35C3.24342 9.04333 3.47175 8.695 3.63509 8.305C3.79842 7.915 3.89009 7.50667 3.91009 7.08V5.43C3.91009 4.97667 4.02342 4.56 4.25009 4.18C4.47675 3.8 4.78009 3.49667 5.16009 3.27C5.54009 3.04333 5.95675 2.93 6.41009 2.93ZM6.41009 0.929999C7.23009 0.929999 7.98675 1.13667 8.68009 1.55C9.36009 1.94333 9.90009 2.48 10.3001 3.16C10.7068 3.86 10.9101 4.61667 10.9101 5.43V6.93C10.9101 7.77667 10.8101 8.61 10.6101 9.43L10.5401 9.7L9.58009 9.44C9.78009 8.71333 9.89009 7.97333 9.91009 7.22V6.93V5.43C9.91009 4.79667 9.75009 4.21 9.43009 3.67C9.12342 3.14333 8.70675 2.72333 8.18009 2.41C7.63342 2.09 7.04342 1.93 6.41009 1.93C6.02342 1.93 5.65175 1.99167 5.29509 2.115C4.93842 2.23833 4.61342 2.41 4.32009 2.63L3.60009 1.92C3.99342 1.60667 4.42675 1.36333 4.90009 1.19C5.38675 1.01667 5.89009 0.929999 6.41009 0.929999ZM2.90009 2.62L3.61009 3.34C3.39675 3.62 3.23009 3.92833 3.11009 4.265C2.99009 4.60167 2.92342 4.95 2.91009 5.31V6.43C2.91009 6.99667 2.78342 7.52667 2.53009 8.02L2.46009 8.17L1.59009 7.67C1.78342 7.33 1.89009 6.96667 1.91009 6.58V6.43V5.43C1.91009 4.91 1.99675 4.40667 2.17009 3.92C2.34342 3.44667 2.58675 3.01333 2.90009 2.62Z" fill="#9FB4D0"/>
-						</svg>
-						Report ID: TS-2026-A483921
-					</span>
-				</div>
-			</div>
 
 			{/* Main report body */}
 			<TestReport />

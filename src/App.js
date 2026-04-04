@@ -84,6 +84,7 @@ import ChennaiHairTreatmentPage from "./pages/ChennaiHairTreatmentPage";
 import HyderabadHairTreatmentPage from "./pages/HyderabadHairTreatmentPage";
 import HairAssessmentPrep from "./features/hair-assessment/HairAssessmentPrep";
 import HairAssessmentFlow from "./features/hair-assessment/HairAssessmentFlow";
+import ReportPage from "./pages/ReportPage";
 
 
 
@@ -195,6 +196,7 @@ function App() {
             <Route path="/success/:id" element={<Success />} />
             <Route path="/failure/:id" element={<Failure />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/report" element={<ReportPage />} />
 
             {/* Non-duplicate static pages */}
             <Route path="/take-hair-test" element={<HairTestPage setTitle={setTitle} />} />
@@ -243,7 +245,7 @@ function App() {
             {/* Locations */}
             <Route path="/online-hair-loss-treatment-bangalore" element={<BangaloreHairTreatmentPage setTitle={setTitle} cart={cart} setCart={setCart} />} />
             <Route path="/online-hair-loss-treatment-delhi" element={<DelhiHairTreatmentPage setTitle={setTitle} cart={cart} setCart={setCart} />} />
-            <Route path="/online-hair-loss-treatment-chennai" element={<ChennaiHairTreatmentPage setTitle={setTitle} cart={cart} setCart={setCart} />} /> 
+            <Route path="/online-hair-loss-treatment-chennai" element={<ChennaiHairTreatmentPage setTitle={setTitle} cart={cart} setCart={setCart} />} />
             <Route path="/online-hair-loss-treatment-hyderabad" element={<HyderabadHairTreatmentPage setTitle={setTitle} cart={cart} setCart={setCart} />} />
 
             {/* Doctor routes */}

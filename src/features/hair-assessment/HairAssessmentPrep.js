@@ -17,7 +17,7 @@ const HairAssessmentPrep = () => {
           <div className="header-divider"></div>
           <div className="prep-logo">
             <Link to="/">
-              <img src="/logo.png" alt="HairSnCare" />
+              <img src="/reportlogo.png" alt="HairSnCare" />
             </Link>
           </div>
         </div>

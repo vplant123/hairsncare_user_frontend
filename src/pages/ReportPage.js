@@ -13,11 +13,12 @@ export default function ReportPage(props) {
 			{/* New Structured Header for Mobile/Desktop flexibility */}
 			<header className="report-main-header container">
 				<div className="header-top-row">
-					<div className="header-logo-section">
-						<button type="button" className="back-link-btn desktop-only" aria-label="Back">
+					<div className="header-left-group">
+						<button type="button" className="back-link-btn desktop-only" aria-label="Back" onClick={() => window.history.back()}>
 							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path d="M6.65598 9.16667H16.4V10.8333H6.65598L10.96 15.3L9.82398 16.4833L3.59998 10L9.82398 3.51667L10.96 4.7L6.65598 9.16667Z" fill="#9FB4D0" />
+								<path d="M6.65598 9.16667H16.4V10.8333H6.65598L10.96 15.3L9.82398 16.4833L3.59998 10L9.82398 3.51667L10.96 4.7L6.65598 9.16667Z" fill="currentColor" />
 							</svg>
+							<span>Back</span>
 						</button>
 						<span
 							className="report-brand-logo-svg"
@@ -27,17 +28,18 @@ export default function ReportPage(props) {
 						/>
 					</div>
 
-					<div className="header-actions-section">
+					<div className="header-center-group">
 						<span className="top-chip">
-							<svg width="8" height="8" viewBox="0 0 8 8" fill="none">
-								<circle cx="4" cy="4" r="4" fill="#00E5FF" />
-							</svg>
+							<span className="dot-marker-cyan" />
 							Hair Intelligence Report
 						</span>
+					</div>
+
+					<div className="header-right-group">
 						<button type="button" className="download-report-btn desktop-only">
 							<span>Download Report</span>
 							<svg width="21" height="20" viewBox="0 0 21 20" fill="none">
-								<path d="M11.2471 8.33333H15.4128L10.414 13.3333L5.41526 8.33333H9.58089V2.5H11.2471V8.33333ZM3.74901 15.8333H17.079V10H18.7453V16.6667C18.7453 16.9 18.6647 17.0972 18.5037 17.2583C18.3426 17.4194 18.1454 17.5 17.9121 17.5H2.91589C2.68261 17.5 2.48544 17.4194 2.32437 17.2583C2.1633 17.0972 2.08276 16.9 2.08276 16.6667V10H3.74901V15.8333Z" fill="#9FB4D0" />
+								<path d="M11.2471 8.33333H15.4128L10.414 13.3333L5.41526 8.33333H9.58089V2.5H11.2471V8.33333ZM3.74901 15.8333H17.079V10H18.7453V16.6667C18.7453 16.9 18.6647 17.0972 18.5037 17.2583C18.3426 17.4194 18.1454 17.5 17.9121 17.5H2.91589C2.68261 17.5 2.48544 17.4194 2.32437 17.2583C2.1633 17.0972 2.08276 16.9 2.08276 16.6667V10H3.74901V15.8333Z" fill="currentColor" />
 							</svg>
 						</button>
 					</div>
@@ -46,23 +48,20 @@ export default function ReportPage(props) {
 				<div className="header-bottom-meta">
 					<div className="meta-left-group">
 						<span className="status-badge-highlight">
-							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-								<rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-								<line x1="8" y1="21" x2="16" y2="21"></line>
-								<line x1="12" y1="17" x2="12" y2="21"></line>
-								<path d="M11 9l1 1l1-1M12 11v2"></path>
-								<path d="M17 5l-1 1M18 9l-1-1M7 5l1 1M6 9l1-1"></path>
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+								<path d="M23 4v6h-6"></path>
+								<path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
 							</svg>
-							AI Assessment Complete
+							AI Diagnostic Complete
 						</span>
 						<span className="meta-date-chip">
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9FB4D0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
 								<rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
 								<line x1="16" y1="2" x2="16" y2="6"></line>
-								<line x1="8" y1="22" x2="8" y2="6"></line>
+								<line x1="8" y1="2" x2="8" y2="6"></line>
 								<line x1="3" y1="10" x2="21" y2="10"></line>
 							</svg>
-							Mar 31, 2026
+							Generated: Mar 18, 2026
 						</span>
 					</div>
 					
@@ -74,7 +73,14 @@ export default function ReportPage(props) {
 								<line x1="12" y1="15" x2="12" y2="3"></line>
 							</svg>
 						</button>
-						<span className="report-id-text desktop-only">Report ID: TS-2026-A483921</span>
+						<span className="report-id-chip desktop-only">
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+								<circle cx="12" cy="12" r="10"></circle>
+								<line x1="2" y1="12" x2="22" y2="12"></line>
+								<path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+							</svg>
+							Report ID: TS-2026-A483921
+						</span>
 					</div>
 				</div>
 			</header>

@@ -5008,6 +5008,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    display: grid;
    grid-template-columns: repeat(2, minmax(0, 1fr));
    gap: 14px;
+   position: relative;
 }
 
 .nutritional-card {
@@ -5190,6 +5191,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    width: 100%;
    display: grid;
    gap: 10px;
+   position: relative;
 }
 
 .meal-plan-row {
@@ -5271,6 +5273,132 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
 }
 
 /* =========================================================
+   Unlock Overlay Component
+========================================================= */
+.unlock-overlay{
+ height: 100%;
+ width: 100%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ position: absolute;
+backdrop-filter: blur(2px);
+  /* -webkit-backdrop-filter: blur(20px); */
+
+  /* background: rgba(0, 0, 255, 0.3);  */
+}
+
+.unlock-overlay-container {
+   border-radius: 16px;
+   border: 1px solid #054358;
+   background: rgba(4, 17, 38);
+   /* backdrop-filter: blur(2px); */
+   padding: 24px 30px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+   gap: 8px;
+}
+
+.unlock-lock-icon-wrap {
+   width: 36px;
+   height: 36px;
+   border-radius: 9999px;
+   background: rgba(244, 196, 48, 0.10);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-shrink: 0;
+   margin-bottom: 4px;
+}
+
+.unlock-title {
+   margin: 0;
+   color: #fff;
+   text-align: center;
+   font-family: Roboto, sans-serif;
+   font-size: 12px;
+   font-style: normal;
+   font-weight: 700;
+   line-height: 16px;
+}
+
+.unlock-description {
+   margin: 0;
+   color: #9fb4d0;
+   text-align: center;
+   font-family: Roboto, sans-serif;
+   font-size: 10px;
+   font-style: normal;
+   font-weight: 400;
+   line-height: 13.75px;
+   /* max-width: 220px; */
+
+}
+
+.unlock-cta-btn {
+   margin-top: 8px;
+   border: none;
+   border-radius: 9999px;
+   background: #00e5ff;
+   padding: 8px 20px;
+   color: #041126;
+   text-align: center;
+   font-family: Roboto, sans-serif;
+   font-size: 10px;
+   font-style: normal;
+   font-weight: 700;
+   line-height: 15px;
+   cursor: pointer;
+   transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.unlock-cta-btn:hover {
+   background: #33ebff;
+   transform: translateY(-1px);
+}
+
+.unlock-cta-btn:active {
+   transform: translateY(0);
+}
+
+/* Smaller unlock overlay for weekly schedule */
+.weekly-schedule-grid .unlock-overlay-container {
+   padding: 16px 20px;
+   gap: 4px;
+}
+
+.weekly-schedule-grid .unlock-lock-icon-wrap {
+   width: 28px;
+   height: 28px;
+   margin-bottom: 2px;
+}
+
+.weekly-schedule-grid .unlock-lock-icon-wrap svg {
+   width: 12px;
+   height: 11px;
+}
+
+.weekly-schedule-grid .unlock-title {
+   font-size: 11px;
+   line-height: 14px;
+}
+
+.weekly-schedule-grid .unlock-description {
+   font-size: 9px;
+   line-height: 12px;
+}
+
+.weekly-schedule-grid .unlock-cta-btn {
+   margin-top: 6px;
+   padding: 6px 16px;
+   font-size: 9px;
+   line-height: 13px;
+}
+
+/* =========================================================
    Foods and habits to avoid
 ========================================================= */
 .avoid-habits-section {
@@ -5310,6 +5438,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    display: grid;
    grid-template-columns: repeat(2, minmax(0, 1fr));
    gap: 12px;
+   position: relative;
 }
 
 .avoid-habit-card {
@@ -5550,6 +5679,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    display: grid;
    grid-template-columns: repeat(7, minmax(0, 1fr));
    gap: 8px;
+   position: relative;
 }
 
 .weekly-day-card {
@@ -5804,6 +5934,131 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    border: 1px solid #054358;
    background: #061a2e;
    padding: 10px 12px;
+   position: relative;
+}
+
+/* Locked insight badge */
+.locked-insight {
+   position: absolute;
+   top: 10px;
+   right: 10px;
+   display: inline-flex;
+   align-items: center;
+   justify-content: end;
+   gap: 4px;
+}
+
+.locked-insight-badge {
+  display: flex;
+  align-items: center;
+  margin-right: 5px; 
+   border-radius: 9999px;
+   border: 1px solid rgba(244, 196, 48, 0.20);
+   background: rgba(244, 196, 48, 0.10);
+   padding: 4px 8px;
+}
+
+.locked-insight-badge span {
+   color: #F4C430;
+   font-family: Roboto, sans-serif;
+   font-size: 9px;
+   font-style: normal;
+   font-weight: 600;
+   /* line-height: 13.5px; */
+}
+
+/* Locked card with overlay */
+.stress-technique-card.locked-card .unlock-overlay {
+   border-radius: 12px;
+}
+
+.stress-technique-card.locked-card .unlock-overlay-container {
+   padding: 16px 20px;
+   gap: 6px;
+}
+
+.stress-technique-card.locked-card .unlock-lock-icon-wrap {
+   display: none;
+}
+
+.stress-technique-card.locked-card .unlock-title {
+   font-size: 11px;
+   line-height: 14px;
+}
+
+.stress-technique-card.locked-card .unlock-description {
+   font-size: 9px;
+   line-height: 12px;
+   max-width: 280px;
+}
+
+.stress-technique-card.locked-card .unlock-cta-btn {
+   margin-top: 8px;
+   padding: 6px 16px;
+   font-size: 9px;
+   line-height: 13px;
+}
+
+/* Locked content inside stress card */
+
+.locked-stress-container {
+   position: relative;
+}
+
+.stress-locked-container {
+   backdrop-filter: blur(2px);
+   position: absolute;
+   height: 100%;
+   width: 100%;
+   top: 0;
+   left: 0;
+}
+
+.stress-locked-content {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+   padding: 0px 12px;
+
+}
+
+.stress-locked-content .unlock-title {
+   margin: 0;
+   color: #fff;
+   font-family: Roboto, sans-serif;
+   font-size: 12px;
+   font-weight: 600;
+   line-height: 16px;
+}
+
+.stress-locked-content .unlock-description {
+   margin: 6px 0 0;
+   color: #9fb4d0;
+   font-family: Roboto, sans-serif;
+   font-size: 11px;
+   font-weight: 400;
+   line-height: 15px;
+}
+
+.stress-locked-content .unlock-cta-btn {
+   margin-top: 12px;
+   padding: 8px 20px;
+   border-radius: 30px;
+   border: none;
+   background: linear-gradient(90deg, #00e5ff 0%, #00b8d4 100%);
+   color: #0a1628;
+   font-family: Roboto, sans-serif;
+   font-size: 11px;
+   font-weight: 600;
+   line-height: 14px;
+   cursor: pointer;
+   transition: opacity 0.2s ease;
+}
+
+.stress-locked-content .unlock-cta-btn:hover {
+   opacity: 0.9;
 }
 
 .stress-technique-head {
@@ -6481,6 +6736,118 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    background: #061a2e;
    padding: 12px 14px;
    position: relative;
+}
+
+/* Locked shaft-scalp insight card styles */
+.shaft-scalp-insights-card.locked-card {
+   border: 1px solid #054358;
+}
+
+.shaft-scalp-insights-card.locked-card .locked-insight {
+   position: absolute;
+   top: 10px;
+   right: 10px;
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   z-index: 10;
+}
+
+.shaft-scalp-insights-card.locked-card .locked-insight-badge {
+   border-radius: 9999px;
+   border: 1px solid rgba(0, 229, 255, 0.30);
+   background: rgba(0, 229, 255, 0.10);
+   padding: 4px 10px;
+   display: flex;
+   align-items: center;
+   gap: 6px;
+}
+
+.shaft-scalp-insights-card.locked-card .locked-insight-badge span {
+   color: #00E5FF;
+   font-size: 12px;
+   font-weight: 500;
+   line-height: 1;
+}
+
+.shaft-scalp-insights-card.locked-card .locked-insight-icon {
+   border-radius: 9999px;
+   border: 1px solid rgba(0, 229, 255, 0.30);
+   background: rgba(0, 229, 255, 0.10);
+   width: 28px;
+   height: 28px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.locked-shaft-scalp-container {
+   position: relative;
+}
+
+.shaft-scalp-locked-container {
+   position: absolute;
+   inset: 0;
+   backdrop-filter: blur(2px);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   z-index: 5;
+   border-radius: 8px;
+}
+
+.shaft-scalp-locked-content {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+   /* max-width: 280px; */
+   padding: 16px;
+}
+
+.shaft-scalp-locked-content .lock-icon {
+   border-radius: 9999px;
+   border: 1px solid rgba(0, 229, 255, 0.30);
+   background: rgba(0, 229, 255, 0.10);
+   width: 44px;
+   height: 44px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-bottom: 12px;
+}
+
+.shaft-scalp-locked-content .lock-title {
+   color: #fff;
+   font-size: 14px;
+   font-weight: 600;
+   line-height: 1.3;
+   margin-bottom: 6px;
+}
+
+.shaft-scalp-locked-content .lock-desc {
+   color: rgba(255, 255, 255, 0.6);
+   font-size: 12px;
+   font-weight: 400;
+   line-height: 1.4;
+   margin-bottom: 12px;
+}
+
+.shaft-scalp-locked-content .unlock-cta {
+   padding: 8px 16px;
+   border-radius: 8px;
+   background: linear-gradient(180deg, #00E5FF 0%, #00B8D4 100%);
+   border: none;
+   color: #061a2e;
+   font-size: 12px;
+   font-weight: 600;
+   cursor: pointer;
+   transition: opacity 0.2s;
+}
+
+.shaft-scalp-locked-content .unlock-cta:hover {
+   opacity: 0.9;
 }
 
 .shaft-scalp-insights-card-head {
@@ -10352,6 +10719,102 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
       margin-top: 6px;
       font-size: 12px;
       line-height: 19.5px;
+   }
+
+   /* Locked Insight Badge - Responsive */
+   .stress-technique-card.locked-card .locked-insight,
+   .shaft-scalp-insights-card.locked-card .locked-insight {
+      top: 8px;
+      right: 8px;
+      gap: 4px;
+   }
+
+   .stress-technique-card.locked-card .locked-insight-badge,
+   .shaft-scalp-insights-card.locked-card .locked-insight-badge {
+      padding: 2px 6px;
+   }
+
+   .stress-technique-card.locked-card .locked-insight-badge span,
+   .shaft-scalp-insights-card.locked-card .locked-insight-badge span {
+      font-size: 9px;
+   }
+
+   .stress-technique-card.locked-card .locked-insight-icon,
+   .shaft-scalp-insights-card.locked-card .locked-insight-icon {
+      width: 22px;
+      height: 22px;
+   }
+
+   .stress-technique-card.locked-card .locked-insight-icon svg,
+   .shaft-scalp-insights-card.locked-card .locked-insight-icon svg {
+      width: 12px;
+      height: 12px;
+   }
+
+   /* Stress Card Locked Content - Responsive */
+   .stress-locked-content {
+      padding: 10px;
+      max-width: 220px;
+   }
+
+   .stress-locked-content .lock-icon {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 8px;
+   }
+
+   .stress-locked-content .lock-icon svg {
+      width: 16px;
+      height: 16px;
+   }
+
+   .stress-locked-content .lock-title {
+      font-size: 12px;
+      margin-bottom: 4px;
+   }
+
+   .stress-locked-content .lock-desc {
+      font-size: 10px;
+      margin-bottom: 10px;
+      line-height: 1.3;
+   }
+
+   .stress-locked-content .unlock-cta {
+      padding: 6px 12px;
+      font-size: 10px;
+   }
+
+   /* Shaft-Scalp Card Locked Content - Responsive */
+   .shaft-scalp-locked-content {
+      padding: 10px;
+      max-width: 220px;
+   }
+
+   .shaft-scalp-locked-content .lock-icon {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 8px;
+   }
+
+   .shaft-scalp-locked-content .lock-icon svg {
+      width: 16px;
+      height: 16px;
+   }
+
+   .shaft-scalp-locked-content .lock-title {
+      font-size: 12px;
+      margin-bottom: 4px;
+   }
+
+   .shaft-scalp-locked-content .lock-desc {
+      font-size: 10px;
+      margin-bottom: 10px;
+      line-height: 1.3;
+   }
+
+   .shaft-scalp-locked-content .unlock-cta {
+      padding: 6px 12px;
+      font-size: 10px;
    }
 
    /* =========================================================

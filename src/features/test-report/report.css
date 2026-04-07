@@ -15,6 +15,19 @@
 }
 
 /* =========================================================
+   Global Overflow Prevention
+========================================================= */
+html, body {
+   overflow-x: hidden;
+   max-width: 100%;
+   box-sizing: border-box;
+}
+
+*, *::before, *::after {
+   box-sizing: border-box;
+}
+
+/* =========================================================
    Layout Utilities
 ========================================================= */
 .container {
@@ -33,6 +46,11 @@
       padding-right: 15px;
    }
 }
+
+/* =========================================================
+   320px Screen Fixes - Prevent Horizontal Overflow
+========================================================= */
+/* Removed 320px media query from here - moved to end of file for proper cascade */
 
 
 .medical-diagnosis-title {
@@ -69,6 +87,9 @@
    padding-bottom: 28px;
    color: var(--report-white);
    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+   overflow-x: hidden;
+   max-width: 100%;
+   width: 100%;
 }
 
 .report-main-header {
@@ -616,7 +637,7 @@
 
 .card-main-title {
    margin: 0;
-   font-size: 14px;
+   font-size: 18px;
    font-weight: 700;
    color: #fff;
    line-height: 1.4;
@@ -694,7 +715,7 @@
    }
 
    .card-main-title {
-      font-size: 12px;
+      font-size: 14px;
    }
 
    .report-series-title {
@@ -4234,6 +4255,7 @@
 .treatment-engine-header {
    padding-bottom: 12px;
    border-bottom: 1px solid rgba(0, 229, 255, 0.25);
+   height: auto;
 }
 
 .treatment-engine-title-row {
@@ -4986,6 +5008,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    display: grid;
    grid-template-columns: repeat(2, minmax(0, 1fr));
    gap: 14px;
+   position: relative;
 }
 
 .nutritional-card {
@@ -5168,6 +5191,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    width: 100%;
    display: grid;
    gap: 10px;
+   position: relative;
 }
 
 .meal-plan-row {
@@ -5249,6 +5273,132 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
 }
 
 /* =========================================================
+   Unlock Overlay Component
+========================================================= */
+.unlock-overlay{
+ height: 100%;
+ width: 100%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ position: absolute;
+backdrop-filter: blur(2px);
+  /* -webkit-backdrop-filter: blur(20px); */
+
+  /* background: rgba(0, 0, 255, 0.3);  */
+}
+
+.unlock-overlay-container {
+   border-radius: 16px;
+   border: 1px solid #054358;
+   background: rgba(4, 17, 38);
+   /* backdrop-filter: blur(2px); */
+   padding: 24px 30px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+   gap: 8px;
+}
+
+.unlock-lock-icon-wrap {
+   width: 36px;
+   height: 36px;
+   border-radius: 9999px;
+   background: rgba(244, 196, 48, 0.10);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-shrink: 0;
+   margin-bottom: 4px;
+}
+
+.unlock-title {
+   margin: 0;
+   color: #fff;
+   text-align: center;
+   font-family: Roboto, sans-serif;
+   font-size: 12px;
+   font-style: normal;
+   font-weight: 700;
+   line-height: 16px;
+}
+
+.unlock-description {
+   margin: 0;
+   color: #9fb4d0;
+   text-align: center;
+   font-family: Roboto, sans-serif;
+   font-size: 10px;
+   font-style: normal;
+   font-weight: 400;
+   line-height: 13.75px;
+   /* max-width: 220px; */
+
+}
+
+.unlock-cta-btn {
+   margin-top: 8px;
+   border: none;
+   border-radius: 9999px;
+   background: #00e5ff;
+   padding: 8px 20px;
+   color: #041126;
+   text-align: center;
+   font-family: Roboto, sans-serif;
+   font-size: 10px;
+   font-style: normal;
+   font-weight: 700;
+   line-height: 15px;
+   cursor: pointer;
+   transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.unlock-cta-btn:hover {
+   background: #33ebff;
+   transform: translateY(-1px);
+}
+
+.unlock-cta-btn:active {
+   transform: translateY(0);
+}
+
+/* Smaller unlock overlay for weekly schedule */
+.weekly-schedule-grid .unlock-overlay-container {
+   padding: 16px 20px;
+   gap: 4px;
+}
+
+.weekly-schedule-grid .unlock-lock-icon-wrap {
+   width: 28px;
+   height: 28px;
+   margin-bottom: 2px;
+}
+
+.weekly-schedule-grid .unlock-lock-icon-wrap svg {
+   width: 12px;
+   height: 11px;
+}
+
+.weekly-schedule-grid .unlock-title {
+   font-size: 11px;
+   line-height: 14px;
+}
+
+.weekly-schedule-grid .unlock-description {
+   font-size: 9px;
+   line-height: 12px;
+}
+
+.weekly-schedule-grid .unlock-cta-btn {
+   margin-top: 6px;
+   padding: 6px 16px;
+   font-size: 9px;
+   line-height: 13px;
+}
+
+/* =========================================================
    Foods and habits to avoid
 ========================================================= */
 .avoid-habits-section {
@@ -5288,6 +5438,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    display: grid;
    grid-template-columns: repeat(2, minmax(0, 1fr));
    gap: 12px;
+   position: relative;
 }
 
 .avoid-habit-card {
@@ -5528,6 +5679,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    display: grid;
    grid-template-columns: repeat(7, minmax(0, 1fr));
    gap: 8px;
+   position: relative;
 }
 
 .weekly-day-card {
@@ -5782,6 +5934,131 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    border: 1px solid #054358;
    background: #061a2e;
    padding: 10px 12px;
+   position: relative;
+}
+
+/* Locked insight badge */
+.locked-insight {
+   position: absolute;
+   top: 10px;
+   right: 10px;
+   display: inline-flex;
+   align-items: center;
+   justify-content: end;
+   gap: 4px;
+}
+
+.locked-insight-badge {
+  display: flex;
+  align-items: center;
+  margin-right: 5px; 
+   border-radius: 9999px;
+   border: 1px solid rgba(244, 196, 48, 0.20);
+   background: rgba(244, 196, 48, 0.10);
+   padding: 4px 8px;
+}
+
+.locked-insight-badge span {
+   color: #F4C430;
+   font-family: Roboto, sans-serif;
+   font-size: 9px;
+   font-style: normal;
+   font-weight: 600;
+   /* line-height: 13.5px; */
+}
+
+/* Locked card with overlay */
+.stress-technique-card.locked-card .unlock-overlay {
+   border-radius: 12px;
+}
+
+.stress-technique-card.locked-card .unlock-overlay-container {
+   padding: 16px 20px;
+   gap: 6px;
+}
+
+.stress-technique-card.locked-card .unlock-lock-icon-wrap {
+   display: none;
+}
+
+.stress-technique-card.locked-card .unlock-title {
+   font-size: 11px;
+   line-height: 14px;
+}
+
+.stress-technique-card.locked-card .unlock-description {
+   font-size: 9px;
+   line-height: 12px;
+   max-width: 280px;
+}
+
+.stress-technique-card.locked-card .unlock-cta-btn {
+   margin-top: 8px;
+   padding: 6px 16px;
+   font-size: 9px;
+   line-height: 13px;
+}
+
+/* Locked content inside stress card */
+
+.locked-stress-container {
+   position: relative;
+}
+
+.stress-locked-container {
+   backdrop-filter: blur(2px);
+   position: absolute;
+   height: 100%;
+   width: 100%;
+   top: 0;
+   left: 0;
+}
+
+.stress-locked-content {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+   padding: 0px 12px;
+
+}
+
+.stress-locked-content .unlock-title {
+   margin: 0;
+   color: #fff;
+   font-family: Roboto, sans-serif;
+   font-size: 12px;
+   font-weight: 600;
+   line-height: 16px;
+}
+
+.stress-locked-content .unlock-description {
+   margin: 6px 0 0;
+   color: #9fb4d0;
+   font-family: Roboto, sans-serif;
+   font-size: 11px;
+   font-weight: 400;
+   line-height: 15px;
+}
+
+.stress-locked-content .unlock-cta-btn {
+   margin-top: 12px;
+   padding: 8px 20px;
+   border-radius: 30px;
+   border: none;
+   background: linear-gradient(90deg, #00e5ff 0%, #00b8d4 100%);
+   color: #0a1628;
+   font-family: Roboto, sans-serif;
+   font-size: 11px;
+   font-weight: 600;
+   line-height: 14px;
+   cursor: pointer;
+   transition: opacity 0.2s ease;
+}
+
+.stress-locked-content .unlock-cta-btn:hover {
+   opacity: 0.9;
 }
 
 .stress-technique-head {
@@ -6459,6 +6736,118 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    background: #061a2e;
    padding: 12px 14px;
    position: relative;
+}
+
+/* Locked shaft-scalp insight card styles */
+.shaft-scalp-insights-card.locked-card {
+   border: 1px solid #054358;
+}
+
+.shaft-scalp-insights-card.locked-card .locked-insight {
+   position: absolute;
+   top: 10px;
+   right: 10px;
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   z-index: 10;
+}
+
+.shaft-scalp-insights-card.locked-card .locked-insight-badge {
+   border-radius: 9999px;
+   border: 1px solid rgba(0, 229, 255, 0.30);
+   background: rgba(0, 229, 255, 0.10);
+   padding: 4px 10px;
+   display: flex;
+   align-items: center;
+   gap: 6px;
+}
+
+.shaft-scalp-insights-card.locked-card .locked-insight-badge span {
+   color: #00E5FF;
+   font-size: 12px;
+   font-weight: 500;
+   line-height: 1;
+}
+
+.shaft-scalp-insights-card.locked-card .locked-insight-icon {
+   border-radius: 9999px;
+   border: 1px solid rgba(0, 229, 255, 0.30);
+   background: rgba(0, 229, 255, 0.10);
+   width: 28px;
+   height: 28px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.locked-shaft-scalp-container {
+   position: relative;
+}
+
+.shaft-scalp-locked-container {
+   position: absolute;
+   inset: 0;
+   backdrop-filter: blur(2px);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   z-index: 5;
+   border-radius: 8px;
+}
+
+.shaft-scalp-locked-content {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+   /* max-width: 280px; */
+   padding: 16px;
+}
+
+.shaft-scalp-locked-content .lock-icon {
+   border-radius: 9999px;
+   border: 1px solid rgba(0, 229, 255, 0.30);
+   background: rgba(0, 229, 255, 0.10);
+   width: 44px;
+   height: 44px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   margin-bottom: 12px;
+}
+
+.shaft-scalp-locked-content .lock-title {
+   color: #fff;
+   font-size: 14px;
+   font-weight: 600;
+   line-height: 1.3;
+   margin-bottom: 6px;
+}
+
+.shaft-scalp-locked-content .lock-desc {
+   color: rgba(255, 255, 255, 0.6);
+   font-size: 12px;
+   font-weight: 400;
+   line-height: 1.4;
+   margin-bottom: 12px;
+}
+
+.shaft-scalp-locked-content .unlock-cta {
+   padding: 8px 16px;
+   border-radius: 8px;
+   background: linear-gradient(180deg, #00E5FF 0%, #00B8D4 100%);
+   border: none;
+   color: #061a2e;
+   font-size: 12px;
+   font-weight: 600;
+   cursor: pointer;
+   transition: opacity 0.2s;
+}
+
+.shaft-scalp-locked-content .unlock-cta:hover {
+   opacity: 0.9;
 }
 
 .shaft-scalp-insights-card-head {
@@ -9423,7 +9812,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    .nutritional-protocol-header,
    .personalised-plan-header,
    .lifestyle-risk-header {
-      flex-direction: column;
+      /* flex-direction: column; */
       align-items: flex-start;
       gap: 8px;
    }
@@ -9462,7 +9851,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
       min-width: 0;
    }
 
-
+   
 
    .nutritional-card {
       padding: 12px;
@@ -9593,7 +9982,6 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
 }
 
 @media (max-width: 360px) {
-
    .clinician-pill,
    .questionnaire-pill,
    .verified-pill {
@@ -9619,7 +10007,6 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    Daily Protocol Section - Mobile Responsive
 ========================================================= */
 @media (max-width: 768px) {
-
    /* Daily Protocol Header */
    .daily-protocol-header {
       flex-direction: row;
@@ -9708,7 +10095,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
       height: 6px;
    }
 
-   .daily-routine-row>p {
+   .daily-routine-row > p {
       display: block;
       margin: 0;
       flex: 1;
@@ -9921,7 +10308,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
       margin-bottom: 6px;
    }
 
-   .stress-cortisol-main .stress-img-info-warpper>p {
+   .stress-cortisol-main .stress-img-info-warpper > p {
       font-size: 12px;
       line-height: 19.5px;
       margin: 0;
@@ -9959,7 +10346,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
       flex-wrap: wrap;
    }
 
-   .stress-technique-how>span:first-child {
+   .stress-technique-how > span:first-child {
       flex-shrink: 0;
    }
 
@@ -10332,6 +10719,102 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
       margin-top: 6px;
       font-size: 12px;
       line-height: 19.5px;
+   }
+
+   /* Locked Insight Badge - Responsive */
+   .stress-technique-card.locked-card .locked-insight,
+   .shaft-scalp-insights-card.locked-card .locked-insight {
+      top: 8px;
+      right: 8px;
+      gap: 4px;
+   }
+
+   .stress-technique-card.locked-card .locked-insight-badge,
+   .shaft-scalp-insights-card.locked-card .locked-insight-badge {
+      padding: 2px 6px;
+   }
+
+   .stress-technique-card.locked-card .locked-insight-badge span,
+   .shaft-scalp-insights-card.locked-card .locked-insight-badge span {
+      font-size: 9px;
+   }
+
+   .stress-technique-card.locked-card .locked-insight-icon,
+   .shaft-scalp-insights-card.locked-card .locked-insight-icon {
+      width: 22px;
+      height: 22px;
+   }
+
+   .stress-technique-card.locked-card .locked-insight-icon svg,
+   .shaft-scalp-insights-card.locked-card .locked-insight-icon svg {
+      width: 12px;
+      height: 12px;
+   }
+
+   /* Stress Card Locked Content - Responsive */
+   .stress-locked-content {
+      padding: 10px;
+      max-width: 220px;
+   }
+
+   .stress-locked-content .lock-icon {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 8px;
+   }
+
+   .stress-locked-content .lock-icon svg {
+      width: 16px;
+      height: 16px;
+   }
+
+   .stress-locked-content .lock-title {
+      font-size: 12px;
+      margin-bottom: 4px;
+   }
+
+   .stress-locked-content .lock-desc {
+      font-size: 10px;
+      margin-bottom: 10px;
+      line-height: 1.3;
+   }
+
+   .stress-locked-content .unlock-cta {
+      padding: 6px 12px;
+      font-size: 10px;
+   }
+
+   /* Shaft-Scalp Card Locked Content - Responsive */
+   .shaft-scalp-locked-content {
+      padding: 10px;
+      max-width: 220px;
+   }
+
+   .shaft-scalp-locked-content .lock-icon {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 8px;
+   }
+
+   .shaft-scalp-locked-content .lock-icon svg {
+      width: 16px;
+      height: 16px;
+   }
+
+   .shaft-scalp-locked-content .lock-title {
+      font-size: 12px;
+      margin-bottom: 4px;
+   }
+
+   .shaft-scalp-locked-content .lock-desc {
+      font-size: 10px;
+      margin-bottom: 10px;
+      line-height: 1.3;
+   }
+
+   .shaft-scalp-locked-content .unlock-cta {
+      padding: 6px 12px;
+      font-size: 10px;
    }
 
    /* =========================================================
@@ -10825,5 +11308,953 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    .footer-copyright {
       font-size: 10px;
       text-align: center;
+   }
+}
+
+/* =========================================================
+   CRITICAL: 320px Screen Fixes - MUST BE LAST FOR PROPER CASCADE
+   This media query is placed at the END of the file to ensure
+   it overrides all other responsive styles for 320px screens
+========================================================= */
+@media (max-width: 380px) {
+   /* CRITICAL: Absolute width enforcement - MUST BE FIRST */
+   html {
+      max-width: 100vw !important;
+      overflow-x: hidden !important;
+   }
+
+   body {
+      max-width: 100vw !important;
+      overflow-x: hidden !important;
+   }
+
+   .report-page-screen {
+      max-width: 100vw !important;
+      width: 100% !important;
+      overflow-x: hidden !important;
+   }
+
+   /* Global container adjustments */
+   .container {
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+      max-width: 100% !important;
+      width: 100% !important;
+   }
+
+   .test-report-page.container {
+      padding-left: 8px !important;
+      padding-right: 8px !important;
+      max-width: 100% !important;
+      width: 100% !important;
+   }
+
+   /* Ensure all elements respect container width */
+   * {
+      max-width: 100%;
+      box-sizing: border-box;
+   }
+
+   /* Override ALL min-widths that could cause overflow */
+   .share-btn {
+      min-width: 100px !important;
+      max-width: 100% !important;
+   }
+
+   .copy-referral-btn {
+      min-width: 100px !important;
+      max-width: 100% !important;
+   }
+
+   /* Remove all fixed min-widths */
+   [style*="min-width"],
+   [class*="btn"],
+   [class*="pill"],
+   [class*="chip"] {
+      min-width: 0 !important;
+   }
+
+   /* Force all grids to single column */
+   .report-content-grid,
+   [class*="-grid"],
+   [class*="grid-"] {
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+   }
+
+   /* Fix specific problematic grids */
+   .clinical-dimension-grid {
+      grid-template-columns: 1fr !important;
+   }
+
+   /* Header adjustments */
+   .report-brand-logo-svg img {
+      max-width: 120px !important;
+      height: auto !important;
+   }
+
+   .top-chip {
+      font-size: 10px !important;
+      padding: 0 10px !important;
+      height: 26px !important;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 150px !important;
+   }
+
+   .header-top-row {
+      padding-bottom: 12px !important;
+      flex-wrap: wrap !important;
+      gap: 10px !important;
+   }
+
+   /* Fix header groups for small screens */
+   .header-left-group,
+   .header-center-group,
+   .header-right-group {
+      flex: 0 0 auto !important;
+      min-width: 0 !important;
+   }
+
+   .header-center-group {
+      order: 3 !important;
+      width: 100% !important;
+      justify-content: flex-start !important;
+      margin-top: 8px !important;
+   }
+
+   .report-brand-logo-svg {
+      flex-shrink: 0 !important;
+   }
+
+   .header-bottom-meta {
+      padding: 12px 0 !important;
+   }
+
+   /* Diagnostic panel */
+   .report-diagnostic-panel {
+      padding: 12px !important;
+      margin-bottom: 16px !important;
+   }
+
+   .diagnostic-header-section {
+      margin: 0 -12px 12px -12px !important;
+      padding: 0 12px 12px 12px !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 10px !important;
+   }
+
+   .report-series-title {
+      font-size: 10px !important;
+   }
+
+   .questionnaire-pill {
+      font-size: 9px !important;
+      padding: 4px 10px !important;
+   }
+
+   .diagnostic-status-grid {
+      margin: 0 -12px 12px -12px !important;
+      padding: 0 12px 12px 12px !important;
+      gap: 8px !important;
+   }
+
+   .status-pills-wrap {
+      gap: 6px !important;
+      flex-wrap: wrap !important;
+   }
+
+   .clinician-pill {
+      font-size: 9px !important;
+      padding: 4px 8px !important;
+      white-space: nowrap;
+   }
+
+   .report-main-heading {
+      font-size: 20px !important;
+      margin-bottom: 12px !important;
+      word-wrap: break-word;
+   }
+
+   .report-summary-text {
+      font-size: 12px !important;
+      line-height: 1.5 !important;
+   }
+
+   .clinical-hero-copy {
+      margin-bottom: 20px !important;
+   }
+
+   /* Cards */
+   .clinical-insight-card,
+   .diagnostic-insight-stack > * {
+      padding: 14px !important;
+      gap: 10px !important;
+   }
+
+   .card-top-label {
+      font-size: 9px !important;
+   }
+
+   .card-main-title {
+      font-size: 13px !important;
+      line-height: 1.3 !important;
+      word-wrap: break-word;
+   }
+
+   .card-footer-note {
+      font-size: 10px !important;
+   }
+
+   /* Clinical Score Dashboard grid */
+   .clinical-dimension-grid {
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+   }
+
+   .clinical-dimension-card {
+      padding: 14px !important;
+      min-width: 0 !important;
+      width: 100% !important;
+   }
+
+   /* Pills and chips */
+   .meta-pill,
+   .muted-pill,
+   .success-pill {
+      font-size: 9px !important;
+      padding: 4px 10px !important;
+      min-width: 0 !important;
+      width: auto !important;
+      max-width: 100% !important;
+   }
+
+   /* Status badges */
+   .status-badge-highlight,
+   .meta-date-chip,
+   .report-id-chip {
+      font-size: 10px !important;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+   }
+
+   /* Download button */
+   .mobile-download-square-btn {
+      width: 38px !important;
+      height: 38px !important;
+   }
+
+   /* Avoid habits section */
+   .avoid-habits-panel {
+      padding: 14px !important;
+   }
+
+   .avoid-habits-grid {
+      grid-template-columns: 1fr !important;
+      gap: 10px !important;
+   }
+
+   .avoid-habit-card {
+      padding: 12px !important;
+   }
+
+   /* Daily protocol */
+   .daily-protocol-section {
+      margin-top: 12px !important;
+   }
+
+   /* Nutritional cards */
+   .nutritional-grid {
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+   }
+
+   /* Meal plan */
+   .meal-plan-grid {
+      grid-template-columns: 1fr !important;
+   }
+
+   /* Blood investigations */
+   .blood-test-grid {
+      grid-template-columns: 1fr !important;
+   }
+
+   /* Fix all progress bars and meters */
+   .risk-progress-bar,
+   .progress-bar,
+   [class*="progress"] {
+      min-width: 0 !important;
+      width: 100% !important;
+   }
+
+   /* Fix photo grid if exists */
+   .photo-grid,
+   .image-grid,
+   .ai-photo-grid {
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+   }
+
+   /* AI Photo tiles for single column */
+   .ai-photo-tile {
+      min-height: 220px !important;
+   }
+
+   /* Sidebar should be full width */
+   .right-recommendation-column,
+   .sidebar,
+   [class*="sidebar"] {
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+   }
+
+   /* Score cards in dashboard */
+   .score-side-card {
+      min-width: 0 !important;
+      width: 100% !important;
+   }
+
+   /* Ensure text wraps properly */
+   h1, h2, h3, h4, h5, h6 {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
+   }
+
+   p, span, div {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+   }
+
+   /* Remove negative margins that might cause overflow */
+   [class*="-section"],
+   [class*="section-"] {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+   }
+
+   /* Ensure images don't overflow */
+   img, svg {
+      max-width: 100% !important;
+      height: auto !important;
+   }
+
+   /* Fix any fixed widths */
+   [style*="width"] {
+      max-width: 100% !important;
+   }
+
+   /* Product cards and match cards */
+   .side-product-card,
+   .match-card {
+      width: 100% !important;
+      min-width: 0 !important;
+   }
+
+   /* Referral and CTA sections */
+   .referral-card,
+   .cta-card {
+      padding: 16px !important;
+   }
+
+   /* Legal cards and grid - CRITICAL FIX */
+   .legal-notice-grid {
+      grid-template-columns: 1fr !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+   }
+
+   .legal-card {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      min-height: 80px !important;
+      padding: 14px !important;
+   }
+
+   /* Fix any flex items that might overflow */
+   [class*="-row"],
+   [class*="row-"] {
+      flex-wrap: wrap !important;
+   }
+
+   /* Ensure all buttons fit */
+   button,
+   [class*="-btn"],
+   [class*="button"] {
+      min-width: 0 !important;
+      max-width: 100% !important;
+      white-space: normal !important;
+      word-wrap: break-word !important;
+   }
+
+   /* Main content grid - CRITICAL FIX for sidebar */
+   .report-content-grid {
+      grid-template-columns: 1fr !important;
+      gap: 16px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+   }
+
+   /* Override ALL fixed pixel grids */
+   [style*="grid-template-columns"] {
+      grid-template-columns: 1fr !important;
+   }
+
+   /* CRITICAL: Fix predictive risk chart overflow */
+   .predictive-risk-row {
+      grid-template-columns: 40px minmax(0, 1fr) 75px !important;
+      gap: 6px !important;
+      font-size: 9px !important;
+   }
+
+   .predictive-risk-label {
+      font-size: 9px !important;
+      line-height: 1.2 !important;
+   }
+
+   .predictive-risk-values {
+      min-width: 0 !important;
+      width: 75px !important;
+      max-width: 75px !important;
+   }
+
+   .predictive-risk-value-red,
+   .predictive-risk-value-green {
+      font-size: 8px !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+   }
+
+   .predictive-risk-bars {
+      min-width: 0 !important;
+      max-width: 100% !important;
+   }
+
+   .predictive-risk-track {
+      width: 100% !important;
+      max-width: 100% !important;
+   }
+
+   .predictive-model-legend {
+      font-size: 8px !important;
+   }
+
+   .predictive-model-legend span {
+      white-space: nowrap !important;
+   }
+
+   .predictive-summary-grid {
+      grid-template-columns: 1fr !important;
+      gap: 10px !important;
+   }
+
+   .predictive-model-chart-head {
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+   }
+
+   /* Fix all other grids with fixed pixel columns */
+   .doctor-stats-grid,
+   .review-stats-row,
+   [class*="stat-grid"],
+   [class*="stats-"] {
+      grid-template-columns: 1fr !important;
+      gap: 10px !important;
+   }
+
+   /* Ensure no element has a min-width that exceeds container */
+   * {
+      min-width: 0 !important;
+   }
+
+   /* Override container to have no min-width */
+   .container,
+   .test-report-page,
+   [class*="container"] {
+      min-width: 0 !important;
+      max-width: 100vw !important;
+      overflow-x: hidden !important;
+   }
+
+   /* Ensure all sections fit */
+   section,
+   article,
+   div {
+      max-width: 100% !important;
+      overflow-x: hidden !important;
+   }
+
+   /* CRITICAL: Make all heights auto-adjustable - NO SCROLLBARS */
+   section,
+   article,
+   [class*="-section"],
+   [class*="section-"],
+   [class*="-card"],
+   [class*="card-"],
+   [class*="-panel"],
+   [class*="panel-"] {
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      overflow-y: visible !important;
+      overflow: visible !important;
+   }
+
+   /* Remove fixed heights from all containers */
+   .report-diagnostic-panel,
+   .medical-review-card,
+   .clinical-insight-card,
+   .predictive-model-section,
+   .deep-metric-section,
+   .ai-photo-analysis-section,
+   .avoid-habits-section,
+   .daily-protocol-section,
+   .nutritional-section,
+   .meal-plan-section,
+   .blood-investigation-section,
+   .score-side-card,
+   .health-index-card,
+   .risk-score-card,
+   .genetic-score-card,
+   .treatment-card {
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      overflow: visible !important;
+   }
+
+   /* Ensure all cards expand to fit content */
+   [class*="card"],
+   [class*="score"],
+   [class*="metric"],
+   [class*="index"] {
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      overflow: visible !important;
+   }
+
+   /* Fix any grid rows with fixed heights */
+   [class*="-row"],
+   [class*="row-"],
+   [class*="-wrap"],
+   [class*="wrap-"] {
+      height: auto !important;
+      min-height: 0 !important;
+      overflow: visible !important;
+   }
+
+   /* Remove overflow from text containers */
+   [class*="copy"],
+   [class*="content"],
+   [class*="body"],
+   [class*="text"] {
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+   }
+
+   /* CRITICAL: Remove universal overflow rule - too aggressive */
+   /* Instead, be selective about which elements need overflow fixes */
+
+   /* Exception: Only html and body should have scrolling */
+   html,
+   body {
+      height: auto !important;
+      min-height: 100vh !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+   }
+
+   .report-page-screen {
+      height: auto !important;
+      min-height: 100vh !important;
+      overflow-y: visible !important;
+      overflow-x: hidden !important;
+   }
+
+   /* Ensure score circles and circular progress don't have fixed heights */
+   [class*="circle"],
+   [class*="circular"],
+   [class*="progress-circle"] {
+      height: auto !important;
+      min-height: 0 !important;
+   }
+
+   /* Fix benchmark sections */
+   [class*="benchmark"],
+   [class*="metric"],
+   [class*="dimension"] {
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+   }
+
+   /* CRITICAL: Fix AI Photo Analysis section */
+   .ai-photo-analysis-section,
+   [class*="photo-analysis"],
+   [class*="ai-analysis"] {
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      overflow: visible !important;
+   }
+
+   /* Fix Treatment Recommendation section */
+   .treatment-recommendation-section,
+   [class*="treatment-recommendation"],
+   [class*="recommendation-engine"] {
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      overflow: visible !important;
+   }
+
+   /* Fix treatment recommendation card and all children */
+   .treatment-card,
+   .recommendation-card,
+   [class*="treatment"] [class*="card"],
+   [class*="recommendation"] [class*="panel"] {
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      overflow: visible !important;
+   }
+
+   /* Fix any grids in treatment section */
+   [class*="treatment"] [class*="grid"],
+   [class*="recommendation"] [class*="grid"] {
+      grid-template-columns: 1fr !important;
+      height: auto !important;
+      overflow: visible !important;
+   }
+
+   /* Fix stat cards (Cases Reviewed, Years Experience, etc.) */
+   .review-stat-box,
+   [class*="stat-box"],
+   [class*="stat-card"],
+   [class*="stats-box"] {
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      overflow: visible !important;
+   }
+
+   /* Fix insight sections */
+   [class*="insight"],
+   [class*="analysis-insight"] {
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+   }
+
+   /* Fix photo section containers */
+   .photo-analysis-panel,
+   .photo-grid-section,
+   [class*="photo"] {
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+   }
+
+   /* Fix "Not Performed" sections */
+   [class*="not-performed"],
+   [class*="report-2"] {
+      height: auto !important;
+      overflow: visible !important;
+   }
+
+   /* Fix all section headers */
+   [class*="section-header"],
+   [class*="section-head"],
+   [class*="panel-header"],
+   [class*="panel-head"] {
+      height: auto !important;
+      overflow: visible !important;
+   }
+
+   /* Fix icon containers */
+   [class*="icon-wrap"],
+   [class*="icon-container"] {
+      height: auto !important;
+      overflow: visible !important;
+   }
+
+   /* CRITICAL: AI Photo Analysis Section Fixes */
+   .ai-photo-analysis-section {
+      padding: 12px !important;
+      height: auto !important;
+      overflow: visible !important;
+   }
+
+   /* Keep AI analysis layout consistent with larger screens */
+   .ai-photo-analysis-section * {
+      max-height: none !important;
+      overflow: visible !important;
+   }
+
+   .ai-photo-analysis-section h2,
+   .ai-photo-analysis-section h3 {
+      font-size: 14px !important;
+      line-height: 1.3 !important;
+   }
+
+   .ai-photo-analysis-section p {
+      font-size: 10px !important;
+      line-height: 1.4 !important;
+   }
+
+   /* Fix photo analysis grid/labels */
+   [class*="photo-label"],
+   [class*="analysis-label"],
+   [class*="zone-label"] {
+      font-size: 9px !important;
+      white-space: normal !important;
+      line-height: 1.2 !important;
+   }
+
+   /* Fix analyzed badges */
+   [class*="analyzed"],
+   [class*="status-badge"] {
+      font-size: 8px !important;
+      padding: 2px 6px !important;
+   }
+
+   /* Fix photo analysis images */
+   .ai-photo-analysis-section img {
+      max-width: 100% !important;
+      height: auto !important;
+   }
+
+   /* CRITICAL: Treatment Recommendation Engine - NO SCROLLBARS */
+   .treatment-recommendation-section,
+   .treatment-recommendation-engine,
+   .treatment-engine-card,
+   .treatment-engine-card-top,
+   .recommendation-panel {
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      overflow: visible !important;
+   }
+
+   .treatment-recommendation-section *,
+   .treatment-recommendation-engine *,
+   .treatment-engine-card *,
+   .recommendation-panel * {
+      max-height: none !important;
+      overflow-y: visible !important;
+   }
+
+   [class*="treatment-plan"],
+   [class*="recommendation"],
+   [class*="treatment-engine"] {
+      height: auto !important;
+      overflow: visible !important;
+   }
+
+   /* Treatment Engine Header Fixes */
+   .treatment-engine-header {
+      padding: 10px 0 !important;
+      height: auto !important;
+      overflow: visible !important;
+   }
+
+   .title-wrapper {
+      display: flex !important;
+      gap: 10px !important;
+      align-items: flex-start !important;
+      width: 100% !important;
+   }
+
+   .treatment-engine-title-icon {
+      flex-shrink: 0 !important;
+      width: 32px !important;
+      height: 32px !important;
+   }
+
+   .treatment-engine-title-icon svg {
+      width: 16px !important;
+      height: 16px !important;
+   }
+
+   .treatment-engine-title-row {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 6px !important;
+      margin-bottom: 6px !important;
+   }
+
+   .treatment-engine-title-row h3 {
+      margin: 0 !important;
+      color: #fff !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      line-height: 1.4 !important;
+      word-wrap: break-word !important;
+   }
+
+   .treatment-engine-plan-chip {
+      font-size: 8px !important;
+      padding: 0 8px !important;
+      height: 20px !important;
+      letter-spacing: 0.5px !important;
+      white-space: nowrap !important;
+   }
+
+   .treatment-engine-header p {
+      margin: 4px 0 0 0 !important;
+      font-size: 10px !important;
+      line-height: 1.5 !important;
+      color: #9fb4d0 !important;
+      word-wrap: break-word !important;
+   }
+
+   /* CRITICAL: Doctor Card Fixes */
+   .doctor-side,
+   .doctor-photo-wrap,
+   [class*="doctor"] {
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+   }
+
+   .doctor-photo {
+      width: 60px !important;
+      height: 60px !important;
+      min-width: 60px !important;
+      min-height: 60px !important;
+      overflow: hidden !important;
+   }
+
+   .doctor-side h4 {
+      font-size: 14px !important;
+      margin: 8px 0 4px 0 !important;
+   }
+
+   /* CRITICAL: Stress Cortisol Card - Remove Scrollbars */
+   .stress-cortisol-card,
+   .stress-cortisol-main,
+   .stress-img-info-warpper {
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      overflow: visible !important;
+   }
+
+   .stress-cortisol-card {
+      padding: 12px !important;
+      gap: 10px !important;
+   }
+
+   .stress-cortisol-top {
+      gap: 8px !important;
+      margin-bottom: 8px !important;
+   }
+
+   .stress-cortisol-title-wrap h4 {
+      font-size: 13px !important;
+      line-height: 1.4 !important;
+   }
+
+   .stress-cortisol-image {
+      width: 80px !important;
+      height: 60px !important;
+      margin-right: 10px !important;
+      margin-bottom: 8px !important;
+   }
+
+   .stress-cortisol-main .stress-img-info-warpper > p {
+      font-size: 11px !important;
+      line-height: 1.6 !important;
+   }
+
+   .stress-level-badge {
+      font-size: 9px !important;
+      padding: 0 8px !important;
+      height: 20px !important;
+   }
+
+   .doctor-role,
+   .doctor-cert {
+      font-size: 10px !important;
+      line-height: 1.3 !important;
+   }
+
+   /* Fix doctor online dot */
+   .doctor-online-dot {
+      width: 18px !important;
+      height: 18px !important;
+   }
+
+   /* CRITICAL: Stat Boxes - ELIMINATE SCROLLBARS */
+   .review-stat-box {
+      height: auto !important;
+      min-height: 60px !important;
+      max-height: none !important;
+      overflow: visible !important;
+      padding: 12px !important;
+   }
+
+   .review-stat-box strong {
+      font-size: 16px !important;
+      display: block !important;
+      margin-bottom: 4px !important;
+   }
+
+   .review-stat-box span {
+      font-size: 10px !important;
+      display: block !important;
+   }
+
+   .review-stat-box > div {
+      height: auto !important;
+      overflow: visible !important;
+   }
+
+   /* Fix stat icons */
+   .review-stat-icon {
+      width: 32px !important;
+      height: 32px !important;
+      min-width: 32px !important;
+      min-height: 32px !important;
+      flex-shrink: 0 !important;
+   }
+
+   /* Medical review card fixes */
+   .medical-card-body {
+      flex-direction: column !important;
+      gap: 16px !important;
+      height: auto !important;
+      overflow: visible !important;
+   }
+
+   .review-side {
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+   }
+
+   .review-stats-row {
+      flex-direction: column !important;
+      gap: 12px !important;
+      height: auto !important;
+   }
+
+   /* Footer fixes */
+   .footer-section {
+      padding: 20px 10px !important;
+   }
+
+   .footer-links {
+      flex-wrap: wrap !important;
+      gap: 10px !important;
    }
 }

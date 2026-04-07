@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaChevronLeft, FaChevronRight, FaTimes, FaCamera, FaCheckCircle, FaTrashAlt, FaClock, FaInfoCircle, FaHeart, FaCheck, FaShieldAlt, FaLightbulb, FaLock, FaMagic, FaSearchPlus, FaGift, FaHeartbeat, FaChartBar, FaStethoscope, FaCalendarAlt, FaEnvelope, FaMapMarkerAlt, FaArrowRight, FaHospital } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import './HairAssessmentFlow.css';
 import { getAssessmentQuestions, createSession, updateAnswers, triggerAnalysis, checkSessionStatus, createLead, fetchReport, finalizeQuiz, uploadImage, verifyOtp } from './HairAssessmentApi';
 
@@ -24,6 +25,7 @@ const PhotoSecureIcon = () => (
 );
 
 const HairAssessmentFlow = () => {
+   const navigate = useNavigate();
   const [currentView, setCurrentView] = useState("diagnostic"); // "diagnostic" or "ai-analysis"
   const [aiSubStep, setAiSubStep] = useState('intro'); // 'intro', 'upload', 'processing', 'results'
   const [currentStep, setCurrentStep] = useState(1);
@@ -230,7 +232,7 @@ const HairAssessmentFlow = () => {
             setAiSubStep("intro");
           } catch (error) {
             console.error("Quiz completion error:", error);
-            alert("Error finalizing result. Proceeding anyway...");
+            toast.info("Error finalizing result. Proceeding anyway...");
             setCurrentView("ai-analysis");
             setAiSubStep("intro");
           }
@@ -627,7 +629,7 @@ const AiAnalysisView = ({ sessionId, subStep, setSubStep, onBack, onNext }) => {
           setUploadProgress(prev => ({ ...prev, [key]: 'done' }));
         } else {
           setUploadProgress(prev => ({ ...prev, [key]: 'error' }));
-          alert(`Failed to upload ${key} view properly`);
+          toast.error(`Failed to upload ${key} view properly`);
         }
       } catch (err) {
         console.error("Upload error:", err);
@@ -647,11 +649,11 @@ const AiAnalysisView = ({ sessionId, subStep, setSubStep, onBack, onNext }) => {
           setSubStep('processing');
         }
       } else {
-        alert(response.message || "Failed to trigger analysis");
+        toast.error(response.message || "Failed to trigger analysis");
       }
     } catch (error) {
       console.error("Analysis trigger error:", error);
-      alert("Error starting analysis. Please try again.");
+      toast.error("Error starting analysis. Please try again.");
     } finally {
       setIsTriggering(false);
     }
@@ -762,7 +764,7 @@ const AiAnalysisView = ({ sessionId, subStep, setSubStep, onBack, onNext }) => {
           <div className="ai-action-footer">
             <button
               className={`analyze-action-btn ${canAnalyze && !isTriggering ? 'active' : ''}`}
-              onClick={() => canAnalyze ? handleTrigger(false) : alert("Please upload required photos")}
+              onClick={() => canAnalyze ? handleTrigger(false) : toast.warning("Please upload required photos")}
               disabled={!canAnalyze || isTriggering}
             >
               {isTriggering ? 'Starting...' : 'Analyze Photos'} <SparklesIcon />
@@ -1234,6 +1236,7 @@ const OtpModal = ({ isOpen, onClose, onVerify, phone }) => {
 };
 
 const ResultsView = ({ sessionId, onBack, onNext }) => {
+  const navigate = useNavigate();
   const [isOtpOpen, setIsOtpOpen] = React.useState(false);
   const [email, setEmail] = useState('');
   const [city, setCity] = useState('');
@@ -1305,7 +1308,7 @@ const ResultsView = ({ sessionId, onBack, onNext }) => {
     }
 
     if (!consents.privacy) {
-      alert("Please accept the privacy policy to continue.");
+      toast.warning("Please accept the privacy policy to continue.");
       return;
     }
 
@@ -1326,11 +1329,11 @@ const ResultsView = ({ sessionId, onBack, onNext }) => {
       if (leadResponse.success) {
         setIsOtpOpen(true);
       } else {
-        alert(leadResponse.message || "Failed to create lead");
+        toast.error(leadResponse.message || "Failed to create lead");
       }
     } catch (err) {
       console.error("Lead creation failed:", err);
-      alert("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setIsCreatingLead(false);
     }
@@ -1344,20 +1347,19 @@ const ResultsView = ({ sessionId, onBack, onNext }) => {
       if (verifyResponse.success) {
         // Step 8: Final Report Download
         const reportResponse = await fetchReport(sessionId);
-        if (reportResponse.success && reportResponse.data.reportUrl) {
-          setReportUrl(reportResponse.data.reportUrl);
+         if (reportResponse.success) {
           setIsOtpOpen(false);
-          alert("Phone verified successfully! Your report is now ready.");
-          window.open(reportResponse.data.reportUrl, '_blank');
+          // Redirect to report view instead of opening PDF
+          navigate(`/report/${sessionId}`);
         } else {
-          alert("Report generation in progress. Please wait a moment.");
+          toast.info("Report generation in progress. Please wait a moment.");
         }
       } else {
-        alert(verifyResponse.message || "Invalid OTP. Please try again.");
+        toast.error(verifyResponse.message || "Invalid OTP. Please try again.");
       }
     } catch (err) {
       console.error("Verification failed:", err);
-      alert("Invalid OTP or verification failed. Please check the code and try again.");
+      toast.error("Invalid OTP or verification failed. Please check the code and try again.");
     }
   };
 

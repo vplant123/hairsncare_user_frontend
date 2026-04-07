@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import { validateSitemapURLs, checkDuplicateURLs } from '../utils/sitemapGenerator';
 
 const SitemapValidator = () => {
@@ -7,7 +8,7 @@ const SitemapValidator = () => {
 
   const validateSitemap = () => {
     if (!sitemapContent.trim()) {
-      alert('Please paste sitemap content first');
+      toast.warning('Please paste sitemap content first');
       return;
     }
 

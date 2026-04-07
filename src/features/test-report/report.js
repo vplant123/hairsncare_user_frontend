@@ -1,937 +1,51 @@
-import React, { useState } from "react";
+import React from "react";
 import "./report.css";
 import { FiCalendar } from "react-icons/fi";
+import { checkSessionStatus } from '../hair-assessment/HairAssessmentApi';
+import { toast } from 'react-toastify';
 
-const recommendationRows = [
-  {
-    title: "Minoxidil 5% Advanced Formula",
-    tag: "High Priority",
-    tagTone: "high-priority",
-    desc: "Clinically proven to halt hair loss and stimulate regrowth",
-    purpose: "For Hair Fall",
-    purposeTone: "purpose-amber",
-    price: "$34.99",
-    thumbClass: "thumb-1",
-  },
-  {
-    title: "DHT Blocker Complex",
-    tag: "Recommended",
-    tagTone: "recommended",
-    desc: "Blocks genetic hair thinning at the root",
-    purpose: "For Genetics",
-    purposeTone: "purpose-cyan",
-    price: "$29.99",
-    thumbClass: "thumb-2",
-  },
-  {
-    title: "Scalp Revive Serum",
-    tag: "Recommended",
-    tagTone: "recommended",
-    desc: "Restores scalp microbiome and hydration",
-    purpose: "For Scalp Health",
-    purposeTone: "purpose-cyan",
-    price: "$24.99",
-    thumbClass: "thumb-3",
-  },
-  {
-    title: "Biotin + Keratin Formula",
-    tag: "Adjunct",
-    tagTone: "adjunct",
-    desc: "Strengthens hair shaft and improves density",
-    purpose: "For Density",
-    purposeTone: "purpose-amber",
-    price: "$19.99",
-    thumbClass: "thumb-4",
-  },
-  {
-    title: "Anti-Stress Hair Tonic",
-    tag: "Adjunct",
-    tagTone: "adjunct",
-    desc: "Counteracts stress-induced shedding",
-    purpose: "For Stress Loss",
-    purposeTone: "purpose-gray",
-    price: "$22.99",
-    thumbClass: "thumb-5",
-  },
-];
+// Purely dynamic mapping from sessionId status API
 
-const freebiesRows = [
-  {
-    title: "Free Hair Consultation",
-    desc: "Get expert guidance tailored to your report",
-  },
-  {
-    title: "Personalized Diet Plan",
-    desc: "Custom nutrition plan for hair recovery",
-  },
-  {
-    title: "Weekly Hair Care Routine PDF",
-    desc: "Step-by-step routine designed for your condition",
-  },
-  {
-    title: "Progress Tracking Support",
-    desc: "Track improvements with expert follow-ups",
-  },
-  {
-    title: "Priority Support Access",
-    desc: "Direct chat with specialist",
-  },
-];
 
-const clinicalDimensions = [
-  {
-    title: "Hair Density",
-    status: "Mild",
-    tone: "mild",
-    score: 52,
-    scoreLabel: "Mild Thinning",
-    note: "Early-stage density reduction observed",
-    dashArray: "84.95 163.36",
-  },
-  {
-    title: "Hair Strength",
-    status: "Mild",
-    tone: "mild",
-    score: 61,
-    scoreLabel: "Moderate Resilience",
-    note: "Tensile strength within normal range",
-    dashArray: "99.67 163.36",
-  },
-  {
-    title: "Fall Control",
-    status: "High Risk",
-    tone: "high-risk",
-    score: 38,
-    scoreLabel: "Active Shedding",
-    note: "Above-normal daily shedding detected",
-    dashArray: "62.08 163.36",
-  },
-  {
-    title: "Scalp Health",
-    status: "Healthy",
-    tone: "healthy",
-    score: 74,
-    scoreLabel: "Balanced Scalp",
-    note: "Sebum & microbiome within healthy limits",
-    dashArray: "120.89 163.36",
-  },
-  {
-    title: "Recovery",
-    status: "Mild",
-    tone: "mild",
-    score: 67,
-    scoreLabel: "Moderate Potential",
-    note: "Moderate follicle regrowth viability",
-    dashArray: "109.45 163.36",
-  },
-  {
-    title: "Lifestyle",
-    status: "Mild",
-    tone: "mild",
-    score: 55,
-    scoreLabel: "Needs Attention",
-    note: "Stress & habit factors moderately impacting health",
-    dashArray: "89.85 163.36",
-  },
-];
 
-const deepMetricRows = [
-  {
-    title: "Hair Health Index",
-    tone: "cyan",
-    score: 91,
-    scoreStand: "Top 25%",
-    scoreNote: "Above average for your age group",
-    benchmarkTitle: "AGE BENCHMARK (30-40)",
-    benchmarkLines: [
-      "For someone aged 30-40, the typical Hair Health Index is around 56.",
-      "Your score of 91 places you in the Top 15% for your age group.",
-    ],
-    meaning:
-      "Your overall hair health is in good shape. Think of this like a car with minor wear - it runs well, but regular maintenance prevents future problems.",
-    progress: 91,
-  },
-  {
-    title: "Hair Density",
-    tone: "green",
-    score: 91,
-    scoreStand: "Top 25%",
-    scoreNote: "Above average for your age group",
-    benchmarkTitle: "AGE BENCHMARK (30-40)",
-    benchmarkLines: [
-      "Average density score for age 30-40 is 56.",
-      "Scores above 70 are considered healthy for your age.",
-    ],
-    meaning:
-      "Your hair density is good. Most people would not notice any significant thinning when looking at your hair.",
-    progress: 91,
-  },
-  {
-    title: "Recovery Potential",
-    tone: "purple",
-    score: 84,
-    scoreStand: "Top 25%",
-    scoreNote: "Above average for your age group",
-    benchmarkTitle: "AGE BENCHMARK (30-40)",
-    benchmarkLines: [
-      "This score is independent of age - it reflects biological follicle health.",
-      "Scores above 65 indicate responsive follicles.",
-    ],
-    meaning:
-      "Excellent recovery potential. Your follicles are likely still active and responsive to both medical and lifestyle interventions.",
-    progress: 84,
-  },
-  {
-    title: "Scalp Health",
-    tone: "amber",
-    score: 94,
-    blurb:
-      "The condition of your scalp environment - including oiliness, inflammation, dandruff, and water quality. A healthy scalp is the foundation of hair growth.",
-    scoreStand: "Top 25%",
-    scoreNote: "Above average for your age group",
-    benchmarkTitle: "AGE BENCHMARK (30-40)",
-    benchmarkLines: [
-      "Scalp health is highly improvable - unlike genetic factors, this score can change significantly within 4-8 weeks of targeted treatment.",
-      "A score below 40 should be addressed before starting hair regrowth treatments.",
-    ],
-    meaning:
-      "Your scalp environment is healthy. This is a strong foundation for hair recovery - hair follicles have the best chance of growth when the scalp is well-balanced.",
-    progress: 94,
-  },
-  {
-    title: "Hair Fall Control",
-    tone: "sky",
-    score: 92,
-    blurb:
-      "How controlled your current shedding is. Higher is better - 100 means no abnormal shedding; lower means active, concerning hair fall.",
-    scoreStand: "Top 25%",
-    scoreNote: "Above average for your age group",
-    benchmarkTitle: "AGE BENCHMARK (30-40)",
-    benchmarkLines: [
-      "Normal daily hair fall is 50-100 strands.",
-      "Your pull test and self-reported fall count suggest you are in the mild category.",
-    ],
-    meaning:
-      "Hair fall is within normal range (50-100 strands/day is normal). You are not in an active shedding phase.",
-    progress: 92,
-  },
-];
 
-const regionalZones = [
-  {
-    name: "Frontal Zone",
-    percent: 52,
-    note: "Hairline and forehead region - mild diffuse thinning noted",
-    status: "Moderate",
-  },
-  {
-    name: "Mid-Scalp",
-    percent: 68,
-    note: "Top of head central region - manageable with treatment",
-    status: "Moderate",
-  },
-  {
-    name: "Crown",
-    percent: 58,
-    note: "Back-top region - minor involvement detected",
-    status: "Moderate",
-  },
-];
+export default function TestReport({ sessionId, reportData: initialData }) {
+  const [reportData, setReportData] = React.useState(initialData || null);
+  const [loading, setLoading] = React.useState(false);
 
-const rootCausePrimary = [
-  {
-    rank: 1,
-    title: "Stress-Induced (Telogen Effluvium)",
-    tag: "Primary Cause",
-    score: 82,
-    tone: "cyan",
-    summary:
-      "Elevated cortisol disrupting hair growth cycle. Chronic stress pushing follicles into premature resting phase causing diffuse shedding - the primary driver of your Diffuse Thinning pattern.",
-  },
-  {
-    rank: 2,
-    title: "Nutritional Deficiency",
-    tag: "Primary Cause",
-    score: 74,
-    tone: "cyan",
-    summary:
-      "Iron, Vitamin D, and Biotin levels below optimal thresholds. These micronutrients are essential for follicle cell synthesis and keratin production.",
-  },
-  {
-    rank: 3,
-    title: "Hormonal Imbalance",
-    tag: "Primary Cause",
-    score: 61,
-    tone: "amber",
-    summary:
-      "Elevated DHT-to-testosterone ratio detected. Thyroid markers require assessment - subclinical hypothyroidism is a secondary driver in your profile causing diffuse effluvium.",
-  },
-];
+  React.useEffect(() => {
+    if (initialData) {
+      setReportData(initialData);
+      return;
+    }
 
-const additionalContributingFactors = [
-  {
-    rank: 4,
-    title: "Genetic / Androgenetic (DHT Sensitivity)",
-    tag: "Contributing",
-    score: 34,
-    summary:
-      "Low-moderate androgen receptor sensitivity detected. Genetic component is present but not the dominant factor - environmental drivers are more significant in your case.",
-  },
-  {
-    rank: 5,
-    title: "Scalp Condition",
-    tag: "Minor",
-    score: 28,
-    summary:
-      "Mild sebum imbalance and minor scalp inflammation are present. This is a secondary contributing factor that can be managed with topical scalp care.",
-  },
-  {
-    rank: 6,
-    title: "Chemical / Heat Damage",
-    tag: "Minor",
-    score: 22,
-    summary:
-      "Past or current use of heat styling contributing to shaft breakage and cuticle damage. Impact is low - correctable with habit changes.",
-  },
-  {
-    rank: 7,
-    title: "Post-Illness / Medication",
-    tag: "Low",
-    score: 15,
-    summary:
-      "Residual telogen effluvium from prior illness or medication use. Hair loss typically delayed 2-3 months post-event and self-resolving.",
-  },
-];
+    const getReportResults = async () => {
+      if (!sessionId) return;
+      try {
+        setLoading(true);
+        const response = await checkSessionStatus(sessionId);
+        if (response.success) {
+          setReportData(response.data);
+          console.log("Loaded report data:", response.data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch report:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-const scalpRecoveryCards = [
-  {
-    title: "Seborrheic Risk",
-    score: 35,
-    scoreLabel: "Low-Moderate",
-    note: "Scalp fungal / inflammatory condition probability",
-    tone: "amber",
-    dashArray: "80.22 229.21",
-    levels: ["Low", "Moderate", "Good", "Excellent"],
-    activeLevel: "Moderate",
-  },
-  {
-    title: "Growth Potential",
-    score: 72,
-    scoreLabel: "Good Recovery",
-    note: "Follicle viability and recovery probability",
-    tone: "cyan",
-    dashArray: "165.03 229.21",
-    levels: ["Low", "Moderate", "Good", "Excellent"],
-    activeLevel: "Good",
-    hasFloatBadge: true,
-  },
-];
+    getReportResults();
+  }, [sessionId, initialData]);
 
-const improvementPredictionCards = [
-  {
-    period: "3 Months",
-    phase: "Stabilisation Phase",
-    tone: "cyan",
-    metrics: [
-      { label: "Density Gain", value: "+14%", progress: 14 },
-      { label: "Fall Reduction", value: "+40%", progress: 40 },
-      { label: "Shaft Quality", value: "+20%", progress: 20 },
-    ],
-  },
-  {
-    period: "6 Months",
-    phase: "Active Growth Phase",
-    tone: "amber",
-    metrics: [
-      { label: "Density Gain", value: "+32%", progress: 32 },
-      { label: "Fall Reduction", value: "+65%", progress: 65 },
-      { label: "Shaft Quality", value: "+38%", progress: 38 },
-    ],
-  },
-  {
-    period: "12 Months",
-    phase: "Consolidation Phase",
-    tone: "green",
-    metrics: [
-      { label: "Density Gain", value: "+55%", progress: 55 },
-      { label: "Fall Reduction", value: "+82%", progress: 82 },
-      { label: "Shaft Quality", value: "+62%", progress: 62 },
-    ],
-  },
-];
+  // Normalize API data to support different response formats (singular vs plural keys)
+  const clinicalNarrative = reportData?.clinicalNarrative || reportData?.analysisResults;
+  const dseResult = reportData?.dseResult || reportData?.dseResults;
 
-const treatmentRecommendationRows = [
-  {
-    title: "Topical Minoxidil (5% / 10%)",
-    desc: "FDA-approved vasodilator - stimulates follicle activity",
-    priority: "HIGH",
-    priorityTone: "high",
-    markerTone: "high",
-    timeFrame: "1-3 mo",
-    duration: "Lifelong - ongoing daily application",
-    showImage: true,
-  },
-  {
-    title: "Anti-DHT Therapy (Finasteride / Dutasteride)",
-    desc: "Blocks DHT - prevents further miniaturisation",
-    priority: "HIGH",
-    priorityTone: "high",
-    markerTone: "high",
-    timeFrame: "1-3 mo",
-    duration: "Lifelong - discontinuing reverses gains within 12 months",
-    showImage: true,
-  },
-  {
-    title: "Nutraceuticals (Biotin, Iron, Zinc, Vit D)",
-    desc: "Corrects micronutrient deficiencies at follicle level",
-    priority: "MEDIUM",
-    priorityTone: "medium",
-    markerTone: "medium",
-    timeFrame: "1-6 mo",
-    duration: "Minimum 3-6 months, assess bloods at 3 months",
-    showImage: true,
-  },
-  {
-    title: "Low Level Laser Therapy (LLLT / 650nm)",
-    desc: "Photobiomodulation - cellular energy boost at follicle",
-    priority: "ADJUNCT",
-    priorityTone: "adjunct",
-    markerTone: "adjunct",
-    timeFrame: "2-12 mo",
-    duration: "3x per week minimum for 5 months to see results",
-    showImage: false,
-  },
-  {
-    title: "Stress Management Protocol",
-    desc: "Cortisol reduction via MBSR, sleep therapy, adaptogens",
-    priority: "MEDIUM",
-    priorityTone: "medium",
-    markerTone: "medium",
-    timeFrame: "Ongoing",
-    duration: "Ongoing lifestyle change - minimum 90 days to impact cortisol",
-    showImage: false,
-  },
-  {
-    title: "Hormonal Panel & Endocrine Therapy",
-    desc: "Thyroid / DHEA / testosterone / estrogen correction",
-    priority: "HIGH",
-    priorityTone: "high",
-    markerTone: "high",
-    timeFrame: "1-2 mo",
-    duration: "2-6 month correction phase, ongoing monitoring",
-    showImage: false,
-  },
-];
-
-const personalisedTreatmentPhases = [
-  {
-    phase: "Phase I",
-    monthRange: "Month 1-3",
-    subtitle: "Foundation & Activation",
-    tone: "cyan",
-    icon: "shield",
-    bullets: [
-      "Topical Minoxidil 5% - twice daily on dry scalp",
-      "Anti-DHT oral therapy if androgenetic pattern confirmed",
-      "Medicated shampoo protocol (ketoconazole 2%) - 3x weekly",
-      "Nutraceuticals: Biotin / Iron / Zinc / Vitamin D3",
-      "Baseline scalp photography for progress tracking",
-      "Blood panel: Ferritin, Thyroid (T3/T4), Vitamin D, DHT",
-    ],
-  },
-  {
-    phase: "Phase II",
-    monthRange: "Month 3-6",
-    subtitle: "Acceleration & Growth",
-    tone: "amber",
-    icon: "sprout",
-    bullets: [
-      "PRP therapy - 3 sessions (4-6 weeks apart)",
-      "Microneedling (1.5mm dermaroller weekly)",
-      "Low-Level Laser Therapy (LLLT) - 3x weekly sessions",
-      "Adaptogen protocol: Ashwagandha + Rhodiola Rosea daily",
-      "Month 3 trichoscopy - compare vs. baseline",
-      "Reassess blood panel for nutritional correction outcomes",
-    ],
-  },
-  {
-    phase: "Phase III",
-    monthRange: "Month 6-12",
-    subtitle: "Consolidation & Evaluation",
-    tone: "green",
-    icon: "star",
-    bullets: [
-      "LLLT maintenance - 2x weekly (consolidation dose)",
-      "Continued adaptogen cycling: 8 weeks on, 2 weeks off",
-      "Scalp pH-balanced shampoo - ongoing maintenance",
-      "Month 6 full diagnostic retest vs. baseline",
-      "Month 12 comparative analysis - determine success metrics",
-      "Decision on ongoing vs. tapering treatment protocol",
-    ],
-  },
-];
-
-const lifestyleRiskFactors = [
-  { label: "Stress Level", tag: "High", tone: "high", progress: 86 },
-  { label: "Sleep Quality", tag: "Moderate", tone: "moderate", progress: 56 },
-  { label: "Diet Quality", tag: "Moderate", tone: "moderate", progress: 45 },
-  { label: "Protein Intake", tag: "Low", tone: "high", progress: 24 },
-  { label: "Smoking", tag: "Non-Smoker", tone: "good", progress: 6 },
-  { label: "Alcohol", tag: "Occasional", tone: "moderate", progress: 41 },
-];
-
-const nutritionalProtocolCards = [
-  {
-    title: "Biotin (Vitamin B7)",
-    dosage: "5,000 mcg/day",
-    tone: "amber",
-    icon: "chain",
-    desc: "Supports keratin synthesis - deficiency causes thinning and brittle hair.",
-    foods: ["Eggs", "Almonds", "Sweet potato", "Salmon"],
-    imageType: "egg",
-  },
-  {
-    title: "Iron & Ferritin",
-    dosage: "18-27 mg/day",
-    tone: "red",
-    icon: "drop",
-    desc: "Iron deficiency reduces oxygen delivery to follicles, triggering shedding.",
-    foods: ["Red meat", "Spinach", "Lentils", "Pumpkin seeds"],
-    imageType: "iron",
-  },
-  {
-    title: "Zinc",
-    dosage: "15-30 mg/day",
-    tone: "cyan",
-    icon: "shield",
-    desc: "Critical for follicle cell repair and DHT metabolism regulation.",
-    foods: ["Oysters", "Beef", "Chickpeas", "Cashews"],
-  },
-  {
-    title: "Vitamin D3",
-    dosage: "2,000-4,000 IU/day",
-    tone: "amber",
-    icon: "sun",
-    desc: "D3 receptors in follicles regulate growth cycles - deficiency causes effluvium.",
-    foods: ["Sunlight", "Fatty fish", "Egg yolks", "Fortified milk"],
-  },
-];
-
-const dailyMealPlanRows = [
-  {
-    meal: "Breakfast",
-    tone: "amber",
-    icon: "sun",
-    detail:
-      "3 boiled eggs + spinach omelette, avocado toast on whole grain, fortified milk",
-  },
-  {
-    meal: "Lunch",
-    tone: "green",
-    icon: "leaf",
-    detail: "Grilled salmon with quinoa, mixed greens salad with pumpkin seeds",
-  },
-  {
-    meal: "Snack",
-    tone: "cyan",
-    icon: "apple",
-    detail: "Mixed nuts (almonds, cashews), dark chocolate 70%+",
-  },
-  {
-    meal: "Dinner",
-    tone: "slate",
-    icon: "moon",
-    detail:
-      "Lean chicken breast with sweet potato, steamed broccoli + lentil soup",
-  },
-  {
-    meal: "Supplement",
-    tone: "amber",
-    icon: "chain",
-    detail:
-      "Biotin 5000mcg + Vitamin D3 2000IU + Iron 18mg + Zinc 15mg with meals",
-  },
-];
-
-const foodsHabitsToAvoid = [
-  {
-    title: "Crash Dieting",
-    detail: "Triggers telogen effluvium from nutrient depletion",
-    tone: "danger",
-  },
-  {
-    title: "Excess Sugar",
-    detail: "Increases androgen activity and DHT levels",
-    tone: "danger",
-  },
-  {
-    title: "Trans Fats",
-    detail: "Promote systemic inflammation around follicles",
-    tone: "danger",
-  },
-  {
-    title: "Excess Dairy",
-    detail: "Increases sebum production and scalp inflammation",
-    tone: "warning",
-  },
-  {
-    title: "Processed Foods",
-    detail: "Disrupt nutrient absorption and hormonal balance",
-    tone: "danger",
-  },
-  {
-    title: "Excess Alcohol",
-    detail: "Depletes zinc, B12 and folic acid - key for follicles",
-    tone: "warning",
-  },
-];
-
-const dailyRoutineItems = [
-  {
-    label: "Morning",
-    action: "Scalp massage 3-5 min",
-    note: "stimulates blood flow to follicles",
-  },
-  {
-    label: "Wash",
-    action: "Lukewarm water only",
-    note: "hot water strips natural scalp oils",
-  },
-  {
-    label: "Post-Wash",
-    action: "Apply Minoxidil on DRY scalp",
-    note: "wet scalp reduces absorption rate",
-  },
-  {
-    label: "Daily",
-    action: "Avoid tight hairstyles",
-    note: "prevents traction alopecia over time",
-  },
-  {
-    label: "Weekly",
-    action: "Trim ends every 8-10 weeks",
-    note: "prevents split end progression",
-  },
-  {
-    label: "Nightly",
-    action: "Sleep on a silk pillowcase",
-    note: "reduces friction and mechanical breakage",
-    highlight: true,
-  },
-];
-
-const weeklyHairSchedule = [
-  {
-    day: "Mon",
-    locked: false,
-    tasks: ["Scalp massage", "Minoxidil AM", "Light yoga"],
-  },
-  {
-    day: "Tue",
-    locked: true,
-    tasks: ["Regular shampoo", "Zinc supplement", "Iron + Vit C"],
-  },
-  {
-    day: "Wed",
-    locked: true,
-    tasks: ["Deep conditioning", "Cardio 30 min", "Minoxidil PM"],
-  },
-  {
-    day: "Thu",
-    locked: true,
-    tasks: ["Scalp massage", "DHT blocker", "Meditation"],
-  },
-  {
-    day: "Fri",
-    locked: true,
-    tasks: ["Hair wash", "Full supplement", "LLLT session"],
-  },
-  {
-    day: "Sat",
-    locked: true,
-    tasks: ["Scalp oil massage", "Biotin dose", "Yoga session"],
-  },
-  {
-    day: "Sun",
-    locked: true,
-    tasks: ["Rest from products", "Meal prep", "Scalp massage"],
-  },
-];
-
-const stressReductionTechniques = [
-  {
-    title: "4-7-8 Breathing",
-    tone: "cyan",
-    icon: "breathing",
-    desc: "Activates the parasympathetic nervous system - reduces cortisol within minutes.",
-    impact: "Lowers heart rate and cortisol spike rapidly",
-    how: "Inhale 4s - Hold 7s - Exhale 8s. Repeat 4 cycles, twice daily.",
-  },
-  {
-    title: "Scalp Self-Massage",
-    tone: "amber",
-    icon: "massage",
-    desc: "Increases scalp blood circulation and reduces localised DHT accumulation.",
-    impact: "Boosts follicle oxygen delivery + stress relief",
-    how: "Firm circular motions from temples to crown - 3-5 min morning and evening.",
-  },
-  {
-    title: "Mindfulness Meditation",
-    tone: "cyan",
-    icon: "mindfulness",
-    desc: "Daily 10-minute sessions shown to reduce cortisol levels by up to 20%.",
-    impact: "Resets HPA axis response to chronic stress",
-    how: "Quiet space, eyes closed, focus on breath - use Calm or Headspace.",
-  },
-  {
-    title: "Progressive Muscle Relaxation",
-    tone: "slate",
-    icon: "progressive",
-    desc: "Systematically releases physical tension - improves sleep quality for GH release.",
-    impact: "Reduces physical stress markers before sleep",
-    how: "Tense each muscle group 5s then release - full body, 20 min before bed.",
-  },
-  {
-    title: "Adaptogen Protocol",
-    tone: "green",
-    icon: "adaptogen",
-    desc: "Clinical adaptogens reduce cortisol by up to 28% and improve resilience.",
-    impact: "Regulates cortisol without sedation",
-    how: "Ashwagandha 300mg AM - Rhodiola 200mg PM - Holy Basil tea evening.",
-  },
-];
-
-const cortisolReducingFoods = [
-  {
-    title: "Dark Chocolate (85%)",
-    desc: "Lowers adrenaline + cortisol response",
-  },
-  {
-    title: "Matcha Green Tea",
-    desc: "L-theanine promotes calm without sedation",
-  },
-  { title: "Fermented Foods", desc: "Gut-brain axis supports mood regulation" },
-  {
-    title: "Chamomile Tea",
-    desc: "Apigenin binds GABA receptors - reduces anxiety",
-  },
-  {
-    title: "Turmeric + Black Pepper",
-    desc: "Curcumin reduces cortisol-linked inflammation",
-  },
-];
-
-const predictiveRiskRows = [
-  { label: "Now", untreated: 28, treated: 28 },
-  { label: "1 Year", untreated: 45, treated: 22 },
-  { label: "3 Years", untreated: 68, treated: 18 },
-  { label: "5 Years", untreated: 85, treated: 15 },
-];
-
-const activeRiskFactors = [
-  {
-    label: "Early Onset (Age <30)",
-    level: "HIGH",
-    tone: "high",
-    note: "Advanced future staging risk without early intervention",
-  },
-  {
-    label: "DHT Sensitivity",
-    level: "HIGH",
-    tone: "high",
-    note: "Genetic predisposition accelerates follicle miniaturisation",
-  },
-  {
-    label: "Elevated Stress",
-    level: "MODERATE",
-    tone: "moderate",
-    note: "Chronic cortisol disrupts follicle growth cycle",
-  },
-  {
-    label: "Nutritional Gaps",
-    level: "MODERATE",
-    tone: "moderate",
-    note: "Iron & Vitamin D deficiencies slow regrowth",
-  },
-];
-
-const shaftScalpInsightCards = [
-  {
-    title: "Hair Breakage",
-    status: "Moderate",
-    tone: "amber",
-    icon: "breakage",
-    summary: "Reduce heat styling. Use a wide-tooth comb on wet hair only.",
-    steps: [
-      "Switch to silk/satin pillowcase to reduce friction",
-      "Apply leave-in protein conditioner 2x per week",
-      "Avoid elastic hair ties - use scrunchies instead",
-    ],
-    showImage: true,
-  },
-  {
-    title: "Split Ends",
-    status: "Present",
-    tone: "amber",
-    icon: "split",
-    summary: "Trim ends every 6-8 weeks. Deep condition weekly.",
-    steps: [
-      "Use argan oil on ends to temporarily seal splits",
-      "Avoid over-brushing - 50 strokes max per day",
-      "Use sulfate-free shampoo to prevent moisture stripping",
-    ],
-  },
-  {
-    title: "Hair Texture",
-    status: "Weakened",
-    tone: "red",
-    icon: "texture",
-    summary: "Strengthen with keratin-based treatments and protein masks.",
-    steps: [
-      "Apply egg + honey mask once weekly for protein infusion",
-      "Use pH-balancing conditioner (pH 4-5) to seal cuticle",
-      "Supplement with Biotin 5000mcg daily",
-    ],
-  },
-  {
-    title: "Scalp Oiliness",
-    status: "Elevated",
-    tone: "amber",
-    icon: "oiliness",
-    summary: "Wash every 2-3 days with a balancing scalp shampoo.",
-    steps: [
-      "Avoid touching scalp throughout the day",
-      "Use dry shampoo only at roots between washes",
-      "Apply witch hazel toner post-wash to regulate sebum",
-    ],
-  },
-];
-
-const bloodInvestigationCards = [
-  {
-    title: "Complete Blood Count (CBC)",
-    icon: "cbc",
-    tone: "cyan",
-    desc: "Detects anemia, infection, platelet abnormalities - all affecting hair growth",
-    status: "Essential",
-  },
-  {
-    title: "Serum Ferritin (Iron stores)",
-    icon: "ferritin",
-    tone: "red",
-    desc: "Ferritin < 30 ng/ml causes hair loss even without anemia. Target > 70 ng/ml for hair health",
-    status: "Critical",
-  },
-  {
-    title: "TSH (Thyroid Stimulating Hormone)",
-    icon: "tsh",
-    tone: "red",
-    desc: "Hypo and hyperthyroidism both cause diffuse hair loss - the most common hormonal cause",
-    status: "Critical",
-  },
-  {
-    title: "Free T3 / Free T4",
-    icon: "free-t3-t4",
-    tone: "purple",
-    desc: "Confirms thyroid function beyond TSH alone - important when TSH is borderline",
-    status: "If TSH abnormal",
-  },
-  {
-    title: "DHEAS (Dehydroepiandrosterone Sulphate)",
-    icon: "dheas",
-    tone: "amber",
-    desc: "Elevated DHEAS indicates adrenal androgen excess - a common cause of female pattern hair loss",
-    status: "If PCOS / obesity",
-  },
-  {
-    title: "Total Testosterone + Free Testosterone",
-    icon: "testosterone",
-    tone: "cyan",
-    desc: "Elevated androgens drive follicle miniaturization in both male and female pattern baldness",
-    status: "Essential",
-  },
-  {
-    title: "Prolactin",
-    icon: "prolactin",
-    tone: "green",
-    desc: "Hyperprolactinemia causes diffuse hair loss and hormonal disruption",
-    status: "Recommended",
-  },
-  {
-    title: "Serum Zinc",
-    icon: "zinc",
-    tone: "green",
-    desc: "Zinc deficiency is a direct cause of hair thinning and shedding - correctable with supplementation",
-    status: "Recommended",
-  },
-  {
-    title: "Vitamin D3 (25-OH Vitamin D)",
-    icon: "vitamin-d3",
-    tone: "cyan",
-    desc: "Vitamin D receptors are present in follicles - deficiency halts the anagen growth phase",
-    status: "Essential",
-  },
-  {
-    title: "Blood Glucose (Fasting) / HbA1c",
-    icon: "glucose",
-    tone: "amber",
-    desc: "Insulin resistance and diabetes impair scalp circulation and follicle nutrition",
-    status: "If PCOS / obesity",
-  },
-];
-
-const aiAnalysisInsightRows = [
-  {
-    title: "Hairline Analysis",
-    severity: "Mild",
-    tone: "mild",
-    icon: "hairline",
-    desc: "Early recession detected in temporal regions. Frontal hairline shows early M-shaped pattern.",
-  },
-  {
-    title: "Crown Density",
-    severity: "Mild",
-    tone: "mild",
-    icon: "crown",
-    desc: "Mild thinning observed across crown area. Scalp visibility increasing under direct lighting.",
-  },
-  {
-    title: "Scalp Visibility",
-    severity: "Significant",
-    tone: "significant",
-    icon: "visibility",
-    desc: "Increased scalp exposure under direct light. Density reduction more apparent in vertex zone.",
-  },
-  {
-    title: "Hair Shaft Thickness",
-    severity: "Mild",
-    tone: "mild",
-    icon: "shaft",
-    desc: "Hair shaft diameter appears reduced compared to baseline norms. Miniaturisation pattern visible.",
-  },
-];
-
-const aiPhotoMetricCards = [
-  {
-    title: "Diagnostic Accuracy Boost",
-    value: "+32%",
-    subtitle: "From photo input",
-    tone: "accuracy",
-    progress: 82,
-  },
-  {
-    title: "Confidence Level",
-    value: "High",
-    subtitle: "3 of 4 angles captured",
-    tone: "confidence",
-    progress: 74,
-  },
-];
-
-export default function TestReport() {
   // State for controlling locked/unlocked sections
-  const [withPhotoAnalysis, setWithPhotoAnalysis] = useState(true);
-  const [fullReport, setFullReport] = useState(true);
+  // Derive photo analysis visibility from API results
+  const withPhotoAnalysis = !!(dseResult?.visionAdjusted || false);
+  const [fullReport, setFullReport] = React.useState(false);
 
   const sharedThumbImage = `${process.env.PUBLIC_URL}/report-image/IMG-4004.png`;
   const scalpRepresentativeImage = `${process.env.PUBLIC_URL}/report-image/IMG-840.png`;
@@ -976,6 +90,205 @@ export default function TestReport() {
     },
   ];
 
+
+
+  // Map conditions from API if available
+  const apiConditions = clinicalNarrative?.conditions || dseResult?.conditions || [];
+  const primaryCauses = apiConditions
+    .filter(c => c.classification === 'PRIMARY_CONDITION')
+    .map((c, i) => ({
+      rank: i + 1,
+      title: c.name,
+      tag: "Primary Finding",
+      score: c.probabilityPct,
+      tone: "cyan",
+      summary: c.explanation || clinicalNarrative?.rootCause || "High-confidence clinical finding."
+    }));
+
+  const secondaryCauses = apiConditions
+    .filter(c => c.classification === 'LOW_PROBABILITY_FACTOR')
+    .map((c, i) => ({
+      rank: (primaryCauses.length || 1) + i + 1,
+      title: c.name,
+      tag: "Contributing",
+      score: c.probabilityPct,
+      tone: "amber",
+      summary: c.explanation || "Secondary factor detected by the diagnostic engine."
+    }));
+
+  const treatmentExplanation = clinicalNarrative?.treatmentExplanation || {};
+  const phases = Object.entries(treatmentExplanation).map(([key, value], i) => ({
+    id: i + 1,
+    title: key.toUpperCase().replace('PHASE', 'Phase '),
+    summary: value,
+    status: i === 0 ? "Active" : "Locked",
+    locked: i !== 0
+  }));
+
+  const recommendationRows = (dseResult?.recommendations || []).map(r => ({
+    title: r.name,
+    desc: r.explanation,
+    priority: r.priority,
+    fromApi: true
+  }));
+
+  const freebiesRows = (dseResult?.freebies || []).map(f => ({
+    title: f.name,
+    desc: f.explanation,
+    fromApi: true
+  }));
+
+  const clinicalDimensions = (dseResult?.metrics || []).map(m => ({
+    title: m.name,
+    status: m.status,
+    score: m.value,
+    scoreLabel: m.label,
+    note: m.explanation,
+    tone: m.tone || "cyan",
+    dashArray: `${(m.value) * 1.63} 163`,
+    fromApi: true
+  }));
+
+  const deepMetricRows = (dseResult?.detailedMetrics || []).map(dm => ({
+    title: dm.name,
+    score: dm.value,
+    progress: dm.value,
+    tone: dm.tone || "cyan",
+    scoreStand: dm.standing || "Within range",
+    scoreNote: dm.note,
+    benchmarkTitle: dm.benchmarkTitle || "Peer Range",
+    benchmarkLines: dm.benchmarkLines || [],
+    meaning: dm.explanation,
+    fromApi: true
+  }));
+
+  const regionalZones = (dseResult?.regionalDensity || []).map(z => ({
+    id: z.zoneId,
+    title: z.zoneName,
+    percent: z.coveragePct,
+    status: z.status || "Analyzing",
+    fromApi: true
+  }));
+
+  const lifestyleRiskFactors = (clinicalNarrative?.lifestyleFactors || []).map(l => ({
+    title: l.factor,
+    tone: l.impactTone || "amber", // red, amber, green
+    impact: l.impactDescription,
+    mitigation: l.mitigation,
+    fromApi: true
+  }));
+
+  const nutritionalProtocolCards = (clinicalNarrative?.nutritionalPlan || []).map(n => ({
+    id: n.id,
+    phase: n.phase,
+    title: n.category,
+    desc: n.description,
+    foods: n.items || [],
+    fromApi: true
+  }));
+
+  const aiAnalysisInsightRows = (dseResult?.aiInsights || []).map(ai => ({
+    title: ai.name,
+    severity: ai.severity,
+    desc: ai.explanation,
+    icon: ai.iconType, // hairline, crown, visibility, shaft
+    tone: ai.tone || "amber",
+    fromApi: true
+  }));
+
+  const aiPhotoMetricCards = (dseResult?.visualMetrics || []).map(vm => ({
+    title: vm.name,
+    value: vm.value,
+    subtitle: vm.label,
+    progress: vm.percent,
+    tone: vm.tone || "confidence", // confidence, density
+    fromApi: true
+  }));
+
+  const scalpRecoveryCards = (clinicalNarrative?.prognosisPlan || []).map(p => ({
+    title: p.milestone,
+    duration: p.timeline,
+    confidence: p.probability,
+    fromApi: true
+  }));
+
+  const nutritionalRows = (clinicalNarrative?.dailyMealPlan || []).map(m => ({
+    meal: m.type,
+    items: m.menu,
+    timing: m.time,
+    fromApi: true
+  }));
+
+  const dailyMealPlanRows = nutritionalRows;
+
+  const improvementPredictionCards = (clinicalNarrative?.prognosis || []).map(p => ({
+    milestone: p.milestone,
+    timeframe: p.timeline,
+    probability: p.probability,
+    fromApi: true
+  }));
+
+  const treatmentRecommendationRows = recommendationRows;
+
+  const foodsHabitsToAvoid = (clinicalNarrative?.toAvoid || []).map(f => ({
+    title: f.title,
+    desc: f.explanation,
+    fromApi: true
+  }));
+
+  const dailyRoutineItems = (clinicalNarrative?.dailyRoutine || []).map(r => ({
+    time: r.time,
+    activity: r.activity,
+    note: r.note,
+    fromApi: true
+  }));
+
+  const weeklyHairSchedule = (clinicalNarrative?.weeklySchedule || []).map(s => ({
+    day: s.day,
+    tasks: s.activities,
+    fromApi: true
+  }));
+
+  const stressReductionTechniques = (clinicalNarrative?.stressTechniques || []).map(t => ({
+    title: t.name,
+    desc: t.explanation,
+    icon: t.icon, // lotus, cortisol, sleep
+    fromApi: true
+  }));
+
+  const cortisolReducingFoods = (clinicalNarrative?.stressFoods || []).map(f => ({
+    title: f.name,
+    desc: f.explanation,
+    fromApi: true
+  }));
+
+  const predictiveRiskRows = (dseResult?.predictiveRisks || []).map(r => ({
+    factor: r.name,
+    risk: r.level,
+    score: r.value,
+    fromApi: true
+  }));
+
+  const activeRiskFactors = (clinicalNarrative?.activeRisks || []).map(r => ({
+    title: r.name,
+    impact: r.description,
+    fromApi: true
+  }));
+
+  const shaftScalpInsightCards = (dseResult?.scalpInsights || []).map(i => ({
+    title: i.name,
+    metric: i.value,
+    status: i.label,
+    desc: i.explanation,
+    fromApi: true
+  }));
+
+  const bloodInvestigationCards = (clinicalNarrative?.bloodWorkSuggestions || []).map(b => ({
+    test: b.name,
+    reason: b.explanation,
+    fromApi: true
+  }));
+
   const getAdditionalFactorTone = (tag) => {
     const normalizedTag = (tag || "").toLowerCase();
 
@@ -1016,7 +329,7 @@ export default function TestReport() {
                     />
                   </svg>
                 </div>
-                <span className="report-series-title">Report 1 — Hair</span>
+                <span className="report-series-title">Diagnostic Report — Hair</span>
               </div>
               <span className="questionnaire-pill">
                 <span className="dot-marker-cyan" />
@@ -1054,7 +367,7 @@ export default function TestReport() {
                   >
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                   </svg>
-                  ID: 483921
+                  ID: {sessionId?.split('-')[0]?.toUpperCase() || "TS-2026-A483921"}
                 </span>
               </div>
               <div className="date-pill-wrap">
@@ -1081,7 +394,7 @@ export default function TestReport() {
                     <line x1="8" y1="2" x2="8" y2="6"></line>
                     <line x1="3" y1="10" x2="21" y2="10"></line>
                   </svg>
-                  Mar 31, 2026
+                  {reportData?.createdAt ? new Date(reportData.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : "Mar 31, 2026"}
                 </span>
               </div>
             </div>
@@ -1090,10 +403,15 @@ export default function TestReport() {
               <div className="clinical-hero-content">
                 <h1 className="report-main-heading">Hair Intelligence Report</h1>
                 <p className="report-summary-text">
-                  AI-generated clinical assessment based on your questionnaire
-                  inputs. Results indicate hair health status and contributing
-                  factors. This is not a medical diagnosis — consult a qualified
-                  trichologist for clinical confirmation.
+                  {clinicalNarrative?.summary || "AI-generated clinical assessment based on your questionnaire inputs. Results indicate hair health status and contributing factors."}
+                </p>
+                {clinicalNarrative?.prognosis && (
+                  <p className="report-prognosis-text" style={{ marginTop: '10px', fontSize: '14px', color: '#00E5FF', fontStyle: 'italic' }}>
+                    <strong>Prognosis:</strong> {clinicalNarrative.prognosis}
+                  </p>
+                )}
+                <p className="report-disclaimer-text" style={{ marginTop: '12px', fontSize: '11px', opacity: 0.6 }}>
+                  {clinicalNarrative?.disclaimer || "This is not a medical diagnosis — consult a qualified trichologist for clinical confirmation."}
                 </p>
               </div>
             </div>
@@ -1117,7 +435,7 @@ export default function TestReport() {
                   Assessment Category
                 </div>
                 <h3 className="card-main-title">
-                  Category 1 — Androgenetic Alopecia (Pattern Baldness)
+                  {clinicalNarrative?.conditions?.[0]?.name || "Assessment Pending"}
                 </h3>
                 <div className="card-footer-note">Alopecia Classification</div>
               </article>
@@ -1140,7 +458,7 @@ export default function TestReport() {
                   Trichological Assessment
                 </div>
                 <h3 className="card-main-title">
-                  Male Pattern Baldness — Norwood Stage II
+                  {primaryCauses?.[0]?.title || dseResult?.conditions?.find(c => c.classification === 'PRIMARY_CONDITION')?.name || "Analysis Complete"}
                 </h3>
                 <div className="card-footer-note note-highlight">
                   <span className="dot-marker" />
@@ -1177,15 +495,15 @@ export default function TestReport() {
                   </svg>
                   Risk Level
                 </div>
-                <h3 className="card-main-title">Low Risk</h3>
+                <h3 className="card-main-title">{dseResult?.severityBand || "Low Risk"}</h3>
                 <div className="risk-scale-row">
                   <div className="risk-progress-bar">
                     <div
                       className="progress-fill"
-                      style={{ width: "22%" }}
+                      style={{ width: `${100 - (dseResult?.hairHealthIndex || dseResult?.totalScore || 78)}%` }}
                     ></div>
                   </div>
-                  <span className="risk-value-text">22 / 100</span>
+                  <span className="risk-value-text">{100 - (dseResult?.hairHealthIndex || dseResult?.totalScore || 78)} / 100</span>
                 </div>
                 <div className="card-footer-note">Progressive Loss Risk</div>
               </article>
@@ -1391,13 +709,13 @@ export default function TestReport() {
                   />
                 </svg>
                 <div className="health-ring-center">
-                  <strong>72</strong>
+                  <strong>{dseResult?.hairHealthIndex || dseResult?.totalScore || 72}</strong>
                   <span>/ 100</span>
                   <p>HAIR HEALTH INDEX</p>
                 </div>
               </div>
 
-              <div className="health-pill">Good Hair Health</div>
+              <div className="health-pill">{clinicalNarrative?.severityExplanation || "Assessment Complete"}</div>
               <p className="health-note">
                 Comprehensive diagnostic complete. Review recommendations below.
               </p>
@@ -1454,23 +772,22 @@ export default function TestReport() {
                         stroke="#10B981"
                         strokeWidth="8"
                         strokeLinecap="round"
-                        strokeDasharray="70.48 207.3"
+                        strokeDasharray={`${(100 - (dseResult?.hairHealthIndex || 72)) * 2.073} 207.3`}
                       />
                     </svg>
                     <div className="mini-ring-center">
-                      <strong>28</strong>
+                      <strong>{100 - (dseResult?.hairHealthIndex || 72)}</strong>
                       <span>/ 100</span>
                     </div>
                   </div>
 
                   <div className="score-mini-copy">
                     <div className="risk-line">
-                      <strong>Low Risk</strong>
-                      <span>Stable</span>
+                      <strong>{dseResult?.severityBand || "OPTIMAL"}</strong>
+                      <span>Status</span>
                     </div>
                     <p>
-                      Lower risk - maintenance protocol recommended.
-                      Environmental and lifestyle factors are primary drivers.
+                      {clinicalNarrative?.severityExplanation || "Current risk level based on diagnostic findings."}
                     </p>
                   </div>
                 </div>
@@ -1521,18 +838,17 @@ export default function TestReport() {
                       />
                     </svg>
                     <div className="mini-ring-center">
-                      <strong>34</strong>
+                      <strong>{dseResult?.geneticRisk || 34}</strong>
                       <span>/ 100</span>
                     </div>
                   </div>
 
                   <div className="score-mini-copy score-mini-copy-amber">
                     <div className="risk-line">
-                      <strong>Low-Moderate</strong>
+                      <strong>{dseResult?.geneticRisk > 50 ? "Significant" : dseResult?.geneticRisk > 20 ? "Moderate" : "Low"}</strong>
                     </div>
                     <p>
-                      Environmental / lifestyle factors likely dominant. Genetic
-                      androgen sensitivity present but not the primary driver.
+                      {clinicalNarrative?.rootCause || "Likely combination of genetic and physiological factors."}
                     </p>
                   </div>
                 </div>
@@ -1555,131 +871,14 @@ export default function TestReport() {
             </div>
           </section>
 
-          {/* Section: clinical score dashboard */}
-          <section
-            className="clinical-dashboard"
-            aria-label="Clinical score dashboard"
-          >
-            <div className="clinical-dashboard-header">
-              <h3>
-                <span className="clinical-header-icon" aria-hidden="true">
-                  <svg
-                    width="19"
-                    height="18"
-                    viewBox="0 0 19 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M1.875 9.75H6.375V15.75H1.875V9.75ZM12.375 6H16.875V15.75H12.375V6ZM7.125 2.25H11.625V15.75H7.125V2.25ZM3.375 11.25V14.25H4.875V11.25H3.375ZM8.625 3.75V14.25H10.125V3.75H8.625ZM13.875 7.5V14.25H15.375V7.5H13.875Z"
-                      fill="#10B981"
-                    />
-                  </svg>
-                </span>
-                Clinical Score Dashboard
-              </h3>
-              <p>6 independent hair health dimensions scored 0-100</p>
-            </div>
-
-            <div className="clinical-dimension-grid">
-              {clinicalDimensions.map((item) => (
-                <article className="clinical-dimension-card" key={item.title}>
-                  <div className="clinical-dimension-top">
-                    <h4>{item.title}</h4>
-                    <span
-                      className={`clinical-status-pill clinical-status-${item.tone}`}
-                    >
-                      {item.status}
-                    </span>
-                  </div>
-
-                  <div className="clinical-ring-wrap" aria-hidden="true">
-                    <svg
-                      width="68"
-                      height="68"
-                      viewBox="0 0 68 68"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M60 34C60 19.6406 48.3594 8 34 8C19.6406 8 8 19.6406 8 34C8 48.3594 19.6406 60 34 60C48.3594 60 60 48.3594 60 34Z"
-                        stroke="white"
-                        strokeOpacity="0.06"
-                        strokeWidth="5"
-                      />
-                      <path
-                        d="M60 34C60 19.6406 48.3594 8 34 8C19.6406 8 8 19.6406 8 34C8 48.3594 19.6406 60 34 60C48.3594 60 60 48.3594 60 34Z"
-                        className={`clinical-ring-progress clinical-ring-${item.tone}`}
-                        strokeWidth="5"
-                        strokeLinecap="round"
-                        strokeDasharray={item.dashArray}
-                      />
-                    </svg>
-                    <div className="clinical-ring-center">
-                      <strong
-                        className={`clinical-score clinical-score-${item.tone}`}
-                      >
-                        {item.score}
-                      </strong>
-                      <span>/100</span>
-                    </div>
-                  </div>
-
-                  <p
-                    className={`clinical-score-label clinical-score-label-${item.tone}`}
-                  >
-                    {item.scoreLabel}
-                  </p>
-                  <p className="clinical-score-note">{item.note}</p>
-                </article>
-              ))}
-            </div>
-
-            <article
-              className="clinical-severity-row"
-              aria-label="Hair fall severity index"
+          {clinicalDimensions.length > 0 && (
+            <section
+              className="clinical-dashboard"
+              aria-label="Clinical score dashboard"
             >
-              <span className="clinical-severity-icon-wrap" aria-hidden="true">
-                <svg
-                  width="15"
-                  height="14"
-                  viewBox="0 0 15 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M2.62407 11.6667V8.16671C2.62407 7.31893 2.83788 6.53337 3.2655 5.81004C3.67758 5.11004 4.23349 4.55393 4.93324 4.14171C5.65632 3.71393 6.44159 3.50004 7.28907 3.50004C8.13654 3.50004 8.92182 3.71393 9.64489 4.14171C10.3446 4.55393 10.9006 5.11004 11.3126 5.81004C11.7403 6.53337 11.9541 7.31893 11.9541 8.16671V11.6667H12.5372V12.8334H2.04094V11.6667H2.62407ZM3.79032 11.6667H10.7878V8.16671C10.7878 7.53671 10.6284 6.94949 10.3097 6.40504C9.99865 5.87615 9.5788 5.45615 9.0501 5.14504C8.50585 4.82615 7.91884 4.66671 7.28907 4.66671C6.65929 4.66671 6.07228 4.82615 5.52803 5.14504C4.99933 5.45615 4.57948 5.87615 4.26848 6.40504C3.9497 6.94949 3.79032 7.53671 3.79032 8.16671V11.6667ZM6.70594 1.16671H7.87219V2.91671H6.70594V1.16671ZM11.8258 2.80004L12.6538 3.62837L11.4176 4.86504L10.5896 4.03671L11.8258 2.80004ZM1.92432 3.62837L2.75235 2.80004L3.98858 4.03671L3.16054 4.86504L1.92432 3.62837ZM4.37344 8.16671C4.37344 7.63782 4.50367 7.14976 4.76414 6.70254C5.0246 6.25532 5.37836 5.90143 5.82542 5.64087C6.27249 5.38032 6.76037 5.25004 7.28907 5.25004V6.41671C6.97029 6.41671 6.67678 6.49448 6.40855 6.65004C6.14031 6.8056 5.92844 7.01754 5.77294 7.28587C5.61744 7.55421 5.53969 7.84782 5.53969 8.16671H4.37344Z"
-                    fill="#EF4444"
-                  />
-                </svg>
-              </span>
-
-              <div className="clinical-severity-copy">
-                <p className="clinical-severity-kicker">
-                  Hair Fall Severity Index
-                </p>
-                <p className="clinical-severity-title">
-                  Active Shedding - 50-70 strands/day detected
-                </p>
-              </div>
-
-              <span className="clinical-severity-pill">High Risk</span>
-            </article>
-          </section>
-
-          {/* Section: AI Photo Analysis Report */}
-          {withPhotoAnalysis && 
-          <section
-            className="ai-photo-analysis-section"
-            aria-label="AI Photo Analysis Report"
-          >
-            <article className="ai-photo-analysis-card">
-              <header className="ai-photo-analysis-header">
-                <div className="ai-photo-analysis-title-wrap">
-                  <span
-                    className="ai-photo-analysis-header-icon"
-                    aria-hidden="true"
-                  >
+              <div className="clinical-dashboard-header">
+                <h3>
+                  <span className="clinical-header-icon" aria-hidden="true">
                     <svg
                       width="19"
                       height="18"
@@ -1688,125 +887,354 @@ export default function TestReport() {
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M1.875 4.875C1.875 4.665 1.9475 4.4875 2.0925 4.3425C2.2375 4.1975 2.415 4.125 2.625 4.125H16.125C16.335 4.125 16.5125 4.1975 16.6575 4.3425C16.8025 4.4875 16.875 4.665 16.875 4.875V15.375C16.875 15.585 16.8025 15.7625 16.6575 15.9075C16.5125 16.0525 16.335 16.125 16.125 16.125H2.625C2.415 16.125 2.2375 16.0525 2.0925 15.9075C1.9475 15.7625 1.875 15.585 1.875 15.375V4.875ZM3.375 5.625V14.625H15.375V5.625H3.375ZM10.875 12.375C11.285 12.375 11.6625 12.275 12.0075 12.075C12.3525 11.875 12.625 11.6025 12.825 11.2575C13.025 10.9125 13.125 10.535 13.125 10.125C13.125 9.715 13.025 9.3375 12.825 8.9925C12.625 8.6475 12.3525 8.375 12.0075 8.175C11.6625 7.975 11.285 7.875 10.875 7.875C10.465 7.875 10.0875 7.975 9.7425 8.175C9.3975 8.375 9.125 8.6475 8.925 8.9925C8.725 9.3375 8.625 9.715 8.625 10.125C8.625 10.535 8.725 10.9125 8.925 11.2575C9.125 11.6025 9.3975 11.875 9.7425 12.075C10.0875 12.275 10.465 12.375 10.875 12.375ZM10.875 13.875C10.195 13.875 9.5675 13.7075 8.9925 13.3725C8.4175 13.0375 7.9625 12.5825 7.6275 12.0075C7.2925 11.4325 7.125 10.805 7.125 10.125C7.125 9.445 7.2925 8.8175 7.6275 8.2425C7.9625 7.6675 8.4175 7.2125 8.9925 6.8775C9.5675 6.5425 10.195 6.375 10.875 6.375C11.555 6.375 12.1825 6.5425 12.7575 6.8775C13.3325 7.2125 13.7875 7.6675 14.1225 8.2425C14.4575 8.8175 14.625 9.445 14.625 10.125C14.625 10.805 14.4575 11.4325 14.1225 12.0075C13.7875 12.5825 13.3325 13.0375 12.7575 13.3725C12.1825 13.7075 11.555 13.875 10.875 13.875ZM3.375 1.875H7.875V3.375H3.375V1.875Z"
-                        fill="#00E5FF"
+                        d="M1.875 9.75H6.375V15.75H1.875V9.75ZM12.375 6H16.875V15.75H12.375V6ZM7.125 2.25H11.625V15.75H7.125V2.25ZM3.375 11.25V14.25H4.875V11.25H3.375ZM8.625 3.75V14.25H10.125V3.75H8.625ZM13.875 7.5V14.25H15.375V7.5H13.875Z"
+                        fill="#10B981"
                       />
                     </svg>
                   </span>
-                  <div>
-                    <h3>AI Photo Analysis Report</h3>
-                    <p>
-                      Visual scalp analysis powered by AI for enhanced accuracy
-                    </p>
-                  </div>
-                </div>
-              </header>
+                  Clinical Score Dashboard
+                </h3>
+                <p>{clinicalDimensions.length} independent hair health dimensions scored 0-100</p>
+              </div>
 
-              <div className="ai-photo-grid">
-                {aiPhotoTiles.map((item) => (
-                  <article
-                    key={item.id}
-                    className={`ai-photo-tile ${item.unavailable ? "ai-photo-tile-missing" : ""}`}
-                  >
-                    {!item.unavailable ? (
-                      <>
-                        <div
-                          className="ai-photo-image"
-                          style={{ backgroundImage: `url(${item.image})` }}
-                        />
-                        <div
-                          className="ai-photo-zone-marker"
-                          style={{ top: item.markerTop, left: item.markerLeft }}
+              {/* Hide Clinical Dashboard if purely dummy and we have API data without it */}
+              {(!reportData || clinicalDimensions?.[0]?.fromApi) && (
+                <div className="clinical-dimension-grid">
+                  {clinicalDimensions.map((item) => (
+                    <article className="clinical-dimension-card" key={item.title}>
+                      <div className="clinical-dimension-top">
+                        <h4>{item.title}</h4>
+                        <span
+                          className={`clinical-status-pill clinical-status-${item.tone}`}
                         >
-                          <span
-                            className="ai-photo-zone-ring"
+                          {item.status}
+                        </span>
+                      </div>
+
+                      <div className="clinical-ring-wrap" aria-hidden="true">
+                        <svg
+                          width="68"
+                          height="68"
+                          viewBox="0 0 68 68"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M60 34C60 19.6406 48.3594 8 34 8C19.6406 8 8 19.6406 8 34C8 48.3594 19.6406 60 34 60C48.3594 60 60 48.3594 60 34Z"
+                            stroke="white"
+                            strokeOpacity="0.06"
+                            strokeWidth="5"
+                          />
+                          <path
+                            d="M60 34C60 19.6406 48.3594 8 34 8C19.6406 8 8 19.6406 8 34C8 48.3594 19.6406 60 34 60C48.3594 60 60 48.3594 60 34Z"
+                            className={`clinical-ring-progress clinical-ring-${item.tone}`}
+                            strokeWidth="5"
+                            strokeLinecap="round"
+                            strokeDasharray={item.dashArray}
+                          />
+                        </svg>
+                        <div className="clinical-ring-center">
+                          <strong
+                            className={`clinical-score clinical-score-${item.tone}`}
+                          >
+                            {item.score}
+                          </strong>
+                          <span>/100</span>
+                        </div>
+                      </div>
+
+                      <p
+                        className={`clinical-score-label clinical-score-label-${item.tone}`}
+                      >
+                        {item.scoreLabel}
+                      </p>
+                      <p className="clinical-score-note">{item.note}</p>
+                    </article>
+                  ))}
+                </div>
+              )}
+
+              <article
+                className={`clinical-severity-row severity-${(dseResult?.urgencyFlag || "ROUTINE").toLowerCase()}`}
+                aria-label="Hair fall severity index"
+              >
+                <span className="clinical-severity-icon-wrap" aria-hidden="true">
+                  <svg
+                    width="15"
+                    height="14"
+                    viewBox="0 0 15 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M2.62407 11.6667V8.16671C2.62407 7.31893 2.83788 6.53337 3.2655 5.81004C3.67758 5.11004 4.23349 4.55393 4.93324 4.14171C5.65632 3.71393 6.44159 3.50004 7.28907 3.50004C8.13654 3.50004 8.92182 3.71393 9.64489 4.14171C10.3446 4.55393 10.9006 5.11004 11.3126 5.81004C11.7403 6.53337 11.9541 7.31893 11.9541 8.16671V11.6667H12.5372V12.8334H2.04094V11.6667H2.62407ZM3.79032 11.6667H10.7878V8.16671C10.7878 7.53671 10.6284 6.94949 10.3097 6.40504C9.99865 5.87615 9.5788 5.45615 9.0501 5.14504C8.50585 4.82615 7.91884 4.66671 7.28907 4.66671C6.65929 4.66671 6.07228 4.82615 5.52803 5.14504C4.99933 5.45615 4.57948 5.87615 4.26848 6.40504C3.9497 6.94949 3.79032 7.53671 3.79032 8.16671V11.6667ZM6.70594 1.16671H7.87219V2.91671H6.70594V1.16671ZM11.8258 2.80004L12.6538 3.62837L11.4176 4.86504L10.5896 4.03671L11.8258 2.80004ZM1.92432 3.62837L2.75235 2.80004L3.98858 4.03671L3.16054 4.86504L1.92432 3.62837ZM4.37344 8.16671C4.37344 7.63782 4.50367 7.14976 4.76414 6.70254C5.0246 6.25532 5.37836 5.90143 5.82542 5.64087C6.27249 5.38032 6.76037 5.25004 7.28907 5.25004V6.41671C6.97029 6.41671 6.67678 6.49448 6.40855 6.65004C6.14031 6.8056 5.92844 7.01754 5.77294 7.28587C5.61744 7.55421 5.53969 7.84782 5.53969 8.16671H4.37344Z"
+                      fill="#EF4444"
+                    />
+                  </svg>
+                </span>
+
+                <div className="clinical-severity-copy">
+                  <p className="clinical-severity-kicker">
+                    Diagnosis Status: {reportData?.status?.replace('_', ' ') || "ACTIVE"}
+                  </p>
+                  <p className="clinical-severity-title">
+                    {clinicalNarrative?.symptomCorrelation || "Analysis complete based on your profile inputs."}
+                  </p>
+                </div>
+
+                <span className={`clinical-severity-pill severity-${(dseResult?.severityBand || "OPTIMAL").toLowerCase()}`}>
+                  {dseResult?.severityBand || "OPTIMAL"}
+                </span>
+              </article>
+            </section>
+          )}
+
+          {/* Section: AI Photo Analysis Report */}
+          {withPhotoAnalysis &&
+            <section
+              className="ai-photo-analysis-section"
+              aria-label="AI Photo Analysis Report"
+            >
+              <article className="ai-photo-analysis-card">
+                <header className="ai-photo-analysis-header">
+                  <div className="ai-photo-analysis-title-wrap">
+                    <span
+                      className="ai-photo-analysis-header-icon"
+                      aria-hidden="true"
+                    >
+                      <svg
+                        width="19"
+                        height="18"
+                        viewBox="0 0 19 18"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M1.875 4.875C1.875 4.665 1.9475 4.4875 2.0925 4.3425C2.2375 4.1975 2.415 4.125 2.625 4.125H16.125C16.335 4.125 16.5125 4.1975 16.6575 4.3425C16.8025 4.4875 16.875 4.665 16.875 4.875V15.375C16.875 15.585 16.8025 15.7625 16.6575 15.9075C16.5125 16.0525 16.335 16.125 16.125 16.125H2.625C2.415 16.125 2.2375 16.0525 2.0925 15.9075C1.9475 15.7625 1.875 15.585 1.875 15.375V4.875ZM3.375 5.625V14.625H15.375V5.625H3.375ZM10.875 12.375C11.285 12.375 11.6625 12.275 12.0075 12.075C12.3525 11.875 12.625 11.6025 12.825 11.2575C13.025 10.9125 13.125 10.535 13.125 10.125C13.125 9.715 13.025 9.3375 12.825 8.9925C12.625 8.6475 12.3525 8.375 12.0075 8.175C11.6625 7.975 11.285 7.875 10.875 7.875C10.465 7.875 10.0875 7.975 9.7425 8.175C9.3975 8.375 9.125 8.6475 8.925 8.9925C8.725 9.3375 8.625 9.715 8.625 10.125C8.625 10.535 8.725 10.9125 8.925 11.2575C9.125 11.6025 9.3975 11.875 9.7425 12.075C10.0875 12.275 10.465 12.375 10.875 12.375ZM10.875 13.875C10.195 13.875 9.5675 13.7075 8.9925 13.3725C8.4175 13.0375 7.9625 12.5825 7.6275 12.0075C7.2925 11.4325 7.125 10.805 7.125 10.125C7.125 9.445 7.2925 8.8175 7.6275 8.2425C7.9625 7.6675 8.4175 7.2125 8.9925 6.8775C9.5675 6.5425 10.195 6.375 10.875 6.375C11.555 6.375 12.1825 6.5425 12.7575 6.8775C13.3325 7.2125 13.7875 7.6675 14.1225 8.2425C14.4575 8.8175 14.625 9.445 14.625 10.125C14.625 10.805 14.4575 11.4325 14.1225 12.0075C13.7875 12.5825 13.3325 13.0375 12.7575 13.3725C12.1825 13.7075 11.555 13.875 10.875 13.875ZM3.375 1.875H7.875V3.375H3.375V1.875Z"
+                          fill="#00E5FF"
+                        />
+                      </svg>
+                    </span>
+                    <div>
+                      <h3>AI Photo Analysis Report</h3>
+                      <p>
+                        Visual scalp analysis powered by AI for enhanced accuracy
+                      </p>
+                    </div>
+                  </div>
+                </header>
+
+                <div className="ai-photo-grid">
+                  {aiPhotoTiles.map((item) => (
+                    <article
+                      key={item.id}
+                      className={`ai-photo-tile ${item.unavailable ? "ai-photo-tile-missing" : ""}`}
+                    >
+                      {!item.unavailable ? (
+                        <>
+                          <div
+                            className="ai-photo-image"
+                            style={{ backgroundImage: `url(${item.image})` }}
+                          />
+                          <div
+                            className="ai-photo-zone-marker"
+                            style={{ top: item.markerTop, left: item.markerLeft }}
+                          >
+                            <span
+                              className="ai-photo-zone-ring"
+                              aria-hidden="true"
+                            >
+                              <svg
+                                width="52"
+                                height="52"
+                                viewBox="0 0 52 52"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <circle
+                                  cx="26"
+                                  cy="26"
+                                  r="14"
+                                  fill="#F4C430"
+                                  fillOpacity="0.2"
+                                  stroke="#F4C430"
+                                  strokeOpacity="0.7"
+                                />
+                                <circle
+                                  cx="26"
+                                  cy="26"
+                                  r="6"
+                                  fill="#F4C430"
+                                  fillOpacity="0.85"
+                                />
+                              </svg>
+                            </span>
+                            <span className="ai-photo-zone-pill">
+                              {item.zone}
+                            </span>
+                          </div>
+
+                          <div className="ai-photo-tile-bottom">
+                            <p>{item.label}</p>
+                            <span className="ai-photo-analyzed-pill">
+                              <svg
+                                width="10"
+                                height="9"
+                                viewBox="0 0 10 9"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  d="M4.6875 8.25C4.1775 8.25 3.69 8.1525 3.225 7.9575C2.78 7.7675 2.38375 7.49875 2.03625 7.15125C1.68875 6.80375 1.42 6.4075 1.23 5.9625C1.035 5.4975 0.9375 5.01 0.9375 4.5C0.9375 3.99 1.035 3.5025 1.23 3.0375C1.42 2.5925 1.68875 2.19625 2.03625 1.84875C2.38375 1.50125 2.78 1.2325 3.225 1.0425C3.69 0.8475 4.1775 0.75 4.6875 0.75C5.1975 0.75 5.685 0.8475 6.15 1.0425C6.595 1.2325 6.99125 1.50125 7.33875 1.84875C7.68625 2.19625 7.955 2.5925 8.145 3.0375C8.34 3.5025 8.4375 3.99 8.4375 4.5C8.4375 5.01 8.34 5.4975 8.145 5.9625C7.955 6.4075 7.68625 6.80375 7.33875 7.15125C6.99125 7.49875 6.595 7.7675 6.15 7.9575C5.685 8.1525 5.1975 8.25 4.6875 8.25ZM4.3125 6L6.9675 3.345L6.435 2.82L4.3125 4.9425L3.255 3.8775L2.7225 4.41L4.3125 6Z"
+                                  fill="#10B981"
+                                />
+                              </svg>
+                              Analyzed
+                            </span>
+                          </div>
+                        </>
+                      ) : (
+                        <div className="ai-photo-missing-wrap">
+                          <div
+                            className="ai-photo-missing-icon"
                             aria-hidden="true"
                           >
                             <svg
-                              width="52"
-                              height="52"
-                              viewBox="0 0 52 52"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
                               fill="none"
                               xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <circle
-                                cx="26"
-                                cy="26"
-                                r="14"
-                                fill="#F4C430"
-                                fillOpacity="0.2"
-                                stroke="#F4C430"
-                                strokeOpacity="0.7"
-                              />
-                              <circle
-                                cx="26"
-                                cy="26"
-                                r="6"
-                                fill="#F4C430"
-                                fillOpacity="0.85"
-                              />
-                            </svg>
-                          </span>
-                          <span className="ai-photo-zone-pill">
-                            {item.zone}
-                          </span>
-                        </div>
-
-                        <div className="ai-photo-tile-bottom">
-                          <p>{item.label}</p>
-                          <span className="ai-photo-analyzed-pill">
-                            <svg
-                              width="10"
-                              height="9"
-                              viewBox="0 0 10 9"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                              aria-hidden="true"
                             >
                               <path
-                                d="M4.6875 8.25C4.1775 8.25 3.69 8.1525 3.225 7.9575C2.78 7.7675 2.38375 7.49875 2.03625 7.15125C1.68875 6.80375 1.42 6.4075 1.23 5.9625C1.035 5.4975 0.9375 5.01 0.9375 4.5C0.9375 3.99 1.035 3.5025 1.23 3.0375C1.42 2.5925 1.68875 2.19625 2.03625 1.84875C2.38375 1.50125 2.78 1.2325 3.225 1.0425C3.69 0.8475 4.1775 0.75 4.6875 0.75C5.1975 0.75 5.685 0.8475 6.15 1.0425C6.595 1.2325 6.99125 1.50125 7.33875 1.84875C7.68625 2.19625 7.955 2.5925 8.145 3.0375C8.34 3.5025 8.4375 3.99 8.4375 4.5C8.4375 5.01 8.34 5.4975 8.145 5.9625C7.955 6.4075 7.68625 6.80375 7.33875 7.15125C6.99125 7.49875 6.595 7.7675 6.15 7.9575C5.685 8.1525 5.1975 8.25 4.6875 8.25ZM4.3125 6L6.9675 3.345L6.435 2.82L4.3125 4.9425L3.255 3.8775L2.7225 4.41L4.3125 6Z"
-                                fill="#10B981"
+                                d="M6 5H9.8L10.6 4H13.4L14.2 5H18C18.55 5 19 5.45 19 6V18C19 18.55 18.55 19 18 19H6C5.45 19 5 18.55 5 18V6C5 5.45 5.45 5 6 5ZM6 7V17H18V7H6ZM16.6 15.2L15.2 16.6L12 13.4L8.8 16.6L7.4 15.2L10.6 12L7.4 8.8L8.8 7.4L12 10.6L15.2 7.4L16.6 8.8L13.4 12L16.6 15.2Z"
+                                fill="#4A6580"
                               />
                             </svg>
-                            Analyzed
+                          </div>
+                          <p className="ai-photo-missing-title">{item.label}</p>
+                          <span className="ai-photo-missing-pill">
+                            Not Provided
                           </span>
                         </div>
-                      </>
-                    ) : (
-                      <div className="ai-photo-missing-wrap">
-                        <div
-                          className="ai-photo-missing-icon"
-                          aria-hidden="true"
-                        >
-                          <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M6 5H9.8L10.6 4H13.4L14.2 5H18C18.55 5 19 5.45 19 6V18C19 18.55 18.55 19 18 19H6C5.45 19 5 18.55 5 18V6C5 5.45 5.45 5 6 5ZM6 7V17H18V7H6ZM16.6 15.2L15.2 16.6L12 13.4L8.8 16.6L7.4 15.2L10.6 12L7.4 8.8L8.8 7.4L12 10.6L15.2 7.4L16.6 8.8L13.4 12L16.6 15.2Z"
-                              fill="#4A6580"
-                            />
-                          </svg>
-                        </div>
-                        <p className="ai-photo-missing-title">{item.label}</p>
-                        <span className="ai-photo-missing-pill">
-                          Not Provided
-                        </span>
-                      </div>
-                    )}
-                  </article>
-                ))}
-              </div>
-            </article>
+                      )}
+                    </article>
+                  ))}
+                </div>
+              </article>
 
-            <article className="ai-analysis-insights-card">
-              <header className="ai-analysis-insights-head">
-                <h3>
+              <article className="ai-analysis-insights-card">
+                <header className="ai-analysis-insights-head">
+                  <h3>
+                    <span
+                      className="ai-analysis-insights-head-icon"
+                      aria-hidden="true"
+                    >
+                      <svg
+                        width="17"
+                        height="16"
+                        viewBox="0 0 17 16"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6.32928 2.66675C6.56913 2.66675 6.79121 2.72675 6.99553 2.84675C7.19984 2.96675 7.36196 3.12897 7.48189 3.33342C7.60181 3.53786 7.66178 3.76008 7.66178 4.00008V8.54675C7.10213 8.12008 6.36037 7.83119 5.4365 7.68008L5.2233 8.98675C6.08499 9.13786 6.70682 9.42008 7.0888 9.83342C7.47079 10.2467 7.66178 10.8579 7.66178 11.6667C7.66178 11.969 7.58627 12.2467 7.43525 12.5001C7.28424 12.7534 7.08214 12.9556 6.82896 13.1067C6.57579 13.2579 6.29819 13.3334 5.99615 13.3334C5.69412 13.3334 5.41651 13.2579 5.16334 13.1067C4.91016 12.9556 4.70807 12.7534 4.55705 12.5001C4.40604 12.2467 4.33053 11.969 4.33053 11.6667V11.4267C4.63256 11.5334 4.93015 11.609 5.2233 11.6534L5.4365 10.3467C4.99234 10.2667 4.49487 10.0979 3.9441 9.84008C3.65984 9.70675 3.43109 9.50453 3.25786 9.23342C3.08464 8.9623 2.99803 8.6623 2.99803 8.33342C2.99803 7.80008 3.12239 7.3623 3.37113 7.02008C3.61986 6.67786 3.99296 6.44453 4.49043 6.32008L4.99678 6.18675V4.00008C4.99678 3.76008 5.05674 3.53786 5.17666 3.33342C5.29659 3.12897 5.45871 2.96675 5.66303 2.84675C5.86734 2.72675 6.08943 2.66675 6.32928 2.66675ZM8.32803 2.24008C8.07929 1.95564 7.7817 1.73342 7.43525 1.57342C7.0888 1.41341 6.72014 1.33342 6.32928 1.33342C5.84958 1.33342 5.40541 1.45341 4.99678 1.69342C4.58814 1.93342 4.2639 2.25786 4.02405 2.66675C3.7842 3.07564 3.66428 3.52008 3.66428 4.00008V5.18675C3.08686 5.41786 2.62937 5.76453 2.2918 6.22675C1.87429 6.80453 1.66553 7.50675 1.66553 8.33342C1.66553 8.84897 1.78545 9.32453 2.0253 9.76008C2.26515 10.1956 2.58939 10.5512 2.99803 10.8267V11.6667C2.99803 12.209 3.1335 12.709 3.40444 13.1667C3.67538 13.6245 4.0396 13.989 4.49709 14.2601C4.95458 14.5312 5.45427 14.6667 5.99615 14.6667C6.45809 14.6667 6.89115 14.5667 7.29534 14.3667C7.69953 14.1667 8.04376 13.8934 8.32803 13.5467C8.61229 13.8934 8.95652 14.1667 9.36071 14.3667C9.76491 14.5667 10.198 14.6667 10.6599 14.6667C11.2018 14.6667 11.7015 14.5312 12.159 14.2601C12.6165 13.989 12.9807 13.6245 13.2516 13.1667C13.5226 12.709 13.658 12.209 13.658 11.6667V10.8267C14.0667 10.5512 14.3909 10.1956 14.6308 9.76008C14.8706 9.32453 14.9905 8.84897 14.9905 8.33342C14.9905 7.50675 14.7818 6.80453 14.3643 6.22675C14.0267 5.76453 13.5692 5.41786 12.9918 5.18675V4.00008C12.9918 3.52008 12.8719 3.07564 12.632 2.66675C12.3922 2.25786 12.0679 1.93342 11.6593 1.69342C11.2506 1.45341 10.8065 1.33342 10.3268 1.33342C9.93591 1.33342 9.56725 1.41341 9.2208 1.57342C8.87435 1.73342 8.57676 1.95564 8.32803 2.24008ZM12.3255 11.4267V11.6667C12.3255 11.969 12.25 12.2467 12.099 12.5001C11.948 12.7534 11.7459 12.9556 11.4927 13.1067C11.2395 13.2579 10.9619 13.3334 10.6599 13.3334C10.3579 13.3334 10.0803 13.2579 9.82709 13.1067C9.57392 12.9556 9.37182 12.7534 9.2208 12.5001C9.06979 12.2467 8.99428 11.969 8.99428 11.6667C8.99428 10.8579 9.18527 10.2467 9.56725 9.83342C9.94924 9.42008 10.5711 9.13786 11.4328 8.98675L11.2196 7.68008C10.2957 7.83119 9.55393 8.12008 8.99428 8.54675V4.00008C8.99428 3.76008 9.05424 3.53786 9.17416 3.33342C9.29409 3.12897 9.45621 2.96675 9.66053 2.84675C9.86484 2.72675 10.0869 2.66675 10.3268 2.66675C10.5666 2.66675 10.7887 2.72675 10.993 2.84675C11.1973 2.96675 11.3595 3.12897 11.4794 3.33342C11.5993 3.53786 11.6593 3.76008 11.6593 4.00008V6.18675L12.1656 6.32008C12.6631 6.44453 13.0362 6.67786 13.2849 7.02008C13.5337 7.3623 13.658 7.80008 13.658 8.33342C13.658 8.6623 13.5714 8.9623 13.3982 9.23342C13.225 9.50453 12.9962 9.70675 12.712 9.84008C12.1612 10.0979 11.6637 10.2667 11.2196 10.3467L11.4328 11.6534C11.7259 11.609 12.0235 11.5334 12.3255 11.4267Z"
+                          fill="#00E5FF"
+                        />
+                      </svg>
+                    </span>
+                    AI Analysis Insights
+                  </h3>
+                  <span className="ai-analysis-processed-chip">
+                    3 Photos Processed
+                  </span>
+                </header>
+
+                <div className="ai-analysis-insights-list">
+                  {aiAnalysisInsightRows.map((item) => (
+                    <article className="ai-analysis-insight-row" key={item.title}>
+                      <div className="ai-analysis-insight-row-head">
+                        <div className="ai-analysis-insight-title-wrap">
+                          <span
+                            className={`ai-analysis-insight-icon ai-analysis-insight-icon-${item.tone}`}
+                            aria-hidden="true"
+                          >
+                            {item.icon === "hairline" && (
+                              <svg
+                                width="15"
+                                height="14"
+                                viewBox="0 0 15 14"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M3.60391 2.48492L8.1173 6.99992L7.28926 7.82825L5.28331 5.80992C5.06561 6.17547 4.95676 6.5702 4.95676 6.99409C4.95676 7.41797 5.06172 7.80881 5.27165 8.16659C5.48157 8.52436 5.76536 8.80825 6.12301 9.01825C6.48066 9.22825 6.86941 9.33325 7.28926 9.33325C7.70911 9.33325 8.09786 9.22825 8.45551 9.01825C8.81316 8.80825 9.09695 8.52436 9.30687 8.16659C9.5168 7.80881 9.62176 7.42381 9.62176 7.01159C9.62176 6.59936 9.52457 6.2202 9.3302 5.87409C9.13582 5.52797 8.87147 5.24797 8.53715 5.03409C8.20282 4.8202 7.8374 4.6977 7.44087 4.66658L6.37958 3.61658C6.67503 3.53881 6.97826 3.49992 7.28926 3.49992C7.91903 3.49992 8.50605 3.65936 9.0503 3.97825C9.579 4.28936 9.99885 4.70936 10.3098 5.23825C10.6286 5.7827 10.788 6.36992 10.788 6.99992C10.788 7.62992 10.6286 8.21714 10.3098 8.76159C9.99885 9.29047 9.579 9.71047 9.0503 10.0216C8.50605 10.3405 7.91903 10.4999 7.28926 10.4999C6.65948 10.4999 6.07247 10.3405 5.52822 10.0216C4.99952 9.71047 4.57967 9.29047 4.26867 8.76159C3.9499 8.21714 3.79051 7.62992 3.79051 6.99992C3.79051 6.62659 3.84688 6.26881 3.95961 5.92659C4.07235 5.58436 4.2298 5.26547 4.43195 4.96992L3.60391 4.14159C3.29291 4.53825 3.05188 4.9777 2.88083 5.45992C2.70978 5.9577 2.62426 6.47103 2.62426 6.99992C2.62426 7.8477 2.83807 8.63325 3.2657 9.35659C3.67777 10.0566 4.23368 10.6127 4.93343 11.0249C5.65651 11.4527 6.44178 11.6666 7.28926 11.6666C8.13673 11.6666 8.92201 11.4527 9.64508 11.0249C10.3448 10.6127 10.9007 10.0566 11.3128 9.35659C11.7404 8.63325 11.9543 7.8477 11.9543 6.99992C11.9543 6.15214 11.7404 5.36659 11.3128 4.64325C10.9007 3.94325 10.3448 3.38714 9.64508 2.97492C8.92201 2.54714 8.13673 2.33325 7.28926 2.33325C6.65171 2.33325 6.04526 2.4577 5.46991 2.70658L4.59522 1.83158C5.43492 1.38825 6.33293 1.16658 7.28926 1.16658C8.08231 1.16658 8.84037 1.31825 9.56345 1.62158C10.2554 1.91714 10.8716 2.3352 11.412 2.87575C11.9523 3.41631 12.3702 4.0327 12.6657 4.72492C12.9689 5.44825 13.1205 6.20659 13.1205 6.99992C13.1205 7.79325 12.9689 8.55159 12.6657 9.27492C12.3702 9.96714 11.9523 10.5835 11.412 11.1241C10.8716 11.6646 10.2554 12.0827 9.56345 12.3783C8.84037 12.6816 8.08231 12.8333 7.28926 12.8333C6.49621 12.8333 5.73815 12.6816 5.01507 12.3783C4.3231 12.0827 3.70693 11.6646 3.16656 11.1241C2.6262 10.5835 2.2083 9.96714 1.91285 9.27492C1.60962 8.55159 1.45801 7.79325 1.45801 6.99992C1.45801 6.10547 1.65238 5.2577 2.04113 4.45658C2.41433 3.68659 2.93526 3.02936 3.60391 2.48492Z"
+                                  fill="#F4C430"
+                                />
+                              </svg>
+                            )}
+                            {item.icon === "crown" && (
+                              <svg
+                                width="15"
+                                height="14"
+                                viewBox="0 0 15 14"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M7.87201 0.583415V2.36841C8.56399 2.45397 9.20348 2.68341 9.79049 3.05675C10.3775 3.43008 10.8576 3.91036 11.2308 4.49758C11.604 5.0848 11.8334 5.72453 11.9189 6.41675H13.7033V7.58341H11.9189C11.8334 8.27564 11.604 8.91536 11.2308 9.50258C10.8576 10.0898 10.3775 10.5701 9.79049 10.9434C9.20348 11.3167 8.56399 11.5462 7.87201 11.6317V13.4167H6.70576V11.6317C6.01379 11.5462 5.37429 11.3167 4.78728 10.9434C4.20027 10.5701 3.72016 10.0898 3.34696 9.50258C2.97376 8.91536 2.7444 8.27564 2.65887 7.58341H0.874512V6.41675H2.65887C2.7444 5.72453 2.97376 5.0848 3.34696 4.49758C3.72016 3.91036 4.20027 3.43008 4.78728 3.05675C5.37429 2.68341 6.01379 2.45397 6.70576 2.36841V0.583415H7.87201ZM7.28889 3.50008C6.65911 3.50008 6.0721 3.65953 5.52785 3.97841C4.99915 4.28953 4.5793 4.70953 4.2683 5.23841C3.94952 5.78286 3.79014 6.37008 3.79014 7.00008C3.79014 7.63008 3.94952 8.2173 4.2683 8.76175C4.5793 9.29064 4.99915 9.71064 5.52785 10.0217C6.0721 10.3406 6.65911 10.5001 7.28889 10.5001C7.91866 10.5001 8.50567 10.3406 9.04992 10.0217C9.57862 9.71064 9.99847 9.29064 10.3095 8.76175C10.6282 8.2173 10.7876 7.63008 10.7876 7.00008C10.7876 6.37008 10.6282 5.78286 10.3095 5.23841C9.99847 4.70953 9.57862 4.28953 9.04992 3.97841C8.50567 3.65953 7.91866 3.50008 7.28889 3.50008ZM7.28889 5.83341C7.49881 5.83341 7.69319 5.88591 7.87201 5.99091C8.05084 6.09591 8.19273 6.23786 8.29769 6.41675C8.40266 6.59564 8.45514 6.79008 8.45514 7.00008C8.45514 7.21008 8.40266 7.40453 8.29769 7.58341C8.19273 7.7623 8.05084 7.90425 7.87201 8.00925C7.69319 8.11425 7.49881 8.16675 7.28889 8.16675C7.07896 8.16675 6.88459 8.11425 6.70576 8.00925C6.52694 7.90425 6.38504 7.7623 6.28008 7.58341C6.17512 7.40453 6.12264 7.21008 6.12264 7.00008C6.12264 6.79008 6.17512 6.59564 6.28008 6.41675C6.38504 6.23786 6.52694 6.09591 6.70576 5.99091C6.88459 5.88591 7.07896 5.83341 7.28889 5.83341Z"
+                                  fill="#F4C430"
+                                />
+                              </svg>
+                            )}
+                            {item.icon === "visibility" && (
+                              <svg
+                                width="15"
+                                height="14"
+                                viewBox="0 0 15 14"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M7.2889 1.75C8.3152 1.75 9.28708 1.98333 10.2045 2.45C11.0831 2.90111 11.8237 3.52528 12.4262 4.3225C13.0288 5.11972 13.4195 6.01222 13.5983 7C13.4195 7.98778 13.0288 8.88028 12.4262 9.6775C11.8237 10.4747 11.0831 11.0989 10.2045 11.55C9.28708 12.0167 8.3152 12.25 7.2889 12.25C6.2626 12.25 5.29073 12.0167 4.37328 11.55C3.4947 11.0989 2.75414 10.4747 2.15157 9.6775C1.54901 8.88028 1.15832 7.98778 0.979492 7C1.15832 6.01222 1.54901 5.11972 2.15157 4.3225C2.75414 3.52528 3.4947 2.90111 4.37328 2.45C5.29073 1.98333 6.2626 1.75 7.2889 1.75ZM7.2889 11.0833C8.0975 11.0833 8.86723 10.9044 9.59808 10.5467C10.3056 10.2044 10.9062 9.72222 11.3999 9.1C11.8936 8.47778 12.2299 7.77778 12.4087 7C12.2299 6.22222 11.8936 5.52222 11.3999 4.9C10.9062 4.27778 10.3056 3.79556 9.59808 3.45333C8.86723 3.09556 8.0975 2.91667 7.2889 2.91667C6.4803 2.91667 5.71058 3.09556 4.97973 3.45333C4.2722 3.79556 3.67159 4.27778 3.17787 4.9C2.68416 5.52222 2.34789 6.22222 2.16907 7C2.34789 7.77778 2.68416 8.47778 3.17787 9.1C3.67159 9.72222 4.2722 10.2044 4.97973 10.5467C5.71058 10.9044 6.4803 11.0833 7.2889 11.0833ZM7.2889 9.625C6.81463 9.625 6.37729 9.50639 5.97687 9.26917C5.57646 9.03194 5.25769 8.71306 5.02055 8.3125C4.78341 7.91194 4.66484 7.47444 4.66484 7C4.66484 6.52556 4.78341 6.08806 5.02055 5.6875C5.25769 5.28694 5.57646 4.96806 5.97687 4.73083C6.37729 4.49361 6.81463 4.375 7.2889 4.375C7.76318 4.375 8.20052 4.49361 8.60094 4.73083C9.00135 4.96806 9.32012 5.28694 9.55726 5.6875C9.7944 6.08806 9.91297 6.52556 9.91297 7C9.91297 7.47444 9.7944 7.91194 9.55726 8.3125C9.32012 8.71306 9.00135 9.03194 8.60094 9.26917C8.20052 9.50639 7.76318 9.625 7.2889 9.625ZM7.2889 8.45833C7.55325 8.45833 7.79622 8.39222 8.01781 8.26C8.2394 8.12778 8.41628 7.95083 8.54845 7.72917C8.68063 7.5075 8.74672 7.26444 8.74672 7C8.74672 6.73556 8.68063 6.4925 8.54845 6.27083C8.41628 6.04917 8.2394 5.87222 8.01781 5.74C7.79622 5.60778 7.55325 5.54167 7.2889 5.54167C7.02455 5.54167 6.78159 5.60778 6.56 5.74C6.33841 5.87222 6.16153 6.04917 6.02935 6.27083C5.89718 6.4925 5.83109 6.73556 5.83109 7C5.83109 7.26444 5.89718 7.5075 6.02935 7.72917C6.16153 7.95083 6.33841 8.12778 6.56 8.26C6.78159 8.39222 7.02455 8.45833 7.2889 8.45833Z"
+                                  fill="#EF4444"
+                                />
+                              </svg>
+                            )}
+                            {item.icon === "shaft" && (
+                              <svg
+                                width="15"
+                                height="14"
+                                viewBox="0 0 15 14"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M12.5373 1.45842V2.62508C12.5373 4.42953 12.2185 5.96564 11.5809 7.23341C10.99 8.41564 10.1542 9.31008 9.0735 9.91675C8.0472 10.5001 6.86929 10.7917 5.53977 10.7917H3.34722C3.25392 11.3206 3.20727 11.904 3.20727 12.5417H2.04102C2.04102 11.7484 2.1071 11.0212 2.23928 10.3601C2.1071 9.60564 2.04102 8.58286 2.04102 7.29175C2.04102 6.49841 2.19263 5.74008 2.49585 5.01675C2.7913 4.32453 3.20921 3.70814 3.74957 3.16758C4.28993 2.62703 4.9061 2.20897 5.59808 1.91341C6.32115 1.61008 7.07922 1.45842 7.87227 1.45842C8.10552 1.45842 8.47094 1.4973 8.96854 1.57508C9.37284 1.6373 9.69162 1.67619 9.92487 1.69175C10.3214 1.72286 10.7101 1.72675 11.0911 1.70341C11.5498 1.66453 12.0319 1.58286 12.5373 1.45842ZM7.87227 2.62508C7.02479 2.62508 6.23952 2.83897 5.51644 3.26675C4.81669 3.67897 4.26078 4.23508 3.8487 4.93508C3.42108 5.65841 3.20727 6.44397 3.20727 7.29175V7.89841C3.56492 7.33841 4.01587 6.8173 4.56012 6.33508C5.08104 5.87619 5.69915 5.44453 6.41445 5.04008L6.99758 6.04341C6.13455 6.54119 5.43869 7.06619 4.90999 7.61841C4.35019 8.20175 3.93423 8.87064 3.6621 9.62508H5.53977C6.71379 9.62508 7.73426 9.36841 8.60117 8.85508C9.46808 8.34175 10.1348 7.5873 10.6013 6.59175C11.0911 5.5573 11.3477 4.30897 11.371 2.84675C10.9823 2.88564 10.5857 2.8973 10.1814 2.88175C9.81602 2.85841 9.39228 2.81175 8.91023 2.74175C8.56813 2.6873 8.33877 2.65425 8.22214 2.64258C8.10552 2.63091 7.98889 2.62508 7.87227 2.62508Z"
+                                  fill="#F4C430"
+                                />
+                              </svg>
+                            )}
+                          </span>
+                          <h4>{item.title}</h4>
+                          <span
+                            className={`ai-analysis-insight-severity ai-analysis-insight-severity-${item.tone}`}
+                          >
+                            {item.severity}
+                          </span>
+                        </div>
+                      </div>
+                      <p>{item.desc}</p>
+                    </article>
+                  ))}
+                </div>
+              </article>
+
+              <article className="ai-questionnaire-correlation-card">
+                <h4>
                   <span
-                    className="ai-analysis-insights-head-icon"
+                    className="ai-questionnaire-correlation-icon"
                     aria-hidden="true"
                   >
                     <svg
@@ -1817,204 +1245,551 @@ export default function TestReport() {
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M6.32928 2.66675C6.56913 2.66675 6.79121 2.72675 6.99553 2.84675C7.19984 2.96675 7.36196 3.12897 7.48189 3.33342C7.60181 3.53786 7.66178 3.76008 7.66178 4.00008V8.54675C7.10213 8.12008 6.36037 7.83119 5.4365 7.68008L5.2233 8.98675C6.08499 9.13786 6.70682 9.42008 7.0888 9.83342C7.47079 10.2467 7.66178 10.8579 7.66178 11.6667C7.66178 11.969 7.58627 12.2467 7.43525 12.5001C7.28424 12.7534 7.08214 12.9556 6.82896 13.1067C6.57579 13.2579 6.29819 13.3334 5.99615 13.3334C5.69412 13.3334 5.41651 13.2579 5.16334 13.1067C4.91016 12.9556 4.70807 12.7534 4.55705 12.5001C4.40604 12.2467 4.33053 11.969 4.33053 11.6667V11.4267C4.63256 11.5334 4.93015 11.609 5.2233 11.6534L5.4365 10.3467C4.99234 10.2667 4.49487 10.0979 3.9441 9.84008C3.65984 9.70675 3.43109 9.50453 3.25786 9.23342C3.08464 8.9623 2.99803 8.6623 2.99803 8.33342C2.99803 7.80008 3.12239 7.3623 3.37113 7.02008C3.61986 6.67786 3.99296 6.44453 4.49043 6.32008L4.99678 6.18675V4.00008C4.99678 3.76008 5.05674 3.53786 5.17666 3.33342C5.29659 3.12897 5.45871 2.96675 5.66303 2.84675C5.86734 2.72675 6.08943 2.66675 6.32928 2.66675ZM8.32803 2.24008C8.07929 1.95564 7.7817 1.73342 7.43525 1.57342C7.0888 1.41341 6.72014 1.33342 6.32928 1.33342C5.84958 1.33342 5.40541 1.45341 4.99678 1.69342C4.58814 1.93342 4.2639 2.25786 4.02405 2.66675C3.7842 3.07564 3.66428 3.52008 3.66428 4.00008V5.18675C3.08686 5.41786 2.62937 5.76453 2.2918 6.22675C1.87429 6.80453 1.66553 7.50675 1.66553 8.33342C1.66553 8.84897 1.78545 9.32453 2.0253 9.76008C2.26515 10.1956 2.58939 10.5512 2.99803 10.8267V11.6667C2.99803 12.209 3.1335 12.709 3.40444 13.1667C3.67538 13.6245 4.0396 13.989 4.49709 14.2601C4.95458 14.5312 5.45427 14.6667 5.99615 14.6667C6.45809 14.6667 6.89115 14.5667 7.29534 14.3667C7.69953 14.1667 8.04376 13.8934 8.32803 13.5467C8.61229 13.8934 8.95652 14.1667 9.36071 14.3667C9.76491 14.5667 10.198 14.6667 10.6599 14.6667C11.2018 14.6667 11.7015 14.5312 12.159 14.2601C12.6165 13.989 12.9807 13.6245 13.2516 13.1667C13.5226 12.709 13.658 12.209 13.658 11.6667V10.8267C14.0667 10.5512 14.3909 10.1956 14.6308 9.76008C14.8706 9.32453 14.9905 8.84897 14.9905 8.33342C14.9905 7.50675 14.7818 6.80453 14.3643 6.22675C14.0267 5.76453 13.5692 5.41786 12.9918 5.18675V4.00008C12.9918 3.52008 12.8719 3.07564 12.632 2.66675C12.3922 2.25786 12.0679 1.93342 11.6593 1.69342C11.2506 1.45341 10.8065 1.33342 10.3268 1.33342C9.93591 1.33342 9.56725 1.41341 9.2208 1.57342C8.87435 1.73342 8.57676 1.95564 8.32803 2.24008ZM12.3255 11.4267V11.6667C12.3255 11.969 12.25 12.2467 12.099 12.5001C11.948 12.7534 11.7459 12.9556 11.4927 13.1067C11.2395 13.2579 10.9619 13.3334 10.6599 13.3334C10.3579 13.3334 10.0803 13.2579 9.82709 13.1067C9.57392 12.9556 9.37182 12.7534 9.2208 12.5001C9.06979 12.2467 8.99428 11.969 8.99428 11.6667C8.99428 10.8579 9.18527 10.2467 9.56725 9.83342C9.94924 9.42008 10.5711 9.13786 11.4328 8.98675L11.2196 7.68008C10.2957 7.83119 9.55393 8.12008 8.99428 8.54675V4.00008C8.99428 3.76008 9.05424 3.53786 9.17416 3.33342C9.29409 3.12897 9.45621 2.96675 9.66053 2.84675C9.86484 2.72675 10.0869 2.66675 10.3268 2.66675C10.5666 2.66675 10.7887 2.72675 10.993 2.84675C11.1973 2.96675 11.3595 3.12897 11.4794 3.33342C11.5993 3.53786 11.6593 3.76008 11.6593 4.00008V6.18675L12.1656 6.32008C12.6631 6.44453 13.0362 6.67786 13.2849 7.02008C13.5337 7.3623 13.658 7.80008 13.658 8.33342C13.658 8.6623 13.5714 8.9623 13.3982 9.23342C13.225 9.50453 12.9962 9.70675 12.712 9.84008C12.1612 10.0979 11.6637 10.2667 11.2196 10.3467L11.4328 11.6534C11.7259 11.609 12.0235 11.5334 12.3255 11.4267Z"
-                        fill="#00E5FF"
+                        d="M5.06366 5.85333C5.17914 6.28889 5.41677 6.64444 5.77654 6.92C6.13632 7.19556 6.54273 7.33333 6.99578 7.33333H9.66078C10.2027 7.33333 10.7068 7.45333 11.1732 7.69333C11.6395 7.93333 12.0282 8.26444 12.3391 8.68667C12.65 9.10889 12.8499 9.57778 12.9387 10.0933C13.3474 10.2267 13.6805 10.4689 13.9381 10.82C14.1957 11.1711 14.3245 11.5644 14.3245 12C14.3245 12.3644 14.2357 12.7 14.058 13.0067C13.8804 13.3133 13.6383 13.5556 13.3318 13.7333C13.0253 13.9111 12.69 14 12.3258 14C11.9616 14 11.6262 13.9111 11.3197 13.7333C11.0133 13.5556 10.7712 13.3133 10.5935 13.0067C10.4159 12.7 10.327 12.3644 10.327 12C10.327 11.5822 10.4447 11.2044 10.6801 10.8667C10.9156 10.5289 11.2198 10.2889 11.5929 10.1467C11.4774 9.71111 11.2398 9.35556 10.88 9.08C10.5202 8.80444 10.1138 8.66667 9.66078 8.66667H6.99578C6.62268 8.66667 6.26735 8.60889 5.92978 8.49333C5.59221 8.37778 5.2813 8.21333 4.99703 8V10.12C5.3879 10.2533 5.7077 10.4933 5.95643 10.84C6.20516 11.1867 6.32953 11.5733 6.32953 12C6.32953 12.3644 6.2407 12.7 6.06303 13.0067C5.88536 13.3133 5.64329 13.5556 5.33682 13.7333C5.03034 13.9111 4.695 14 4.33078 14C3.96656 14 3.63122 13.9111 3.32474 13.7333C3.01827 13.5556 2.7762 13.3133 2.59853 13.0067C2.42086 12.7 2.33203 12.3644 2.33203 12C2.33203 11.5733 2.4564 11.1867 2.70513 10.84C2.95386 10.4933 3.27366 10.2533 3.66453 10.12V5.88C3.27366 5.74667 2.95386 5.50667 2.70513 5.16C2.4564 4.81333 2.33203 4.42667 2.33203 4C2.33203 3.63556 2.42086 3.3 2.59853 2.99333C2.7762 2.68667 3.01827 2.44444 3.32474 2.26667C3.63122 2.08889 3.96656 2 4.33078 2C4.695 2 5.03034 2.08889 5.33682 2.26667C5.64329 2.44444 5.88536 2.68667 6.06303 2.99333C6.2407 3.3 6.32953 3.63556 6.32953 4C6.32953 4.41778 6.21183 4.79556 5.97642 5.13333C5.74101 5.47111 5.43676 5.71111 5.06366 5.85333Z"
+                        fill="#10B981"
                       />
                     </svg>
                   </span>
-                  AI Analysis Insights
-                </h3>
-                <span className="ai-analysis-processed-chip">
-                  3 Photos Processed
-                </span>
-              </header>
+                  AI + Questionnaire Correlation
+                </h4>
+                <p>
+                  Photo analysis <strong>confirms</strong> early-stage thinning
+                  patterns detected in your questionnaire responses. Visual data
+                  indicates crown density reduction is slightly more advanced than
+                  self-reported data - consistent with gradual onset.
+                </p>
+              </article>
 
-              <div className="ai-analysis-insights-list">
-                {aiAnalysisInsightRows.map((item) => (
-                  <article className="ai-analysis-insight-row" key={item.title}>
-                    <div className="ai-analysis-insight-row-head">
-                      <div className="ai-analysis-insight-title-wrap">
+              <div className="ai-photo-metrics-grid">
+                {aiPhotoMetricCards.map((item) => (
+                  <article className="ai-photo-metric-card" key={item.title}>
+                    <p className="ai-photo-metric-kicker">{item.title}</p>
+                    <p className="ai-photo-metric-value-row">
+                      {item.tone === "confidence" && (
                         <span
-                          className={`ai-analysis-insight-icon ai-analysis-insight-icon-${item.tone}`}
+                          className="ai-photo-confidence-icon"
                           aria-hidden="true"
                         >
-                          {item.icon === "hairline" && (
-                            <svg
-                              width="15"
-                              height="14"
-                              viewBox="0 0 15 14"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M3.60391 2.48492L8.1173 6.99992L7.28926 7.82825L5.28331 5.80992C5.06561 6.17547 4.95676 6.5702 4.95676 6.99409C4.95676 7.41797 5.06172 7.80881 5.27165 8.16659C5.48157 8.52436 5.76536 8.80825 6.12301 9.01825C6.48066 9.22825 6.86941 9.33325 7.28926 9.33325C7.70911 9.33325 8.09786 9.22825 8.45551 9.01825C8.81316 8.80825 9.09695 8.52436 9.30687 8.16659C9.5168 7.80881 9.62176 7.42381 9.62176 7.01159C9.62176 6.59936 9.52457 6.2202 9.3302 5.87409C9.13582 5.52797 8.87147 5.24797 8.53715 5.03409C8.20282 4.8202 7.8374 4.6977 7.44087 4.66658L6.37958 3.61658C6.67503 3.53881 6.97826 3.49992 7.28926 3.49992C7.91903 3.49992 8.50605 3.65936 9.0503 3.97825C9.579 4.28936 9.99885 4.70936 10.3098 5.23825C10.6286 5.7827 10.788 6.36992 10.788 6.99992C10.788 7.62992 10.6286 8.21714 10.3098 8.76159C9.99885 9.29047 9.579 9.71047 9.0503 10.0216C8.50605 10.3405 7.91903 10.4999 7.28926 10.4999C6.65948 10.4999 6.07247 10.3405 5.52822 10.0216C4.99952 9.71047 4.57967 9.29047 4.26867 8.76159C3.9499 8.21714 3.79051 7.62992 3.79051 6.99992C3.79051 6.62659 3.84688 6.26881 3.95961 5.92659C4.07235 5.58436 4.2298 5.26547 4.43195 4.96992L3.60391 4.14159C3.29291 4.53825 3.05188 4.9777 2.88083 5.45992C2.70978 5.9577 2.62426 6.47103 2.62426 6.99992C2.62426 7.8477 2.83807 8.63325 3.2657 9.35659C3.67777 10.0566 4.23368 10.6127 4.93343 11.0249C5.65651 11.4527 6.44178 11.6666 7.28926 11.6666C8.13673 11.6666 8.92201 11.4527 9.64508 11.0249C10.3448 10.6127 10.9007 10.0566 11.3128 9.35659C11.7404 8.63325 11.9543 7.8477 11.9543 6.99992C11.9543 6.15214 11.7404 5.36659 11.3128 4.64325C10.9007 3.94325 10.3448 3.38714 9.64508 2.97492C8.92201 2.54714 8.13673 2.33325 7.28926 2.33325C6.65171 2.33325 6.04526 2.4577 5.46991 2.70658L4.59522 1.83158C5.43492 1.38825 6.33293 1.16658 7.28926 1.16658C8.08231 1.16658 8.84037 1.31825 9.56345 1.62158C10.2554 1.91714 10.8716 2.3352 11.412 2.87575C11.9523 3.41631 12.3702 4.0327 12.6657 4.72492C12.9689 5.44825 13.1205 6.20659 13.1205 6.99992C13.1205 7.79325 12.9689 8.55159 12.6657 9.27492C12.3702 9.96714 11.9523 10.5835 11.412 11.1241C10.8716 11.6646 10.2554 12.0827 9.56345 12.3783C8.84037 12.6816 8.08231 12.8333 7.28926 12.8333C6.49621 12.8333 5.73815 12.6816 5.01507 12.3783C4.3231 12.0827 3.70693 11.6646 3.16656 11.1241C2.6262 10.5835 2.2083 9.96714 1.91285 9.27492C1.60962 8.55159 1.45801 7.79325 1.45801 6.99992C1.45801 6.10547 1.65238 5.2577 2.04113 4.45658C2.41433 3.68659 2.93526 3.02936 3.60391 2.48492Z"
-                                fill="#F4C430"
-                              />
-                            </svg>
-                          )}
-                          {item.icon === "crown" && (
-                            <svg
-                              width="15"
-                              height="14"
-                              viewBox="0 0 15 14"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M7.87201 0.583415V2.36841C8.56399 2.45397 9.20348 2.68341 9.79049 3.05675C10.3775 3.43008 10.8576 3.91036 11.2308 4.49758C11.604 5.0848 11.8334 5.72453 11.9189 6.41675H13.7033V7.58341H11.9189C11.8334 8.27564 11.604 8.91536 11.2308 9.50258C10.8576 10.0898 10.3775 10.5701 9.79049 10.9434C9.20348 11.3167 8.56399 11.5462 7.87201 11.6317V13.4167H6.70576V11.6317C6.01379 11.5462 5.37429 11.3167 4.78728 10.9434C4.20027 10.5701 3.72016 10.0898 3.34696 9.50258C2.97376 8.91536 2.7444 8.27564 2.65887 7.58341H0.874512V6.41675H2.65887C2.7444 5.72453 2.97376 5.0848 3.34696 4.49758C3.72016 3.91036 4.20027 3.43008 4.78728 3.05675C5.37429 2.68341 6.01379 2.45397 6.70576 2.36841V0.583415H7.87201ZM7.28889 3.50008C6.65911 3.50008 6.0721 3.65953 5.52785 3.97841C4.99915 4.28953 4.5793 4.70953 4.2683 5.23841C3.94952 5.78286 3.79014 6.37008 3.79014 7.00008C3.79014 7.63008 3.94952 8.2173 4.2683 8.76175C4.5793 9.29064 4.99915 9.71064 5.52785 10.0217C6.0721 10.3406 6.65911 10.5001 7.28889 10.5001C7.91866 10.5001 8.50567 10.3406 9.04992 10.0217C9.57862 9.71064 9.99847 9.29064 10.3095 8.76175C10.6282 8.2173 10.7876 7.63008 10.7876 7.00008C10.7876 6.37008 10.6282 5.78286 10.3095 5.23841C9.99847 4.70953 9.57862 4.28953 9.04992 3.97841C8.50567 3.65953 7.91866 3.50008 7.28889 3.50008ZM7.28889 5.83341C7.49881 5.83341 7.69319 5.88591 7.87201 5.99091C8.05084 6.09591 8.19273 6.23786 8.29769 6.41675C8.40266 6.59564 8.45514 6.79008 8.45514 7.00008C8.45514 7.21008 8.40266 7.40453 8.29769 7.58341C8.19273 7.7623 8.05084 7.90425 7.87201 8.00925C7.69319 8.11425 7.49881 8.16675 7.28889 8.16675C7.07896 8.16675 6.88459 8.11425 6.70576 8.00925C6.52694 7.90425 6.38504 7.7623 6.28008 7.58341C6.17512 7.40453 6.12264 7.21008 6.12264 7.00008C6.12264 6.79008 6.17512 6.59564 6.28008 6.41675C6.38504 6.23786 6.52694 6.09591 6.70576 5.99091C6.88459 5.88591 7.07896 5.83341 7.28889 5.83341Z"
-                                fill="#F4C430"
-                              />
-                            </svg>
-                          )}
-                          {item.icon === "visibility" && (
-                            <svg
-                              width="15"
-                              height="14"
-                              viewBox="0 0 15 14"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M7.2889 1.75C8.3152 1.75 9.28708 1.98333 10.2045 2.45C11.0831 2.90111 11.8237 3.52528 12.4262 4.3225C13.0288 5.11972 13.4195 6.01222 13.5983 7C13.4195 7.98778 13.0288 8.88028 12.4262 9.6775C11.8237 10.4747 11.0831 11.0989 10.2045 11.55C9.28708 12.0167 8.3152 12.25 7.2889 12.25C6.2626 12.25 5.29073 12.0167 4.37328 11.55C3.4947 11.0989 2.75414 10.4747 2.15157 9.6775C1.54901 8.88028 1.15832 7.98778 0.979492 7C1.15832 6.01222 1.54901 5.11972 2.15157 4.3225C2.75414 3.52528 3.4947 2.90111 4.37328 2.45C5.29073 1.98333 6.2626 1.75 7.2889 1.75ZM7.2889 11.0833C8.0975 11.0833 8.86723 10.9044 9.59808 10.5467C10.3056 10.2044 10.9062 9.72222 11.3999 9.1C11.8936 8.47778 12.2299 7.77778 12.4087 7C12.2299 6.22222 11.8936 5.52222 11.3999 4.9C10.9062 4.27778 10.3056 3.79556 9.59808 3.45333C8.86723 3.09556 8.0975 2.91667 7.2889 2.91667C6.4803 2.91667 5.71058 3.09556 4.97973 3.45333C4.2722 3.79556 3.67159 4.27778 3.17787 4.9C2.68416 5.52222 2.34789 6.22222 2.16907 7C2.34789 7.77778 2.68416 8.47778 3.17787 9.1C3.67159 9.72222 4.2722 10.2044 4.97973 10.5467C5.71058 10.9044 6.4803 11.0833 7.2889 11.0833ZM7.2889 9.625C6.81463 9.625 6.37729 9.50639 5.97687 9.26917C5.57646 9.03194 5.25769 8.71306 5.02055 8.3125C4.78341 7.91194 4.66484 7.47444 4.66484 7C4.66484 6.52556 4.78341 6.08806 5.02055 5.6875C5.25769 5.28694 5.57646 4.96806 5.97687 4.73083C6.37729 4.49361 6.81463 4.375 7.2889 4.375C7.76318 4.375 8.20052 4.49361 8.60094 4.73083C9.00135 4.96806 9.32012 5.28694 9.55726 5.6875C9.7944 6.08806 9.91297 6.52556 9.91297 7C9.91297 7.47444 9.7944 7.91194 9.55726 8.3125C9.32012 8.71306 9.00135 9.03194 8.60094 9.26917C8.20052 9.50639 7.76318 9.625 7.2889 9.625ZM7.2889 8.45833C7.55325 8.45833 7.79622 8.39222 8.01781 8.26C8.2394 8.12778 8.41628 7.95083 8.54845 7.72917C8.68063 7.5075 8.74672 7.26444 8.74672 7C8.74672 6.73556 8.68063 6.4925 8.54845 6.27083C8.41628 6.04917 8.2394 5.87222 8.01781 5.74C7.79622 5.60778 7.55325 5.54167 7.2889 5.54167C7.02455 5.54167 6.78159 5.60778 6.56 5.74C6.33841 5.87222 6.16153 6.04917 6.02935 6.27083C5.89718 6.4925 5.83109 6.73556 5.83109 7C5.83109 7.26444 5.89718 7.5075 6.02935 7.72917C6.16153 7.95083 6.33841 8.12778 6.56 8.26C6.78159 8.39222 7.02455 8.45833 7.2889 8.45833Z"
-                                fill="#EF4444"
-                              />
-                            </svg>
-                          )}
-                          {item.icon === "shaft" && (
-                            <svg
-                              width="15"
-                              height="14"
-                              viewBox="0 0 15 14"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M12.5373 1.45842V2.62508C12.5373 4.42953 12.2185 5.96564 11.5809 7.23341C10.99 8.41564 10.1542 9.31008 9.0735 9.91675C8.0472 10.5001 6.86929 10.7917 5.53977 10.7917H3.34722C3.25392 11.3206 3.20727 11.904 3.20727 12.5417H2.04102C2.04102 11.7484 2.1071 11.0212 2.23928 10.3601C2.1071 9.60564 2.04102 8.58286 2.04102 7.29175C2.04102 6.49841 2.19263 5.74008 2.49585 5.01675C2.7913 4.32453 3.20921 3.70814 3.74957 3.16758C4.28993 2.62703 4.9061 2.20897 5.59808 1.91341C6.32115 1.61008 7.07922 1.45842 7.87227 1.45842C8.10552 1.45842 8.47094 1.4973 8.96854 1.57508C9.37284 1.6373 9.69162 1.67619 9.92487 1.69175C10.3214 1.72286 10.7101 1.72675 11.0911 1.70341C11.5498 1.66453 12.0319 1.58286 12.5373 1.45842ZM7.87227 2.62508C7.02479 2.62508 6.23952 2.83897 5.51644 3.26675C4.81669 3.67897 4.26078 4.23508 3.8487 4.93508C3.42108 5.65841 3.20727 6.44397 3.20727 7.29175V7.89841C3.56492 7.33841 4.01587 6.8173 4.56012 6.33508C5.08104 5.87619 5.69915 5.44453 6.41445 5.04008L6.99758 6.04341C6.13455 6.54119 5.43869 7.06619 4.90999 7.61841C4.35019 8.20175 3.93423 8.87064 3.6621 9.62508H5.53977C6.71379 9.62508 7.73426 9.36841 8.60117 8.85508C9.46808 8.34175 10.1348 7.5873 10.6013 6.59175C11.0911 5.5573 11.3477 4.30897 11.371 2.84675C10.9823 2.88564 10.5857 2.8973 10.1814 2.88175C9.81602 2.85841 9.39228 2.81175 8.91023 2.74175C8.56813 2.6873 8.33877 2.65425 8.22214 2.64258C8.10552 2.63091 7.98889 2.62508 7.87227 2.62508Z"
-                                fill="#F4C430"
-                              />
-                            </svg>
-                          )}
+                          <svg
+                            width="17"
+                            height="16"
+                            viewBox="0 0 17 16"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M8.32828 0.666585L13.8049 1.87992C13.9559 1.91547 14.0802 1.99547 14.178 2.11992C14.2757 2.24436 14.3245 2.38214 14.3245 2.53325V9.18658C14.3245 9.86214 14.1669 10.4933 13.8515 11.0799C13.5361 11.6666 13.0986 12.1466 12.539 12.5199L8.32828 15.3333L4.11758 12.5199C3.55793 12.1466 3.12043 11.6666 2.80507 11.0799C2.48971 10.4933 2.33203 9.86214 2.33203 9.18658V2.53325C2.33203 2.38214 2.38089 2.24436 2.47861 2.11992C2.57632 1.99547 2.70069 1.91547 2.85171 1.87992L8.32828 0.666585ZM8.32828 2.02658L3.66453 3.06658V9.18658C3.66453 9.63992 3.76891 10.0621 3.97767 10.4533C4.18643 10.8444 4.47736 11.1644 4.85046 11.4133L8.32828 13.7333L11.8061 11.4133C12.1792 11.1644 12.4701 10.8444 12.6789 10.4533C12.8877 10.0621 12.992 9.63992 12.992 9.18658V3.06658L8.32828 2.02658ZM11.2998 5.47992L12.2325 6.42659L7.99516 10.6666L5.17026 7.83992L6.11633 6.89325L7.99516 8.78659L11.2998 5.47992Z"
+                              fill="#10B981"
+                            />
+                          </svg>
                         </span>
-                        <h4>{item.title}</h4>
-                        <span
-                          className={`ai-analysis-insight-severity ai-analysis-insight-severity-${item.tone}`}
-                        >
-                          {item.severity}
-                        </span>
-                      </div>
+                      )}
+                      <strong
+                        className={`ai-photo-metric-value ai-photo-metric-value-${item.tone}`}
+                      >
+                        {item.value}
+                      </strong>
+                    </p>
+                    <p
+                      className={`ai-photo-metric-subtitle ai-photo-metric-subtitle-${item.tone}`}
+                    >
+                      {item.subtitle}
+                    </p>
+
+                    <div className="ai-photo-metric-track" aria-hidden="true">
+                      <span
+                        className={`ai-photo-metric-fill ai-photo-metric-fill-${item.tone}`}
+                        style={{ width: `${item.progress}%` }}
+                      />
                     </div>
-                    <p>{item.desc}</p>
                   </article>
                 ))}
               </div>
-            </article>
 
-            <article className="ai-questionnaire-correlation-card">
-              <h4>
-                <span
-                  className="ai-questionnaire-correlation-icon"
-                  aria-hidden="true"
-                >
+              <article className="ai-photo-security-note">
+                <span className="ai-photo-security-icon" aria-hidden="true">
                   <svg
-                    width="17"
-                    height="16"
-                    viewBox="0 0 17 16"
+                    width="15"
+                    height="14"
+                    viewBox="0 0 15 14"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M5.06366 5.85333C5.17914 6.28889 5.41677 6.64444 5.77654 6.92C6.13632 7.19556 6.54273 7.33333 6.99578 7.33333H9.66078C10.2027 7.33333 10.7068 7.45333 11.1732 7.69333C11.6395 7.93333 12.0282 8.26444 12.3391 8.68667C12.65 9.10889 12.8499 9.57778 12.9387 10.0933C13.3474 10.2267 13.6805 10.4689 13.9381 10.82C14.1957 11.1711 14.3245 11.5644 14.3245 12C14.3245 12.3644 14.2357 12.7 14.058 13.0067C13.8804 13.3133 13.6383 13.5556 13.3318 13.7333C13.0253 13.9111 12.69 14 12.3258 14C11.9616 14 11.6262 13.9111 11.3197 13.7333C11.0133 13.5556 10.7712 13.3133 10.5935 13.0067C10.4159 12.7 10.327 12.3644 10.327 12C10.327 11.5822 10.4447 11.2044 10.6801 10.8667C10.9156 10.5289 11.2198 10.2889 11.5929 10.1467C11.4774 9.71111 11.2398 9.35556 10.88 9.08C10.5202 8.80444 10.1138 8.66667 9.66078 8.66667H6.99578C6.62268 8.66667 6.26735 8.60889 5.92978 8.49333C5.59221 8.37778 5.2813 8.21333 4.99703 8V10.12C5.3879 10.2533 5.7077 10.4933 5.95643 10.84C6.20516 11.1867 6.32953 11.5733 6.32953 12C6.32953 12.3644 6.2407 12.7 6.06303 13.0067C5.88536 13.3133 5.64329 13.5556 5.33682 13.7333C5.03034 13.9111 4.695 14 4.33078 14C3.96656 14 3.63122 13.9111 3.32474 13.7333C3.01827 13.5556 2.7762 13.3133 2.59853 13.0067C2.42086 12.7 2.33203 12.3644 2.33203 12C2.33203 11.5733 2.4564 11.1867 2.70513 10.84C2.95386 10.4933 3.27366 10.2533 3.66453 10.12V5.88C3.27366 5.74667 2.95386 5.50667 2.70513 5.16C2.4564 4.81333 2.33203 4.42667 2.33203 4C2.33203 3.63556 2.42086 3.3 2.59853 2.99333C2.7762 2.68667 3.01827 2.44444 3.32474 2.26667C3.63122 2.08889 3.96656 2 4.33078 2C4.695 2 5.03034 2.08889 5.33682 2.26667C5.64329 2.44444 5.88536 2.68667 6.06303 2.99333C6.2407 3.3 6.32953 3.63556 6.32953 4C6.32953 4.41778 6.21183 4.79556 5.97642 5.13333C5.74101 5.47111 5.43676 5.71111 5.06366 5.85333Z"
-                      fill="#10B981"
+                      d="M11.371 5.83325H11.9541C12.1174 5.83325 12.2554 5.88964 12.3682 6.00242C12.4809 6.1152 12.5373 6.25325 12.5373 6.41659V12.2499C12.5373 12.4133 12.4809 12.5513 12.3682 12.6641C12.2554 12.7769 12.1174 12.8333 11.9541 12.8333H2.62414C2.46087 12.8333 2.32286 12.7769 2.21012 12.6641C2.09738 12.5513 2.04102 12.4133 2.04102 12.2499V6.41659C2.04102 6.25325 2.09738 6.1152 2.21012 6.00242C2.32286 5.88964 2.46087 5.83325 2.62414 5.83325H3.20727V5.24992C3.20727 4.51103 3.39387 3.8227 3.76707 3.18492C4.12472 2.57047 4.61065 2.08436 5.22488 1.72659C5.86243 1.35325 6.55052 1.16658 7.28914 1.16658C8.02777 1.16658 8.71585 1.35325 9.3534 1.72659C9.96763 2.08436 10.4536 2.57047 10.8112 3.18492C11.1844 3.8227 11.371 4.51103 11.371 5.24992V5.83325ZM3.20727 6.99992V11.6666H11.371V6.99992H3.20727ZM6.70602 8.16659H7.87227V10.4999H6.70602V8.16659ZM10.2048 5.83325V5.24992C10.2048 4.72103 10.0745 4.23297 9.81407 3.78575C9.55361 3.33853 9.19985 2.98464 8.75278 2.72408C8.30572 2.46353 7.81784 2.33325 7.28914 2.33325C6.76044 2.33325 6.27256 2.46353 5.8255 2.72408C5.37843 2.98464 5.02467 3.33853 4.76421 3.78575C4.50375 4.23297 4.37352 4.72103 4.37352 5.24992V5.83325H10.2048Z"
+                      fill="#9FB4D0"
                     />
                   </svg>
                 </span>
-                AI + Questionnaire Correlation
-              </h4>
-              <p>
-                Photo analysis <strong>confirms</strong> early-stage thinning
-                patterns detected in your questionnaire responses. Visual data
-                indicates crown density reduction is slightly more advanced than
-                self-reported data - consistent with gradual onset.
-              </p>
-            </article>
+                <p>
+                  Your photos are processed securely using on-device AI and are
+                  <span> never stored</span> after analysis is complete.
+                </p>
+              </article>
+            </section>
+          }
 
-            <div className="ai-photo-metrics-grid">
-              {aiPhotoMetricCards.map((item) => (
-                <article className="ai-photo-metric-card" key={item.title}>
-                  <p className="ai-photo-metric-kicker">{item.title}</p>
-                  <p className="ai-photo-metric-value-row">
-                    {item.tone === "confidence" && (
+          {deepMetricRows.length > 0 && (
+            <section
+              className="deep-metric-section"
+              aria-label="Deep metric insights"
+            >
+              <div className="deep-metric-header">
+                <h3>
+                  <span className="deep-metric-header-icon" aria-hidden="true">
+                    <svg
+                      width="19"
+                      height="18"
+                      viewBox="0 0 19 18"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10.275 1.98002L12.705 6.19502C12.815 6.37502 12.8425 6.56502 12.7875 6.76502C12.7325 6.96502 12.615 7.11502 12.435 7.21502L11.46 7.78502L12.21 9.09002L10.905 9.84002L10.155 8.53502L9.195 9.09002C9.015 9.20002 8.825 9.22752 8.625 9.17252C8.425 9.11752 8.27 9.00002 8.16 8.82002L6.78 6.43502C6.27 6.59502 5.815 6.85002 5.415 7.20002C5.015 7.55002 4.7 7.97002 4.47 8.46002C4.24 8.95002 4.125 9.47002 4.125 10.02C4.125 10.48 4.205 10.925 4.365 11.355C4.975 10.965 5.645 10.77 6.375 10.77C6.995 10.77 7.5725 10.9125 8.1075 11.1975C8.6425 11.4825 9.085 11.87 9.435 12.36L15.195 9.03002L15.945 10.32L10.035 13.74C10.095 14 10.125 14.26 10.125 14.52C10.125 14.78 10.1 15.03 10.05 15.27H16.125V16.77H3.375C3.135 16.45 2.95 16.1 2.82 15.72C2.69 15.34 2.625 14.94 2.625 14.52C2.625 13.78 2.83 13.1 3.24 12.48C2.83 11.71 2.625 10.89 2.625 10.02C2.625 9.29002 2.77 8.59002 3.06 7.92002C3.35 7.27002 3.75 6.70252 4.26 6.21752C4.77 5.73252 5.355 5.36502 6.015 5.11502L5.73 4.60502C5.59 4.36502 5.52 4.11252 5.52 3.84752C5.52 3.58252 5.5875 3.33502 5.7225 3.10502C5.8575 2.87502 6.04 2.69002 6.27 2.55002L8.22 1.42502C8.46 1.28502 8.7125 1.21752 8.9775 1.22252C9.2425 1.22752 9.49 1.29502 9.72 1.42502C9.95 1.55502 10.135 1.74002 10.275 1.98002ZM6.375 12.27C5.965 12.27 5.5875 12.3725 5.2425 12.5775C4.8975 12.7825 4.625 13.0575 4.425 13.4025C4.225 13.7475 4.125 14.12 4.125 14.52C4.125 14.78 4.17 15.03 4.26 15.27H8.49C8.58 15.03 8.625 14.78 8.625 14.52C8.625 14.12 8.525 13.7475 8.325 13.4025C8.125 13.0575 7.8525 12.7825 7.5075 12.5775C7.1625 12.3725 6.785 12.27 6.375 12.27ZM8.97 2.73002L7.02 3.85502L9.09 7.42502L11.04 6.30002L8.97 2.73002Z"
+                        fill="#00E5FF"
+                      />
+                    </svg>
+                  </span>
+                  Deep Metric Insights
+                </h3>
+                <p>
+                  Personalised benchmarks and clinical interpretation for your key
+                  scores
+                </p>
+              </div>
+
+              <div className="deep-metric-list">
+                {deepMetricRows.map((metric) => (
+                  <article className="deep-metric-card" key={metric.title}>
+                    <div className="deep-metric-card-head">
+                      <h4>
+                        <span
+                          className={`deep-metric-dot deep-metric-dot-${metric.tone}`}
+                          aria-hidden="true"
+                        />
+                        {metric.title}
+                      </h4>
+                      <p>
+                        <strong
+                          className={`deep-metric-score deep-metric-score-${metric.tone}`}
+                        >
+                          {metric.score}
+                        </strong>
+                        <span>/ 100</span>
+                      </p>
+                    </div>
+
+                    {metric.blurb && (
+                      <p className="deep-metric-card-blurb">{metric.blurb}</p>
+                    )}
+
+                    <div
+                      className="deep-metric-progress-track"
+                      aria-hidden="true"
+                    >
                       <span
-                        className="ai-photo-confidence-icon"
+                        className={`deep-metric-progress-fill deep-metric-progress-fill-${metric.tone}`}
+                        style={{ width: `${metric.progress}%` }}
+                      />
+                    </div>
+
+                    <div className="deep-metric-panels">
+                      <div
+                        className={`deep-metric-panel deep-metric-panel-stand deep-metric-panel-stand-${metric.tone}`}
+                      >
+                        <h5>WHERE YOU STAND</h5>
+                        <strong>{metric.scoreStand}</strong>
+                        <p>{metric.scoreNote}</p>
+                      </div>
+                      <div className="deep-metric-panel deep-metric-panel-benchmark">
+                        <h5>{metric.benchmarkTitle}</h5>
+                        {metric.benchmarkLines.map((line) => (
+                          <p key={line}>{line}</p>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div
+                      className={`deep-metric-meaning-row deep-metric-meaning-row-${metric.tone}`}
+                    >
+                      <span
+                        className="deep-metric-meaning-icon"
                         aria-hidden="true"
                       >
                         <svg
-                          width="17"
-                          height="16"
-                          viewBox="0 0 17 16"
+                          width="15"
+                          height="14"
+                          viewBox="0 0 15 14"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            d="M8.32828 0.666585L13.8049 1.87992C13.9559 1.91547 14.0802 1.99547 14.178 2.11992C14.2757 2.24436 14.3245 2.38214 14.3245 2.53325V9.18658C14.3245 9.86214 14.1669 10.4933 13.8515 11.0799C13.5361 11.6666 13.0986 12.1466 12.539 12.5199L8.32828 15.3333L4.11758 12.5199C3.55793 12.1466 3.12043 11.6666 2.80507 11.0799C2.48971 10.4933 2.33203 9.86214 2.33203 9.18658V2.53325C2.33203 2.38214 2.38089 2.24436 2.47861 2.11992C2.57632 1.99547 2.70069 1.91547 2.85171 1.87992L8.32828 0.666585ZM8.32828 2.02658L3.66453 3.06658V9.18658C3.66453 9.63992 3.76891 10.0621 3.97767 10.4533C4.18643 10.8444 4.47736 11.1644 4.85046 11.4133L8.32828 13.7333L11.8061 11.4133C12.1792 11.1644 12.4701 10.8444 12.6789 10.4533C12.8877 10.0621 12.992 9.63992 12.992 9.18658V3.06658L8.32828 2.02658ZM11.2998 5.47992L12.2325 6.42659L7.99516 10.6666L5.17026 7.83992L6.11633 6.89325L7.99516 8.78659L11.2998 5.47992Z"
-                            fill="#10B981"
+                            d="M7.28901 12.8333C6.49596 12.8333 5.7379 12.6816 5.01483 12.3783C4.32285 12.0827 3.70668 11.6646 3.16632 11.1241C2.62596 10.5835 2.20805 9.96714 1.9126 9.27492C1.60938 8.55159 1.45776 7.79325 1.45776 6.99992C1.45776 6.20659 1.60938 5.44825 1.9126 4.72492C2.20805 4.0327 2.62596 3.41631 3.16632 2.87575C3.70668 2.3352 4.32285 1.91714 5.01483 1.62158C5.7379 1.31825 6.49596 1.16658 7.28901 1.16658C8.08206 1.16658 8.84013 1.31825 9.5632 1.62158C10.2552 1.91714 10.8713 2.3352 11.4117 2.87575C11.9521 3.41631 12.37 4.0327 12.6654 4.72492C12.9687 5.44825 13.1203 6.20659 13.1203 6.99992C13.1203 7.79325 12.9687 8.55159 12.6654 9.27492C12.37 9.96714 11.9521 10.5835 11.4117 11.1241C10.8713 11.6646 10.2552 12.0827 9.5632 12.3783C8.84013 12.6816 8.08206 12.8333 7.28901 12.8333ZM7.28901 11.6666C8.13649 11.6666 8.92176 11.4527 9.64484 11.0249C10.3446 10.6127 10.9005 10.0566 11.3126 9.35659C11.7402 8.63325 11.954 7.8477 11.954 6.99992C11.954 6.15214 11.7402 5.36659 11.3126 4.64325C10.9005 3.94325 10.3446 3.38714 9.64484 2.97492C8.92176 2.54714 8.13649 2.33325 7.28901 2.33325C6.44154 2.33325 5.65626 2.54714 4.93319 2.97492C4.23344 3.38714 3.67753 3.94325 3.26545 4.64325C2.83783 5.36659 2.62401 6.15214 2.62401 6.99992C2.62401 7.8477 2.83783 8.63325 3.26545 9.35659C3.67753 10.0566 4.23344 10.6127 4.93319 11.0249C5.65626 11.4527 6.44154 11.6666 7.28901 11.6666ZM6.70589 4.08325H7.87214V5.24992H6.70589V4.08325ZM6.70589 6.41659H7.87214V9.91659H6.70589V6.41659Z"
+                            fill="currentColor"
                           />
                         </svg>
                       </span>
-                    )}
-                    <strong
-                      className={`ai-photo-metric-value ai-photo-metric-value-${item.tone}`}
-                    >
-                      {item.value}
-                    </strong>
-                  </p>
-                  <p
-                    className={`ai-photo-metric-subtitle ai-photo-metric-subtitle-${item.tone}`}
-                  >
-                    {item.subtitle}
-                  </p>
+                      <p>
+                        <strong>What this means for you:</strong> {metric.meaning}
+                      </p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          )}
 
-                  <div className="ai-photo-metric-track" aria-hidden="true">
+          {regionalZones.length > 0 && (
+            <section
+              className="regional-analysis-section"
+              aria-label="Regional analysis"
+            >
+              <article className="regional-analysis-card">
+                <div className="regional-analysis-header">
+                  <span
+                    className="regional-analysis-icon-wrap"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      width="21"
+                      height="20"
+                      viewBox="0 0 21 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10.414 19.05L5.11534 13.75C4.14892 12.7945 3.49908 11.6612 3.16583 10.35C2.83258 9.08338 2.83258 7.81672 3.16583 6.55005C3.49908 5.23894 4.14614 4.10283 5.10701 3.14172C6.06788 2.1806 7.20371 1.52783 8.51449 1.18338C9.78084 0.861158 11.0472 0.861158 12.3135 1.18338C13.6243 1.52783 14.7602 2.1806 15.721 3.14172C16.6819 4.10283 17.329 5.23894 17.6622 6.55005C17.9955 7.81672 17.9955 9.08338 17.6622 10.35C17.329 11.6612 16.6791 12.7945 15.7127 13.75L10.414 19.05ZM14.5297 12.5667C15.285 11.8223 15.796 10.9445 16.0626 9.93338C16.3181 8.94449 16.3181 7.9556 16.0626 6.96671C15.796 5.9556 15.2878 5.07505 14.538 4.32505C13.7882 3.57505 12.9078 3.06671 11.897 2.80005C10.9083 2.54449 9.9197 2.54449 8.93106 2.80005C7.9202 3.06671 7.03986 3.57505 6.29005 4.32505C5.54024 5.07505 5.03203 5.9556 4.76543 6.96671C4.50994 7.9556 4.50994 8.94449 4.76543 9.93338C5.03203 10.9445 5.54301 11.8223 6.29838 12.5667L10.414 16.7L14.5297 12.5667ZM10.414 10.1167C10.1141 10.1167 9.83639 10.0417 9.58089 9.89172C9.3254 9.74172 9.12267 9.53894 8.97271 9.28338C8.82275 9.02783 8.74777 8.75005 8.74777 8.45005C8.74777 8.15005 8.82275 7.87227 8.97271 7.61671C9.12267 7.36116 9.3254 7.15838 9.58089 7.00838C9.83639 6.85838 10.1141 6.78338 10.414 6.78338C10.7139 6.78338 10.9917 6.85838 11.2471 7.00838C11.5026 7.15838 11.7054 7.36116 11.8553 7.61671C12.0053 7.87227 12.0803 8.15005 12.0803 8.45005C12.0803 8.75005 12.0053 9.02783 11.8553 9.28338C11.7054 9.53894 11.5026 9.74172 11.2471 9.89172C10.9917 10.0417 10.7139 10.1167 10.414 10.1167Z"
+                        fill="#00E5FF"
+                      />
+                    </svg>
+                  </span>
+                  <div>
+                    <p className="regional-analysis-kicker">Regional Analysis</p>
+                    <h3>Scalp Density Map</h3>
+                    <p className="regional-analysis-subtitle">
+                      Zone-by-zone follicular coverage analysis
+                    </p>
+                  </div>
+                </div>
+
+                <div className="regional-analysis-body">
+                  <div className="regional-analysis-left">
+                    <svg
+                      className="regional-scalp-map"
+                      width="160"
+                      height="208"
+                      viewBox="0 0 160 208"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M80.0001 193.818C114.578 193.818 142.609 153.605 142.609 104C142.609 54.3949 114.578 14.1819 80.0001 14.1819C45.4222 14.1819 17.3914 54.3949 17.3914 104C17.3914 153.605 45.4222 193.818 80.0001 193.818Z"
+                        fill="#041126"
+                        fillOpacity="0.8"
+                        stroke="#00E5FF"
+                        strokeOpacity="0.15"
+                      />
+                      <path
+                        d="M80 81.309C93.447 81.309 104.348 69.4567 104.348 54.8363C104.348 40.2158 93.447 28.3635 80 28.3635C66.5531 28.3635 55.6522 40.2158 55.6522 54.8363C55.6522 69.4567 66.5531 81.309 80 81.309Z"
+                        fill="#F4C430"
+                        fillOpacity="0.0941176"
+                        stroke="#F4C430"
+                        strokeWidth="1.5"
+                      />
+                      <path
+                        d="M80.0001 66.749C86.0512 66.749 90.9566 61.4155 90.9566 54.8363C90.9566 48.2571 86.0512 42.9236 80.0001 42.9236C73.949 42.9236 69.0436 48.2571 69.0436 54.8363C69.0436 61.4155 73.949 66.749 80.0001 66.749Z"
+                        fill="#F4C430"
+                        fillOpacity="0.25098"
+                      />
+                      <path
+                        d="M80.0001 57.6727C81.4408 57.6727 82.6087 56.4028 82.6087 54.8364C82.6087 53.2699 81.4408 52 80.0001 52C78.5593 52 77.3914 53.2699 77.3914 54.8364C77.3914 56.4028 78.5593 57.6727 80.0001 57.6727Z"
+                        fill="#F4C430"
+                      />
+                      <path
+                        d="M80.0001 121.964C91.526 121.964 100.87 111.805 100.87 99.2727C100.87 86.7409 91.526 76.5818 80.0001 76.5818C68.4741 76.5818 59.1305 86.7409 59.1305 99.2727C59.1305 111.805 68.4741 121.964 80.0001 121.964Z"
+                        fill="#F4C430"
+                        fillOpacity="0.0941176"
+                        stroke="#F4C430"
+                        strokeWidth="1.5"
+                      />
+                      <path
+                        d="M80.0001 109.484C85.1867 109.484 89.3914 104.912 89.3914 99.2727C89.3914 93.6333 85.1867 89.0618 80.0001 89.0618C74.8134 89.0618 70.6088 93.6333 70.6088 99.2727C70.6088 104.912 74.8134 109.484 80.0001 109.484Z"
+                        fill="#F4C430"
+                        fillOpacity="0.25098"
+                      />
+                      <path
+                        d="M80.0001 102.109C81.4408 102.109 82.6087 100.839 82.6087 99.2726C82.6087 97.7062 81.4408 96.4363 80.0001 96.4363C78.5593 96.4363 77.3914 97.7062 77.3914 99.2726C77.3914 100.839 78.5593 102.109 80.0001 102.109Z"
+                        fill="#F4C430"
+                      />
+                      <path
+                        d="M79.9999 160.727C89.6049 160.727 97.3913 152.261 97.3913 141.818C97.3913 131.375 89.6049 122.909 79.9999 122.909C70.395 122.909 62.6086 131.375 62.6086 141.818C62.6086 152.261 70.395 160.727 79.9999 160.727Z"
+                        fill="#F4C430"
+                        fillOpacity="0.0941176"
+                        stroke="#F4C430"
+                        strokeWidth="1.5"
+                      />
+                      <path
+                        d="M79.9999 150.327C84.3221 150.327 87.826 146.518 87.826 141.818C87.826 137.119 84.3221 133.309 79.9999 133.309C75.6777 133.309 72.1738 137.119 72.1738 141.818C72.1738 146.518 75.6777 150.327 79.9999 150.327Z"
+                        fill="#F4C430"
+                        fillOpacity="0.25098"
+                      />
+                      <path
+                        d="M79.9999 144.655C81.4407 144.655 82.6086 143.385 82.6086 141.818C82.6086 140.252 81.4407 138.982 79.9999 138.982C78.5592 138.982 77.3912 140.252 77.3912 141.818C77.3912 143.385 78.5592 144.655 79.9999 144.655Z"
+                        fill="#F4C430"
+                      />
+                    </svg>
+                    <span className="regional-scalp-label">SCALP</span>
+
+                    <div className="regional-representative-wrap">
+                      <div
+                        className="regional-representative-image"
+                        style={{
+                          backgroundImage: `url(${scalpRepresentativeImage})`,
+                        }}
+                      />
+                      <p>Representative image</p>
+                    </div>
+                  </div>
+
+                  <div className="regional-analysis-right">
+                    {regionalZones.map((zone) => (
+                      <article className="regional-zone-row" key={zone.name}>
+                        <div className="regional-zone-head">
+                          <h4>{zone.name}</h4>
+                          <span>{zone.percent}%</span>
+                        </div>
+                        <p>{zone.note}</p>
+                        <div className="regional-zone-track" aria-hidden="true">
+                          <span
+                            className="regional-zone-fill"
+                            style={{ width: `${zone.percent}%` }}
+                          />
+                        </div>
+                        <em>{zone.status}</em>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="regional-overall-wrap">
+                  <div className="regional-overall-head">
+                    <h4>Overall Scalp Coverage</h4>
+                    <p>{Math.round((regionalZones.reduce((acc, z) => acc + z.percent, 0) / (regionalZones.length || 1)))}% - Coverage</p>
+                  </div>
+
+                  <div className="regional-overall-track" aria-hidden="true">
                     <span
-                      className={`ai-photo-metric-fill ai-photo-metric-fill-${item.tone}`}
-                      style={{ width: `${item.progress}%` }}
+                      className="regional-overall-fill"
+                      style={{ width: `${Math.round((regionalZones.reduce((acc, z) => acc + z.percent, 0) / (regionalZones.length || 1)))}%` }}
                     />
                   </div>
-                </article>
-              ))}
-            </div>
 
-            <article className="ai-photo-security-note">
-              <span className="ai-photo-security-icon" aria-hidden="true">
-                <svg
-                  width="15"
-                  height="14"
-                  viewBox="0 0 15 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+                  <div className="regional-overall-legend">
+                    <div className="regional-legend-item">
+                      <span
+                        className="regional-legend-swatch regional-legend-red"
+                        aria-hidden="true"
+                      />
+                      <p>
+                        Poor <small>0-49%</small>
+                      </p>
+                    </div>
+                    <div className="regional-legend-item">
+                      <span
+                        className="regional-legend-swatch regional-legend-amber"
+                        aria-hidden="true"
+                      />
+                      <p>
+                        Moderate <small>50-74%</small>
+                      </p>
+                    </div>
+                    <div className="regional-legend-item">
+                      <span
+                        className="regional-legend-swatch regional-legend-green"
+                        aria-hidden="true"
+                      />
+                      <p>
+                        Good <small>75-100%</small>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </section>
+          )}
+
+          {primaryCauses.length > 0 && (
+            <section
+              className="root-cause-section"
+              aria-label="Root cause analysis"
+            >
+              <div className="title-wrapper">
+                <span
+                  className="root-cause-title-icon title-icon-bg"
+                  aria-hidden="true"
                 >
-                  <path
-                    d="M11.371 5.83325H11.9541C12.1174 5.83325 12.2554 5.88964 12.3682 6.00242C12.4809 6.1152 12.5373 6.25325 12.5373 6.41659V12.2499C12.5373 12.4133 12.4809 12.5513 12.3682 12.6641C12.2554 12.7769 12.1174 12.8333 11.9541 12.8333H2.62414C2.46087 12.8333 2.32286 12.7769 2.21012 12.6641C2.09738 12.5513 2.04102 12.4133 2.04102 12.2499V6.41659C2.04102 6.25325 2.09738 6.1152 2.21012 6.00242C2.32286 5.88964 2.46087 5.83325 2.62414 5.83325H3.20727V5.24992C3.20727 4.51103 3.39387 3.8227 3.76707 3.18492C4.12472 2.57047 4.61065 2.08436 5.22488 1.72659C5.86243 1.35325 6.55052 1.16658 7.28914 1.16658C8.02777 1.16658 8.71585 1.35325 9.3534 1.72659C9.96763 2.08436 10.4536 2.57047 10.8112 3.18492C11.1844 3.8227 11.371 4.51103 11.371 5.24992V5.83325ZM3.20727 6.99992V11.6666H11.371V6.99992H3.20727ZM6.70602 8.16659H7.87227V10.4999H6.70602V8.16659ZM10.2048 5.83325V5.24992C10.2048 4.72103 10.0745 4.23297 9.81407 3.78575C9.55361 3.33853 9.19985 2.98464 8.75278 2.72408C8.30572 2.46353 7.81784 2.33325 7.28914 2.33325C6.76044 2.33325 6.27256 2.46353 5.8255 2.72408C5.37843 2.98464 5.02467 3.33853 4.76421 3.78575C4.50375 4.23297 4.37352 4.72103 4.37352 5.24992V5.83325H10.2048Z"
-                    fill="#9FB4D0"
-                  />
-                </svg>
-              </span>
-              <p>
-                Your photos are processed securely using on-device AI and are
-                <span> never stored</span> after analysis is complete.
-              </p>
-            </article>
-          </section>
-          }
+                  <svg
+                    width="19"
+                    height="18"
+                    viewBox="0 0 19 18"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M13.785 12.3451L16.995 15.5551L15.93 16.6201L12.72 13.4101C12.13 13.8801 11.485 14.2401 10.785 14.4901C10.045 14.7501 9.285 14.8801 8.505 14.8801C7.285 14.8801 6.15 14.5751 5.1 13.9651C4.08 13.3651 3.275 12.5551 2.685 11.5351C2.065 10.4851 1.755 9.35012 1.755 8.13012C1.755 6.91012 2.065 5.77512 2.685 4.72512C3.275 3.70512 4.08 2.90012 5.1 2.31012C6.15 1.69012 7.285 1.38012 8.505 1.38012C9.725 1.38012 10.86 1.69012 11.91 2.31012C12.93 2.90012 13.74 3.70512 14.34 4.72512C14.95 5.77512 15.255 6.91012 15.255 8.13012C15.255 8.91012 15.125 9.67012 14.865 10.4101C14.615 11.1101 14.255 11.7551 13.785 12.3451ZM12.27 11.7901C12.74 11.3101 13.105 10.7601 13.365 10.1401C13.625 9.50012 13.755 8.83012 13.755 8.13012C13.755 7.18012 13.515 6.29512 13.035 5.47512C12.575 4.68512 11.95 4.06012 11.16 3.60012C10.34 3.12012 9.455 2.88012 8.505 2.88012C7.555 2.88012 6.67 3.12012 5.85 3.60012C5.06 4.06012 4.435 4.68512 3.975 5.47512C3.495 6.29512 3.255 7.18012 3.255 8.13012C3.255 9.08012 3.495 9.96512 3.975 10.7851C4.435 11.5751 5.06 12.2001 5.85 12.6601C6.67 13.1401 7.555 13.3801 8.505 13.3801C9.205 13.3801 9.875 13.2501 10.515 12.9901C11.135 12.7301 11.685 12.3651 12.165 11.8951L12.27 11.7901ZM9.39 5.26512C9.13 5.38512 8.9175 5.56762 8.7525 5.81262C8.5875 6.05762 8.505 6.33012 8.505 6.63012C8.505 6.90012 8.5725 7.15012 8.7075 7.38012C8.8425 7.61012 9.025 7.79262 9.255 7.92762C9.485 8.06262 9.735 8.13012 10.005 8.13012C10.305 8.13012 10.5775 8.05012 10.8225 7.89012C11.0675 7.73012 11.25 7.51512 11.37 7.24512C11.46 7.53512 11.505 7.83012 11.505 8.13012C11.505 8.67012 11.37 9.17012 11.1 9.63012C10.83 10.0901 10.465 10.4551 10.005 10.7251C9.545 10.9951 9.045 11.1301 8.505 11.1301C7.965 11.1301 7.465 10.9951 7.005 10.7251C6.545 10.4551 6.18 10.0901 5.91 9.63012C5.64 9.17012 5.505 8.67012 5.505 8.13012C5.505 7.59012 5.64 7.09012 5.91 6.63012C6.18 6.17012 6.545 5.80512 7.005 5.53512C7.465 5.26512 7.965 5.13012 8.505 5.13012C8.805 5.13012 9.1 5.17512 9.39 5.26512Z"
+                      fill="#00E5FF"
+                    />
+                  </svg>
+                </span>
+                <div>
+                  <div className="root-cause-header">
+                    <h3>Root Cause Analysis</h3>
+                    <span className="root-cause-engine-chip">
+                      AI Assessment Engine
+                    </span>
+                  </div>
+                  <p className="root-cause-subtitle">
+                    Probability-weighted causal attribution model
+                  </p>
+                </div>
+              </div>
+              <div className="root-cause-top-title">
+                <span className="root-cause-top-marker" aria-hidden="true" />
+                <p>Top {primaryCauses.length || 3} Primary Causes Ranked</p>
+              </div>
 
-          {/* Section: clinical score dashboard */}
-          <section
-            className="deep-metric-section"
-            aria-label="Deep metric insights"
-          >
-            <div className="deep-metric-header">
-              <h3>
-                <span className="deep-metric-header-icon" aria-hidden="true">
+              <div className="root-cause-primary-list">
+                {primaryCauses.map((cause) => (
+                  <article
+                    className={`root-cause-card root-cause-card-${cause.tone}`}
+                    key={cause.rank}
+                  >
+                    <div className="root-cause-card-head">
+                      <div className="root-cause-rank-wrap">
+                        <span
+                          className={`root-cause-rank root-cause-rank-${cause.tone}`}
+                        >
+                          #{cause.rank}
+                        </span>
+                        <h4>{cause.title}</h4>
+                      </div>
+                      <span
+                        className={`root-cause-tag root-cause-tag-${cause.tone}`}
+                      >
+                        {cause.tag}
+                      </span>
+                    </div>
+
+                    <p className="root-cause-summary">{cause.summary}</p>
+
+                    <div className="root-cause-score-row">
+                      <div className="root-cause-track" aria-hidden="true">
+                        <span
+                          className={`root-cause-fill root-cause-fill-${cause.tone}`}
+                          style={{ width: `${cause.score}%` }}
+                        />
+                      </div>
+                      <p>
+                        <strong
+                          className={`root-cause-score root-cause-score-${cause.tone}`}
+                        >
+                          {cause.score}%
+                        </strong>
+                        <span>Impact Score</span>
+                      </p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {secondaryCauses.length > 0 && (
+            <section
+              className={`additional-factors-section ${fullReport
+                ? "additional-factors-section-colored"
+                : "additional-factors-section-dull"
+                }`}
+              aria-label="Additional contributing factors"
+            >
+              <div className="additional-factors-title-row">
+                <span
+                  className="additional-factors-title-icon"
+                  aria-hidden="true"
+                >
+                  <svg
+                    width="4"
+                    height="16"
+                    viewBox="0 0 4 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 2C0 0.895431 0.895431 0 2 0C3.10457 0 4 0.895431 4 2V14C4 15.1046 3.10457 16 2 16C0.895431 16 0 15.1046 0 14V2Z"
+                      fill={fullReport ? "#00E5FF" : "#4A6080"}
+                    />
+                  </svg>
+                </span>
+                <h3>Additional Contributing Factors</h3>
+              </div>
+
+              <div className="additional-factors-list">
+                {secondaryCauses.map((factor) => {
+                  const factorTone = getAdditionalFactorTone(factor.tag);
+
+                  return (
+                    <article
+                      className={`additional-factor-card additional-factor-card-${factorTone}`}
+                      key={factor.rank}
+                    >
+                      <div className="additional-factor-head">
+                        <div className="additional-factor-rank-title">
+                          <span
+                            className={`additional-factor-rank additional-factor-rank-${factorTone}`}
+                          >
+                            #{factor.rank}
+                          </span>
+                          <h4>{factor.title}</h4>
+                        </div>
+                        <span
+                          className={`additional-factor-tag additional-factor-tag-${factorTone}`}
+                        >
+                          {factor.tag}
+                        </span>
+                      </div>
+
+                      <p className="additional-factor-summary">{factor.summary}</p>
+
+                      <div className="additional-factor-progress-row">
+                        <div className="additional-factor-track" aria-hidden="true">
+                          <span
+                            className={`additional-factor-fill additional-factor-fill-${factorTone}`}
+                            style={{ width: `${factor.score}%` }}
+                          />
+                        </div>
+                        <span
+                          className={`additional-factor-score additional-factor-score-${factorTone}`}
+                        >
+                          {factor.score}%
+                        </span>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            </section>
+          )}
+
+          {scalpRecoveryCards.length > 0 && (
+            <section
+              className="scalp-recovery-section"
+              aria-label="Scalp condition and recovery"
+            >
+              <div className="title-wrapper">
+                <span
+                  className="scalp-recovery-icon title-icon-bg"
+                  aria-hidden="true"
+                >
                   <svg
                     width="19"
                     height="18"
@@ -2028,633 +1803,184 @@ export default function TestReport() {
                     />
                   </svg>
                 </span>
-                Deep Metric Insights
-              </h3>
-              <p>
-                Personalised benchmarks and clinical interpretation for your key
-                scores
-              </p>
-            </div>
+                <div className="scalp-recovery-header">
+                  <h3>Scalp Condition & Recovery</h3>
+                  <p>Scalp health and follicle recovery assessment</p>
+                </div>
+              </div>
 
-            <div className="deep-metric-list">
-              {deepMetricRows.map((metric) => (
-                <article className="deep-metric-card" key={metric.title}>
-                  <div className="deep-metric-card-head">
-                    <h4>
-                      <span
-                        className={`deep-metric-dot deep-metric-dot-${metric.tone}`}
-                        aria-hidden="true"
-                      />
-                      {metric.title}
-                    </h4>
-                    <p>
-                      <strong
-                        className={`deep-metric-score deep-metric-score-${metric.tone}`}
-                      >
-                        {metric.score}
-                      </strong>
-                      <span>/ 100</span>
-                    </p>
-                  </div>
+              <div className="scalp-recovery-grid">
+                {scalpRecoveryCards.map((card) => (
+                  <article className="scalp-recovery-card" key={card.title}>
+                    <p className="scalp-recovery-card-title">{card.title}</p>
 
-                  {metric.blurb && (
-                    <p className="deep-metric-card-blurb">{metric.blurb}</p>
-                  )}
-
-                  <div
-                    className="deep-metric-progress-track"
-                    aria-hidden="true"
-                  >
-                    <span
-                      className={`deep-metric-progress-fill deep-metric-progress-fill-${metric.tone}`}
-                      style={{ width: `${metric.progress}%` }}
-                    />
-                  </div>
-
-                  <div className="deep-metric-panels">
-                    <div
-                      className={`deep-metric-panel deep-metric-panel-stand deep-metric-panel-stand-${metric.tone}`}
-                    >
-                      <h5>WHERE YOU STAND</h5>
-                      <strong>{metric.scoreStand}</strong>
-                      <p>{metric.scoreNote}</p>
-                    </div>
-                    <div className="deep-metric-panel deep-metric-panel-benchmark">
-                      <h5>{metric.benchmarkTitle}</h5>
-                      {metric.benchmarkLines.map((line) => (
-                        <p key={line}>{line}</p>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div
-                    className={`deep-metric-meaning-row deep-metric-meaning-row-${metric.tone}`}
-                  >
-                    <span
-                      className="deep-metric-meaning-icon"
-                      aria-hidden="true"
-                    >
+                    <div className="scalp-recovery-ring-wrap" aria-hidden="true">
                       <svg
-                        width="15"
-                        height="14"
-                        viewBox="0 0 15 14"
+                        width="96"
+                        height="96"
+                        viewBox="0 0 96 96"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          d="M7.28901 12.8333C6.49596 12.8333 5.7379 12.6816 5.01483 12.3783C4.32285 12.0827 3.70668 11.6646 3.16632 11.1241C2.62596 10.5835 2.20805 9.96714 1.9126 9.27492C1.60938 8.55159 1.45776 7.79325 1.45776 6.99992C1.45776 6.20659 1.60938 5.44825 1.9126 4.72492C2.20805 4.0327 2.62596 3.41631 3.16632 2.87575C3.70668 2.3352 4.32285 1.91714 5.01483 1.62158C5.7379 1.31825 6.49596 1.16658 7.28901 1.16658C8.08206 1.16658 8.84013 1.31825 9.5632 1.62158C10.2552 1.91714 10.8713 2.3352 11.4117 2.87575C11.9521 3.41631 12.37 4.0327 12.6654 4.72492C12.9687 5.44825 13.1203 6.20659 13.1203 6.99992C13.1203 7.79325 12.9687 8.55159 12.6654 9.27492C12.37 9.96714 11.9521 10.5835 11.4117 11.1241C10.8713 11.6646 10.2552 12.0827 9.5632 12.3783C8.84013 12.6816 8.08206 12.8333 7.28901 12.8333ZM7.28901 11.6666C8.13649 11.6666 8.92176 11.4527 9.64484 11.0249C10.3446 10.6127 10.9005 10.0566 11.3126 9.35659C11.7402 8.63325 11.954 7.8477 11.954 6.99992C11.954 6.15214 11.7402 5.36659 11.3126 4.64325C10.9005 3.94325 10.3446 3.38714 9.64484 2.97492C8.92176 2.54714 8.13649 2.33325 7.28901 2.33325C6.44154 2.33325 5.65626 2.54714 4.93319 2.97492C4.23344 3.38714 3.67753 3.94325 3.26545 4.64325C2.83783 5.36659 2.62401 6.15214 2.62401 6.99992C2.62401 7.8477 2.83783 8.63325 3.26545 9.35659C3.67753 10.0566 4.23344 10.6127 4.93319 11.0249C5.65626 11.4527 6.44154 11.6666 7.28901 11.6666ZM6.70589 4.08325H7.87214V5.24992H6.70589V4.08325ZM6.70589 6.41659H7.87214V9.91659H6.70589V6.41659Z"
-                          fill="currentColor"
+                          d="M84.48 48C84.48 27.8526 68.1474 11.52 48 11.52C27.8527 11.52 11.52 27.8526 11.52 48C11.52 68.1473 27.8527 84.48 48 84.48C68.1474 84.48 84.48 68.1473 84.48 48Z"
+                          stroke="white"
+                          strokeOpacity="0.06"
+                          strokeWidth="7"
+                        />
+                        <path
+                          d="M84.48 48C84.48 27.8526 68.1474 11.52 48 11.52C27.8527 11.52 11.52 27.8526 11.52 48C11.52 68.1473 27.8527 84.48 48 84.48C68.1474 84.48 84.48 68.1473 84.48 48Z"
+                          className={`scalp-recovery-ring-progress scalp-recovery-ring-progress-${card.tone}`}
+                          strokeWidth="7"
+                          strokeLinecap="round"
+                          strokeDasharray={card.dashArray}
                         />
                       </svg>
-                    </span>
-                    <p>
-                      <strong>What this means for you:</strong> {metric.meaning}
-                    </p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
+                      <div className="scalp-recovery-ring-center">
+                        <strong>{card.score}</strong>
+                        <span>/100</span>
+                      </div>
+                    </div>
 
-          {/* Section: clinical score dashboard */}
-          <section
-            className="regional-analysis-section"
-            aria-label="Regional analysis"
-          >
-            <article className="regional-analysis-card">
-              <div className="regional-analysis-header">
+                    <p
+                      className={`scalp-recovery-score-label scalp-recovery-score-label-${card.tone}`}
+                    >
+                      {card.scoreLabel}
+                    </p>
+                    <p className="scalp-recovery-note">{card.note}</p>
+
+                    <div className="scalp-recovery-levels" role="presentation">
+                      {card.levels.map((level) => {
+                        const isActive = card.activeLevel === level;
+                        return (
+                          <span
+                            key={level}
+                            className={`scalp-recovery-level-pill ${isActive
+                              ? `scalp-recovery-level-pill-active scalp-recovery-level-pill-active-${card.tone}`
+                              : ""
+                              }`}
+                          >
+                            {level}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {improvementPredictionCards.length > 0 && (
+            <section
+              className="improvement-prediction-section"
+              aria-label="Before and after improvement prediction"
+            >
+              <div className="title-wrapper">
                 <span
-                  className="regional-analysis-icon-wrap"
+                  className="improvement-prediction-icon title-icon-bg"
                   aria-hidden="true"
                 >
                   <svg
-                    width="21"
-                    height="20"
-                    viewBox="0 0 21 20"
+                    width="15"
+                    height="14"
+                    viewBox="0 0 15 14"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M10.414 19.05L5.11534 13.75C4.14892 12.7945 3.49908 11.6612 3.16583 10.35C2.83258 9.08338 2.83258 7.81672 3.16583 6.55005C3.49908 5.23894 4.14614 4.10283 5.10701 3.14172C6.06788 2.1806 7.20371 1.52783 8.51449 1.18338C9.78084 0.861158 11.0472 0.861158 12.3135 1.18338C13.6243 1.52783 14.7602 2.1806 15.721 3.14172C16.6819 4.10283 17.329 5.23894 17.6622 6.55005C17.9955 7.81672 17.9955 9.08338 17.6622 10.35C17.329 11.6612 16.6791 12.7945 15.7127 13.75L10.414 19.05ZM14.5297 12.5667C15.285 11.8223 15.796 10.9445 16.0626 9.93338C16.3181 8.94449 16.3181 7.9556 16.0626 6.96671C15.796 5.9556 15.2878 5.07505 14.538 4.32505C13.7882 3.57505 12.9078 3.06671 11.897 2.80005C10.9083 2.54449 9.9197 2.54449 8.93106 2.80005C7.9202 3.06671 7.03986 3.57505 6.29005 4.32505C5.54024 5.07505 5.03203 5.9556 4.76543 6.96671C4.50994 7.9556 4.50994 8.94449 4.76543 9.93338C5.03203 10.9445 5.54301 11.8223 6.29838 12.5667L10.414 16.7L14.5297 12.5667ZM10.414 10.1167C10.1141 10.1167 9.83639 10.0417 9.58089 9.89172C9.3254 9.74172 9.12267 9.53894 8.97271 9.28338C8.82275 9.02783 8.74777 8.75005 8.74777 8.45005C8.74777 8.15005 8.82275 7.87227 8.97271 7.61671C9.12267 7.36116 9.3254 7.15838 9.58089 7.00838C9.83639 6.85838 10.1141 6.78338 10.414 6.78338C10.7139 6.78338 10.9917 6.85838 11.2471 7.00838C11.5026 7.15838 11.7054 7.36116 11.8553 7.61671C12.0053 7.87227 12.0803 8.15005 12.0803 8.45005C12.0803 8.75005 12.0053 9.02783 11.8553 9.28338C11.7054 9.53894 11.5026 9.74172 11.2471 9.89172C10.9917 10.0417 10.7139 10.1167 10.414 10.1167Z"
+                      d="M1.5 0V12H13.5V13.5H0V0H1.5ZM12.975 2.475L14.04 3.525L9.75 7.815L7.5 5.565L4.29 8.775L3.225 7.725L7.5 3.435L9.75 5.685L12.975 2.475Z"
                       fill="#00E5FF"
                     />
                   </svg>
                 </span>
-                <div>
-                  <p className="regional-analysis-kicker">Regional Analysis</p>
-                  <h3>Scalp Density Map</h3>
-                  <p className="regional-analysis-subtitle">
-                    Zone-by-zone follicular coverage analysis
-                  </p>
+                <div className="improvement-prediction-header">
+                  <h3>Before / After Improvement Prediction</h3>
+                  <p>AI-projected outcomes with consistent treatment adherence</p>
                 </div>
               </div>
 
-              <div className="regional-analysis-body">
-                <div className="regional-analysis-left">
+              <div className="improvement-prediction-grid">
+                {improvementPredictionCards.map((card) => (
+                  <article
+                    className="improvement-prediction-card"
+                    key={card.period}
+                  >
+                    <header
+                      className={`improvement-prediction-card-head improvement-prediction-card-head-${card.tone}`}
+                    >
+                      <h4>{card.period}</h4>
+                      <span
+                        className={`improvement-prediction-phase-chip improvement-prediction-phase-chip-${card.tone}`}
+                      >
+                        {card.phase}
+                      </span>
+                    </header>
+
+                    <div className="improvement-prediction-metrics">
+                      {card.metrics.map((metric) => (
+                        <div
+                          className="improvement-metric-row"
+                          key={metric.label}
+                        >
+                          <div className="improvement-metric-head">
+                            <p>{metric.label}</p>
+                            <strong
+                              className={`improvement-metric-value improvement-metric-value-${card.tone}`}
+                            >
+                              {metric.value}
+                            </strong>
+                          </div>
+                          <div
+                            className="improvement-metric-track"
+                            aria-hidden="true"
+                          >
+                            <span
+                              className={`improvement-metric-fill improvement-metric-fill-${card.tone}`}
+                              style={{ width: `${metric.progress}%` }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </article>
+                ))}
+              </div>
+
+              <div className="improvement-prediction-disclaimer">
+                <span
+                  className="improvement-prediction-disclaimer-icon"
+                  aria-hidden="true"
+                >
                   <svg
-                    className="regional-scalp-map"
-                    width="160"
-                    height="208"
-                    viewBox="0 0 160 208"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M80.0001 193.818C114.578 193.818 142.609 153.605 142.609 104C142.609 54.3949 114.578 14.1819 80.0001 14.1819C45.4222 14.1819 17.3914 54.3949 17.3914 104C17.3914 153.605 45.4222 193.818 80.0001 193.818Z"
-                      fill="#041126"
-                      fillOpacity="0.8"
-                      stroke="#00E5FF"
-                      strokeOpacity="0.15"
+                      d="M8.69358 2.09326L14.767 12.6133C15.0773 13.151 14.6891 13.8232 14.0686 13.8232H1.92175C1.30125 13.8232 0.913015 13.151 1.22328 12.6133L7.29674 2.09326C7.607 1.55554 8.38332 1.55554 8.69358 2.09326Z"
+                      fill="#FACC15"
                     />
                     <path
-                      d="M80 81.309C93.447 81.309 104.348 69.4567 104.348 54.8363C104.348 40.2158 93.447 28.3635 80 28.3635C66.5531 28.3635 55.6522 40.2158 55.6522 54.8363C55.6522 69.4567 66.5531 81.309 80 81.309Z"
-                      fill="#F4C430"
-                      fillOpacity="0.0941176"
-                      stroke="#F4C430"
-                      strokeWidth="1.5"
+                      d="M8.00016 5.36548C8.39157 5.36548 8.7085 5.68241 8.7085 6.07381V9.13631C8.7085 9.52772 8.39157 9.84465 8.00016 9.84465C7.60876 9.84465 7.29183 9.52772 7.29183 9.13631V6.07381C7.29183 5.68241 7.60876 5.36548 8.00016 5.36548Z"
+                      fill="#111827"
                     />
                     <path
-                      d="M80.0001 66.749C86.0512 66.749 90.9566 61.4155 90.9566 54.8363C90.9566 48.2571 86.0512 42.9236 80.0001 42.9236C73.949 42.9236 69.0436 48.2571 69.0436 54.8363C69.0436 61.4155 73.949 66.749 80.0001 66.749Z"
-                      fill="#F4C430"
-                      fillOpacity="0.25098"
-                    />
-                    <path
-                      d="M80.0001 57.6727C81.4408 57.6727 82.6087 56.4028 82.6087 54.8364C82.6087 53.2699 81.4408 52 80.0001 52C78.5593 52 77.3914 53.2699 77.3914 54.8364C77.3914 56.4028 78.5593 57.6727 80.0001 57.6727Z"
-                      fill="#F4C430"
-                    />
-                    <path
-                      d="M80.0001 121.964C91.526 121.964 100.87 111.805 100.87 99.2727C100.87 86.7409 91.526 76.5818 80.0001 76.5818C68.4741 76.5818 59.1305 86.7409 59.1305 99.2727C59.1305 111.805 68.4741 121.964 80.0001 121.964Z"
-                      fill="#F4C430"
-                      fillOpacity="0.0941176"
-                      stroke="#F4C430"
-                      strokeWidth="1.5"
-                    />
-                    <path
-                      d="M80.0001 109.484C85.1867 109.484 89.3914 104.912 89.3914 99.2727C89.3914 93.6333 85.1867 89.0618 80.0001 89.0618C74.8134 89.0618 70.6088 93.6333 70.6088 99.2727C70.6088 104.912 74.8134 109.484 80.0001 109.484Z"
-                      fill="#F4C430"
-                      fillOpacity="0.25098"
-                    />
-                    <path
-                      d="M80.0001 102.109C81.4408 102.109 82.6087 100.839 82.6087 99.2726C82.6087 97.7062 81.4408 96.4363 80.0001 96.4363C78.5593 96.4363 77.3914 97.7062 77.3914 99.2726C77.3914 100.839 78.5593 102.109 80.0001 102.109Z"
-                      fill="#F4C430"
-                    />
-                    <path
-                      d="M79.9999 160.727C89.6049 160.727 97.3913 152.261 97.3913 141.818C97.3913 131.375 89.6049 122.909 79.9999 122.909C70.395 122.909 62.6086 131.375 62.6086 141.818C62.6086 152.261 70.395 160.727 79.9999 160.727Z"
-                      fill="#F4C430"
-                      fillOpacity="0.0941176"
-                      stroke="#F4C430"
-                      strokeWidth="1.5"
-                    />
-                    <path
-                      d="M79.9999 150.327C84.3221 150.327 87.826 146.518 87.826 141.818C87.826 137.119 84.3221 133.309 79.9999 133.309C75.6777 133.309 72.1738 137.119 72.1738 141.818C72.1738 146.518 75.6777 150.327 79.9999 150.327Z"
-                      fill="#F4C430"
-                      fillOpacity="0.25098"
-                    />
-                    <path
-                      d="M79.9999 144.655C81.4407 144.655 82.6086 143.385 82.6086 141.818C82.6086 140.252 81.4407 138.982 79.9999 138.982C78.5592 138.982 77.3912 140.252 77.3912 141.818C77.3912 143.385 78.5592 144.655 79.9999 144.655Z"
-                      fill="#F4C430"
+                      d="M8.00016 11.6777C8.41437 11.6777 8.75016 11.3419 8.75016 10.9277C8.75016 10.5135 8.41437 10.1777 8.00016 10.1777C7.58595 10.1777 7.25016 10.5135 7.25016 10.9277C7.25016 11.3419 7.58595 11.6777 8.00016 11.6777Z"
+                      fill="#111827"
                     />
                   </svg>
-                  <span className="regional-scalp-label">SCALP</span>
-
-                  <div className="regional-representative-wrap">
-                    <div
-                      className="regional-representative-image"
-                      style={{
-                        backgroundImage: `url(${scalpRepresentativeImage})`,
-                      }}
-                    />
-                    <p>Representative image</p>
-                  </div>
-                </div>
-
-                <div className="regional-analysis-right">
-                  {regionalZones.map((zone) => (
-                    <article className="regional-zone-row" key={zone.name}>
-                      <div className="regional-zone-head">
-                        <h4>{zone.name}</h4>
-                        <span>{zone.percent}%</span>
-                      </div>
-                      <p>{zone.note}</p>
-                      <div className="regional-zone-track" aria-hidden="true">
-                        <span
-                          className="regional-zone-fill"
-                          style={{ width: `${zone.percent}%` }}
-                        />
-                      </div>
-                      <em>{zone.status}</em>
-                    </article>
-                  ))}
-                </div>
-              </div>
-
-              <div className="regional-overall-wrap">
-                <div className="regional-overall-head">
-                  <h4>Overall Scalp Coverage</h4>
-                  <p>65% - Moderate</p>
-                </div>
-
-                <div className="regional-overall-track" aria-hidden="true">
-                  <span
-                    className="regional-overall-fill"
-                    style={{ width: "65%" }}
-                  />
-                </div>
-
-                <div className="regional-overall-legend">
-                  <div className="regional-legend-item">
-                    <span
-                      className="regional-legend-swatch regional-legend-red"
-                      aria-hidden="true"
-                    />
-                    <p>
-                      Poor <small>0-49%</small>
-                    </p>
-                  </div>
-                  <div className="regional-legend-item">
-                    <span
-                      className="regional-legend-swatch regional-legend-amber"
-                      aria-hidden="true"
-                    />
-                    <p>
-                      Moderate <small>50-74%</small>
-                    </p>
-                  </div>
-                  <div className="regional-legend-item">
-                    <span
-                      className="regional-legend-swatch regional-legend-green"
-                      aria-hidden="true"
-                    />
-                    <p>
-                      Good <small>75-100%</small>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </article>
-          </section>
-
-          {/* Section: clinical score dashboard */}
-          <section
-            className="root-cause-section"
-            aria-label="Root cause analysis"
-          >
-            <div className="title-wrapper">
-              <span
-                className="root-cause-title-icon title-icon-bg"
-                aria-hidden="true"
-              >
-                <svg
-                  width="19"
-                  height="18"
-                  viewBox="0 0 19 18"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M13.785 12.3451L16.995 15.5551L15.93 16.6201L12.72 13.4101C12.13 13.8801 11.485 14.2401 10.785 14.4901C10.045 14.7501 9.285 14.8801 8.505 14.8801C7.285 14.8801 6.15 14.5751 5.1 13.9651C4.08 13.3651 3.275 12.5551 2.685 11.5351C2.065 10.4851 1.755 9.35012 1.755 8.13012C1.755 6.91012 2.065 5.77512 2.685 4.72512C3.275 3.70512 4.08 2.90012 5.1 2.31012C6.15 1.69012 7.285 1.38012 8.505 1.38012C9.725 1.38012 10.86 1.69012 11.91 2.31012C12.93 2.90012 13.74 3.70512 14.34 4.72512C14.95 5.77512 15.255 6.91012 15.255 8.13012C15.255 8.91012 15.125 9.67012 14.865 10.4101C14.615 11.1101 14.255 11.7551 13.785 12.3451ZM12.27 11.7901C12.74 11.3101 13.105 10.7601 13.365 10.1401C13.625 9.50012 13.755 8.83012 13.755 8.13012C13.755 7.18012 13.515 6.29512 13.035 5.47512C12.575 4.68512 11.95 4.06012 11.16 3.60012C10.34 3.12012 9.455 2.88012 8.505 2.88012C7.555 2.88012 6.67 3.12012 5.85 3.60012C5.06 4.06012 4.435 4.68512 3.975 5.47512C3.495 6.29512 3.255 7.18012 3.255 8.13012C3.255 9.08012 3.495 9.96512 3.975 10.7851C4.435 11.5751 5.06 12.2001 5.85 12.6601C6.67 13.1401 7.555 13.3801 8.505 13.3801C9.205 13.3801 9.875 13.2501 10.515 12.9901C11.135 12.7301 11.685 12.3651 12.165 11.8951L12.27 11.7901ZM9.39 5.26512C9.13 5.38512 8.9175 5.56762 8.7525 5.81262C8.5875 6.05762 8.505 6.33012 8.505 6.63012C8.505 6.90012 8.5725 7.15012 8.7075 7.38012C8.8425 7.61012 9.025 7.79262 9.255 7.92762C9.485 8.06262 9.735 8.13012 10.005 8.13012C10.305 8.13012 10.5775 8.05012 10.8225 7.89012C11.0675 7.73012 11.25 7.51512 11.37 7.24512C11.46 7.53512 11.505 7.83012 11.505 8.13012C11.505 8.67012 11.37 9.17012 11.1 9.63012C10.83 10.0901 10.465 10.4551 10.005 10.7251C9.545 10.9951 9.045 11.1301 8.505 11.1301C7.965 11.1301 7.465 10.9951 7.005 10.7251C6.545 10.4551 6.18 10.0901 5.91 9.63012C5.64 9.17012 5.505 8.67012 5.505 8.13012C5.505 7.59012 5.64 7.09012 5.91 6.63012C6.18 6.17012 6.545 5.80512 7.005 5.53512C7.465 5.26512 7.965 5.13012 8.505 5.13012C8.805 5.13012 9.1 5.17512 9.39 5.26512Z"
-                    fill="#00E5FF"
-                  />
-                </svg>
-              </span>
-              <div>
-                <div className="root-cause-header">
-                  <h3>Root Cause Analysis</h3>
-                  <span className="root-cause-engine-chip">
-                    AI Assessment Engine
-                  </span>
-                </div>
-                <p className="root-cause-subtitle">
-                  Probability-weighted causal attribution model
+                </span>
+                <p>
+                  Predictions are AI-estimated projections based on your inputs.
+                  Actual results vary. Consult a trichologist for clinical
+                  guidance.
                 </p>
               </div>
-            </div>
-            <div className="root-cause-top-title">
-              <span className="root-cause-top-marker" aria-hidden="true" />
-              <p>Top 3 Primary Causes Ranked</p>
-            </div>
-
-            <div className="root-cause-primary-list">
-              {rootCausePrimary.map((cause) => (
-                <article
-                  className={`root-cause-card root-cause-card-${cause.tone}`}
-                  key={cause.rank}
-                >
-                  <div className="root-cause-card-head">
-                    <div className="root-cause-rank-wrap">
-                      <span
-                        className={`root-cause-rank root-cause-rank-${cause.tone}`}
-                      >
-                        #{cause.rank}
-                      </span>
-                      <h4>{cause.title}</h4>
-                    </div>
-                    <span
-                      className={`root-cause-tag root-cause-tag-${cause.tone}`}
-                    >
-                      {cause.tag}
-                    </span>
-                  </div>
-
-                  <p className="root-cause-summary">{cause.summary}</p>
-
-                  <div className="root-cause-score-row">
-                    <div className="root-cause-track" aria-hidden="true">
-                      <span
-                        className={`root-cause-fill root-cause-fill-${cause.tone}`}
-                        style={{ width: `${cause.score}%` }}
-                      />
-                    </div>
-                    <p>
-                      <strong
-                        className={`root-cause-score root-cause-score-${cause.tone}`}
-                      >
-                        {cause.score}%
-                      </strong>
-                      <span>Impact Score</span>
-                    </p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          {/* Section: Additional Contributing Factors */}
-          <section
-            className={`additional-factors-section ${
-              fullReport
-                ? "additional-factors-section-colored"
-                : "additional-factors-section-dull"
-            }`}
-            aria-label="Additional contributing factors"
-          >
-            <div className="additional-factors-title-row">
-              <span
-                className="additional-factors-title-icon"
-                aria-hidden="true"
-              >
-                <svg
-                  width="4"
-                  height="16"
-                  viewBox="0 0 4 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 2C0 0.895431 0.895431 0 2 0C3.10457 0 4 0.895431 4 2V14C4 15.1046 3.10457 16 2 16C0.895431 16 0 15.1046 0 14V2Z"
-                    fill={fullReport ? "#00E5FF" : "#4A6080"}
-                  />
-                </svg>
-              </span>
-              <h3>Additional Contributing Factors</h3>
-            </div>
-
-            <div className="additional-factors-list">
-              {additionalContributingFactors.map((factor) => {
-                const factorTone = getAdditionalFactorTone(factor.tag);
-
-                return (
-                  <article
-                    className={`additional-factor-card additional-factor-card-${factorTone}`}
-                    key={factor.rank}
-                  >
-                    <div className="additional-factor-head">
-                      <div className="additional-factor-rank-title">
-                        <span
-                          className={`additional-factor-rank additional-factor-rank-${factorTone}`}
-                        >
-                          #{factor.rank}
-                        </span>
-                        <h4>{factor.title}</h4>
-                      </div>
-                      <span
-                        className={`additional-factor-tag additional-factor-tag-${factorTone}`}
-                      >
-                        {factor.tag}
-                      </span>
-                    </div>
-
-                    <p className="additional-factor-summary">{factor.summary}</p>
-
-                    <div className="additional-factor-progress-row">
-                      <div className="additional-factor-track" aria-hidden="true">
-                        <span
-                          className={`additional-factor-fill additional-factor-fill-${factorTone}`}
-                          style={{ width: `${factor.score}%` }}
-                        />
-                      </div>
-                      <span
-                        className={`additional-factor-score additional-factor-score-${factorTone}`}
-                      >
-                        {factor.score}%
-                      </span>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          </section>
-
-          {/* Section: Scalp Condition & Recovery */}
-          <section
-            className="scalp-recovery-section"
-            aria-label="Scalp condition and recovery"
-          >
-            <div className="title-wrapper">
-              <span
-                className="scalp-recovery-icon title-icon-bg"
-                aria-hidden="true"
-              >
-                <svg
-                  width="19"
-                  height="18"
-                  viewBox="0 0 19 18"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M10.275 1.98002L12.705 6.19502C12.815 6.37502 12.8425 6.56502 12.7875 6.76502C12.7325 6.96502 12.615 7.11502 12.435 7.21502L11.46 7.78502L12.21 9.09002L10.905 9.84002L10.155 8.53502L9.195 9.09002C9.015 9.20002 8.825 9.22752 8.625 9.17252C8.425 9.11752 8.27 9.00002 8.16 8.82002L6.78 6.43502C6.27 6.59502 5.815 6.85002 5.415 7.20002C5.015 7.55002 4.7 7.97002 4.47 8.46002C4.24 8.95002 4.125 9.47002 4.125 10.02C4.125 10.48 4.205 10.925 4.365 11.355C4.975 10.965 5.645 10.77 6.375 10.77C6.995 10.77 7.5725 10.9125 8.1075 11.1975C8.6425 11.4825 9.085 11.87 9.435 12.36L15.195 9.03002L15.945 10.32L10.035 13.74C10.095 14 10.125 14.26 10.125 14.52C10.125 14.78 10.1 15.03 10.05 15.27H16.125V16.77H3.375C3.135 16.45 2.95 16.1 2.82 15.72C2.69 15.34 2.625 14.94 2.625 14.52C2.625 13.78 2.83 13.1 3.24 12.48C2.83 11.71 2.625 10.89 2.625 10.02C2.625 9.29002 2.77 8.59002 3.06 7.92002C3.35 7.27002 3.75 6.70252 4.26 6.21752C4.77 5.73252 5.355 5.36502 6.015 5.11502L5.73 4.60502C5.59 4.36502 5.52 4.11252 5.52 3.84752C5.52 3.58252 5.5875 3.33502 5.7225 3.10502C5.8575 2.87502 6.04 2.69002 6.27 2.55002L8.22 1.42502C8.46 1.28502 8.7125 1.21752 8.9775 1.22252C9.2425 1.22752 9.49 1.29502 9.72 1.42502C9.95 1.55502 10.135 1.74002 10.275 1.98002ZM6.375 12.27C5.965 12.27 5.5875 12.3725 5.2425 12.5775C4.8975 12.7825 4.625 13.0575 4.425 13.4025C4.225 13.7475 4.125 14.12 4.125 14.52C4.125 14.78 4.17 15.03 4.26 15.27H8.49C8.58 15.03 8.625 14.78 8.625 14.52C8.625 14.12 8.525 13.7475 8.325 13.4025C8.125 13.0575 7.8525 12.7825 7.5075 12.5775C7.1625 12.3725 6.785 12.27 6.375 12.27ZM8.97 2.73002L7.02 3.85502L9.09 7.42502L11.04 6.30002L8.97 2.73002Z"
-                    fill="#00E5FF"
-                  />
-                </svg>
-              </span>
-              <div className="scalp-recovery-header">
-                <h3>Scalp Condition & Recovery</h3>
-                <p>Scalp health and follicle recovery assessment</p>
-              </div>
-            </div>
-
-            <div className="scalp-recovery-grid">
-              {scalpRecoveryCards.map((card) => (
-                <article className="scalp-recovery-card" key={card.title}>
-                  <p className="scalp-recovery-card-title">{card.title}</p>
-
-                  <div className="scalp-recovery-ring-wrap" aria-hidden="true">
-                    <svg
-                      width="96"
-                      height="96"
-                      viewBox="0 0 96 96"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M84.48 48C84.48 27.8526 68.1474 11.52 48 11.52C27.8527 11.52 11.52 27.8526 11.52 48C11.52 68.1473 27.8527 84.48 48 84.48C68.1474 84.48 84.48 68.1473 84.48 48Z"
-                        stroke="white"
-                        strokeOpacity="0.06"
-                        strokeWidth="7"
-                      />
-                      <path
-                        d="M84.48 48C84.48 27.8526 68.1474 11.52 48 11.52C27.8527 11.52 11.52 27.8526 11.52 48C11.52 68.1473 27.8527 84.48 48 84.48C68.1474 84.48 84.48 68.1473 84.48 48Z"
-                        className={`scalp-recovery-ring-progress scalp-recovery-ring-progress-${card.tone}`}
-                        strokeWidth="7"
-                        strokeLinecap="round"
-                        strokeDasharray={card.dashArray}
-                      />
-                    </svg>
-                    <div className="scalp-recovery-ring-center">
-                      <strong>{card.score}</strong>
-                      <span>/100</span>
-                    </div>
-                  </div>
-
-                  <p
-                    className={`scalp-recovery-score-label scalp-recovery-score-label-${card.tone}`}
-                  >
-                    {card.scoreLabel}
-                  </p>
-                  <p className="scalp-recovery-note">{card.note}</p>
-
-                  <div className="scalp-recovery-levels" role="presentation">
-                    {card.levels.map((level) => {
-                      const isActive = card.activeLevel === level;
-                      return (
-                        <span
-                          key={level}
-                          className={`scalp-recovery-level-pill ${
-                            isActive
-                              ? `scalp-recovery-level-pill-active scalp-recovery-level-pill-active-${card.tone}`
-                              : ""
-                          }`}
-                        >
-                          {level}
-                        </span>
-                      );
-                    })}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          {/* Section: Before / After Improvement Prediction */}
-          <section
-            className="improvement-prediction-section"
-            aria-label="Before and after improvement prediction"
-          >
-            <div className="title-wrapper">
-              <span
-                className="improvement-prediction-icon title-icon-bg"
-                aria-hidden="true"
-              >
-                <svg
-                  width="15"
-                  height="14"
-                  viewBox="0 0 15 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1.5 0V12H13.5V13.5H0V0H1.5ZM12.975 2.475L14.04 3.525L9.75 7.815L7.5 5.565L4.29 8.775L3.225 7.725L7.5 3.435L9.75 5.685L12.975 2.475Z"
-                    fill="#00E5FF"
-                  />
-                </svg>
-              </span>
-              <div className="improvement-prediction-header">
-                <h3>Before / After Improvement Prediction</h3>
-                <p>AI-projected outcomes with consistent treatment adherence</p>
-              </div>
-            </div>
-
-            <div className="improvement-prediction-grid">
-              {improvementPredictionCards.map((card) => (
-                <article
-                  className="improvement-prediction-card"
-                  key={card.period}
-                >
-                  <header
-                    className={`improvement-prediction-card-head improvement-prediction-card-head-${card.tone}`}
-                  >
-                    <h4>{card.period}</h4>
-                    <span
-                      className={`improvement-prediction-phase-chip improvement-prediction-phase-chip-${card.tone}`}
-                    >
-                      {card.phase}
-                    </span>
-                  </header>
-
-                  <div className="improvement-prediction-metrics">
-                    {card.metrics.map((metric) => (
-                      <div
-                        className="improvement-metric-row"
-                        key={metric.label}
-                      >
-                        <div className="improvement-metric-head">
-                          <p>{metric.label}</p>
-                          <strong
-                            className={`improvement-metric-value improvement-metric-value-${card.tone}`}
-                          >
-                            {metric.value}
-                          </strong>
-                        </div>
-                        <div
-                          className="improvement-metric-track"
-                          aria-hidden="true"
-                        >
-                          <span
-                            className={`improvement-metric-fill improvement-metric-fill-${card.tone}`}
-                            style={{ width: `${metric.progress}%` }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </article>
-              ))}
-            </div>
-
-            <div className="improvement-prediction-disclaimer">
-              <span
-                className="improvement-prediction-disclaimer-icon"
-                aria-hidden="true"
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M8.69358 2.09326L14.767 12.6133C15.0773 13.151 14.6891 13.8232 14.0686 13.8232H1.92175C1.30125 13.8232 0.913015 13.151 1.22328 12.6133L7.29674 2.09326C7.607 1.55554 8.38332 1.55554 8.69358 2.09326Z"
-                    fill="#FACC15"
-                  />
-                  <path
-                    d="M8.00016 5.36548C8.39157 5.36548 8.7085 5.68241 8.7085 6.07381V9.13631C8.7085 9.52772 8.39157 9.84465 8.00016 9.84465C7.60876 9.84465 7.29183 9.52772 7.29183 9.13631V6.07381C7.29183 5.68241 7.60876 5.36548 8.00016 5.36548Z"
-                    fill="#111827"
-                  />
-                  <path
-                    d="M8.00016 11.6777C8.41437 11.6777 8.75016 11.3419 8.75016 10.9277C8.75016 10.5135 8.41437 10.1777 8.00016 10.1777C7.58595 10.1777 7.25016 10.5135 7.25016 10.9277C7.25016 11.3419 7.58595 11.6777 8.00016 11.6777Z"
-                    fill="#111827"
-                  />
-                </svg>
-              </span>
-              <p>
-                Predictions are AI-estimated projections based on your inputs.
-                Actual results vary. Consult a trichologist for clinical
-                guidance.
-              </p>
-            </div>
-          </section>
+            </section>
+          )}
 
           {/* Section: Treatment Recommendation Engine */}
           <section
@@ -2772,7 +2098,7 @@ export default function TestReport() {
             </div>
 
             <div className="personalised-plan-wrap">
-              {personalisedTreatmentPhases.map((phaseItem) => (
+              {phases.map((phaseItem) => (
                 <article
                   className={`personalised-phase-card personalised-phase-card-${phaseItem.tone}`}
                   key={phaseItem.phase}
@@ -2926,8 +2252,7 @@ export default function TestReport() {
                 <div className="lifestyle-impact-copy">
                   <h4>Lifestyle Impact Score</h4>
                   <p>
-                    4 of 6 lifestyle factors require improvement - addressing
-                    these can reduce hair loss risk significantly.
+                    {clinicalNarrative?.lifestyleImpact || "Lifestyle factors appear to be a contributing factor - addressing these can reduce hair loss risk significantly."}
                   </p>
                 </div>
               </div>
@@ -3350,124 +2675,124 @@ export default function TestReport() {
                 </div>
               ) : (
                 <div className="meal-plan-list">
-                {dailyMealPlanRows.map((item) => (
-                  <article className="meal-plan-row" key={item.meal}>
-                    <span
-                      className={`meal-plan-row-icon meal-plan-row-icon-${item.tone}`}
-                      aria-hidden="true"
-                    >
-                      {item.icon === "sun" && (
-                        <svg
-                          width="13"
-                          height="12"
-                          viewBox="0 0 13 12"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M6.25 9C5.71 9 5.20667 8.86333 4.74 8.59C4.28667 8.32333 3.92667 7.96333 3.66 7.51C3.38667 7.04333 3.25 6.54 3.25 6C3.25 5.46 3.38667 4.95667 3.66 4.49C3.92667 4.03667 4.28667 3.67667 4.74 3.41C5.20667 3.13667 5.71 3 6.25 3C6.79 3 7.29333 3.13667 7.76 3.41C8.21333 3.67667 8.57333 4.03667 8.84 4.49C9.11333 4.95667 9.25 5.46 9.25 6C9.25 6.54 9.11333 7.04333 8.84 7.51C8.57333 7.96333 8.21333 8.32333 7.76 8.59C7.29333 8.86333 6.79 9 6.25 9ZM6.25 8C6.61 8 6.94333 7.91 7.25 7.73C7.55667 7.55 7.8 7.30667 7.98 7C8.16 6.69333 8.25 6.36 8.25 6C8.25 5.64 8.16 5.30667 7.98 5C7.8 4.69333 7.55667 4.45 7.25 4.27C6.94333 4.09 6.61 4 6.25 4C5.89 4 5.55667 4.09 5.25 4.27C4.94333 4.45 4.7 4.69333 4.52 5C4.34 5.30667 4.25 5.64 4.25 6C4.25 6.36 4.34 6.69333 4.52 7C4.7 7.30667 4.94333 7.55 5.25 7.73C5.55667 7.91 5.89 8 6.25 8ZM5.75 0.5H6.75V2H5.75V0.5ZM5.75 10H6.75V11.5H5.75V10ZM2.01 2.46L2.71 1.76L3.78 2.82L3.07 3.53L2.01 2.46ZM8.72 9.18L9.43 8.47L10.49 9.54L9.79 10.24L8.72 9.18ZM9.79 1.76L10.49 2.46L9.43 3.53L8.72 2.82L9.79 1.76ZM3.07 8.47L3.78 9.18L2.71 10.24L2.01 9.54L3.07 8.47ZM11.75 5.5V6.5H10.25V5.5H11.75ZM2.25 5.5V6.5H0.75V5.5H2.25Z"
-                            fill="currentColor"
-                          />
-                        </svg>
-                      )}
-                      {item.icon === "leaf" && (
-                        <svg
-                          width="13"
-                          height="12"
-                          viewBox="0 0 13 12"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M10.75 1.25V2.25C10.75 3.79667 10.4767 5.11333 9.93 6.2C9.42333 7.21333 8.70667 7.98 7.78 8.5C6.9 9 5.89 9.25 4.75 9.25H2.87C2.79 9.70333 2.75 10.2033 2.75 10.75H1.75C1.75 10.07 1.80667 9.44667 1.92 8.88C1.80667 8.23333 1.75 7.35667 1.75 6.25C1.75 5.57 1.88 4.92 2.14 4.3C2.39333 3.70667 2.75167 3.17833 3.215 2.715C3.67833 2.25167 4.20667 1.89333 4.8 1.64C5.42 1.38 6.07 1.25 6.75 1.25C6.95 1.25 7.26333 1.28333 7.69 1.35C8.03667 1.40333 8.31 1.43667 8.51 1.45C8.85 1.47667 9.18333 1.48 9.51 1.46C9.90333 1.42667 10.3167 1.35667 10.75 1.25ZM6.75 2.25C6.02333 2.25 5.35 2.43333 4.73 2.8C4.13 3.15333 3.65333 3.63 3.3 4.23C2.93333 4.85 2.75 5.52333 2.75 6.25V6.77C3.05667 6.29 3.44333 5.84333 3.91 5.43C4.35667 5.03667 4.88667 4.66667 5.5 4.32L6 5.18C5.26 5.60667 4.66333 6.05667 4.21 6.53C3.73 7.03 3.37333 7.60333 3.14 8.25H4.75C5.75667 8.25 6.63167 8.03 7.375 7.59C8.11833 7.15 8.69 6.50333 9.09 5.65C9.51 4.76333 9.73 3.69333 9.75 2.44C9.41667 2.47333 9.07667 2.48333 8.73 2.47C8.41667 2.45 8.05333 2.41 7.64 2.35C7.34667 2.30333 7.15 2.275 7.05 2.265C6.95 2.255 6.85 2.25 6.75 2.25Z"
-                            fill="currentColor"
-                          />
-                        </svg>
-                      )}
-                      {item.icon === "apple" && (
-                        <svg
-                          width="13"
-                          height="12"
-                          viewBox="0 0 13 12"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M8.36998 4.12958C8.25665 4.12292 8.13165 4.13458 7.99498 4.16458C7.85831 4.19458 7.68998 4.24625 7.48998 4.31958C7.50331 4.31292 7.48998 4.31958 7.44998 4.33958L7.00998 4.50958C6.74998 4.59625 6.51998 4.63958 6.31998 4.63958C6.11998 4.63958 5.89331 4.59625 5.63998 4.50958C5.56665 4.48958 5.48331 4.45958 5.38998 4.41958L5.15998 4.32958C4.85998 4.21625 4.63998 4.15958 4.49998 4.15958C4.21331 4.16625 3.94165 4.24792 3.68498 4.40458C3.42831 4.56125 3.21998 4.77625 3.05998 5.04958C2.85331 5.41625 2.74665 5.87292 2.73998 6.41958C2.73331 6.93958 2.81665 7.48125 2.98998 8.04458C3.16331 8.60792 3.40665 9.11625 3.71998 9.56958C3.95998 9.90958 4.15665 10.1629 4.30998 10.3296C4.44998 10.4763 4.54831 10.5479 4.60498 10.5446C4.66165 10.5413 4.71665 10.5329 4.76998 10.5196C4.82331 10.5063 4.89998 10.4763 4.99998 10.4296L5.07998 10.3996C5.34665 10.2863 5.57665 10.2063 5.76998 10.1596C5.98331 10.1129 6.21498 10.0896 6.46498 10.0896C6.71498 10.0896 6.94331 10.1129 7.14998 10.1596C7.33665 10.2063 7.55331 10.2829 7.79998 10.3896L7.88998 10.4196C7.98998 10.4663 8.06498 10.4963 8.11498 10.5096C8.16498 10.5229 8.21998 10.5296 8.27998 10.5296C8.37331 10.5229 8.48331 10.4563 8.60998 10.3296C8.74998 10.1896 8.93665 9.94625 9.16998 9.59958C9.30331 9.40625 9.42331 9.20292 9.52998 8.98958C9.46331 8.93625 9.39665 8.87958 9.32998 8.81958C8.99665 8.49958 8.74331 8.13958 8.56998 7.73958C8.38331 7.31292 8.28665 6.84958 8.27998 6.34958C8.27331 5.57625 8.50665 4.87958 8.97998 4.25958C8.80665 4.19292 8.60331 4.14958 8.36998 4.12958ZM8.44998 3.13958C8.77665 3.15958 9.07665 3.22292 9.34998 3.32958C9.81665 3.51625 10.1933 3.81958 10.48 4.23958C10.38 4.29292 10.2666 4.37292 10.14 4.47958C9.90665 4.68625 9.71665 4.91958 9.56998 5.17958C9.36998 5.53958 9.27331 5.92625 9.27998 6.33958C9.28665 6.83958 9.41665 7.28292 9.66998 7.66958C9.84998 7.94292 10.0866 8.17625 10.38 8.36958C10.54 8.48292 10.67 8.55625 10.77 8.58958C10.73 8.72958 10.6666 8.89958 10.58 9.09958C10.4133 9.47958 10.22 9.83292 9.99998 10.1596C9.79998 10.4529 9.63998 10.6729 9.51998 10.8196C9.33331 11.0396 9.14998 11.2063 8.96998 11.3196C8.75665 11.4529 8.53331 11.5229 8.29998 11.5296C8.13998 11.5296 7.98331 11.5096 7.82998 11.4696C7.73665 11.4429 7.60331 11.3913 7.42998 11.3146C7.25665 11.2379 7.11998 11.1863 7.01998 11.1596C6.84665 11.1129 6.66165 11.0896 6.46498 11.0896C6.26831 11.0896 6.07665 11.1129 5.88998 11.1596C5.78331 11.1929 5.63665 11.2496 5.44998 11.3296C5.28998 11.3963 5.16665 11.4429 5.07998 11.4696C4.93998 11.5096 4.79665 11.5329 4.64998 11.5396C4.42331 11.5463 4.19998 11.4796 3.97998 11.3396C3.79331 11.2196 3.59998 11.0429 3.39998 10.8096C3.27331 10.6563 3.10665 10.4329 2.89998 10.1396C2.55998 9.65292 2.28665 9.09292 2.07998 8.45958C1.84665 7.76625 1.72998 7.09625 1.72998 6.44958C1.73665 5.71625 1.89331 5.08292 2.19998 4.54958C2.43998 4.12958 2.76498 3.79458 3.17498 3.54458C3.58498 3.29458 4.02331 3.16625 4.48998 3.15958C4.66998 3.15292 4.86998 3.18292 5.08998 3.24958C5.21665 3.28292 5.39998 3.34625 5.63998 3.43958C5.80665 3.51292 5.92998 3.55958 6.00998 3.57958C6.12998 3.61958 6.22998 3.63958 6.30998 3.63958C6.38998 3.63958 6.48998 3.62292 6.60998 3.58958C6.67665 3.56292 6.79331 3.51958 6.95998 3.45958C7.25331 3.33958 7.48331 3.25958 7.64998 3.21958C7.92998 3.14625 8.19665 3.11958 8.44998 3.13958ZM7.87998 2.22958C7.67331 2.47625 7.42665 2.66958 7.13998 2.80958C6.83331 2.96958 6.53331 3.03625 6.23998 3.00958C6.19998 2.70958 6.23998 2.39625 6.35998 2.06958C6.47331 1.78292 6.62998 1.52292 6.82998 1.28959C7.02998 1.05625 7.28165 0.861252 7.58498 0.704585C7.88831 0.547918 8.17998 0.466252 8.45998 0.459585C8.49331 0.766252 8.45331 1.08292 8.33998 1.40958C8.23998 1.70958 8.08665 1.98292 7.87998 2.22958Z"
-                            fill="#00E5FF"
-                          />
-                        </svg>
-                      )}
-                      {item.icon === "moon" && (
-                        <svg
-                          width="13"
-                          height="12"
-                          viewBox="0 0 13 12"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M5.25 3.5C5.25 4.13333 5.41 4.72333 5.73 5.27C6.03667 5.79667 6.45333 6.21333 6.98 6.52C7.52667 6.84 8.11667 7 8.75 7C9.23 7 9.69 6.90667 10.13 6.72C10.55 6.54 10.9233 6.28333 11.25 5.95V6C11.25 6.68 11.12 7.33 10.86 7.95C10.6067 8.54333 10.2483 9.07167 9.785 9.535C9.32167 9.99833 8.79333 10.3567 8.2 10.61C7.58 10.87 6.93 11 6.25 11C5.57 11 4.92 10.87 4.3 10.61C3.70667 10.3567 3.17833 9.99833 2.715 9.535C2.25167 9.07167 1.89333 8.54333 1.64 7.95C1.38 7.33 1.25 6.68 1.25 6C1.25 5.32 1.38 4.67 1.64 4.05C1.89333 3.45667 2.25167 2.92833 2.715 2.465C3.17833 2.00167 3.70667 1.64333 4.3 1.39C4.92 1.13 5.57 1 6.25 1H6.3C5.96667 1.32667 5.71 1.7 5.53 2.12C5.34333 2.56 5.25 3.02 5.25 3.5ZM2.25 6C2.25 6.72667 2.43333 7.4 2.8 8.02C3.15333 8.62 3.63 9.09667 4.23 9.45C4.85 9.81667 5.52333 10 6.25 10C7.00333 10 7.7 9.80333 8.34 9.41C8.96 9.03 9.44 8.52 9.78 7.88C9.44 7.96 9.09667 8 8.75 8C7.93667 8 7.18 7.79667 6.48 7.39C5.8 6.99 5.26 6.45 4.86 5.77C4.45333 5.07 4.25 4.31333 4.25 3.5C4.25 3.15333 4.29 2.81 4.37 2.47C3.73 2.81 3.22 3.29 2.84 3.91C2.44667 4.55 2.25 5.24667 2.25 6Z"
-                            fill="currentColor"
-                          />
-                        </svg>
-                      )}
-                      {item.icon === "chain" && (
-                        <svg
-                          width="13"
-                          height="12"
-                          viewBox="0 0 13 12"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M10.14 2.10953C10.5266 2.4962 10.7866 2.94953 10.92 3.46953C11.0533 3.9762 11.0533 4.48286 10.92 4.98953C10.7866 5.5162 10.5266 5.96953 10.14 6.34953L6.59998 9.88953C6.21998 10.2762 5.76665 10.5362 5.23998 10.6695C4.73331 10.8029 4.22665 10.8029 3.71998 10.6695C3.19998 10.5362 2.74665 10.2762 2.35998 9.88953C1.97331 9.50286 1.71331 9.04953 1.57998 8.52953C1.44665 8.02286 1.44665 7.5162 1.57998 7.00953C1.71331 6.48286 1.97331 6.02953 2.35998 5.64953L5.89998 2.10953C6.27998 1.72287 6.73331 1.46286 7.25998 1.32953C7.76665 1.1962 8.27331 1.1962 8.77998 1.32953C9.29998 1.46286 9.75331 1.72287 10.14 2.10953ZM7.30998 7.76953L4.47998 4.93953L3.06998 6.34953C2.80998 6.60953 2.63498 6.9112 2.54498 7.25453C2.45498 7.59786 2.45498 7.9412 2.54498 8.28453C2.63498 8.62786 2.80831 8.92786 3.06498 9.18453C3.32165 9.4412 3.62165 9.61453 3.96498 9.70453C4.30831 9.79453 4.65165 9.79453 4.99498 9.70453C5.33831 9.61453 5.63998 9.43953 5.89998 9.17953L7.30998 7.76953ZM9.42998 2.81953C9.17665 2.55953 8.87831 2.38453 8.53498 2.29453C8.19165 2.20453 7.84831 2.20453 7.50498 2.29453C7.16165 2.38453 6.85998 2.55953 6.59998 2.81953L5.18998 4.22953L8.01998 7.05953L9.42998 5.64953C9.68998 5.38953 9.86498 5.08786 9.95498 4.74453C10.045 4.4012 10.045 4.05786 9.95498 3.71453C9.86498 3.3712 9.68998 3.07286 9.42998 2.81953Z"
-                            fill="currentColor"
-                          />
-                        </svg>
-                      )}
-                    </span>
-                    <p>
-                      <strong
-                        className={`meal-plan-label meal-plan-label-${item.tone}`}
+                  {dailyMealPlanRows.map((item) => (
+                    <article className="meal-plan-row" key={item.meal}>
+                      <span
+                        className={`meal-plan-row-icon meal-plan-row-icon-${item.tone}`}
+                        aria-hidden="true"
                       >
-                        {item.meal}
-                      </strong>
-                      <span>{item.detail}</span>
-                    </p>
-                  </article>
-                ))}
-                <div className="unlock-overlay">
+                        {item.icon === "sun" && (
+                          <svg
+                            width="13"
+                            height="12"
+                            viewBox="0 0 13 12"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M6.25 9C5.71 9 5.20667 8.86333 4.74 8.59C4.28667 8.32333 3.92667 7.96333 3.66 7.51C3.38667 7.04333 3.25 6.54 3.25 6C3.25 5.46 3.38667 4.95667 3.66 4.49C3.92667 4.03667 4.28667 3.67667 4.74 3.41C5.20667 3.13667 5.71 3 6.25 3C6.79 3 7.29333 3.13667 7.76 3.41C8.21333 3.67667 8.57333 4.03667 8.84 4.49C9.11333 4.95667 9.25 5.46 9.25 6C9.25 6.54 9.11333 7.04333 8.84 7.51C8.57333 7.96333 8.21333 8.32333 7.76 8.59C7.29333 8.86333 6.79 9 6.25 9ZM6.25 8C6.61 8 6.94333 7.91 7.25 7.73C7.55667 7.55 7.8 7.30667 7.98 7C8.16 6.69333 8.25 6.36 8.25 6C8.25 5.64 8.16 5.30667 7.98 5C7.8 4.69333 7.55667 4.45 7.25 4.27C6.94333 4.09 6.61 4 6.25 4C5.89 4 5.55667 4.09 5.25 4.27C4.94333 4.45 4.7 4.69333 4.52 5C4.34 5.30667 4.25 5.64 4.25 6C4.25 6.36 4.34 6.69333 4.52 7C4.7 7.30667 4.94333 7.55 5.25 7.73C5.55667 7.91 5.89 8 6.25 8ZM5.75 0.5H6.75V2H5.75V0.5ZM5.75 10H6.75V11.5H5.75V10ZM2.01 2.46L2.71 1.76L3.78 2.82L3.07 3.53L2.01 2.46ZM8.72 9.18L9.43 8.47L10.49 9.54L9.79 10.24L8.72 9.18ZM9.79 1.76L10.49 2.46L9.43 3.53L8.72 2.82L9.79 1.76ZM3.07 8.47L3.78 9.18L2.71 10.24L2.01 9.54L3.07 8.47ZM11.75 5.5V6.5H10.25V5.5H11.75ZM2.25 5.5V6.5H0.75V5.5H2.25Z"
+                              fill="currentColor"
+                            />
+                          </svg>
+                        )}
+                        {item.icon === "leaf" && (
+                          <svg
+                            width="13"
+                            height="12"
+                            viewBox="0 0 13 12"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M10.75 1.25V2.25C10.75 3.79667 10.4767 5.11333 9.93 6.2C9.42333 7.21333 8.70667 7.98 7.78 8.5C6.9 9 5.89 9.25 4.75 9.25H2.87C2.79 9.70333 2.75 10.2033 2.75 10.75H1.75C1.75 10.07 1.80667 9.44667 1.92 8.88C1.80667 8.23333 1.75 7.35667 1.75 6.25C1.75 5.57 1.88 4.92 2.14 4.3C2.39333 3.70667 2.75167 3.17833 3.215 2.715C3.67833 2.25167 4.20667 1.89333 4.8 1.64C5.42 1.38 6.07 1.25 6.75 1.25C6.95 1.25 7.26333 1.28333 7.69 1.35C8.03667 1.40333 8.31 1.43667 8.51 1.45C8.85 1.47667 9.18333 1.48 9.51 1.46C9.90333 1.42667 10.3167 1.35667 10.75 1.25ZM6.75 2.25C6.02333 2.25 5.35 2.43333 4.73 2.8C4.13 3.15333 3.65333 3.63 3.3 4.23C2.93333 4.85 2.75 5.52333 2.75 6.25V6.77C3.05667 6.29 3.44333 5.84333 3.91 5.43C4.35667 5.03667 4.88667 4.66667 5.5 4.32L6 5.18C5.26 5.60667 4.66333 6.05667 4.21 6.53C3.73 7.03 3.37333 7.60333 3.14 8.25H4.75C5.75667 8.25 6.63167 8.03 7.375 7.59C8.11833 7.15 8.69 6.50333 9.09 5.65C9.51 4.76333 9.73 3.69333 9.75 2.44C9.41667 2.47333 9.07667 2.48333 8.73 2.47C8.41667 2.45 8.05333 2.41 7.64 2.35C7.34667 2.30333 7.15 2.275 7.05 2.265C6.95 2.255 6.85 2.25 6.75 2.25Z"
+                              fill="currentColor"
+                            />
+                          </svg>
+                        )}
+                        {item.icon === "apple" && (
+                          <svg
+                            width="13"
+                            height="12"
+                            viewBox="0 0 13 12"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M8.36998 4.12958C8.25665 4.12292 8.13165 4.13458 7.99498 4.16458C7.85831 4.19458 7.68998 4.24625 7.48998 4.31958C7.50331 4.31292 7.48998 4.31958 7.44998 4.33958L7.00998 4.50958C6.74998 4.59625 6.51998 4.63958 6.31998 4.63958C6.11998 4.63958 5.89331 4.59625 5.63998 4.50958C5.56665 4.48958 5.48331 4.45958 5.38998 4.41958L5.15998 4.32958C4.85998 4.21625 4.63998 4.15958 4.49998 4.15958C4.21331 4.16625 3.94165 4.24792 3.68498 4.40458C3.42831 4.56125 3.21998 4.77625 3.05998 5.04958C2.85331 5.41625 2.74665 5.87292 2.73998 6.41958C2.73331 6.93958 2.81665 7.48125 2.98998 8.04458C3.16331 8.60792 3.40665 9.11625 3.71998 9.56958C3.95998 9.90958 4.15665 10.1629 4.30998 10.3296C4.44998 10.4763 4.54831 10.5479 4.60498 10.5446C4.66165 10.5413 4.71665 10.5329 4.76998 10.5196C4.82331 10.5063 4.89998 10.4763 4.99998 10.4296L5.07998 10.3996C5.34665 10.2863 5.57665 10.2063 5.76998 10.1596C5.98331 10.1129 6.21498 10.0896 6.46498 10.0896C6.71498 10.0896 6.94331 10.1129 7.14998 10.1596C7.33665 10.2063 7.55331 10.2829 7.79998 10.3896L7.88998 10.4196C7.98998 10.4663 8.06498 10.4963 8.11498 10.5096C8.16498 10.5229 8.21998 10.5296 8.27998 10.5296C8.37331 10.5229 8.48331 10.4563 8.60998 10.3296C8.74998 10.1896 8.93665 9.94625 9.16998 9.59958C9.30331 9.40625 9.42331 9.20292 9.52998 8.98958C9.46331 8.93625 9.39665 8.87958 9.32998 8.81958C8.99665 8.49958 8.74331 8.13958 8.56998 7.73958C8.38331 7.31292 8.28665 6.84958 8.27998 6.34958C8.27331 5.57625 8.50665 4.87958 8.97998 4.25958C8.80665 4.19292 8.60331 4.14958 8.36998 4.12958ZM8.44998 3.13958C8.77665 3.15958 9.07665 3.22292 9.34998 3.32958C9.81665 3.51625 10.1933 3.81958 10.48 4.23958C10.38 4.29292 10.2666 4.37292 10.14 4.47958C9.90665 4.68625 9.71665 4.91958 9.56998 5.17958C9.36998 5.53958 9.27331 5.92625 9.27998 6.33958C9.28665 6.83958 9.41665 7.28292 9.66998 7.66958C9.84998 7.94292 10.0866 8.17625 10.38 8.36958C10.54 8.48292 10.67 8.55625 10.77 8.58958C10.73 8.72958 10.6666 8.89958 10.58 9.09958C10.4133 9.47958 10.22 9.83292 9.99998 10.1596C9.79998 10.4529 9.63998 10.6729 9.51998 10.8196C9.33331 11.0396 9.14998 11.2063 8.96998 11.3196C8.75665 11.4529 8.53331 11.5229 8.29998 11.5296C8.13998 11.5296 7.98331 11.5096 7.82998 11.4696C7.73665 11.4429 7.60331 11.3913 7.42998 11.3146C7.25665 11.2379 7.11998 11.1863 7.01998 11.1596C6.84665 11.1129 6.66165 11.0896 6.46498 11.0896C6.26831 11.0896 6.07665 11.1129 5.88998 11.1596C5.78331 11.1929 5.63665 11.2496 5.44998 11.3296C5.28998 11.3963 5.16665 11.4429 5.07998 11.4696C4.93998 11.5096 4.79665 11.5329 4.64998 11.5396C4.42331 11.5463 4.19998 11.4796 3.97998 11.3396C3.79331 11.2196 3.59998 11.0429 3.39998 10.8096C3.27331 10.6563 3.10665 10.4329 2.89998 10.1396C2.55998 9.65292 2.28665 9.09292 2.07998 8.45958C1.84665 7.76625 1.72998 7.09625 1.72998 6.44958C1.73665 5.71625 1.89331 5.08292 2.19998 4.54958C2.43998 4.12958 2.76498 3.79458 3.17498 3.54458C3.58498 3.29458 4.02331 3.16625 4.48998 3.15958C4.66998 3.15292 4.86998 3.18292 5.08998 3.24958C5.21665 3.28292 5.39998 3.34625 5.63998 3.43958C5.80665 3.51292 5.92998 3.55958 6.00998 3.57958C6.12998 3.61958 6.22998 3.63958 6.30998 3.63958C6.38998 3.63958 6.48998 3.62292 6.60998 3.58958C6.67665 3.56292 6.79331 3.51958 6.95998 3.45958C7.25331 3.33958 7.48331 3.25958 7.64998 3.21958C7.92998 3.14625 8.19665 3.11958 8.44998 3.13958ZM7.87998 2.22958C7.67331 2.47625 7.42665 2.66958 7.13998 2.80958C6.83331 2.96958 6.53331 3.03625 6.23998 3.00958C6.19998 2.70958 6.23998 2.39625 6.35998 2.06958C6.47331 1.78292 6.62998 1.52292 6.82998 1.28959C7.02998 1.05625 7.28165 0.861252 7.58498 0.704585C7.88831 0.547918 8.17998 0.466252 8.45998 0.459585C8.49331 0.766252 8.45331 1.08292 8.33998 1.40958C8.23998 1.70958 8.08665 1.98292 7.87998 2.22958Z"
+                              fill="#00E5FF"
+                            />
+                          </svg>
+                        )}
+                        {item.icon === "moon" && (
+                          <svg
+                            width="13"
+                            height="12"
+                            viewBox="0 0 13 12"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M5.25 3.5C5.25 4.13333 5.41 4.72333 5.73 5.27C6.03667 5.79667 6.45333 6.21333 6.98 6.52C7.52667 6.84 8.11667 7 8.75 7C9.23 7 9.69 6.90667 10.13 6.72C10.55 6.54 10.9233 6.28333 11.25 5.95V6C11.25 6.68 11.12 7.33 10.86 7.95C10.6067 8.54333 10.2483 9.07167 9.785 9.535C9.32167 9.99833 8.79333 10.3567 8.2 10.61C7.58 10.87 6.93 11 6.25 11C5.57 11 4.92 10.87 4.3 10.61C3.70667 10.3567 3.17833 9.99833 2.715 9.535C2.25167 9.07167 1.89333 8.54333 1.64 7.95C1.38 7.33 1.25 6.68 1.25 6C1.25 5.32 1.38 4.67 1.64 4.05C1.89333 3.45667 2.25167 2.92833 2.715 2.465C3.17833 2.00167 3.70667 1.64333 4.3 1.39C4.92 1.13 5.57 1 6.25 1H6.3C5.96667 1.32667 5.71 1.7 5.53 2.12C5.34333 2.56 5.25 3.02 5.25 3.5ZM2.25 6C2.25 6.72667 2.43333 7.4 2.8 8.02C3.15333 8.62 3.63 9.09667 4.23 9.45C4.85 9.81667 5.52333 10 6.25 10C7.00333 10 7.7 9.80333 8.34 9.41C8.96 9.03 9.44 8.52 9.78 7.88C9.44 7.96 9.09667 8 8.75 8C7.93667 8 7.18 7.79667 6.48 7.39C5.8 6.99 5.26 6.45 4.86 5.77C4.45333 5.07 4.25 4.31333 4.25 3.5C4.25 3.15333 4.29 2.81 4.37 2.47C3.73 2.81 3.22 3.29 2.84 3.91C2.44667 4.55 2.25 5.24667 2.25 6Z"
+                              fill="currentColor"
+                            />
+                          </svg>
+                        )}
+                        {item.icon === "chain" && (
+                          <svg
+                            width="13"
+                            height="12"
+                            viewBox="0 0 13 12"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M10.14 2.10953C10.5266 2.4962 10.7866 2.94953 10.92 3.46953C11.0533 3.9762 11.0533 4.48286 10.92 4.98953C10.7866 5.5162 10.5266 5.96953 10.14 6.34953L6.59998 9.88953C6.21998 10.2762 5.76665 10.5362 5.23998 10.6695C4.73331 10.8029 4.22665 10.8029 3.71998 10.6695C3.19998 10.5362 2.74665 10.2762 2.35998 9.88953C1.97331 9.50286 1.71331 9.04953 1.57998 8.52953C1.44665 8.02286 1.44665 7.5162 1.57998 7.00953C1.71331 6.48286 1.97331 6.02953 2.35998 5.64953L5.89998 2.10953C6.27998 1.72287 6.73331 1.46286 7.25998 1.32953C7.76665 1.1962 8.27331 1.1962 8.77998 1.32953C9.29998 1.46286 9.75331 1.72287 10.14 2.10953ZM7.30998 7.76953L4.47998 4.93953L3.06998 6.34953C2.80998 6.60953 2.63498 6.9112 2.54498 7.25453C2.45498 7.59786 2.45498 7.9412 2.54498 8.28453C2.63498 8.62786 2.80831 8.92786 3.06498 9.18453C3.32165 9.4412 3.62165 9.61453 3.96498 9.70453C4.30831 9.79453 4.65165 9.79453 4.99498 9.70453C5.33831 9.61453 5.63998 9.43953 5.89998 9.17953L7.30998 7.76953ZM9.42998 2.81953C9.17665 2.55953 8.87831 2.38453 8.53498 2.29453C8.19165 2.20453 7.84831 2.20453 7.50498 2.29453C7.16165 2.38453 6.85998 2.55953 6.59998 2.81953L5.18998 4.22953L8.01998 7.05953L9.42998 5.64953C9.68998 5.38953 9.86498 5.08786 9.95498 4.74453C10.045 4.4012 10.045 4.05786 9.95498 3.71453C9.86498 3.3712 9.68998 3.07286 9.42998 2.81953Z"
+                              fill="currentColor"
+                            />
+                          </svg>
+                        )}
+                      </span>
+                      <p>
+                        <strong
+                          className={`meal-plan-label meal-plan-label-${item.tone}`}
+                        >
+                          {item.meal}
+                        </strong>
+                        <span>{item.detail}</span>
+                      </p>
+                    </article>
+                  ))}
+                  <div className="unlock-overlay">
                     <div className="unlock-overlay-container">
-                  <div className="unlock-lock-icon-wrap">
-                    <svg
-                      width="15"
-                      height="14"
-                      viewBox="0 0 15 14"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M10.7878 4.95833H11.954C12.1173 4.95833 12.2553 5.01472 12.368 5.1275C12.4808 5.24028 12.5371 5.37833 12.5371 5.54167V12.5417C12.5371 12.705 12.4808 12.8431 12.368 12.9558C12.2553 13.0686 12.1173 13.125 11.954 13.125H2.62402C2.46074 13.125 2.32274 13.0686 2.21 12.9558C2.09726 12.8431 2.04089 12.705 2.04089 12.5417V5.54167C2.04089 5.37833 2.09726 5.24028 2.21 5.1275C2.32274 5.01472 2.46074 4.95833 2.62402 4.95833H3.79027V4.375C3.79027 3.745 3.94966 3.15778 4.26843 2.61333C4.57943 2.08444 4.99928 1.66444 5.52798 1.35333C6.07223 1.03444 6.65924 0.875 7.28902 0.875C7.91879 0.875 8.50581 1.03444 9.05006 1.35333C9.57876 1.66444 9.99861 2.08444 10.3096 2.61333C10.6284 3.15778 10.7878 3.745 10.7878 4.375V4.95833ZM6.70589 9.47333V10.7917H7.87214V9.47333C8.05097 9.36444 8.19286 9.22056 8.29782 9.04167C8.40279 8.86278 8.45527 8.66833 8.45527 8.45833C8.45527 8.24833 8.40279 8.05389 8.29782 7.875C8.19286 7.69611 8.05097 7.55417 7.87214 7.44917C7.69332 7.34417 7.49894 7.29167 7.28902 7.29167C7.07909 7.29167 6.88472 7.34417 6.70589 7.44917C6.52707 7.55417 6.38517 7.69611 6.28021 7.875C6.17525 8.05389 6.12277 8.24833 6.12277 8.45833C6.12277 8.66833 6.17525 8.86278 6.28021 9.04167C6.38517 9.22056 6.52707 9.36444 6.70589 9.47333ZM9.62152 4.95833V4.375C9.62152 3.955 9.51656 3.56611 9.30663 3.20833C9.09671 2.85056 8.81292 2.56667 8.45527 2.35667C8.09762 2.14667 7.70887 2.04167 7.28902 2.04167C6.86917 2.04167 6.48042 2.14667 6.12277 2.35667C5.76512 2.56667 5.48133 2.85056 5.27141 3.20833C5.06148 3.56611 4.95652 3.955 4.95652 4.375V4.95833H9.62152Z"
-                        fill="#F4C430"
-                      />
-                    </svg>
+                      <div className="unlock-lock-icon-wrap">
+                        <svg
+                          width="15"
+                          height="14"
+                          viewBox="0 0 15 14"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M10.7878 4.95833H11.954C12.1173 4.95833 12.2553 5.01472 12.368 5.1275C12.4808 5.24028 12.5371 5.37833 12.5371 5.54167V12.5417C12.5371 12.705 12.4808 12.8431 12.368 12.9558C12.2553 13.0686 12.1173 13.125 11.954 13.125H2.62402C2.46074 13.125 2.32274 13.0686 2.21 12.9558C2.09726 12.8431 2.04089 12.705 2.04089 12.5417V5.54167C2.04089 5.37833 2.09726 5.24028 2.21 5.1275C2.32274 5.01472 2.46074 4.95833 2.62402 4.95833H3.79027V4.375C3.79027 3.745 3.94966 3.15778 4.26843 2.61333C4.57943 2.08444 4.99928 1.66444 5.52798 1.35333C6.07223 1.03444 6.65924 0.875 7.28902 0.875C7.91879 0.875 8.50581 1.03444 9.05006 1.35333C9.57876 1.66444 9.99861 2.08444 10.3096 2.61333C10.6284 3.15778 10.7878 3.745 10.7878 4.375V4.95833ZM6.70589 9.47333V10.7917H7.87214V9.47333C8.05097 9.36444 8.19286 9.22056 8.29782 9.04167C8.40279 8.86278 8.45527 8.66833 8.45527 8.45833C8.45527 8.24833 8.40279 8.05389 8.29782 7.875C8.19286 7.69611 8.05097 7.55417 7.87214 7.44917C7.69332 7.34417 7.49894 7.29167 7.28902 7.29167C7.07909 7.29167 6.88472 7.34417 6.70589 7.44917C6.52707 7.55417 6.38517 7.69611 6.28021 7.875C6.17525 8.05389 6.12277 8.24833 6.12277 8.45833C6.12277 8.66833 6.17525 8.86278 6.28021 9.04167C6.38517 9.22056 6.52707 9.36444 6.70589 9.47333ZM9.62152 4.95833V4.375C9.62152 3.955 9.51656 3.56611 9.30663 3.20833C9.09671 2.85056 8.81292 2.56667 8.45527 2.35667C8.09762 2.14667 7.70887 2.04167 7.28902 2.04167C6.86917 2.04167 6.48042 2.14667 6.12277 2.35667C5.76512 2.56667 5.48133 2.85056 5.27141 3.20833C5.06148 3.56611 4.95652 3.955 4.95652 4.375V4.95833H9.62152Z"
+                            fill="#F4C430"
+                          />
+                        </svg>
+                      </div>
+                      <h5 className="unlock-title">Unlock Personalized Meal Plan</h5>
+                      <p className="unlock-description">
+                        Get a day-by-day diet plan tailored to your hair recovery needs.
+                      </p>
+                      <button
+                        className="unlock-cta-btn"
+                        onClick={() => setFullReport(true)}
+                      >
+                        View Full Plan
+                      </button>
+                    </div>
                   </div>
-                  <h5 className="unlock-title">Unlock Personalized Meal Plan</h5>
-                  <p className="unlock-description">
-                    Get a day-by-day diet plan tailored to your hair recovery needs.
-                  </p>
-                  <button
-                    className="unlock-cta-btn"
-                    onClick={() => setFullReport(true)}
-                  >
-                    View Full Plan
-                  </button>
+
                 </div>
-                </div>
-                
-              </div>
-                
+
               )}
             </article>
           </section>
@@ -3496,72 +2821,72 @@ export default function TestReport() {
                 Foods &amp; Habits to Avoid
               </h4>
 
-              {fullReport ? 
-              <div className="avoid-habits-grid">
-                {foodsHabitsToAvoid.map((item) => (
-                  <article
-                    className={`avoid-habit-card avoid-habit-card-${item.tone}`}
-                    key={item.title}
-                  >
-                    <div className="avoid-habit-head">
-                      <span
-                        className={`avoid-habit-icon avoid-habit-icon-${item.tone}`}
-                        aria-hidden="true"
-                      >
-                        <svg
-                          width="13"
-                          height="12"
-                          viewBox="0 0 13 12"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
+              {fullReport ?
+                <div className="avoid-habits-grid">
+                  {foodsHabitsToAvoid.map((item) => (
+                    <article
+                      className={`avoid-habit-card avoid-habit-card-${item.tone}`}
+                      key={item.title}
+                    >
+                      <div className="avoid-habit-head">
+                        <span
+                          className={`avoid-habit-icon avoid-habit-icon-${item.tone}`}
+                          aria-hidden="true"
                         >
-                          <path
-                            d="M6.25 11C5.57 11 4.92 10.87 4.3 10.61C3.70667 10.3567 3.17833 9.99833 2.715 9.535C2.25167 9.07167 1.89333 8.54333 1.64 7.95C1.38 7.33 1.25 6.68 1.25 6C1.25 5.32 1.38 4.67 1.64 4.05C1.89333 3.45667 2.25167 2.92833 2.715 2.465C3.17833 2.00167 3.70667 1.64333 4.3 1.39C4.92 1.13 5.57 1 6.25 1C6.93 1 7.58 1.13 8.2 1.39C8.79333 1.64333 9.32167 2.00167 9.785 2.465C10.2483 2.92833 10.6067 3.45667 10.86 4.05C11.12 4.67 11.25 5.32 11.25 6C11.25 6.68 11.12 7.33 10.86 7.95C10.6067 8.54333 10.2483 9.07167 9.785 9.535C9.32167 9.99833 8.79333 10.3567 8.2 10.61C7.58 10.87 6.93 11 6.25 11ZM6.25 5.29L4.84 3.88L4.13 4.59L5.54 6L4.13 7.41L4.84 8.12L6.25 6.71L7.66 8.12L8.37 7.41L6.96 6L8.37 4.59L7.66 3.88L6.25 5.29Z"
-                            fill="currentColor"
-                          />
-                        </svg>
-                      </span>
-                      <h5>{item.title}</h5>
-                    </div>
-                    <p>{item.detail}</p>
-                  </article>
-                ))}
-                
-                  
-              </div>
-              
-              :
+                          <svg
+                            width="13"
+                            height="12"
+                            viewBox="0 0 13 12"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M6.25 11C5.57 11 4.92 10.87 4.3 10.61C3.70667 10.3567 3.17833 9.99833 2.715 9.535C2.25167 9.07167 1.89333 8.54333 1.64 7.95C1.38 7.33 1.25 6.68 1.25 6C1.25 5.32 1.38 4.67 1.64 4.05C1.89333 3.45667 2.25167 2.92833 2.715 2.465C3.17833 2.00167 3.70667 1.64333 4.3 1.39C4.92 1.13 5.57 1 6.25 1C6.93 1 7.58 1.13 8.2 1.39C8.79333 1.64333 9.32167 2.00167 9.785 2.465C10.2483 2.92833 10.6067 3.45667 10.86 4.05C11.12 4.67 11.25 5.32 11.25 6C11.25 6.68 11.12 7.33 10.86 7.95C10.6067 8.54333 10.2483 9.07167 9.785 9.535C9.32167 9.99833 8.79333 10.3567 8.2 10.61C7.58 10.87 6.93 11 6.25 11ZM6.25 5.29L4.84 3.88L4.13 4.59L5.54 6L4.13 7.41L4.84 8.12L6.25 6.71L7.66 8.12L8.37 7.41L6.96 6L8.37 4.59L7.66 3.88L6.25 5.29Z"
+                              fill="currentColor"
+                            />
+                          </svg>
+                        </span>
+                        <h5>{item.title}</h5>
+                      </div>
+                      <p>{item.detail}</p>
+                    </article>
+                  ))}
 
-              <div className="avoid-habits-grid">
-                {foodsHabitsToAvoid.map((item) => (
-                  <article
-                    className={`avoid-habit-card avoid-habit-card-${item.tone}`}
-                    key={item.title}
-                  >
-                    <div className="avoid-habit-head">
-                      <span
-                        className={`avoid-habit-icon avoid-habit-icon-${item.tone}`}
-                        aria-hidden="true"
-                      >
-                        <svg
-                          width="13"
-                          height="12"
-                          viewBox="0 0 13 12"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
+
+                </div>
+
+                :
+
+                <div className="avoid-habits-grid">
+                  {foodsHabitsToAvoid.map((item) => (
+                    <article
+                      className={`avoid-habit-card avoid-habit-card-${item.tone}`}
+                      key={item.title}
+                    >
+                      <div className="avoid-habit-head">
+                        <span
+                          className={`avoid-habit-icon avoid-habit-icon-${item.tone}`}
+                          aria-hidden="true"
                         >
-                          <path
-                            d="M6.25 11C5.57 11 4.92 10.87 4.3 10.61C3.70667 10.3567 3.17833 9.99833 2.715 9.535C2.25167 9.07167 1.89333 8.54333 1.64 7.95C1.38 7.33 1.25 6.68 1.25 6C1.25 5.32 1.38 4.67 1.64 4.05C1.89333 3.45667 2.25167 2.92833 2.715 2.465C3.17833 2.00167 3.70667 1.64333 4.3 1.39C4.92 1.13 5.57 1 6.25 1C6.93 1 7.58 1.13 8.2 1.39C8.79333 1.64333 9.32167 2.00167 9.785 2.465C10.2483 2.92833 10.6067 3.45667 10.86 4.05C11.12 4.67 11.25 5.32 11.25 6C11.25 6.68 11.12 7.33 10.86 7.95C10.6067 8.54333 10.2483 9.07167 9.785 9.535C9.32167 9.99833 8.79333 10.3567 8.2 10.61C7.58 10.87 6.93 11 6.25 11ZM6.25 5.29L4.84 3.88L4.13 4.59L5.54 6L4.13 7.41L4.84 8.12L6.25 6.71L7.66 8.12L8.37 7.41L6.96 6L8.37 4.59L7.66 3.88L6.25 5.29Z"
-                            fill="currentColor"
-                          />
-                        </svg>
-                      </span>
-                      <h5>{item.title}</h5>
-                    </div>
-                    <p>{item.detail}</p>
-                  </article>
-                ))}
-                
+                          <svg
+                            width="13"
+                            height="12"
+                            viewBox="0 0 13 12"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M6.25 11C5.57 11 4.92 10.87 4.3 10.61C3.70667 10.3567 3.17833 9.99833 2.715 9.535C2.25167 9.07167 1.89333 8.54333 1.64 7.95C1.38 7.33 1.25 6.68 1.25 6C1.25 5.32 1.38 4.67 1.64 4.05C1.89333 3.45667 2.25167 2.92833 2.715 2.465C3.17833 2.00167 3.70667 1.64333 4.3 1.39C4.92 1.13 5.57 1 6.25 1C6.93 1 7.58 1.13 8.2 1.39C8.79333 1.64333 9.32167 2.00167 9.785 2.465C10.2483 2.92833 10.6067 3.45667 10.86 4.05C11.12 4.67 11.25 5.32 11.25 6C11.25 6.68 11.12 7.33 10.86 7.95C10.6067 8.54333 10.2483 9.07167 9.785 9.535C9.32167 9.99833 8.79333 10.3567 8.2 10.61C7.58 10.87 6.93 11 6.25 11ZM6.25 5.29L4.84 3.88L4.13 4.59L5.54 6L4.13 7.41L4.84 8.12L6.25 6.71L7.66 8.12L8.37 7.41L6.96 6L8.37 4.59L7.66 3.88L6.25 5.29Z"
+                              fill="currentColor"
+                            />
+                          </svg>
+                        </span>
+                        <h5>{item.title}</h5>
+                      </div>
+                      <p>{item.detail}</p>
+                    </article>
+                  ))}
+
                   <div className="unlock-overlay">
                     <div className="unlock-overlay-container">
                       <div className="unlock-lock-icon-wrap">
@@ -3590,8 +2915,8 @@ export default function TestReport() {
                       </button>
                     </div>
                   </div>
-              </div>
-            }
+                </div>
+              }
             </article>
           </section>
 
@@ -3875,10 +3200,10 @@ export default function TestReport() {
                   {!fullReport && index >= 2 && (
                     <div className="locked-insight">
                       <div className="locked-insight-badge">
-                      
-                      <span>Locked Insight</span>
-                    </div>
-                    <svg
+
+                        <span>Locked Insight</span>
+                      </div>
+                      <svg
                         width="13"
                         height="12"
                         viewBox="0 0 13 12"
@@ -3943,8 +3268,8 @@ export default function TestReport() {
                         )}
                         {item.icon === "progressive" && (
                           <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M2.25 8V10H4.25V11H1.25V8H2.25ZM11.25 8V11H8.25V10H10.25V8H11.25ZM4 3.5C4 3.85333 4.075 4.18333 4.225 4.49C4.375 4.79667 4.58333 5.055 4.85 5.265C5.11667 5.475 5.41667 5.61667 5.75 5.69V8.5H6.75V5.69C7.08333 5.61667 7.38333 5.475 7.65 5.265C7.91667 5.055 8.125 4.79667 8.275 4.49C8.425 4.18333 8.5 3.85333 8.5 3.5H9.5C9.5 4.12 9.34 4.69 9.02 5.21C8.7 5.71667 8.27667 6.10667 7.75 6.38V9.5H4.75V6.38C4.22333 6.10667 3.80333 5.71667 3.49 5.21C3.16333 4.69 3 4.12 3 3.5H4ZM6.25 2.5C6.47667 2.5 6.685 2.55667 6.875 2.67C7.065 2.78333 7.21667 2.935 7.33 3.125C7.44333 3.315 7.5 3.52333 7.5 3.75C7.5 3.97667 7.44333 4.185 7.33 4.375C7.21667 4.565 7.065 4.71667 6.875 4.83C6.685 4.94333 6.47667 5 6.25 5C6.02333 5 5.815 4.94333 5.625 4.83C5.435 4.71667 5.28333 4.565 5.17 4.375C5.05667 4.185 5 3.97667 5 3.75C5 3.52333 5.05667 3.315 5.17 3.125C5.28333 2.935 5.435 2.78333 5.625 2.67C5.815 2.55667 6.02333 2.5 6.25 2.5ZM4.25 1V2H2.25V4H1.25V1H4.25ZM11.25 1V4H10.25V2H8.25V1H11.25Z" fill="#9FB4D0"/>
-</svg>
+                            <path d="M2.25 8V10H4.25V11H1.25V8H2.25ZM11.25 8V11H8.25V10H10.25V8H11.25ZM4 3.5C4 3.85333 4.075 4.18333 4.225 4.49C4.375 4.79667 4.58333 5.055 4.85 5.265C5.11667 5.475 5.41667 5.61667 5.75 5.69V8.5H6.75V5.69C7.08333 5.61667 7.38333 5.475 7.65 5.265C7.91667 5.055 8.125 4.79667 8.275 4.49C8.425 4.18333 8.5 3.85333 8.5 3.5H9.5C9.5 4.12 9.34 4.69 9.02 5.21C8.7 5.71667 8.27667 6.10667 7.75 6.38V9.5H4.75V6.38C4.22333 6.10667 3.80333 5.71667 3.49 5.21C3.16333 4.69 3 4.12 3 3.5H4ZM6.25 2.5C6.47667 2.5 6.685 2.55667 6.875 2.67C7.065 2.78333 7.21667 2.935 7.33 3.125C7.44333 3.315 7.5 3.52333 7.5 3.75C7.5 3.97667 7.44333 4.185 7.33 4.375C7.21667 4.565 7.065 4.71667 6.875 4.83C6.685 4.94333 6.47667 5 6.25 5C6.02333 5 5.815 4.94333 5.625 4.83C5.435 4.71667 5.28333 4.565 5.17 4.375C5.05667 4.185 5 3.97667 5 3.75C5 3.52333 5.05667 3.315 5.17 3.125C5.28333 2.935 5.435 2.78333 5.625 2.67C5.815 2.55667 6.02333 2.5 6.25 2.5ZM4.25 1V2H2.25V4H1.25V1H4.25ZM11.25 1V4H10.25V2H8.25V1H11.25Z" fill="#9FB4D0" />
+                          </svg>
 
                         )}
                         {item.icon === "adaptogen" && (
@@ -3984,41 +3309,41 @@ export default function TestReport() {
                     </>
                   ) : (
                     /* Unlock overlay for locked cards - replaces content */
-                  <div className="locked-stress-container">
-                    <div>
-                      <p className="stress-technique-desc">{item.desc}</p>
-                      <p
-                        className={`stress-technique-impact stress-technique-impact-${item.tone}`}
-                      >
-                        <span aria-hidden="true">★</span>
-                        {item.impact}
-                      </p>
-                      <br></br>
-                      <p className="stress-technique-how">
-                        <span aria-hidden="true">›</span>
-                        <strong>How:</strong>
-                        <em>{item.how}</em>
-                      </p>
-                    </div>
-                    
-                    <div className="stress-locked-container">
+                    <div className="locked-stress-container">
+                      <div>
+                        <p className="stress-technique-desc">{item.desc}</p>
+                        <p
+                          className={`stress-technique-impact stress-technique-impact-${item.tone}`}
+                        >
+                          <span aria-hidden="true">★</span>
+                          {item.impact}
+                        </p>
+                        <br></br>
+                        <p className="stress-technique-how">
+                          <span aria-hidden="true">›</span>
+                          <strong>How:</strong>
+                          <em>{item.how}</em>
+                        </p>
+                      </div>
 
-                    
-                      <div className="stress-locked-content">
-                      <p className="unlock-title">
-                        Unlock Advanced Stress Recovery Protocol
-                      </p>
-                      <p className="unlock-description">
-                        Get personalized, clinically-backed techniques
-                        tailored to your hair loss profile.
-                      </p>
-                      <button className="unlock-cta-btn">
-                        Unlock Full Plan
-                      </button>
+                      <div className="stress-locked-container">
+
+
+                        <div className="stress-locked-content">
+                          <p className="unlock-title">
+                            Unlock Advanced Stress Recovery Protocol
+                          </p>
+                          <p className="unlock-description">
+                            Get personalized, clinically-backed techniques
+                            tailored to your hair loss profile.
+                          </p>
+                          <button className="unlock-cta-btn">
+                            Unlock Full Plan
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                    </div>
-                  </div>
-                    
+
                   )}
                 </article>
               ))}
@@ -4215,7 +3540,7 @@ export default function TestReport() {
           </section>
 
           {/* Section: Hair Shaft & Scalp Condition Insights */}
-         <section
+          <section
             className="shaft-scalp-insights-section"
             aria-label="Hair Shaft and Scalp Condition Insights"
           >
@@ -4248,13 +3573,13 @@ export default function TestReport() {
             <div className="shaft-scalp-insights-card-list">
               {shaftScalpInsightCards.map((item, cardIndex) => {
                 const isLocked = !fullReport && cardIndex >= shaftScalpInsightCards.length - 3;
-                
+
                 return (
-                <article
-                  className={`shaft-scalp-insights-card${item.showImage ? " shaft-scalp-insights-card-has-image" : ""}${isLocked ? " locked-card" : ""}`}
-                  key={item.title}
-                >
-                  {/* {isLocked && (
+                  <article
+                    className={`shaft-scalp-insights-card${item.showImage ? " shaft-scalp-insights-card-has-image" : ""}${isLocked ? " locked-card" : ""}`}
+                    key={item.title}
+                  >
+                    {/* {isLocked && (
                     <div className="locked-insight">
                       <div className="locked-insight-badge">
                         <span>Locked Insight</span>
@@ -4275,95 +3600,175 @@ export default function TestReport() {
                       </div>
                     </div>
                   )} */}
-                  <div className="shaft-scalp-insights-card-head">
-                    <div className="shaft-scalp-insights-title-wrap">
-                      <span
-                        className={`shaft-scalp-insights-item-icon shaft-scalp-insights-item-icon-${item.tone}`}
-                        aria-hidden="true"
-                      >
-                        {item.icon === "breakage" && (
-                          <svg
-                            width="15"
-                            height="14"
-                            viewBox="0 0 15 14"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M6.12301 3.49967C6.12301 3.91967 6.01805 4.30856 5.80812 4.66634L7.28926 6.17134L11.2079 2.25134C11.3634 2.10356 11.5402 2.00245 11.7385 1.94801C11.9368 1.89356 12.137 1.89356 12.3391 1.94801C12.5413 2.00245 12.7162 2.10356 12.8639 2.25134L5.79646 9.30967C6.01416 9.67523 6.12301 10.07 6.12301 10.4938C6.12301 10.9177 6.01805 11.3086 5.80812 11.6663C5.5982 12.0241 5.31441 12.308 4.95676 12.518C4.59911 12.728 4.21036 12.833 3.79051 12.833C3.37066 12.833 2.98191 12.728 2.62426 12.518C2.26661 12.308 1.98282 12.0241 1.7729 11.6663C1.56297 11.3086 1.45801 10.9197 1.45801 10.4997C1.45801 10.0797 1.56297 9.69079 1.7729 9.33301C1.98282 8.97523 2.26661 8.69134 2.62426 8.48134C2.98191 8.27134 3.3726 8.16634 3.79634 8.16634C4.22008 8.16634 4.61466 8.27523 4.98008 8.49301L6.46122 6.99967L4.98008 5.50634C4.61466 5.72412 4.22008 5.83301 3.79634 5.83301C3.3726 5.83301 2.98191 5.72801 2.62426 5.51801C2.26661 5.30801 1.98282 5.02412 1.7729 4.66634C1.56297 4.30856 1.45801 3.91967 1.45801 3.49967C1.45801 3.07967 1.56297 2.69079 1.7729 2.33301C1.98282 1.97523 2.26661 1.69134 2.62426 1.48134C2.98191 1.27134 3.37066 1.16634 3.79051 1.16634C4.21036 1.16634 4.59911 1.27134 4.95676 1.48134C5.31441 1.69134 5.5982 1.97523 5.80812 2.33301C6.01805 2.69079 6.12301 3.07967 6.12301 3.49967ZM4.95676 3.49967C4.95676 3.28967 4.90428 3.09523 4.79931 2.91634C4.69435 2.73745 4.55246 2.59551 4.37363 2.49051C4.19481 2.38551 4.00043 2.33301 3.79051 2.33301C3.58058 2.33301 3.38621 2.38551 3.20738 2.49051C3.02856 2.59551 2.88666 2.73745 2.7817 2.91634C2.67674 3.09523 2.62426 3.28967 2.62426 3.49967C2.62426 3.70967 2.67674 3.90412 2.7817 4.08301C2.88666 4.2619 3.02856 4.40384 3.20738 4.50884C3.38621 4.61384 3.58058 4.66634 3.79051 4.66634C4.00043 4.66634 4.19481 4.61384 4.37363 4.50884C4.55246 4.40384 4.69435 4.2619 4.79931 4.08301C4.90428 3.90412 4.95676 3.70967 4.95676 3.49967ZM12.8639 11.748C12.7162 11.8958 12.5413 11.9969 12.3391 12.0513C12.137 12.1058 11.9368 12.1058 11.7385 12.0513C11.5402 11.9969 11.3634 11.8958 11.2079 11.748L8.1173 8.64467L8.93367 7.82801L12.8639 11.748ZM9.62176 6.41634H10.788V7.58301H9.62176V6.41634ZM11.9543 6.41634H13.1205V7.58301H11.9543V6.41634ZM3.79051 6.41634H4.95676V7.58301H3.79051V6.41634ZM1.45801 6.41634H2.62426V7.58301H1.45801V6.41634ZM3.79051 11.6663C4.00043 11.6663 4.19481 11.6138 4.37363 11.5088C4.55246 11.4038 4.69435 11.2619 4.79931 11.083C4.90428 10.9041 4.95676 10.7097 4.95676 10.4997C4.95676 10.2897 4.90428 10.0952 4.79931 9.91634C4.69435 9.73745 4.55246 9.59551 4.37363 9.49051C4.19481 9.38551 4.00043 9.33301 3.79051 9.33301C3.58058 9.33301 3.38621 9.38551 3.20738 9.49051C3.02856 9.59551 2.88666 9.73745 2.7817 9.91634C2.67674 10.0952 2.62426 10.2897 2.62426 10.4997C2.62426 10.7097 2.67674 10.9041 2.7817 11.083C2.88666 11.2619 3.02856 11.4038 3.20738 11.5088C3.38621 11.6138 3.58058 11.6663 3.79051 11.6663Z"
-                              fill={item.tone === "red" ? "#EF4444" : "#F4C430"}
-                            />
-                          </svg>
-                        )}
-
-                        {item.icon === "split" && (
-                          <svg
-                            width="15"
-                            height="14"
-                            viewBox="0 0 15 14"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M3.79039 2.91667C3.62712 2.91667 3.48911 2.97306 3.37637 3.08583C3.26363 3.19861 3.20727 3.33667 3.20727 3.5C3.20727 3.66333 3.26363 3.80139 3.37637 3.91417C3.48911 4.02694 3.62712 4.08333 3.79039 4.08333C3.95367 4.08333 4.09167 4.02694 4.20441 3.91417C4.31715 3.80139 4.37352 3.66333 4.37352 3.5C4.37352 3.33667 4.31715 3.19861 4.20441 3.08583C4.09167 2.97306 3.95367 2.91667 3.79039 2.91667ZM2.04102 3.5C2.04102 3.18111 2.11877 2.8875 2.27427 2.61917C2.42977 2.35083 2.64163 2.13889 2.90987 1.98333C3.17811 1.82778 3.47162 1.75 3.79039 1.75C4.10917 1.75 4.40267 1.82778 4.67091 1.98333C4.93915 2.13889 5.15102 2.35083 5.30652 2.61917C5.46202 2.8875 5.53977 3.18111 5.53977 3.5C5.53977 3.87333 5.43092 4.21167 5.21322 4.515C4.99552 4.81833 4.71562 5.02833 4.37352 5.145V5.25C4.37352 5.46 4.426 5.65444 4.53096 5.83333C4.63592 6.01222 4.77782 6.15417 4.95664 6.25917C5.13547 6.36417 5.32984 6.41667 5.53977 6.41667H9.03852C9.24844 6.41667 9.44282 6.36417 9.62164 6.25917C9.80047 6.15417 9.94236 6.01222 10.0473 5.83333C10.1523 5.65444 10.2048 5.46 10.2048 5.25V5.145C9.86267 5.02833 9.58277 4.81833 9.36507 4.515C9.14737 4.21167 9.03852 3.87333 9.03852 3.5C9.03852 3.18111 9.11627 2.8875 9.27177 2.61917C9.42727 2.35083 9.63913 2.13889 9.90737 1.98333C10.1756 1.82778 10.4691 1.75 10.7879 1.75C11.1067 1.75 11.4002 1.82778 11.6684 1.98333C11.9366 2.13889 12.1485 2.35083 12.304 2.61917C12.4595 2.8875 12.5373 3.18111 12.5373 3.5C12.5373 3.87333 12.4284 4.21167 12.2107 4.515C11.993 4.81833 11.7131 5.02833 11.371 5.145V5.25C11.371 5.67 11.2661 6.05889 11.0561 6.41667C10.8462 6.77444 10.5624 7.05833 10.2048 7.26833C9.84712 7.47833 9.45837 7.58333 9.03852 7.58333H7.87227V8.855C8.21437 8.97167 8.49427 9.18167 8.71197 9.485C8.92967 9.78833 9.03852 10.1267 9.03852 10.5C9.03852 10.8189 8.96077 11.1125 8.80527 11.3808C8.64977 11.6492 8.4379 11.8611 8.16966 12.0167C7.90142 12.1722 7.60792 12.25 7.28914 12.25C6.97037 12.25 6.67686 12.1722 6.40862 12.0167C6.14038 11.8611 5.92852 11.6492 5.77302 11.3808C5.61752 11.1125 5.53977 10.8189 5.53977 10.5C5.53977 10.1267 5.64862 9.78833 5.86632 9.485C6.08402 9.18167 6.36392 8.97167 6.70602 8.855V7.58333H5.53977C5.11992 7.58333 4.73117 7.47833 4.37352 7.26833C4.01587 7.05833 3.73208 6.77444 3.52215 6.41667C3.31223 6.05889 3.20727 5.67 3.20727 5.25V5.145C2.86517 5.02833 2.58527 4.81833 2.36757 4.515C2.14987 4.21167 2.04102 3.87333 2.04102 3.5ZM10.7879 2.91667C10.6246 2.91667 10.4866 2.97306 10.3739 3.08583C10.2611 3.19861 10.2048 3.33667 10.2048 3.5C10.2048 3.66333 10.2611 3.80139 10.3739 3.91417C10.4866 4.02694 10.6246 4.08333 10.7879 4.08333C10.9512 4.08333 11.0892 4.02694 11.2019 3.91417C11.3146 3.80139 11.371 3.66333 11.371 3.5C11.371 3.33667 11.3146 3.19861 11.2019 3.08583C11.0892 2.97306 10.9512 2.91667 10.7879 2.91667ZM7.28914 9.91667C7.12587 9.91667 6.98786 9.97306 6.87512 10.0858C6.76238 10.1986 6.70602 10.3367 6.70602 10.5C6.70602 10.6633 6.76238 10.8014 6.87512 10.9142C6.98786 11.0269 7.12587 11.0833 7.28914 11.0833C7.45242 11.0833 7.59042 11.0269 7.70316 10.9142C7.8159 10.8014 7.87227 10.6633 7.87227 10.5C7.87227 10.3367 7.8159 10.1986 7.70316 10.0858C7.59042 9.97306 7.45242 9.91667 7.28914 9.91667Z"
-                              fill={item.tone === "red" ? "#EF4444" : "#F4C430"}
-                            />
-                          </svg>
-                        )}
-
-                        {item.icon === "texture" && (
-                          <svg
-                            width="15"
-                            height="14"
-                            viewBox="0 0 15 14"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M11.9541 1.75C12.1174 1.75 12.2554 1.80639 12.3682 1.91917C12.4809 2.03194 12.5373 2.17 12.5373 2.33333V11.6667C12.5373 11.83 12.4809 11.9681 12.3682 12.0808C12.2554 12.1936 12.1174 12.25 11.9541 12.25H2.62414C2.46087 12.25 2.32286 12.1936 2.21012 12.0808C2.09738 11.9681 2.04102 11.83 2.04102 11.6667V2.33333C2.04102 2.17 2.09738 2.03194 2.21012 1.91917C2.32286 1.80639 2.46087 1.75 2.62414 1.75H11.9541ZM6.81098 7.67667L3.20727 8.30667V11.0833H7.41743L6.81098 7.67667ZM11.371 2.91667H7.16085L8.59534 11.0833H11.371V2.91667ZM5.98294 2.91667H3.20727V7.12833L6.61272 6.52167L5.98294 2.91667Z"
-                              fill="#EF4444"
-                            />
-                          </svg>
-                        )}
-
-                        {item.icon === "oiliness" && (
-                          <svg
-                            width="15"
-                            height="14"
-                            viewBox="0 0 15 14"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <g clipPath="url(#clip0_oiliness_1)">
+                    <div className="shaft-scalp-insights-card-head">
+                      <div className="shaft-scalp-insights-title-wrap">
+                        <span
+                          className={`shaft-scalp-insights-item-icon shaft-scalp-insights-item-icon-${item.tone}`}
+                          aria-hidden="true"
+                        >
+                          {item.icon === "breakage" && (
+                            <svg
+                              width="15"
+                              height="14"
+                              viewBox="0 0 15 14"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
                               <path
-                                d="M7.28914 2.30999L4.4085 5.20332C3.8798 5.72443 3.52215 6.33888 3.33555 7.04665C3.15673 7.73888 3.15673 8.4311 3.33555 9.12332C3.52215 9.8311 3.87786 10.4475 4.40267 10.9725C4.92748 11.4975 5.54365 11.8533 6.25118 12.04C6.94315 12.2189 7.63513 12.2189 8.3271 12.04C9.03463 11.8533 9.6508 11.4975 10.1756 10.9725C10.7004 10.4475 11.0561 9.8311 11.2427 9.12332C11.4216 8.4311 11.4216 7.73888 11.2427 7.04665C11.0561 6.33888 10.6985 5.72443 10.1698 5.20332L7.28914 2.30999ZM7.28914 0.664987L10.9978 4.37499C11.6742 5.04388 12.1291 5.83721 12.3623 6.75499C12.5956 7.64165 12.5956 8.52832 12.3623 9.41499C12.1291 10.3328 11.6762 11.128 11.0036 11.8008C10.3311 12.4736 9.53612 12.9305 8.61867 13.1717C7.73232 13.3972 6.84597 13.3972 5.95962 13.1717C5.04217 12.9305 4.24717 12.4736 3.57463 11.8008C2.9021 11.128 2.4492 10.3328 2.21595 9.41499C1.9827 8.52832 1.9827 7.64165 2.21595 6.75499C2.4492 5.83721 2.90404 5.04388 3.58047 4.37499L7.28914 0.664987Z"
-                                fill="#F4C430"
+                                d="M6.12301 3.49967C6.12301 3.91967 6.01805 4.30856 5.80812 4.66634L7.28926 6.17134L11.2079 2.25134C11.3634 2.10356 11.5402 2.00245 11.7385 1.94801C11.9368 1.89356 12.137 1.89356 12.3391 1.94801C12.5413 2.00245 12.7162 2.10356 12.8639 2.25134L5.79646 9.30967C6.01416 9.67523 6.12301 10.07 6.12301 10.4938C6.12301 10.9177 6.01805 11.3086 5.80812 11.6663C5.5982 12.0241 5.31441 12.308 4.95676 12.518C4.59911 12.728 4.21036 12.833 3.79051 12.833C3.37066 12.833 2.98191 12.728 2.62426 12.518C2.26661 12.308 1.98282 12.0241 1.7729 11.6663C1.56297 11.3086 1.45801 10.9197 1.45801 10.4997C1.45801 10.0797 1.56297 9.69079 1.7729 9.33301C1.98282 8.97523 2.26661 8.69134 2.62426 8.48134C2.98191 8.27134 3.3726 8.16634 3.79634 8.16634C4.22008 8.16634 4.61466 8.27523 4.98008 8.49301L6.46122 6.99967L4.98008 5.50634C4.61466 5.72412 4.22008 5.83301 3.79634 5.83301C3.3726 5.83301 2.98191 5.72801 2.62426 5.51801C2.26661 5.30801 1.98282 5.02412 1.7729 4.66634C1.56297 4.30856 1.45801 3.91967 1.45801 3.49967C1.45801 3.07967 1.56297 2.69079 1.7729 2.33301C1.98282 1.97523 2.26661 1.69134 2.62426 1.48134C2.98191 1.27134 3.37066 1.16634 3.79051 1.16634C4.21036 1.16634 4.59911 1.27134 4.95676 1.48134C5.31441 1.69134 5.5982 1.97523 5.80812 2.33301C6.01805 2.69079 6.12301 3.07967 6.12301 3.49967ZM4.95676 3.49967C4.95676 3.28967 4.90428 3.09523 4.79931 2.91634C4.69435 2.73745 4.55246 2.59551 4.37363 2.49051C4.19481 2.38551 4.00043 2.33301 3.79051 2.33301C3.58058 2.33301 3.38621 2.38551 3.20738 2.49051C3.02856 2.59551 2.88666 2.73745 2.7817 2.91634C2.67674 3.09523 2.62426 3.28967 2.62426 3.49967C2.62426 3.70967 2.67674 3.90412 2.7817 4.08301C2.88666 4.2619 3.02856 4.40384 3.20738 4.50884C3.38621 4.61384 3.58058 4.66634 3.79051 4.66634C4.00043 4.66634 4.19481 4.61384 4.37363 4.50884C4.55246 4.40384 4.69435 4.2619 4.79931 4.08301C4.90428 3.90412 4.95676 3.70967 4.95676 3.49967ZM12.8639 11.748C12.7162 11.8958 12.5413 11.9969 12.3391 12.0513C12.137 12.1058 11.9368 12.1058 11.7385 12.0513C11.5402 11.9969 11.3634 11.8958 11.2079 11.748L8.1173 8.64467L8.93367 7.82801L12.8639 11.748ZM9.62176 6.41634H10.788V7.58301H9.62176V6.41634ZM11.9543 6.41634H13.1205V7.58301H11.9543V6.41634ZM3.79051 6.41634H4.95676V7.58301H3.79051V6.41634ZM1.45801 6.41634H2.62426V7.58301H1.45801V6.41634ZM3.79051 11.6663C4.00043 11.6663 4.19481 11.6138 4.37363 11.5088C4.55246 11.4038 4.69435 11.2619 4.79931 11.083C4.90428 10.9041 4.95676 10.7097 4.95676 10.4997C4.95676 10.2897 4.90428 10.0952 4.79931 9.91634C4.69435 9.73745 4.55246 9.59551 4.37363 9.49051C4.19481 9.38551 4.00043 9.33301 3.79051 9.33301C3.58058 9.33301 3.38621 9.38551 3.20738 9.49051C3.02856 9.59551 2.88666 9.73745 2.7817 9.91634C2.67674 10.0952 2.62426 10.2897 2.62426 10.4997C2.62426 10.7097 2.67674 10.9041 2.7817 11.083C2.88666 11.2619 3.02856 11.4038 3.20738 11.5088C3.38621 11.6138 3.58058 11.6663 3.79051 11.6663Z"
+                                fill={item.tone === "red" ? "#EF4444" : "#F4C430"}
                               />
-                            </g>
-                            <defs>
-                              <clipPath id="clip0_oiliness_1">
-                                <rect
-                                  width="14.5781"
-                                  height="14"
-                                  fill="white"
-                                />
-                              </clipPath>
-                            </defs>
-                          </svg>
-                        )}
-                      </span>
-                      <h4>{item.title}</h4>
-                    </div>
-                    <span
-                      className={`shaft-scalp-insights-status shaft-scalp-insights-status-${item.tone}`}
-                    >
-                      {item.status}
-                    </span>
-                  </div>
+                            </svg>
+                          )}
 
-                  {isLocked ? (
-                    <div className="locked-shaft-scalp-container">
-                      <div>
+                          {item.icon === "split" && (
+                            <svg
+                              width="15"
+                              height="14"
+                              viewBox="0 0 15 14"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M3.79039 2.91667C3.62712 2.91667 3.48911 2.97306 3.37637 3.08583C3.26363 3.19861 3.20727 3.33667 3.20727 3.5C3.20727 3.66333 3.26363 3.80139 3.37637 3.91417C3.48911 4.02694 3.62712 4.08333 3.79039 4.08333C3.95367 4.08333 4.09167 4.02694 4.20441 3.91417C4.31715 3.80139 4.37352 3.66333 4.37352 3.5C4.37352 3.33667 4.31715 3.19861 4.20441 3.08583C4.09167 2.97306 3.95367 2.91667 3.79039 2.91667ZM2.04102 3.5C2.04102 3.18111 2.11877 2.8875 2.27427 2.61917C2.42977 2.35083 2.64163 2.13889 2.90987 1.98333C3.17811 1.82778 3.47162 1.75 3.79039 1.75C4.10917 1.75 4.40267 1.82778 4.67091 1.98333C4.93915 2.13889 5.15102 2.35083 5.30652 2.61917C5.46202 2.8875 5.53977 3.18111 5.53977 3.5C5.53977 3.87333 5.43092 4.21167 5.21322 4.515C4.99552 4.81833 4.71562 5.02833 4.37352 5.145V5.25C4.37352 5.46 4.426 5.65444 4.53096 5.83333C4.63592 6.01222 4.77782 6.15417 4.95664 6.25917C5.13547 6.36417 5.32984 6.41667 5.53977 6.41667H9.03852C9.24844 6.41667 9.44282 6.36417 9.62164 6.25917C9.80047 6.15417 9.94236 6.01222 10.0473 5.83333C10.1523 5.65444 10.2048 5.46 10.2048 5.25V5.145C9.86267 5.02833 9.58277 4.81833 9.36507 4.515C9.14737 4.21167 9.03852 3.87333 9.03852 3.5C9.03852 3.18111 9.11627 2.8875 9.27177 2.61917C9.42727 2.35083 9.63913 2.13889 9.90737 1.98333C10.1756 1.82778 10.4691 1.75 10.7879 1.75C11.1067 1.75 11.4002 1.82778 11.6684 1.98333C11.9366 2.13889 12.1485 2.35083 12.304 2.61917C12.4595 2.8875 12.5373 3.18111 12.5373 3.5C12.5373 3.87333 12.4284 4.21167 12.2107 4.515C11.993 4.81833 11.7131 5.02833 11.371 5.145V5.25C11.371 5.67 11.2661 6.05889 11.0561 6.41667C10.8462 6.77444 10.5624 7.05833 10.2048 7.26833C9.84712 7.47833 9.45837 7.58333 9.03852 7.58333H7.87227V8.855C8.21437 8.97167 8.49427 9.18167 8.71197 9.485C8.92967 9.78833 9.03852 10.1267 9.03852 10.5C9.03852 10.8189 8.96077 11.1125 8.80527 11.3808C8.64977 11.6492 8.4379 11.8611 8.16966 12.0167C7.90142 12.1722 7.60792 12.25 7.28914 12.25C6.97037 12.25 6.67686 12.1722 6.40862 12.0167C6.14038 11.8611 5.92852 11.6492 5.77302 11.3808C5.61752 11.1125 5.53977 10.8189 5.53977 10.5C5.53977 10.1267 5.64862 9.78833 5.86632 9.485C6.08402 9.18167 6.36392 8.97167 6.70602 8.855V7.58333H5.53977C5.11992 7.58333 4.73117 7.47833 4.37352 7.26833C4.01587 7.05833 3.73208 6.77444 3.52215 6.41667C3.31223 6.05889 3.20727 5.67 3.20727 5.25V5.145C2.86517 5.02833 2.58527 4.81833 2.36757 4.515C2.14987 4.21167 2.04102 3.87333 2.04102 3.5ZM10.7879 2.91667C10.6246 2.91667 10.4866 2.97306 10.3739 3.08583C10.2611 3.19861 10.2048 3.33667 10.2048 3.5C10.2048 3.66333 10.2611 3.80139 10.3739 3.91417C10.4866 4.02694 10.6246 4.08333 10.7879 4.08333C10.9512 4.08333 11.0892 4.02694 11.2019 3.91417C11.3146 3.80139 11.371 3.66333 11.371 3.5C11.371 3.33667 11.3146 3.19861 11.2019 3.08583C11.0892 2.97306 10.9512 2.91667 10.7879 2.91667ZM7.28914 9.91667C7.12587 9.91667 6.98786 9.97306 6.87512 10.0858C6.76238 10.1986 6.70602 10.3367 6.70602 10.5C6.70602 10.6633 6.76238 10.8014 6.87512 10.9142C6.98786 11.0269 7.12587 11.0833 7.28914 11.0833C7.45242 11.0833 7.59042 11.0269 7.70316 10.9142C7.8159 10.8014 7.87227 10.6633 7.87227 10.5C7.87227 10.3367 7.8159 10.1986 7.70316 10.0858C7.59042 9.97306 7.45242 9.91667 7.28914 9.91667Z"
+                                fill={item.tone === "red" ? "#EF4444" : "#F4C430"}
+                              />
+                            </svg>
+                          )}
+
+                          {item.icon === "texture" && (
+                            <svg
+                              width="15"
+                              height="14"
+                              viewBox="0 0 15 14"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M11.9541 1.75C12.1174 1.75 12.2554 1.80639 12.3682 1.91917C12.4809 2.03194 12.5373 2.17 12.5373 2.33333V11.6667C12.5373 11.83 12.4809 11.9681 12.3682 12.0808C12.2554 12.1936 12.1174 12.25 11.9541 12.25H2.62414C2.46087 12.25 2.32286 12.1936 2.21012 12.0808C2.09738 11.9681 2.04102 11.83 2.04102 11.6667V2.33333C2.04102 2.17 2.09738 2.03194 2.21012 1.91917C2.32286 1.80639 2.46087 1.75 2.62414 1.75H11.9541ZM6.81098 7.67667L3.20727 8.30667V11.0833H7.41743L6.81098 7.67667ZM11.371 2.91667H7.16085L8.59534 11.0833H11.371V2.91667ZM5.98294 2.91667H3.20727V7.12833L6.61272 6.52167L5.98294 2.91667Z"
+                                fill="#EF4444"
+                              />
+                            </svg>
+                          )}
+
+                          {item.icon === "oiliness" && (
+                            <svg
+                              width="15"
+                              height="14"
+                              viewBox="0 0 15 14"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <g clipPath="url(#clip0_oiliness_1)">
+                                <path
+                                  d="M7.28914 2.30999L4.4085 5.20332C3.8798 5.72443 3.52215 6.33888 3.33555 7.04665C3.15673 7.73888 3.15673 8.4311 3.33555 9.12332C3.52215 9.8311 3.87786 10.4475 4.40267 10.9725C4.92748 11.4975 5.54365 11.8533 6.25118 12.04C6.94315 12.2189 7.63513 12.2189 8.3271 12.04C9.03463 11.8533 9.6508 11.4975 10.1756 10.9725C10.7004 10.4475 11.0561 9.8311 11.2427 9.12332C11.4216 8.4311 11.4216 7.73888 11.2427 7.04665C11.0561 6.33888 10.6985 5.72443 10.1698 5.20332L7.28914 2.30999ZM7.28914 0.664987L10.9978 4.37499C11.6742 5.04388 12.1291 5.83721 12.3623 6.75499C12.5956 7.64165 12.5956 8.52832 12.3623 9.41499C12.1291 10.3328 11.6762 11.128 11.0036 11.8008C10.3311 12.4736 9.53612 12.9305 8.61867 13.1717C7.73232 13.3972 6.84597 13.3972 5.95962 13.1717C5.04217 12.9305 4.24717 12.4736 3.57463 11.8008C2.9021 11.128 2.4492 10.3328 2.21595 9.41499C1.9827 8.52832 1.9827 7.64165 2.21595 6.75499C2.4492 5.83721 2.90404 5.04388 3.58047 4.37499L7.28914 0.664987Z"
+                                  fill="#F4C430"
+                                />
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_oiliness_1">
+                                  <rect
+                                    width="14.5781"
+                                    height="14"
+                                    fill="white"
+                                  />
+                                </clipPath>
+                              </defs>
+                            </svg>
+                          )}
+                        </span>
+                        <h4>{item.title}</h4>
+                      </div>
+                      <span
+                        className={`shaft-scalp-insights-status shaft-scalp-insights-status-${item.tone}`}
+                      >
+                        {item.status}
+                      </span>
+                    </div>
+
+                    {isLocked ? (
+                      <div className="locked-shaft-scalp-container">
+                        <div>
+                          <div className="shaft-scalp-insights-summary-row">
+                            <div className="shaft-scalp-insights-summary-main">
+                              <p className="shaft-scalp-insights-summary-line">
+                                <span
+                                  className={`shaft-scalp-insights-summary-icon shaft-scalp-insights-summary-icon-${item.tone}`}
+                                  aria-hidden="true"
+                                >
+                                  <svg
+                                    width="13"
+                                    height="12"
+                                    viewBox="0 0 13 12"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M5.24 8.75H7.26C7.29333 8.46333 7.38667 8.18333 7.54 7.91C7.67333 7.66333 7.87 7.39667 8.13 7.11L8.27 6.96C8.46333 6.76 8.57 6.65 8.59 6.63C8.80333 6.36333 8.96667 6.07 9.08 5.75C9.19333 5.43 9.25 5.09667 9.25 4.75C9.25 4.21 9.11333 3.70667 8.84 3.24C8.57333 2.78667 8.21333 2.42667 7.76 2.16C7.29333 1.88667 6.79 1.75 6.25 1.75C5.71 1.75 5.20667 1.88667 4.74 2.16C4.28667 2.42667 3.92667 2.78667 3.66 3.24C3.38667 3.70667 3.25 4.21 3.25 4.75C3.25 5.09667 3.30667 5.43 3.42 5.75C3.53333 6.07 3.69667 6.36 3.91 6.62C3.93 6.64667 4.03667 6.76 4.23 6.96L4.37 7.11C4.63 7.39667 4.82667 7.66333 4.96 7.91C5.11333 8.18333 5.20667 8.46333 5.24 8.75ZM7.25 9.75H5.25V10.25H7.25V9.75ZM3.13 7.25C2.85 6.90333 2.63333 6.52 2.48 6.1C2.32667 5.66667 2.25 5.21667 2.25 4.75C2.25 4.02333 2.43333 3.35 2.8 2.73C3.15333 2.13 3.63 1.65333 4.23 1.3C4.85 0.933333 5.52333 0.75 6.25 0.75C6.97667 0.75 7.65 0.933333 8.27 1.3C8.87 1.65333 9.34667 2.13 9.7 2.73C10.0667 3.35 10.25 4.02333 10.25 4.75C10.25 5.21667 10.1733 5.66667 10.02 6.1C9.86667 6.52 9.65 6.90333 9.37 7.25C9.32333 7.31 9.23 7.41 9.09 7.55C8.83 7.82333 8.64667 8.04 8.54 8.2C8.34667 8.48 8.25 8.74667 8.25 9V10.25C8.25 10.43 8.205 10.5967 8.115 10.75C8.025 10.9033 7.90333 11.025 7.75 11.115C7.59667 11.205 7.43 11.25 7.25 11.25H5.25C5.07 11.25 4.90333 11.205 4.75 11.115C4.59667 11.025 4.475 10.9033 4.385 10.75C4.295 10.5967 4.25 10.43 4.25 10.25V9C4.25 8.74667 4.15333 8.48 3.96 8.2C3.85333 8.04 3.67 7.82333 3.41 7.55C3.27 7.41 3.17667 7.31 3.13 7.25ZM6.75 4.75H8L5.75 7.75V5.75H4.5L6.75 2.75V4.75Z"
+                                      fill="currentColor"
+                                    />
+                                  </svg>
+                                </span>
+                                <span>{item.summary}</span>
+                              </p>
+                            </div>
+                          </div>
+
+                          {item.showImage && (
+                            <figure className="shaft-scalp-insights-image-wrap">
+                              <div
+                                className="shaft-scalp-insights-image"
+                                style={{ backgroundImage: `url(${shaftScalpImage})` }}
+                              />
+                              <figcaption>Representative image</figcaption>
+                            </figure>
+                          )}
+
+                          <div className="shaft-scalp-insights-action-block">
+                            <p className="shaft-scalp-insights-action-title">Action Steps</p>
+                            <ol className="shaft-scalp-insights-action-list">
+                              {item.steps.map((step, index) => (
+                                <li key={step}>
+                                  <span
+                                    className={`shaft-scalp-insights-action-number shaft-scalp-insights-action-number-${item.tone}`}
+                                  >
+                                    {index + 1}.
+                                  </span>
+                                  <span>{step}</span>
+                                </li>
+                              ))}
+                            </ol>
+                          </div>
+
+                          <div className="shaft-scalp-locked-container">
+                            <div className="shaft-scalp-locked-content">
+                              <span className="lock-icon" aria-hidden="true">
+                                <svg
+                                  width="17"
+                                  height="16"
+                                  viewBox="0 0 17 16"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M12.9919 6.66699H13.6582C13.8447 6.66699 14.0024 6.73144 14.1312 6.86033C14.26 6.98921 14.3244 7.14699 14.3244 7.33366V14.0003C14.3244 14.187 14.26 14.3448 14.1312 14.4737C14.0024 14.6025 13.8447 14.667 13.6582 14.667H2.99816C2.81161 14.667 2.65393 14.6025 2.52512 14.4737C2.39631 14.3448 2.33191 14.187 2.33191 14.0003V7.33366C2.33191 7.14699 2.39631 6.98921 2.52512 6.86033C2.65393 6.73144 2.81161 6.66699 2.99816 6.66699H3.66441V6.00033C3.66441 5.15588 3.87761 4.36922 4.30401 3.64033C4.71264 2.9381 5.26785 2.38255 5.96963 1.97366C6.69807 1.54699 7.48424 1.33366 8.32816 1.33366C9.17208 1.33366 9.95825 1.54699 10.6867 1.97366C11.3885 2.38255 11.9437 2.9381 12.3523 3.64033C12.7787 4.36922 12.9919 5.15588 12.9919 6.00033V6.66699ZM3.66441 8.00033V13.3337H12.9919V8.00033H3.66441ZM7.66191 9.33366H8.99441V12.0003H7.66191V9.33366ZM11.6594 6.66699V6.00033C11.6594 5.39588 11.5106 4.8381 11.213 4.32699C10.9154 3.81588 10.5112 3.41144 10.0004 3.11366C9.48966 2.81588 8.93223 2.66699 8.32816 2.66699C7.72409 2.66699 7.16666 2.81588 6.65587 3.11366C6.14508 3.41144 5.74089 3.81588 5.4433 4.32699C5.1457 4.8381 4.99691 5.39588 4.99691 6.00033V6.66699H11.6594Z"
+                                    fill="#00E5FF"
+                                  />
+                                </svg>
+                              </span>
+                              <p className="lock-title">Unlock Full Shaft &amp; Scalp Insights</p>
+                              <p className="lock-desc">
+                                Access deeper scalp analysis and action priorities tailored to your report.
+                              </p>
+                              <button className="unlock-cta" onClick={() => setFullReport(true)}>
+                                Unlock Full Plan
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
                         <div className="shaft-scalp-insights-summary-row">
                           <div className="shaft-scalp-insights-summary-main">
                             <p className="shaft-scalp-insights-summary-line">
@@ -4414,90 +3819,10 @@ export default function TestReport() {
                             ))}
                           </ol>
                         </div>
-
-                        <div className="shaft-scalp-locked-container">
-                          <div className="shaft-scalp-locked-content">
-                            <span className="lock-icon" aria-hidden="true">
-                              <svg
-                                width="17"
-                                height="16"
-                                viewBox="0 0 17 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M12.9919 6.66699H13.6582C13.8447 6.66699 14.0024 6.73144 14.1312 6.86033C14.26 6.98921 14.3244 7.14699 14.3244 7.33366V14.0003C14.3244 14.187 14.26 14.3448 14.1312 14.4737C14.0024 14.6025 13.8447 14.667 13.6582 14.667H2.99816C2.81161 14.667 2.65393 14.6025 2.52512 14.4737C2.39631 14.3448 2.33191 14.187 2.33191 14.0003V7.33366C2.33191 7.14699 2.39631 6.98921 2.52512 6.86033C2.65393 6.73144 2.81161 6.66699 2.99816 6.66699H3.66441V6.00033C3.66441 5.15588 3.87761 4.36922 4.30401 3.64033C4.71264 2.9381 5.26785 2.38255 5.96963 1.97366C6.69807 1.54699 7.48424 1.33366 8.32816 1.33366C9.17208 1.33366 9.95825 1.54699 10.6867 1.97366C11.3885 2.38255 11.9437 2.9381 12.3523 3.64033C12.7787 4.36922 12.9919 5.15588 12.9919 6.00033V6.66699ZM3.66441 8.00033V13.3337H12.9919V8.00033H3.66441ZM7.66191 9.33366H8.99441V12.0003H7.66191V9.33366ZM11.6594 6.66699V6.00033C11.6594 5.39588 11.5106 4.8381 11.213 4.32699C10.9154 3.81588 10.5112 3.41144 10.0004 3.11366C9.48966 2.81588 8.93223 2.66699 8.32816 2.66699C7.72409 2.66699 7.16666 2.81588 6.65587 3.11366C6.14508 3.41144 5.74089 3.81588 5.4433 4.32699C5.1457 4.8381 4.99691 5.39588 4.99691 6.00033V6.66699H11.6594Z"
-                                  fill="#00E5FF"
-                                />
-                              </svg>
-                            </span>
-                            <p className="lock-title">Unlock Full Shaft &amp; Scalp Insights</p>
-                            <p className="lock-desc">
-                              Access deeper scalp analysis and action priorities tailored to your report.
-                            </p>
-                            <button className="unlock-cta" onClick={() => setFullReport(true)}>
-                              Unlock Full Plan
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <>
-                      <div className="shaft-scalp-insights-summary-row">
-                        <div className="shaft-scalp-insights-summary-main">
-                          <p className="shaft-scalp-insights-summary-line">
-                            <span
-                              className={`shaft-scalp-insights-summary-icon shaft-scalp-insights-summary-icon-${item.tone}`}
-                              aria-hidden="true"
-                            >
-                              <svg
-                                width="13"
-                                height="12"
-                                viewBox="0 0 13 12"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M5.24 8.75H7.26C7.29333 8.46333 7.38667 8.18333 7.54 7.91C7.67333 7.66333 7.87 7.39667 8.13 7.11L8.27 6.96C8.46333 6.76 8.57 6.65 8.59 6.63C8.80333 6.36333 8.96667 6.07 9.08 5.75C9.19333 5.43 9.25 5.09667 9.25 4.75C9.25 4.21 9.11333 3.70667 8.84 3.24C8.57333 2.78667 8.21333 2.42667 7.76 2.16C7.29333 1.88667 6.79 1.75 6.25 1.75C5.71 1.75 5.20667 1.88667 4.74 2.16C4.28667 2.42667 3.92667 2.78667 3.66 3.24C3.38667 3.70667 3.25 4.21 3.25 4.75C3.25 5.09667 3.30667 5.43 3.42 5.75C3.53333 6.07 3.69667 6.36 3.91 6.62C3.93 6.64667 4.03667 6.76 4.23 6.96L4.37 7.11C4.63 7.39667 4.82667 7.66333 4.96 7.91C5.11333 8.18333 5.20667 8.46333 5.24 8.75ZM7.25 9.75H5.25V10.25H7.25V9.75ZM3.13 7.25C2.85 6.90333 2.63333 6.52 2.48 6.1C2.32667 5.66667 2.25 5.21667 2.25 4.75C2.25 4.02333 2.43333 3.35 2.8 2.73C3.15333 2.13 3.63 1.65333 4.23 1.3C4.85 0.933333 5.52333 0.75 6.25 0.75C6.97667 0.75 7.65 0.933333 8.27 1.3C8.87 1.65333 9.34667 2.13 9.7 2.73C10.0667 3.35 10.25 4.02333 10.25 4.75C10.25 5.21667 10.1733 5.66667 10.02 6.1C9.86667 6.52 9.65 6.90333 9.37 7.25C9.32333 7.31 9.23 7.41 9.09 7.55C8.83 7.82333 8.64667 8.04 8.54 8.2C8.34667 8.48 8.25 8.74667 8.25 9V10.25C8.25 10.43 8.205 10.5967 8.115 10.75C8.025 10.9033 7.90333 11.025 7.75 11.115C7.59667 11.205 7.43 11.25 7.25 11.25H5.25C5.07 11.25 4.90333 11.205 4.75 11.115C4.59667 11.025 4.475 10.9033 4.385 10.75C4.295 10.5967 4.25 10.43 4.25 10.25V9C4.25 8.74667 4.15333 8.48 3.96 8.2C3.85333 8.04 3.67 7.82333 3.41 7.55C3.27 7.41 3.17667 7.31 3.13 7.25ZM6.75 4.75H8L5.75 7.75V5.75H4.5L6.75 2.75V4.75Z"
-                                  fill="currentColor"
-                                />
-                              </svg>
-                            </span>
-                            <span>{item.summary}</span>
-                          </p>
-                        </div>
-                      </div>
-
-                      {item.showImage && (
-                        <figure className="shaft-scalp-insights-image-wrap">
-                          <div
-                            className="shaft-scalp-insights-image"
-                            style={{ backgroundImage: `url(${shaftScalpImage})` }}
-                          />
-                          <figcaption>Representative image</figcaption>
-                        </figure>
-                      )}
-
-                      <div className="shaft-scalp-insights-action-block">
-                        <p className="shaft-scalp-insights-action-title">Action Steps</p>
-                        <ol className="shaft-scalp-insights-action-list">
-                          {item.steps.map((step, index) => (
-                            <li key={step}>
-                              <span
-                                className={`shaft-scalp-insights-action-number shaft-scalp-insights-action-number-${item.tone}`}
-                              >
-                                {index + 1}.
-                              </span>
-                              <span>{step}</span>
-                            </li>
-                          ))}
-                        </ol>
-                      </div>
-                    </>
-                  )}
-                </article>
-              );
+                      </>
+                    )}
+                  </article>
+                );
               })}
             </div>
 
@@ -4800,72 +4125,52 @@ export default function TestReport() {
           </section>
 
           {/* Section: Clinical summary */}
-          <section
-            className="clinical-summary-section"
-            aria-label="Clinical Summary"
-          >
-            <article className="clinical-summary-card">
-              <header className="clinical-summary-head">
-                <span className="clinical-summary-chip">Clinical Summary</span>
-              </header>
+          {clinicalNarrative && (
+            <section
+              className="clinical-summary-section"
+              aria-label="Clinical Summary"
+            >
+              <article className="clinical-summary-card">
+                <header className="clinical-summary-head">
+                  <span className="clinical-summary-chip">Clinical Summary</span>
+                </header>
 
-              <div className="clinical-summary-list">
-                <p className="clinical-summary-item">
-                  The provisional assessment is
-                  <strong>
-                    {" "}
-                    Ar £2 - Male Pattern Baldness - Norwood Stage II
-                  </strong>
-                  , classified under
-                  <strong>
-                    {" "}
-                    Category 1 - Androgenetic Alopecia (Pattern Baldness)
-                  </strong>
-                  , staged as
-                  <strong> Norwood Stage II</strong> - confirmatory trichoscopy
-                  and lab tests required.
-                </p>
+                <div className="clinical-summary-list">
+                  <p className="clinical-summary-item">
+                    {clinicalNarrative?.summary || "Your clinical assessment is complete based on provided diagnostic data."}
+                  </p>
 
-                <p className="clinical-summary-item">
-                  Your <strong>Hair Health Index</strong> of
-                  <strong className="clinical-summary-accent-cyan">
-                    {" "}
-                    91/100
-                  </strong>{" "}
-                  indicates generally healthy hair requiring preventive
-                  monitoring.
-                </p>
+                  <p className="clinical-summary-item">
+                    Your <strong>Hair Health Index</strong> of
+                    <strong className="clinical-summary-accent-cyan">
+                      {" "}
+                      {dseResult?.hairHealthIndex || 0}/100
+                    </strong>{" "}
+                    {clinicalNarrative?.severityExplanation}
+                  </p>
 
-                <p className="clinical-summary-item">
-                  The AI engine identifies{" "}
-                  <strong>Genetic / Androgenetic</strong> as the primary causal
-                  factor
-                  <strong className="clinical-summary-accent-red">
-                    {" "}
-                    (61% probability)
-                  </strong>
-                  , with
-                  <strong> Stress-Induced (Telogen)</strong> as a secondary
-                  contributor
-                  <strong className="clinical-summary-accent-amber">
-                    {" "}
-                    (39%)
-                  </strong>
-                  .
-                </p>
+                  <article className="clinical-summary-card">
+                    <p className="clinical-summary-item">
+                      Primary Assessment: <strong>{clinicalNarrative?.rootCause || "Assessment Pending"}</strong>
+                    </p>
+                    <p className="clinical-summary-item">
+                      Impact Correlation: <strong>{clinicalNarrative?.symptomCorrelation || "Consistent with reported symptoms."}</strong>
+                    </p>
+                  </article>
 
-                <p className="clinical-summary-item">
-                  Recovery potential score:
-                  <strong className="clinical-summary-accent-green">
-                    {" "}
-                    84/100
-                  </strong>{" "}
-                  - favourable prognosis with consistent treatment adherence
-                  over <strong>6-12 months</strong>.
-                </p>
-              </div>
-            </article>
-          </section>
+                  <p className="clinical-summary-item">
+                    Recovery potential score:
+                    <strong className="clinical-summary-accent-green">
+                      {" "}
+                      84/100
+                    </strong>{" "}
+                    - favourable prognosis with consistent treatment adherence
+                    over <strong>6-12 months</strong>.
+                  </p>
+                </div>
+              </article>
+            </section>
+          )}
 
           {/* Section: Begin Your Recovery Journey */}
           <section
@@ -5111,7 +4416,7 @@ export default function TestReport() {
                     navigator.clipboard.writeText(
                       "Join TrichoScan AI for a free hair intelligence assessment: https://trichoscan-ai.com",
                     );
-                    alert("Referral link copied!");
+                    toast.success("Referral link copied!");
                   }}
                 >
                   Copy Referral Summary
@@ -5207,74 +4512,13 @@ export default function TestReport() {
             </p>
           </section>
         </div>
-
         {/* Section: recommendation sidebar */}
-        <aside className="aside-container">
-          <div className="recommendation-panel">
-            <h3>
-              <span className="sidebar-title-icon" aria-hidden="true">
-                <svg
-                  width="15"
-                  height="14"
-                  viewBox="0 0 15 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11.4992 5.61167L11.3476 5.95001C11.3165 6.02778 11.264 6.08028 11.1902 6.1075C11.1163 6.13473 11.0425 6.13473 10.9686 6.1075C10.8947 6.08028 10.8422 6.02778 10.8111 5.95001L10.6595 5.61167C10.5351 5.32389 10.3602 5.06528 10.1347 4.83584C9.90925 4.60639 9.65267 4.42945 9.365 4.30501L8.92182 4.10667C8.84407 4.07556 8.79159 4.02112 8.76438 3.94334C8.73717 3.86556 8.73717 3.78778 8.76438 3.71C8.79159 3.63223 8.84407 3.57778 8.92182 3.54667L9.34167 3.36001C9.63712 3.22778 9.89953 3.045 10.1289 2.81167C10.3583 2.57834 10.5351 2.31001 10.6595 2.00667L10.7995 1.64501C10.8384 1.56723 10.8947 1.51278 10.9686 1.48167C11.0425 1.45056 11.1163 1.45056 11.1902 1.48167C11.264 1.51278 11.3204 1.56723 11.3593 1.64501L11.4992 2.00667C11.6236 2.31001 11.8005 2.57834 12.0299 2.81167C12.2592 3.045 12.5216 3.22778 12.8171 3.36001L13.2369 3.54667C13.3147 3.57778 13.3672 3.63223 13.3944 3.71C13.4216 3.78778 13.4216 3.86556 13.3944 3.94334C13.3672 4.02112 13.3147 4.07556 13.2369 4.10667L12.7938 4.30501C12.5061 4.42945 12.2495 4.60639 12.024 4.83584C11.7986 5.06528 11.6236 5.32389 11.4992 5.61167ZM3.49876 3.20834C3.28883 3.20834 3.09446 3.26084 2.91563 3.36584C2.73681 3.47084 2.59492 3.61278 2.48995 3.79167C2.38499 3.97056 2.33251 4.165 2.33251 4.375V10.2083C2.33251 10.4183 2.38499 10.6128 2.48995 10.7917C2.59492 10.9706 2.73681 11.1125 2.91563 11.2175C3.09446 11.3225 3.28883 11.375 3.49876 11.375H10.4963C10.7062 11.375 10.9006 11.3225 11.0794 11.2175C11.2582 11.1125 11.4001 10.9706 11.5051 10.7917C11.61 10.6128 11.6625 10.4183 11.6625 10.2083V7.29167H12.8288V10.2083C12.8288 10.6283 12.7238 11.0172 12.5139 11.375C12.3039 11.7328 12.0202 12.0167 11.6625 12.2267C11.3049 12.4367 10.9161 12.5417 10.4963 12.5417H3.49876C3.07891 12.5417 2.69016 12.4367 2.33251 12.2267C1.97486 12.0167 1.69107 11.7328 1.48115 11.375C1.27122 11.0172 1.16626 10.6283 1.16626 10.2083V4.375C1.16626 3.955 1.27122 3.56612 1.48115 3.20834C1.69107 2.85056 1.97486 2.56667 2.33251 2.35667C2.69016 2.14667 3.07891 2.04167 3.49876 2.04167H7.58063V3.20834H3.49876Z"
-                    fill="#00E5FF"
-                  />
-                </svg>
-              </span>
-              Recommended for Your Hair Condition
-            </h3>
-            <p className="side-subtitle">
-              Based on your diagnosis and root causes
-            </p>
-            <div className="match-card">
-              <span className="match-icon" aria-hidden="true">
-                <svg
-                  width="13"
-                  height="12"
-                  viewBox="0 0 13 12"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M4.75 2C4.93 2 5.09667 2.045 5.25 2.135C5.40333 2.225 5.525 2.34667 5.615 2.5C5.705 2.65333 5.75 2.82 5.75 3V6.41C5.33 6.09 4.77333 5.87333 4.08 5.76L3.92 6.74C4.56667 6.85333 5.03333 7.065 5.32 7.375C5.60667 7.685 5.75 8.14333 5.75 8.75C5.75 8.97667 5.69333 9.185 5.58 9.375C5.46667 9.565 5.315 9.71667 5.125 9.83C4.935 9.94333 4.72667 10 4.5 10C4.27333 10 4.065 9.94333 3.875 9.83C3.685 9.71667 3.53333 9.565 3.42 9.375C3.30667 9.185 3.25 8.97667 3.25 8.75V8.57C3.47667 8.65 3.7 8.70667 3.92 8.74L4.08 7.76C3.74667 7.7 3.37333 7.57333 2.96 7.38C2.74667 7.28 2.575 7.12833 2.445 6.925C2.315 6.72167 2.25 6.49667 2.25 6.25C2.25 5.85 2.34333 5.52167 2.53 5.265C2.71667 5.00833 2.99667 4.83333 3.37 4.74L3.75 4.64V3C3.75 2.82 3.795 2.65333 3.885 2.5C3.975 2.34667 4.09667 2.225 4.25 2.135C4.40333 2.045 4.57 2 4.75 2ZM6.25 1.68C6.06333 1.46667 5.84 1.3 5.58 1.18C5.32 1.06 5.04333 1 4.75 1C4.39 1 4.05667 1.09 3.75 1.27C3.44333 1.45 3.2 1.69333 3.02 2C2.84 2.30667 2.75 2.64 2.75 3V3.89C2.31667 4.06333 1.97333 4.32333 1.72 4.67C1.40667 5.10333 1.25 5.63 1.25 6.25C1.25 6.63667 1.34 6.99333 1.52 7.32C1.7 7.64667 1.94333 7.91333 2.25 8.12V8.75C2.25 9.15667 2.35167 9.53167 2.555 9.875C2.75833 10.2183 3.03167 10.4917 3.375 10.695C3.71833 10.8983 4.09333 11 4.5 11C4.84667 11 5.17167 10.925 5.475 10.775C5.77833 10.625 6.03667 10.42 6.25 10.16C6.46333 10.42 6.72167 10.625 7.025 10.775C7.32833 10.925 7.65333 11 8 11C8.40667 11 8.78167 10.8983 9.125 10.695C9.46833 10.4917 9.74167 10.2183 9.945 9.875C10.1483 9.53167 10.25 9.15667 10.25 8.75V8.12C10.5567 7.91333 10.8 7.64667 10.98 7.32C11.16 6.99333 11.25 6.63667 11.25 6.25C11.25 5.63 11.0933 5.10333 10.78 4.67C10.5267 4.32333 10.1833 4.06333 9.75 3.89V3C9.75 2.64 9.66 2.30667 9.48 2C9.3 1.69333 9.05667 1.45 8.75 1.27C8.44333 1.09 8.11 1 7.75 1C7.45667 1 7.18 1.06 6.92 1.18C6.66 1.3 6.43667 1.46667 6.25 1.68ZM9.25 8.57V8.75C9.25 8.97667 9.19333 9.185 9.08 9.375C8.96667 9.565 8.815 9.71667 8.625 9.83C8.435 9.94333 8.22667 10 8 10C7.77333 10 7.565 9.94333 7.375 9.83C7.185 9.71667 7.03333 9.565 6.92 9.375C6.80667 9.185 6.75 8.97667 6.75 8.75C6.75 8.14333 6.89333 7.685 7.18 7.375C7.46667 7.065 7.93333 6.85333 8.58 6.74L8.42 5.76C7.72667 5.87333 7.17 6.09 6.75 6.41V3C6.75 2.82 6.795 2.65333 6.885 2.5C6.975 2.34667 7.09667 2.225 7.25 2.135C7.40333 2.045 7.57 2 7.75 2C7.93 2 8.09667 2.045 8.25 2.135C8.40333 2.225 8.525 2.34667 8.615 2.5C8.705 2.65333 8.75 2.82 8.75 3V4.64L9.13 4.74C9.50333 4.83333 9.78333 5.00833 9.97 5.265C10.1567 5.52167 10.25 5.85 10.25 6.25C10.25 6.49667 10.185 6.72167 10.055 6.925C9.925 7.12833 9.75333 7.28 9.54 7.38C9.12667 7.57333 8.75333 7.7 8.42 7.76L8.58 8.74C8.8 8.70667 9.02333 8.65 9.25 8.57Z"
-                    fill="#00E5FF"
-                  />
-                </svg>
-              </span>
-              <span>
-                AI matched <b>5 products</b> to your Norwood II + genetic risk
-                profile
-              </span>
-            </div>
-            <div className="side-product-list">
-              {recommendationRows.map((item) => (
-                <article className="side-product-card" key={item.title}>
-                  <div
-                    className={`product-thumb ${item.thumbClass}`}
-                    style={{ backgroundImage: `url(${sharedThumbImage})` }}
-                  />
-                  <div className="product-copy">
-                    <h4>{item.title}</h4>
-                    <span className={`product-tag ${item.tagTone}`}>
-                      {item.tag}
-                    </span>
-                    <p>{item.desc}</p>
-                    <div className="product-bottom-row">
-                      <span className={item.purposeTone}>{item.purpose}</span>
-                      <strong>{item.price}</strong>
-                    </div>
-                  </div>
-
-                  <button
-                    type="button"
-                    className="go-btn"
-                    aria-label="View product"
-                  >
+        {(recommendationRows.length > 0 || freebiesRows.length > 0) && (
+          <aside className="aside-container">
+            {recommendationRows.length > 0 && (
+              <div className="recommendation-panel">
+                <h3>
+                  <span className="sidebar-title-icon" aria-hidden="true">
                     <svg
                       width="15"
                       height="14"
@@ -5283,374 +4527,321 @@ export default function TestReport() {
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M7.90725 6.99999L5.02661 4.11832L5.84299 3.28999L9.55166 6.99999L5.84299 10.71L5.02661 9.88166L7.90725 6.99999Z"
-                        fill="#9FB4D0"
+                        d="M11.4992 5.61167L11.3476 5.95001C11.3165 6.02778 11.264 6.08028 11.1902 6.1075C11.1163 6.13473 11.0425 6.13473 10.9686 6.1075C10.8947 6.1075 10.8422 6.02778 10.8111 5.95001L10.6595 5.61167C10.5351 5.32389 10.3602 5.06528 10.1347 4.83584C9.90925 4.60639 9.65267 4.42945 9.365 4.30501L8.92182 4.10667C8.84407 4.07556 8.79159 4.02112 8.76438 3.94334C8.73717 3.86556 8.73717 3.78778 8.76438 3.71C8.79159 3.63223 8.84407 3.57778 8.92182 3.54667L9.34167 3.36001C9.63712 3.22778 9.89953 3.045 10.1289 2.81167C10.3583 2.57834 10.5351 2.31001 10.6595 2.00667L10.7995 1.64501C10.8384 1.56723 10.8947 1.51278 10.9686 1.48167C11.0425 1.45056 11.1163 1.45056 11.1902 1.48167C11.264 1.51278 11.3204 1.56723 11.3593 1.64501L11.4992 2.00667C11.6236 2.31001 11.8005 2.57834 12.0299 2.81167C12.2592 3.045 12.5216 3.22778 12.8171 3.36001L13.2369 3.54667C13.3147 3.57778 13.3672 3.63223 13.3944 3.71C13.4216 3.78778 13.4216 3.86556 13.3944 3.94334C13.3672 4.02112 13.3147 4.07556 13.2369 4.10667L12.7938 4.30501C12.5061 4.42945 12.2495 4.60639 12.024 4.83584C11.7986 5.06528 11.6236 5.32389 11.4992 5.61167ZM3.49876 3.20834C3.28883 3.20834 3.09446 3.26084 2.91563 3.36584C2.73681 3.47084 2.59492 3.61278 2.48995 3.79167C2.38499 3.97056 2.33251 4.165 2.33251 4.375V10.2083C2.33251 10.4183 2.38499 10.6128 2.48995 10.7917C2.59492 10.9706 2.73681 11.1125 2.91563 11.2175C3.09446 11.3225 3.28883 11.375 3.49876 11.375H10.4963C10.7062 11.375 10.9006 11.3225 11.0794 11.2175C11.2582 11.1125 11.4001 10.9706 11.5051 10.7917C11.61 10.6128 11.6625 10.4183 11.6625 10.2083V7.29167H12.8288V10.2083C12.8288 10.6283 12.7238 11.0172 12.5139 11.375C12.3039 11.7328 12.0202 12.0167 11.6625 12.2267C11.3049 12.4367 10.9161 12.5417 10.4963 12.5417H3.49876C3.07891 12.5417 2.69016 12.4367 2.33251 12.2267C1.97486 12.0167 1.69107 11.7328 1.48115 11.375C1.27122 11.0172 1.16626 10.6283 1.16626 10.2083V4.375C1.16626 3.955 1.27122 3.56612 1.48115 3.20834C1.69107 2.85056 1.97486 2.56667 2.33251 2.35667C2.69016 2.14667 3.07891 2.04167 3.49876 2.04167H7.58063V3.20834H3.49876Z"
+                        fill="#00E5FF"
                       />
                     </svg>
-                  </button>
-                </article>
-              ))}
-            </div>
-            <div className="cta-card">
-              <div className="cta-icon-wrap">
-                <svg
-                  width="21"
-                  height="20"
-                  viewBox="0 0 21 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M16.2459 1.66665V3.33331H14.5796V5.83331C15.0351 5.83331 15.4544 5.94442 15.8377 6.16665C16.2209 6.38887 16.5236 6.69165 16.7458 7.07498C16.9679 7.45831 17.079 7.87776 17.079 8.33331V17.5C17.079 17.7333 16.9985 17.9305 16.8374 18.0916C16.6763 18.2528 16.4792 18.3333 16.2459 18.3333H4.58215C4.34887 18.3333 4.1517 18.2528 3.99063 18.0916C3.82956 17.9305 3.74902 17.7333 3.74902 17.5V8.33331C3.74902 7.87776 3.86011 7.45831 4.08227 7.07498C4.30444 6.69165 4.60714 6.38887 4.99038 6.16665C5.37362 5.94442 5.79296 5.83331 6.2484 5.83331V3.33331H4.58215V1.66665H16.2459ZM14.5796 7.49998H6.2484C6.01512 7.49998 5.81795 7.58054 5.65688 7.74165C5.49581 7.90276 5.41527 8.09998 5.41527 8.33331V16.6666H15.4128V8.33331C15.4128 8.09998 15.3322 7.90276 15.1712 7.74165C15.0101 7.58054 14.8129 7.49998 14.5796 7.49998ZM11.2471 9.16665V10.8333H12.9134V12.5H11.2471V14.1666H9.5809V12.5H7.91465V10.8333H9.5809V9.16665H11.2471ZM12.9134 3.33331H7.91465V5.83331H12.9134V3.33331Z"
-                    fill="#F4C430"
-                  />
-                </svg>
+                  </span>
+                  Recommended for Your Hair Condition
+                </h3>
+                <p className="side-subtitle">
+                  Based on your diagnosis and root causes
+                </p>
               </div>
-              <h4>Get a Personalized Treatment Kit</h4>
-              <p>
-                Our trichologist will curate the exact products for your
-                condition and stage.
-              </p>
-              <button type="button" className="cta-btn">
-                <svg
-                  width="13"
-                  height="12"
-                  viewBox="0 0 13 12"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M8.65999 8.02999L8.74999 8.11999L8.83999 8.02999C8.97999 7.88332 9.14666 7.78499 9.33999 7.73499C9.53332 7.68499 9.72666 7.68499 9.91999 7.73499C10.1133 7.78499 10.2833 7.88332 10.43 8.02999C10.5767 8.17665 10.675 8.34665 10.725 8.53999C10.775 8.73332 10.775 8.92499 10.725 9.11499C10.675 9.30499 10.5767 9.47332 10.43 9.61999L8.74999 11.3L7.06999 9.61999C6.92332 9.47332 6.82499 9.30499 6.77499 9.11499C6.72499 8.92499 6.72499 8.73332 6.77499 8.53999C6.82499 8.34665 6.92332 8.17665 7.06999 8.02999C7.21666 7.88332 7.38666 7.78499 7.57999 7.73499C7.77332 7.68499 7.96666 7.68499 8.15999 7.73499C8.35332 7.78499 8.51999 7.88332 8.65999 8.02999ZM5.73999 7.19999V8.19999C5.19999 8.19999 4.69666 8.33665 4.22999 8.60999C3.77666 8.87665 3.41666 9.23665 3.14999 9.68999C2.87666 10.1567 2.73999 10.66 2.73999 11.2H1.73999C1.73999 10.4867 1.91666 9.82332 2.26999 9.20999C2.60999 8.61665 3.07332 8.14332 3.65999 7.78999C4.25999 7.41665 4.91332 7.21999 5.61999 7.19999H5.73999ZM5.73999 0.699987C6.28666 0.699987 6.79332 0.836654 7.25999 1.10999C7.70666 1.37665 8.06332 1.73665 8.32999 2.18999C8.60332 2.64999 8.73999 3.14999 8.73999 3.68999C8.73999 4.22999 8.60999 4.72665 8.34999 5.17999C8.09666 5.62665 7.74832 5.98665 7.30499 6.25999C6.86166 6.53332 6.37666 6.67999 5.84999 6.69999H5.73999C5.19999 6.69999 4.69666 6.56332 4.22999 6.28999C3.77666 6.02332 3.41666 5.66332 3.14999 5.20999C2.87666 4.74999 2.73999 4.24999 2.73999 3.70999C2.73999 3.16999 2.86999 2.67332 3.12999 2.21999C3.38332 1.77332 3.73166 1.41332 4.17499 1.13999C4.61832 0.866653 5.10332 0.719987 5.62999 0.699987H5.73999ZM5.73999 1.69999C5.37999 1.69999 5.04666 1.78999 4.73999 1.96999C4.43332 2.14999 4.18999 2.39332 4.00999 2.69999C3.82999 3.00665 3.73999 3.33999 3.73999 3.69999C3.73999 4.05999 3.82999 4.39332 4.00999 4.69999C4.18999 5.00665 4.43332 5.24999 4.73999 5.42999C5.04666 5.60999 5.37999 5.69999 5.73999 5.69999C6.09999 5.69999 6.43332 5.60999 6.73999 5.42999C7.04666 5.24999 7.28999 5.00665 7.46999 4.69999C7.64999 4.39332 7.73999 4.05999 7.73999 3.69999C7.73999 3.33999 7.64999 3.00665 7.46999 2.69999C7.28999 2.39332 7.04666 2.14999 6.73999 1.96999C6.43332 1.78999 6.09999 1.69999 5.73999 1.69999Z"
-                    fill="#020617"
-                  />
-                </svg>
-                Talk to Expert
-              </button>
-            </div>
-          </div>
-          <article
-            className="freebies-card"
-            aria-label="Freebies with your order"
-          >
-            <div className="freebies-header">
-              <div className="freebies-title-wrap">
-                <span className="freebies-title-icon" aria-hidden="true">
+            )}
+
+            {freebiesRows.length > 0 && (
+              <article
+                className="freebies-card"
+                aria-label="Freebies with your order"
+              >
+                <div className="freebies-list">
+                  {freebiesRows.map((freebie) => (
+                    <article className="freebies-item" key={freebie.title}>
+                      <div
+                        className="freebies-thumb"
+                        style={{ backgroundImage: `url(${sharedThumbImage})` }}
+                      />
+                      <div className="freebies-copy">
+                        <h4>{freebie.title}</h4>
+                        <p>{freebie.desc}</p>
+                      </div>
+                      <span className="freebies-check" aria-hidden="true">
+                        <svg
+                          width="15"
+                          height="14"
+                          viewBox="0 0 15 14"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M7.28901 12.8334C6.49596 12.8334 5.7379 12.6817 5.01483 12.3784C4.32285 12.0828 3.70668 11.6648 3.16632 11.1242C2.62596 10.5837 2.20805 9.96726 1.9126 9.27504C1.60938 8.55171 1.45776 7.79337 1.45776 7.00004C1.45776 6.20671 1.60938 5.44837 1.9126 4.72504C2.20805 4.03282 2.62596 3.41643 3.16632 2.87587C3.70668 2.33532 4.32285 1.91726 5.01483 1.62171C5.7379 1.31837 6.49596 1.16671 7.28901 1.16671C8.08206 1.16671 8.84013 1.31837 9.5632 1.62171C10.2552 1.91726 10.8713 2.33532 11.4117 2.87587C11.9521 3.41643 12.37 4.03282 12.6654 4.72504C12.9687 5.44837 13.1203 6.20671 13.1203 7.00004C13.1203 7.79337 12.9687 8.55171 12.6654 9.27504C12.37 9.96726 11.9521 10.5837 11.4117 11.1242C10.8713 11.6648 10.2552 12.0828 9.5632 12.3784C8.84013 12.6817 8.08206 12.8334 7.28901 12.8334ZM6.70589 9.33337L10.8344 5.20337L10.0064 4.38671L6.70589 7.68837L5.06148 6.03171L4.23344 6.86004L6.70589 9.33337Z"
+                            fill="#10B981"
+                          />
+                        </svg>
+                      </span>
+                    </article>
+                  ))}
+                </div>
+
+                <div className="freebies-unlock-strip">
                   <svg
-                    width="15"
-                    height="14"
-                    viewBox="0 0 15 14"
+                    width="13"
+                    height="12"
+                    viewBox="0 0 13 12"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M9.03851 1.45829C9.45836 1.45829 9.84711 1.56329 10.2048 1.77329C10.5624 1.98329 10.8462 2.26718 11.0561 2.62496C11.266 2.98274 11.371 3.37163 11.371 3.79163C11.371 4.21163 11.266 4.60051 11.0561 4.95829H13.7035V6.12496H12.5373V11.9583C12.5373 12.1216 12.4809 12.2597 12.3681 12.3725C12.2554 12.4852 12.1174 12.5416 11.9541 12.5416H2.62413C2.46086 12.5416 2.32285 12.4852 2.21011 12.3725C2.09737 12.2597 2.04101 12.1216 2.04101 11.9583V6.12496H0.874756V4.95829H3.52214C3.31222 4.60051 3.20726 4.21163 3.20726 3.79163C3.20726 3.37163 3.31222 2.98274 3.52214 2.62496C3.73207 2.26718 4.01586 1.98329 4.37351 1.77329C4.73116 1.56329 5.11991 1.45829 5.53976 1.45829C5.88186 1.45829 6.20452 1.52829 6.50774 1.66829C6.81097 1.80829 7.07143 2.00274 7.28913 2.25163C7.50683 2.00274 7.76729 1.80829 8.07052 1.66829C8.37374 1.52829 8.69641 1.45829 9.03851 1.45829ZM6.70601 6.12496H3.20726V11.375H6.70601V6.12496ZM11.371 6.12496H7.87226V11.375H11.371V6.12496ZM5.53976 2.62496C5.32983 2.62496 5.13546 2.67746 4.95663 2.78246C4.77781 2.88746 4.63591 3.0294 4.53095 3.20829C4.42599 3.38718 4.37351 3.58163 4.37351 3.79163C4.37351 4.09496 4.47847 4.3594 4.68839 4.58496C4.89832 4.81051 5.15489 4.93496 5.45812 4.95829H6.70601V3.79163C6.70601 3.50385 6.61076 3.25107 6.42027 3.03329C6.22979 2.81551 5.99459 2.68329 5.71469 2.63663L5.53976 2.62496ZM9.03851 2.62496C8.73528 2.62496 8.47093 2.72996 8.24546 2.93996C8.01998 3.14996 7.89558 3.40663 7.87226 3.70996V4.95829H9.03851C9.34173 4.95829 9.60608 4.85329 9.83156 4.64329C10.057 4.43329 10.1814 4.17663 10.2048 3.87329V3.79163C10.2048 3.58163 10.1523 3.38718 10.0473 3.20829C9.94235 3.0294 9.80046 2.88746 9.62163 2.78246C9.44281 2.67746 9.24843 2.62496 9.03851 2.62496Z"
+                      d="M7.5 2.22C7.72 2.22 7.92333 2.165 8.11 2.055C8.29667 1.945 8.445 1.79667 8.555 1.61C8.665 1.42333 8.72 1.22 8.72 1H9.28C9.28 1.22 9.335 1.42333 9.445 1.61C9.555 1.79667 9.70333 1.945 9.89 2.055C10.0767 2.165 10.28 2.22 10.5 2.22V2.78C10.28 2.78 10.0767 2.835 9.89 2.945C9.70333 3.055 9.555 3.20333 9.445 3.39C9.335 3.57667 9.28 3.78 9.28 4H8.72C8.72 3.78 8.665 3.57667 8.555 3.39C8.445 3.20333 8.29667 3.055 8.11 2.945C7.92333 2.835 7.72 2.78 7.5 2.78V2.22ZM1 5.5C1.54 5.5 2.04333 5.36333 2.51 5.09C2.96333 4.82333 3.32333 4.46333 3.59 4.01C3.86333 3.54333 4 3.04 4 2.5H5C5 3.04 5.13667 3.54333 5.41 4.01C5.67667 4.46333 6.03667 4.82333 6.49 5.09C6.95667 5.36333 7.46 5.5 8 5.5V6.5C7.46 6.5 6.95667 6.63667 6.49 6.91C6.03667 7.17667 5.67667 7.53667 5.41 7.99C5.13667 8.45667 5 8.96 5 9.5H4C4 8.96 3.86333 8.45667 3.59 7.99C3.32333 7.53667 2.96333 7.17667 2.51 6.91C2.04333 6.63667 1.54 6.5 1 6.5V5.5ZM2.94 6C3.26667 6.18 3.56333 6.40333 3.83 6.67C4.09667 6.93667 4.32 7.23333 4.5 7.56C4.68 7.23333 4.90333 6.93667 5.17 6.67C5.43667 6.40333 5.73333 6.18 6.06 6C5.73333 5.82 5.43667 5.59667 5.17 5.33C4.90333 5.06333 4.68 4.76667 4.5 4.44C4.32 4.76667 4.09667 5.06333 3.83 5.33C3.56333 5.59667 3.26667 5.82 2.94 6ZM9.13 7C9.13 7.29333 9.05667 7.565 8.91 7.815C8.76333 8.065 8.565 8.26333 8.315 8.41C8.065 8.55667 7.79333 8.62667 7.5 8.62V9.37C7.79333 9.37 8.065 9.44333 8.315 9.59C8.565 9.73667 8.76167 9.935 8.905 10.185C9.04833 10.435 9.12 10.7067 9.12 11H9.88C9.87333 10.7067 9.94333 10.435 10.09 10.185C10.2367 9.935 10.435 9.73667 10.685 9.59C10.935 9.44333 11.2067 9.37 11.5 9.37V8.62C11.2067 8.62 10.935 8.54833 10.685 8.405C10.435 8.26167 10.2367 8.065 10.09 7.815C9.94333 7.565 9.87333 7.29333 9.88 7H9.13Z"
                       fill="#F4C430"
                     />
                   </svg>
-                </span>
-                <div>
-                  <h3>Freebies with Your Order</h3>
-                  <p>Exclusive benefits included with your purchase</p>
-                </div>
-              </div>
-              <span className="freebies-chip">FREE WITH PURCHASE</span>
-            </div>
-
-            <div className="freebies-list">
-              {freebiesRows.map((freebie) => (
-                <article className="freebies-item" key={freebie.title}>
-                  <div
-                    className="freebies-thumb"
-                    style={{ backgroundImage: `url(${sharedThumbImage})` }}
-                  />
-                  <div className="freebies-copy">
-                    <h4>{freebie.title}</h4>
-                    <p>{freebie.desc}</p>
-                  </div>
-                  <span className="freebies-check" aria-hidden="true">
-                    <svg
-                      width="15"
-                      height="14"
-                      viewBox="0 0 15 14"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M7.28901 12.8334C6.49596 12.8334 5.7379 12.6817 5.01483 12.3784C4.32285 12.0828 3.70668 11.6648 3.16632 11.1242C2.62596 10.5837 2.20805 9.96726 1.9126 9.27504C1.60938 8.55171 1.45776 7.79337 1.45776 7.00004C1.45776 6.20671 1.60938 5.44837 1.9126 4.72504C2.20805 4.03282 2.62596 3.41643 3.16632 2.87587C3.70668 2.33532 4.32285 1.91726 5.01483 1.62171C5.7379 1.31837 6.49596 1.16671 7.28901 1.16671C8.08206 1.16671 8.84013 1.31837 9.5632 1.62171C10.2552 1.91726 10.8713 2.33532 11.4117 2.87587C11.9521 3.41643 12.37 4.03282 12.6654 4.72504C12.9687 5.44837 13.1203 6.20671 13.1203 7.00004C13.1203 7.79337 12.9687 8.55171 12.6654 9.27504C12.37 9.96726 11.9521 10.5837 11.4117 11.1242C10.8713 11.6648 10.2552 12.0828 9.5632 12.3784C8.84013 12.6817 8.08206 12.8334 7.28901 12.8334ZM6.70589 9.33337L10.8344 5.20337L10.0064 4.38671L6.70589 7.68837L5.06148 6.03171L4.23344 6.86004L6.70589 9.33337Z"
-                        fill="#10B981"
-                      />
-                    </svg>
+                  <span>
+                    <b>5 freebies unlocked</b>
+                    <em> - add your kit to claim them</em>
                   </span>
-                </article>
-              ))}
-            </div>
+                </div>
 
-            <div className="freebies-unlock-strip">
-              <svg
-                width="13"
-                height="12"
-                viewBox="0 0 13 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M7.5 2.22C7.72 2.22 7.92333 2.165 8.11 2.055C8.29667 1.945 8.445 1.79667 8.555 1.61C8.665 1.42333 8.72 1.22 8.72 1H9.28C9.28 1.22 9.335 1.42333 9.445 1.61C9.555 1.79667 9.70333 1.945 9.89 2.055C10.0767 2.165 10.28 2.22 10.5 2.22V2.78C10.28 2.78 10.0767 2.835 9.89 2.945C9.70333 3.055 9.555 3.20333 9.445 3.39C9.335 3.57667 9.28 3.78 9.28 4H8.72C8.72 3.78 8.665 3.57667 8.555 3.39C8.445 3.20333 8.29667 3.055 8.11 2.945C7.92333 2.835 7.72 2.78 7.5 2.78V2.22ZM1 5.5C1.54 5.5 2.04333 5.36333 2.51 5.09C2.96333 4.82333 3.32333 4.46333 3.59 4.01C3.86333 3.54333 4 3.04 4 2.5H5C5 3.04 5.13667 3.54333 5.41 4.01C5.67667 4.46333 6.03667 4.82333 6.49 5.09C6.95667 5.36333 7.46 5.5 8 5.5V6.5C7.46 6.5 6.95667 6.63667 6.49 6.91C6.03667 7.17667 5.67667 7.53667 5.41 7.99C5.13667 8.45667 5 8.96 5 9.5H4C4 8.96 3.86333 8.45667 3.59 7.99C3.32333 7.53667 2.96333 7.17667 2.51 6.91C2.04333 6.63667 1.54 6.5 1 6.5V5.5ZM2.94 6C3.26667 6.18 3.56333 6.40333 3.83 6.67C4.09667 6.93667 4.32 7.23333 4.5 7.56C4.68 7.23333 4.90333 6.93667 5.17 6.67C5.43667 6.40333 5.73333 6.18 6.06 6C5.73333 5.82 5.43667 5.59667 5.17 5.33C4.90333 5.06333 4.68 4.76667 4.5 4.44C4.32 4.76667 4.09667 5.06333 3.83 5.33C3.56333 5.59667 3.26667 5.82 2.94 6ZM9.13 7C9.13 7.29333 9.05667 7.565 8.91 7.815C8.76333 8.065 8.565 8.26333 8.315 8.41C8.065 8.55667 7.79333 8.62667 7.5 8.62V9.37C7.79333 9.37 8.065 9.44333 8.315 9.59C8.565 9.73667 8.76167 9.935 8.905 10.185C9.04833 10.435 9.12 10.7067 9.12 11H9.88C9.87333 10.7067 9.94333 10.435 10.09 10.185C10.2367 9.935 10.435 9.73667 10.685 9.59C10.935 9.44333 11.2067 9.37 11.5 9.37V8.62C11.2067 8.62 10.935 8.54833 10.685 8.405C10.435 8.26167 10.2367 8.065 10.09 7.815C9.94333 7.565 9.87333 7.29333 9.88 7H9.13Z"
-                  fill="#F4C430"
-                />
-              </svg>
-              <span>
-                <b>5 freebies unlocked</b>
-                <em> - add your kit to claim them</em>
-              </span>
-            </div>
-
-            <button type="button" className="freebies-cta-btn">
-              <svg
-                width="13"
-                height="12"
-                viewBox="0 0 13 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6.25 5.5V4L8.25 6L6.25 8V6.5H4.25V5.5H6.25ZM6.25 1C6.93 1 7.58 1.13 8.2 1.39C8.79333 1.64333 9.32167 2.00167 9.785 2.465C10.2483 2.92833 10.6067 3.45667 10.86 4.05C11.12 4.67 11.25 5.32 11.25 6C11.25 6.68 11.12 7.33 10.86 7.95C10.6067 8.54333 10.2483 9.07167 9.785 9.535C9.32167 9.99833 8.79333 10.3567 8.2 10.61C7.58 10.87 6.93 11 6.25 11C5.57 11 4.92 10.87 4.3 10.61C3.70667 10.3567 3.17833 9.99833 2.715 9.535C2.25167 9.07167 1.89333 8.54333 1.64 7.95C1.38 7.33 1.25 6.68 1.25 6C1.25 5.32 1.38 4.67 1.64 4.05C1.89333 3.45667 2.25167 2.92833 2.715 2.465C3.17833 2.00167 3.70667 1.64333 4.3 1.39C4.92 1.13 5.57 1 6.25 1ZM6.25 10C6.97667 10 7.65 9.81667 8.27 9.45C8.87 9.09667 9.34667 8.62 9.7 8.02C10.0667 7.4 10.25 6.72667 10.25 6C10.25 5.27333 10.0667 4.6 9.7 3.98C9.34667 3.38 8.87 2.90333 8.27 2.55C7.65 2.18333 6.97667 2 6.25 2C5.52333 2 4.85 2.18333 4.23 2.55C3.63 2.90333 3.15333 3.38 2.8 3.98C2.43333 4.6 2.25 5.27333 2.25 6C2.25 6.72667 2.43333 7.4 2.8 8.02C3.15333 8.62 3.63 9.09667 4.23 9.45C4.85 9.81667 5.52333 10 6.25 10Z"
-                  fill="#020617"
-                />
-              </svg>
-              Proceed with Recommended Kit
-            </button>
-          </article>
+                <button type="button" className="freebies-cta-btn">
+                  <svg
+                    width="13"
+                    height="12"
+                    viewBox="0 0 13 12"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M6.25 5.5V4L8.25 6L6.25 8V6.5H4.25V5.5H6.25ZM6.25 1C6.93 1 7.58 1.13 8.2 1.39C8.79333 1.64333 9.32167 2.00167 9.785 2.465C10.2483 2.92833 10.6067 3.45667 10.86 4.05C11.12 4.67 11.25 5.32 11.25 6C11.25 6.68 11.12 7.33 10.86 7.95C10.6067 8.54333 10.2483 9.07167 9.785 9.535C9.32167 9.99833 8.79333 10.3567 8.2 10.61C7.58 10.87 6.93 11 6.25 11C5.57 11 4.92 10.87 4.3 10.61C3.70667 10.3567 3.17833 9.99833 2.715 9.535C2.25167 9.07167 1.89333 8.54333 1.64 7.95C1.38 7.33 1.25 6.68 1.25 6C1.25 5.32 1.38 4.67 1.64 4.05C1.89333 3.45667 2.25167 2.92833 2.715 2.465C3.17833 2.00167 3.70667 1.64333 4.3 1.39C4.92 1.13 5.57 1 6.25 1ZM6.25 10C6.97667 10 7.65 9.81667 8.27 9.45C8.87 9.09667 9.34667 8.62 9.7 8.02C10.0667 7.4 10.25 6.72667 10.25 6C10.25 5.27333 10.0667 4.6 9.7 3.98C9.34667 3.38 8.87 2.90333 8.27 2.55C7.65 2.18333 6.97667 2 6.25 2C5.52333 2 4.85 2.18333 4.23 2.55C3.63 2.90333 3.15333 3.38 2.8 3.98C2.43333 4.6 2.25 5.27333 2.25 6C2.25 6.72667 2.43333 7.4 2.8 8.02C3.15333 8.62 3.63 9.09667 4.23 9.45C4.85 9.81667 5.52333 10 6.25 10Z"
+                      fill="#020617"
+                    />
+                  </svg>
+                  Proceed with Recommended Kit
+                </button>
+              </article>
+          )}
         </aside>
+        )}
+      </div>
 
-        {/* Bottom Section */}
-        <div>
-          {/* Legal & Regulatory Notice */}
-          <section className="legal-notice-section container">
-            <div className="legal-notice-header">
-              <div className="legal-icon-wrap">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M7 20h10" />
-                  <path d="M10 20v-4" />
-                  <path d="M14 20v-4" />
-                  <path d="M15 7v5" />
-                  <path d="M9 7v5" />
-                  <path d="M6 7l6-4 6 4" />
-                  <path d="M4 14.5l3-1.5 3 1.5-3 1.5-3-1.5z" />
-                  <path d="M14 14.5l3-1.5 3 1.5-3 1.5-3-1.5z" />
-                </svg>
+      {/* Bottom Section */}
+      <div className="bottom-report-section">
+        {/* Legal & Regulatory Notice */}
+        <section className="legal-notice-section container">
+          <div className="legal-notice-header">
+            <div className="legal-icon-wrap">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M7 20h10" />
+                <path d="M10 20v-4" />
+                <path d="M14 20v-4" />
+                <path d="M15 7v5" />
+                <path d="M9 7v5" />
+                <path d="M6 7l6-4 6 4" />
+                <path d="M4 14.5l3-1.5 3 1.5-3 1.5-3-1.5z" />
+                <path d="M14 14.5l3-1.5 3 1.5-3 1.5-3-1.5z" />
+              </svg>
+            </div>
+            <h3>Important Legal & Regulatory Notice</h3>
+          </div>
+
+          <div className="legal-notice-grid">
+            <article className="legal-card">
+              <div className="legal-card-head">
+                <div className="legal-card-icon icon-red">
+                  <svg
+                    width="28"
+                    height="28"
+                    viewBox="0 0 28 28"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 12C0 5.37258 5.37258 0 12 0H16C22.6274 0 28 5.37258 28 12V16C28 22.6274 22.6274 28 16 28H12C5.37258 28 0 22.6274 0 16V12Z"
+                      fill="#EF4444"
+                      fill-opacity="0.07"
+                    />
+                    <path
+                      d="M12 0.5H16C22.3513 0.5 27.5 5.64873 27.5 12V16C27.5 22.3513 22.3513 27.5 16 27.5H12C5.64873 27.5 0.5 22.3513 0.5 16V12C0.5 5.64873 5.64873 0.5 12 0.5Z"
+                      stroke="#EF4444"
+                      stroke-opacity="0.157"
+                    />
+                    <path
+                      d="M15.5 10H10.5V18H17.5V12H15.5V10ZM9.5 9.5C9.5 9.36 9.54833 9.24167 9.645 9.145C9.74167 9.04833 9.86 9 10 9H16L18.5 11.5V18.5C18.5 18.6333 18.4517 18.75 18.355 18.85C18.2583 18.95 18.14 19 18 19H10C9.86 19 9.74167 18.9517 9.645 18.855C9.54833 18.7583 9.5 18.64 9.5 18.5V9.5ZM13.5 15.5H14.5V16.5H13.5V15.5ZM13.5 11.5H14.5V14.5H13.5V11.5Z"
+                      fill="#EF4444"
+                    />
+                  </svg>
+                </div>
+                <h4 className="medical-diagnosis-title">
+                  Not a Medical Diagnosis-3916
+                </h4>
               </div>
-              <h3>Important Legal & Regulatory Notice</h3>
-            </div>
+              <p className="legal-card-body">
+                This report is a health information assessment generated by
+                AI. It is NOT a clinical diagnosis and does not constitute
+                medical advice. The term "Provisional Assessment" indicates an
+                AI-generated impression only.
+              </p>
+            </article>
 
-            <div className="legal-notice-grid">
-              <article className="legal-card">
-                <div className="legal-card-head">
-                  <div className="legal-card-icon icon-red">
-                    <svg
-                      width="28"
-                      height="28"
-                      viewBox="0 0 28 28"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
+            <article className="legal-card">
+              <div className="legal-card-head">
+                <div className="legal-card-icon icon-yellow">
+                  <svg
+                    width="28"
+                    height="28"
+                    viewBox="0 0 28 28"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 12C0 5.37258 5.37258 0 12 0H16C22.6274 0 28 5.37258 28 12V16C28 22.6274 22.6274 28 16 28H12C5.37258 28 0 22.6274 0 16V12Z"
+                      fill="#F4C430"
+                      fill-opacity="0.07"
+                    />
+                    <path
+                      d="M12 0.5H16C22.3513 0.5 27.5 5.64873 27.5 12V16C27.5 22.3513 22.3513 27.5 16 27.5H12C5.64873 27.5 0.5 22.3513 0.5 16V12C0.5 5.64873 5.64873 0.5 12 0.5Z"
+                      stroke="#F4C430"
+                      stroke-opacity="0.157"
+                    />
+                    <g clip-path="url(#clip0_335_5457)">
                       <path
-                        d="M0 12C0 5.37258 5.37258 0 12 0H16C22.6274 0 28 5.37258 28 12V16C28 22.6274 22.6274 28 16 28H12C5.37258 28 0 22.6274 0 16V12Z"
-                        fill="#EF4444"
-                        fill-opacity="0.07"
-                      />
-                      <path
-                        d="M12 0.5H16C22.3513 0.5 27.5 5.64873 27.5 12V16C27.5 22.3513 22.3513 27.5 16 27.5H12C5.64873 27.5 0.5 22.3513 0.5 16V12C0.5 5.64873 5.64873 0.5 12 0.5Z"
-                        stroke="#EF4444"
-                        stroke-opacity="0.157"
-                      />
-                      <path
-                        d="M15.5 10H10.5V18H17.5V12H15.5V10ZM9.5 9.5C9.5 9.36 9.54833 9.24167 9.645 9.145C9.74167 9.04833 9.86 9 10 9H16L18.5 11.5V18.5C18.5 18.6333 18.4517 18.75 18.355 18.85C18.2583 18.95 18.14 19 18 19H10C9.86 19 9.74167 18.9517 9.645 18.855C9.54833 18.7583 9.5 18.64 9.5 18.5V9.5ZM13.5 15.5H14.5V16.5H13.5V15.5ZM13.5 11.5H14.5V14.5H13.5V11.5Z"
-                        fill="#EF4444"
-                      />
-                    </svg>
-                  </div>
-                  <h4 className="medical-diagnosis-title">
-                    Not a Medical Diagnosis-3916
-                  </h4>
-                </div>
-                <p className="legal-card-body">
-                  This report is a health information assessment generated by
-                  AI. It is NOT a clinical diagnosis and does not constitute
-                  medical advice. The term "Provisional Assessment" indicates an
-                  AI-generated impression only.
-                </p>
-              </article>
-
-              <article className="legal-card">
-                <div className="legal-card-head">
-                  <div className="legal-card-icon icon-yellow">
-                    <svg
-                      width="28"
-                      height="28"
-                      viewBox="0 0 28 28"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M0 12C0 5.37258 5.37258 0 12 0H16C22.6274 0 28 5.37258 28 12V16C28 22.6274 22.6274 28 16 28H12C5.37258 28 0 22.6274 0 16V12Z"
+                        d="M16.4102 16.0308L16.5002 16.1208L16.5902 16.0308C16.7302 15.8841 16.8969 15.7858 17.0902 15.7358C17.2836 15.6858 17.4769 15.6858 17.6702 15.7358C17.8636 15.7858 18.0336 15.8841 18.1802 16.0308C18.3269 16.1774 18.4252 16.3474 18.4752 16.5408C18.5252 16.7341 18.5252 16.9258 18.4752 17.1158C18.4252 17.3058 18.3269 17.4741 18.1802 17.6208L16.5002 19.3008L14.8202 17.6208C14.6736 17.4741 14.5752 17.3058 14.5252 17.1158C14.4752 16.9258 14.4752 16.7341 14.5252 16.5408C14.5752 16.3474 14.6736 16.1774 14.8202 16.0308C14.9669 15.8841 15.1369 15.7858 15.3302 15.7358C15.5236 15.6858 15.7169 15.6858 15.9102 15.7358C16.1036 15.7858 16.2702 15.8841 16.4102 16.0308ZM13.4902 15.2008V16.2008C12.9502 16.2008 12.4469 16.3374 11.9802 16.6108C11.5269 16.8774 11.1669 17.2374 10.9002 17.6908C10.6269 18.1574 10.4902 18.6608 10.4902 19.2008H9.49023C9.49023 18.4874 9.6669 17.8241 10.0202 17.2108C10.3602 16.6174 10.8236 16.1441 11.4102 15.7908C12.0102 15.4174 12.6636 15.2208 13.3702 15.2008H13.4902ZM13.4902 8.70078C14.0369 8.70078 14.5436 8.83745 15.0102 9.11078C15.4569 9.37745 15.8136 9.73745 16.0802 10.1908C16.3536 10.6508 16.4902 11.1508 16.4902 11.6908C16.4902 12.2308 16.3602 12.7274 16.1002 13.1808C15.8469 13.6274 15.4986 13.9874 15.0552 14.2608C14.6119 14.5341 14.1269 14.6808 13.6002 14.7008H13.4902C12.9502 14.7008 12.4469 14.5641 11.9802 14.2908C11.5269 14.0241 11.1669 13.6641 10.9002 13.2108C10.6269 12.7508 10.4902 12.2508 10.4902 11.7108C10.4902 11.1708 10.6202 10.6741 10.8802 10.2208C11.1336 9.77411 11.4819 9.41411 11.9252 9.14078C12.3686 8.86745 12.8536 8.72078 13.3802 8.70078H13.4902ZM13.4902 9.70078C13.1302 9.70078 12.7969 9.79078 12.4902 9.97078C12.1836 10.1508 11.9402 10.3941 11.7602 10.7008C11.5802 11.0074 11.4902 11.3408 11.4902 11.7008C11.4902 12.0608 11.5802 12.3941 11.7602 12.7008C11.9402 13.0074 12.1836 13.2508 12.4902 13.4308C12.7969 13.6108 13.1302 13.7008 13.4902 13.7008C13.8502 13.7008 14.1836 13.6108 14.4902 13.4308C14.7969 13.2508 15.0402 13.0074 15.2202 12.7008C15.4002 12.3941 15.4902 12.0608 15.4902 11.7008C15.4902 11.3408 15.4002 11.0074 15.2202 10.7008C15.0402 10.3941 14.7969 10.1508 14.4902 9.97078C14.1836 9.79078 13.8502 9.70078 13.4902 9.70078Z"
                         fill="#F4C430"
-                        fill-opacity="0.07"
                       />
-                      <path
-                        d="M12 0.5H16C22.3513 0.5 27.5 5.64873 27.5 12V16C27.5 22.3513 22.3513 27.5 16 27.5H12C5.64873 27.5 0.5 22.3513 0.5 16V12C0.5 5.64873 5.64873 0.5 12 0.5Z"
-                        stroke="#F4C430"
-                        stroke-opacity="0.157"
-                      />
-                      <g clip-path="url(#clip0_335_5457)">
-                        <path
-                          d="M16.4102 16.0308L16.5002 16.1208L16.5902 16.0308C16.7302 15.8841 16.8969 15.7858 17.0902 15.7358C17.2836 15.6858 17.4769 15.6858 17.6702 15.7358C17.8636 15.7858 18.0336 15.8841 18.1802 16.0308C18.3269 16.1774 18.4252 16.3474 18.4752 16.5408C18.5252 16.7341 18.5252 16.9258 18.4752 17.1158C18.4252 17.3058 18.3269 17.4741 18.1802 17.6208L16.5002 19.3008L14.8202 17.6208C14.6736 17.4741 14.5752 17.3058 14.5252 17.1158C14.4752 16.9258 14.4752 16.7341 14.5252 16.5408C14.5752 16.3474 14.6736 16.1774 14.8202 16.0308C14.9669 15.8841 15.1369 15.7858 15.3302 15.7358C15.5236 15.6858 15.7169 15.6858 15.9102 15.7358C16.1036 15.7858 16.2702 15.8841 16.4102 16.0308ZM13.4902 15.2008V16.2008C12.9502 16.2008 12.4469 16.3374 11.9802 16.6108C11.5269 16.8774 11.1669 17.2374 10.9002 17.6908C10.6269 18.1574 10.4902 18.6608 10.4902 19.2008H9.49023C9.49023 18.4874 9.6669 17.8241 10.0202 17.2108C10.3602 16.6174 10.8236 16.1441 11.4102 15.7908C12.0102 15.4174 12.6636 15.2208 13.3702 15.2008H13.4902ZM13.4902 8.70078C14.0369 8.70078 14.5436 8.83745 15.0102 9.11078C15.4569 9.37745 15.8136 9.73745 16.0802 10.1908C16.3536 10.6508 16.4902 11.1508 16.4902 11.6908C16.4902 12.2308 16.3602 12.7274 16.1002 13.1808C15.8469 13.6274 15.4986 13.9874 15.0552 14.2608C14.6119 14.5341 14.1269 14.6808 13.6002 14.7008H13.4902C12.9502 14.7008 12.4469 14.5641 11.9802 14.2908C11.5269 14.0241 11.1669 13.6641 10.9002 13.2108C10.6269 12.7508 10.4902 12.2508 10.4902 11.7108C10.4902 11.1708 10.6202 10.6741 10.8802 10.2208C11.1336 9.77411 11.4819 9.41411 11.9252 9.14078C12.3686 8.86745 12.8536 8.72078 13.3802 8.70078H13.4902ZM13.4902 9.70078C13.1302 9.70078 12.7969 9.79078 12.4902 9.97078C12.1836 10.1508 11.9402 10.3941 11.7602 10.7008C11.5802 11.0074 11.4902 11.3408 11.4902 11.7008C11.4902 12.0608 11.5802 12.3941 11.7602 12.7008C11.9402 13.0074 12.1836 13.2508 12.4902 13.4308C12.7969 13.6108 13.1302 13.7008 13.4902 13.7008C13.8502 13.7008 14.1836 13.6108 14.4902 13.4308C14.7969 13.2508 15.0402 13.0074 15.2202 12.7008C15.4002 12.3941 15.4902 12.0608 15.4902 11.7008C15.4902 11.3408 15.4002 11.0074 15.2202 10.7008C15.0402 10.3941 14.7969 10.1508 14.4902 9.97078C14.1836 9.79078 13.8502 9.70078 13.4902 9.70078Z"
-                          fill="#F4C430"
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_335_5457">
+                        <rect
+                          width="12.5"
+                          height="12"
+                          fill="white"
+                          transform="translate(7.75 8)"
                         />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_335_5457">
-                          <rect
-                            width="12.5"
-                            height="12"
-                            fill="white"
-                            transform="translate(7.75 8)"
-                          />
-                        </clipPath>
-                      </defs>
-                    </svg>
-                  </div>
-                  <h4>Consult a Professional</h4>
+                      </clipPath>
+                    </defs>
+                  </svg>
                 </div>
-                <p className="legal-card-body">
-                  Always seek the advice of a qualified dermatologist or
-                  trichologist. Never disregard or delay professional medical
-                  consultation based on information from this tool.
-                </p>
-              </article>
+                <h4>Consult a Professional</h4>
+              </div>
+              <p className="legal-card-body">
+                Always seek the advice of a qualified dermatologist or
+                trichologist. Never disregard or delay professional medical
+                consultation based on information from this tool.
+              </p>
+            </article>
 
-              <article className="legal-card">
-                <div className="legal-card-head">
-                  <div className="legal-card-icon icon-cyan">
-                    <svg
-                      width="28"
-                      height="28"
-                      viewBox="0 0 28 28"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
+            <article className="legal-card">
+              <div className="legal-card-head">
+                <div className="legal-card-icon icon-cyan">
+                  <svg
+                    width="28"
+                    height="28"
+                    viewBox="0 0 28 28"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 12C0 5.37258 5.37258 0 12 0H16C22.6274 0 28 5.37258 28 12V16C28 22.6274 22.6274 28 16 28H12C5.37258 28 0 22.6274 0 16V12Z"
+                      fill="#00E5FF"
+                      fill-opacity="0.07"
+                    />
+                    <path
+                      d="M12 0.5H16C22.3513 0.5 27.5 5.64873 27.5 12V16C27.5 22.3513 22.3513 27.5 16 27.5H12C5.64873 27.5 0.5 22.3513 0.5 16V12C0.5 5.64873 5.64873 0.5 12 0.5Z"
+                      stroke="#00E5FF"
+                      stroke-opacity="0.157"
+                    />
+                    <g clip-path="url(#clip0_335_5469)">
                       <path
-                        d="M0 12C0 5.37258 5.37258 0 12 0H16C22.6274 0 28 5.37258 28 12V16C28 22.6274 22.6274 28 16 28H12C5.37258 28 0 22.6274 0 16V12Z"
+                        d="M14 8.5L18.11 9.41C18.2233 9.43667 18.3167 9.49667 18.39 9.59C18.4633 9.68333 18.5 9.78667 18.5 9.9V14.89C18.5 15.3967 18.3817 15.87 18.145 16.31C17.9083 16.75 17.58 17.11 17.16 17.39L14 19.5L10.84 17.39C10.42 17.11 10.0917 16.75 9.855 16.31C9.61833 15.87 9.5 15.3967 9.5 14.89V9.9C9.5 9.78667 9.53667 9.68333 9.61 9.59C9.68333 9.49667 9.77667 9.43667 9.89 9.41L14 8.5ZM14 9.52L10.5 10.3V14.89C10.5 15.23 10.5783 15.5467 10.735 15.84C10.8917 16.1333 11.11 16.3733 11.39 16.56L14 18.3L16.61 16.56C16.89 16.3733 17.1083 16.1333 17.265 15.84C17.4217 15.5467 17.5 15.23 17.5 14.89V10.3L14 9.52ZM16.23 12.11L16.93 12.82L13.75 16L11.63 13.88L12.34 13.17L13.75 14.59L16.23 12.11Z"
                         fill="#00E5FF"
-                        fill-opacity="0.07"
                       />
-                      <path
-                        d="M12 0.5H16C22.3513 0.5 27.5 5.64873 27.5 12V16C27.5 22.3513 22.3513 27.5 16 27.5H12C5.64873 27.5 0.5 22.3513 0.5 16V12C0.5 5.64873 5.64873 0.5 12 0.5Z"
-                        stroke="#00E5FF"
-                        stroke-opacity="0.157"
-                      />
-                      <g clip-path="url(#clip0_335_5469)">
-                        <path
-                          d="M14 8.5L18.11 9.41C18.2233 9.43667 18.3167 9.49667 18.39 9.59C18.4633 9.68333 18.5 9.78667 18.5 9.9V14.89C18.5 15.3967 18.3817 15.87 18.145 16.31C17.9083 16.75 17.58 17.11 17.16 17.39L14 19.5L10.84 17.39C10.42 17.11 10.0917 16.75 9.855 16.31C9.61833 15.87 9.5 15.3967 9.5 14.89V9.9C9.5 9.78667 9.53667 9.68333 9.61 9.59C9.68333 9.49667 9.77667 9.43667 9.89 9.41L14 8.5ZM14 9.52L10.5 10.3V14.89C10.5 15.23 10.5783 15.5467 10.735 15.84C10.8917 16.1333 11.11 16.3733 11.39 16.56L14 18.3L16.61 16.56C16.89 16.3733 17.1083 16.1333 17.265 15.84C17.4217 15.5467 17.5 15.23 17.5 14.89V10.3L14 9.52ZM16.23 12.11L16.93 12.82L13.75 16L11.63 13.88L12.34 13.17L13.75 14.59L16.23 12.11Z"
-                          fill="#00E5FF"
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_335_5469">
+                        <rect
+                          width="12.5"
+                          height="12"
+                          fill="white"
+                          transform="translate(7.75 8)"
                         />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_335_5469">
-                          <rect
-                            width="12.5"
-                            height="12"
-                            fill="white"
-                            transform="translate(7.75 8)"
-                          />
-                        </clipPath>
-                      </defs>
-                    </svg>
-                  </div>
-                  <h4>DPDP Act 2023 Compliance</h4>
+                      </clipPath>
+                    </defs>
+                  </svg>
                 </div>
-                <p className="legal-card-body">
-                  Your health data is processed under the Digital Personal Data
-                  Protection Act, 2023 (India). Scalp photos (if uploaded) are
-                  processed in-memory only and are not retained on any server.
-                </p>
-              </article>
+                <h4>DPDP Act 2023 Compliance</h4>
+              </div>
+              <p className="legal-card-body">
+                Your health data is processed under the Digital Personal Data
+                Protection Act, 2023 (India). Scalp photos (if uploaded) are
+                processed in-memory only and are not retained on any server.
+              </p>
+            </article>
 
-              <article className="legal-card">
-                <div className="legal-card-head">
-                  <div className="legal-card-icon icon-purple">
-                    <svg
-                      width="28"
-                      height="28"
-                      viewBox="0 0 28 28"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
+            <article className="legal-card">
+              <div className="legal-card-head">
+                <div className="legal-card-icon icon-purple">
+                  <svg
+                    width="28"
+                    height="28"
+                    viewBox="0 0 28 28"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 12C0 5.37258 5.37258 0 12 0H16C22.6274 0 28 5.37258 28 12V16C28 22.6274 22.6274 28 16 28H12C5.37258 28 0 22.6274 0 16V12Z"
+                      fill="#A78BFA"
+                      fill-opacity="0.07"
+                    />
+                    <path
+                      d="M12 0.5H16C22.3513 0.5 27.5 5.64873 27.5 12V16C27.5 22.3513 22.3513 27.5 16 27.5H12C5.64873 27.5 0.5 22.3513 0.5 16V12C0.5 5.64873 5.64873 0.5 12 0.5Z"
+                      stroke="#A78BFA"
+                      stroke-opacity="0.157"
+                    />
+                    <g clip-path="url(#clip0_335_5480)">
                       <path
-                        d="M0 12C0 5.37258 5.37258 0 12 0H16C22.6274 0 28 5.37258 28 12V16C28 22.6274 22.6274 28 16 28H12C5.37258 28 0 22.6274 0 16V12Z"
+                        d="M14.75 9.62063C14.75 9.73396 14.7283 9.83896 14.685 9.93563C14.6417 10.0323 14.58 10.114 14.5 10.1806V11.1206H17C17.2733 11.1206 17.525 11.189 17.755 11.3256C17.985 11.4623 18.1667 11.6456 18.3 11.8756C18.4333 12.1056 18.5 12.354 18.5 12.6206V17.6206C18.5 17.894 18.4333 18.1456 18.3 18.3756C18.1667 18.6056 17.985 18.789 17.755 18.9256C17.525 19.0623 17.2733 19.1273 17 19.1206H11C10.7267 19.1273 10.475 19.0623 10.245 18.9256C10.015 18.789 9.83333 18.6056 9.7 18.3756C9.56667 18.1456 9.5 17.894 9.5 17.6206V12.6206C9.5 12.354 9.56667 12.1056 9.7 11.8756C9.83333 11.6456 10.015 11.4623 10.245 11.3256C10.475 11.189 10.7267 11.1206 11 11.1206H13.5V10.1806C13.42 10.114 13.3583 10.0323 13.315 9.93563C13.2717 9.83896 13.25 9.7373 13.25 9.63063C13.25 9.4173 13.3233 9.2373 13.47 9.09063C13.6167 8.94396 13.7933 8.8723 14 8.87563C14.2067 8.87896 14.3833 8.9523 14.53 9.09563C14.6767 9.23896 14.75 9.4173 14.75 9.63063V9.62063ZM11 12.1206C10.86 12.1206 10.7417 12.1706 10.645 12.2706C10.5483 12.3706 10.5 12.4873 10.5 12.6206V17.6206C10.5 17.7606 10.5483 17.879 10.645 17.9756C10.7417 18.0723 10.86 18.1206 11 18.1206H17C17.14 18.1206 17.2583 18.0723 17.355 17.9756C17.4517 17.879 17.5 17.7606 17.5 17.6206V12.6206C17.5 12.4873 17.4517 12.3723 17.355 12.2756C17.2583 12.179 17.14 12.1273 17 12.1206H11ZM9 13.6206H8V16.6206H9V13.6206ZM19 13.6206H20V16.6206H19V13.6206ZM12.5 15.8706C12.7067 15.8773 12.8833 15.8073 13.03 15.6606C13.1767 15.514 13.25 15.3356 13.25 15.1256C13.25 14.9156 13.1767 14.7373 13.03 14.5906C12.8833 14.444 12.7067 14.3723 12.5 14.3756C12.2933 14.379 12.1167 14.4523 11.97 14.5956C11.8233 14.739 11.75 14.9156 11.75 15.1256C11.75 15.3356 11.8233 15.5123 11.97 15.6556C12.1167 15.799 12.2933 15.8706 12.5 15.8706ZM15.5 15.8706C15.7067 15.8706 15.8833 15.799 16.03 15.6556C16.1767 15.5123 16.25 15.3356 16.25 15.1256C16.25 14.9156 16.1767 14.7373 16.03 14.5906C15.8833 14.444 15.7067 14.3723 15.5 14.3756C15.2933 14.379 15.1167 14.4523 14.97 14.5956C14.8233 14.739 14.75 14.9156 14.75 15.1256C14.75 15.3356 14.8233 15.5123 14.97 15.6556C15.1167 15.799 15.2933 15.8706 15.5 15.8706Z"
                         fill="#A78BFA"
-                        fill-opacity="0.07"
                       />
-                      <path
-                        d="M12 0.5H16C22.3513 0.5 27.5 5.64873 27.5 12V16C27.5 22.3513 22.3513 27.5 16 27.5H12C5.64873 27.5 0.5 22.3513 0.5 16V12C0.5 5.64873 5.64873 0.5 12 0.5Z"
-                        stroke="#A78BFA"
-                        stroke-opacity="0.157"
-                      />
-                      <g clip-path="url(#clip0_335_5480)">
-                        <path
-                          d="M14.75 9.62063C14.75 9.73396 14.7283 9.83896 14.685 9.93563C14.6417 10.0323 14.58 10.114 14.5 10.1806V11.1206H17C17.2733 11.1206 17.525 11.189 17.755 11.3256C17.985 11.4623 18.1667 11.6456 18.3 11.8756C18.4333 12.1056 18.5 12.354 18.5 12.6206V17.6206C18.5 17.894 18.4333 18.1456 18.3 18.3756C18.1667 18.6056 17.985 18.789 17.755 18.9256C17.525 19.0623 17.2733 19.1273 17 19.1206H11C10.7267 19.1273 10.475 19.0623 10.245 18.9256C10.015 18.789 9.83333 18.6056 9.7 18.3756C9.56667 18.1456 9.5 17.894 9.5 17.6206V12.6206C9.5 12.354 9.56667 12.1056 9.7 11.8756C9.83333 11.6456 10.015 11.4623 10.245 11.3256C10.475 11.189 10.7267 11.1206 11 11.1206H13.5V10.1806C13.42 10.114 13.3583 10.0323 13.315 9.93563C13.2717 9.83896 13.25 9.7373 13.25 9.63063C13.25 9.4173 13.3233 9.2373 13.47 9.09063C13.6167 8.94396 13.7933 8.8723 14 8.87563C14.2067 8.87896 14.3833 8.9523 14.53 9.09563C14.6767 9.23896 14.75 9.4173 14.75 9.63063V9.62063ZM11 12.1206C10.86 12.1206 10.7417 12.1706 10.645 12.2706C10.5483 12.3706 10.5 12.4873 10.5 12.6206V17.6206C10.5 17.7606 10.5483 17.879 10.645 17.9756C10.7417 18.0723 10.86 18.1206 11 18.1206H17C17.14 18.1206 17.2583 18.0723 17.355 17.9756C17.4517 17.879 17.5 17.7606 17.5 17.6206V12.6206C17.5 12.4873 17.4517 12.3723 17.355 12.2756C17.2583 12.179 17.14 12.1273 17 12.1206H11ZM9 13.6206H8V16.6206H9V13.6206ZM19 13.6206H20V16.6206H19V13.6206ZM12.5 15.8706C12.7067 15.8773 12.8833 15.8073 13.03 15.6606C13.1767 15.514 13.25 15.3356 13.25 15.1256C13.25 14.9156 13.1767 14.7373 13.03 14.5906C12.8833 14.444 12.7067 14.3723 12.5 14.3756C12.2933 14.379 12.1167 14.4523 11.97 14.5956C11.8233 14.739 11.75 14.9156 11.75 15.1256C11.75 15.3356 11.8233 15.5123 11.97 15.6556C12.1167 15.799 12.2933 15.8706 12.5 15.8706ZM15.5 15.8706C15.7067 15.8706 15.8833 15.799 16.03 15.6556C16.1767 15.5123 16.25 15.3356 16.25 15.1256C16.25 14.9156 16.1767 14.7373 16.03 14.5906C15.8833 14.444 15.7067 14.3723 15.5 14.3756C15.2933 14.379 15.1167 14.4523 14.97 14.5956C14.8233 14.739 14.75 14.9156 14.75 15.1256C14.75 15.3356 14.8233 15.5123 14.97 15.6556C15.1167 15.799 15.2933 15.8706 15.5 15.8706Z"
-                          fill="#A78BFA"
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_335_5480">
+                        <rect
+                          width="12.5"
+                          height="12"
+                          fill="white"
+                          transform="translate(7.75 8)"
                         />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_335_5480">
-                          <rect
-                            width="12.5"
-                            height="12"
-                            fill="white"
-                            transform="translate(7.75 8)"
-                          />
-                        </clipPath>
-                      </defs>
-                    </svg>
-                  </div>
-                  <h4>Third-Party AI Processing</h4>
+                      </clipPath>
+                    </defs>
+                  </svg>
                 </div>
-                <p className="legal-card-body">
-                  Assessment outputs are generated by Anthropic Claude AI (a
-                  US-based service). By using this tool you acknowledge consent
-                  to this processing on the entry screen.
-                </p>
-              </article>
-            </div>
-          </section>
+                <h4>Third-Party AI Processing</h4>
+              </div>
+              <p className="legal-card-body">
+                Assessment outputs are generated by Anthropic Claude AI (a
+                US-based service). By using this tool you acknowledge consent
+                to this processing on the entry screen.
+              </p>
+            </article>
+          </div>
+        </section>
 
-          {/* Footer */}
-          <footer className="report-footer container">
-            <div className="footer-links">
-              <a href="#" className="footer-link">
-                Privacy Policy
-              </a>
-              <span className="footer-separator">|</span>
-              <a href="#" className="footer-link">
-                Terms of Service
-              </a>
-              <span className="footer-separator">|</span>
-              <a href="#" className="footer-link">
-                Data Processing Agreement
-              </a>
-            </div>
-            <div className="footer-copyright">© TrichoScan AI 2025-3969</div>
-          </footer>
-        </div>
+        {/* Footer */}
+        <footer className="report-footer container">
+          <div className="footer-links">
+            <a href="#" className="footer-link">
+              Privacy Policy
+            </a>
+            <span className="footer-separator">|</span>
+            <a href="#" className="footer-link">
+              Terms of Service
+            </a>
+            <span className="footer-separator">|</span>
+            <a href="#" className="footer-link">
+              Data Processing Agreement
+            </a>
+          </div>
+          <div className="footer-copyright">© TrichoScan AI 2025-3969</div>
+        </footer>
       </div>
     </section>
   );

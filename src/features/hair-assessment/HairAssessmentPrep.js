@@ -1,10 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import "./HairAssessmentPrep.css";
-import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronLeft, FaSpinner } from "react-icons/fa";
 import { useNavigate, Link } from "react-router-dom";
+import { createSession } from "./HairAssessmentApi";
 
 const HairAssessmentPrep = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const handleBeginAssessment = async () => {
+    try {
+      setLoading(true);
+      const response = await createSession();
+      if (response.success && response.statusCode === 201) {
+        // Store session data according to Step 2 of Roadmap
+        const { sessionId, sessionToken } = response.data;
+        localStorage.setItem('hair_assessment_session_id', sessionId);
+        
+        if (sessionToken) {
+          localStorage.setItem('hair_assessment_token', sessionToken);
+        }
+        
+        // Navigate to the diagnostic flow
+        navigate("/take-hair-test-premium");
+      } else {
+        alert("Unable to start assessment. Please try again.");
+      }
+    } catch (error) {
+      console.error("Session creation error:", error);
+      alert("Something went wrong. Please check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="hair-assessment-prep-container">
@@ -164,7 +192,13 @@ const HairAssessmentPrep = () => {
 
         {/* Action Buttons */}
         <div className="prep-actions">
-          <button className="begin-btn" onClick={() => navigate("/take-hair-test-premium")}>Begin Assessment</button>
+          <button 
+            className="begin-btn" 
+            onClick={handleBeginAssessment}
+            disabled={loading}
+          >
+            {loading ? <><FaSpinner className="spin-icon" /> Initializing...</> : "Begin Assessment"}
+          </button>
           {/* <button className="subtle-btn" onClick={() => navigate("/")}>Back to Introduction</button> */}
         </div>
 

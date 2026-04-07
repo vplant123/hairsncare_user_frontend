@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaChevronLeft, FaChevronRight, FaTimes, FaCamera, FaCheckCircle, FaTrashAlt, FaClock, FaInfoCircle, FaHeart, FaCheck, FaShieldAlt, FaLightbulb, FaLock, FaMagic, FaSearchPlus, FaGift, FaHeartbeat, FaChartBar, FaStethoscope, FaCalendarAlt, FaEnvelope, FaMapMarkerAlt, FaArrowRight, FaHospital } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import './HairAssessmentFlow.css';
+import { getAssessmentQuestions, createSession, updateAnswers, triggerAnalysis, checkSessionStatus, createLead, fetchReport, finalizeQuiz, uploadImage, verifyOtp } from './HairAssessmentApi';
 
 /* Shared Shield Icon */
 const ShieldIcon = () => (
@@ -28,57 +29,260 @@ const HairAssessmentFlow = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedOptions, setSelectedOptions] = useState({});
 
+  // API Data State
+  const [sections, setSections] = useState([]);
+  const [branchingRules, setBranchingRules] = useState([]);
+  const [hiddenQuestions, setHiddenQuestions] = useState([]); // Questions in 'inject' array
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Validation State for Step 1
+  const [userInfo, setUserInfo] = useState({ fullName: '', phone: '' });
+  const [userErrors, setUserErrors] = useState({ fullName: '', phone: '' });
+  const [showErrors, setShowErrors] = useState(false);
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        setLoading(true);
+        const response = await getAssessmentQuestions();
+        if (response.success && response.data.sections) {
+          setSections(response.data.sections);
+          setBranchingRules(response.data.branching || []);
+          setHiddenQuestions(response.data.inject || []);
+        } else {
+          setError("Failed to load assessment questions");
+        }
+      } catch (err) {
+        setError("Error connecting to server. Please try again.");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchQuestions();
+  }, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentStep, currentView]);
 
-  const handleOptionSelect = (qId, option) => {
-    setSelectedOptions(prev => ({
-      ...prev,
-      [qId]: option
-    }));
+  const handleOptionSelect = async (qId, option, isMulti = false) => {
+    const sessionId = localStorage.getItem('hair_assessment_session_id');
+
+    // 1. Calculate the NEW value first
+    let newValue;
+    if (isMulti) {
+      const current = selectedOptions[qId] || [];
+      const isSelected = current.includes(option);
+      newValue = isSelected
+        ? current.filter(o => o !== option)
+        : [...current, option];
+    } else {
+      newValue = option;
+    }
+
+    // 2. Update state locally for immediate UI response
+    setSelectedOptions(prev => ({ ...prev, [qId]: newValue }));
+
+    // 3. Step 3: Progressive Answering (Auto-save)
+    // Execute once outside the state updater
+    if (sessionId) {
+      try {
+        await updateAnswers(sessionId, { questionId: qId, value: newValue });
+      } catch (err) {
+        console.error("Auto-save failed:", err);
+      }
+    }
   };
 
-  const menuItems = [
-    { label: "Profile", step: 1 },
-    { label: "Medical", step: 2 },
-    { label: "Pattern", step: 3 },
-    { label: "Density", step: 4 },
-    { label: "Scalp", step: 5 },
-    { label: "Lifestyle", step: 6 },
-    { label: "Diet", step: 7 },
-    { label: "Stress", step: 8 },
-    { label: "History", step: 9 }
-  ];
+  const menuItems = sections.map((s, idx) => ({
+    label: s.title.split(' ')[0], // Simpler labels for tabs
+    step: idx + 1,
+    fullTitle: s.title
+  }));
 
-  const stepTotals = { 1: 5, 2: 4, 3: 4, 4: 3, 5: 4, 6: 4, 7: 4, 8: 3, 9: 3 };
-  const stepPrefixes = { 1: 'q', 2: 'm_q', 3: 'p_q', 4: 'd_q', 5: 's_q', 6: 'l_q', 7: 'dt_q', 8: 'st_q', 9: 'h_q' };
+  const getDisplayedQuestions = (section) => {
+    if (!section) return [];
 
-  const totalInSection = stepTotals[currentStep] || 3;
-  const answeredCount = Object.keys(selectedOptions).filter(k => {
-    const prefix = stepPrefixes[currentStep];
-    if (currentStep === 1) return k.startsWith('q') && !k.includes('_');
-    return k.startsWith(prefix);
-  }).length;
+    // 1. Collect all activated IDs across all branching rules
+    let activatedIds = new Set();
+
+    const evaluateCondition = (cond) => {
+      const userValue = selectedOptions[cond.questionId];
+      if (userValue === undefined) return false;
+
+      switch (cond.operator) {
+        case 'equals': return userValue === cond.value;
+        case 'not_equals': return userValue !== cond.value;
+        case 'in': return Array.isArray(cond.value) ? cond.value.includes(userValue) : false;
+        case 'gte': return Number(userValue) >= Number(cond.value);
+        case 'lte': return Number(userValue) <= Number(cond.value);
+        default: return false;
+      }
+    };
+
+    // Evaluate all branching rules to determine what's active
+    branchingRules.forEach(rule => {
+      const conditions = rule.conditions || [];
+      // Implicit AND for all conditions in the rule
+      const met = conditions.length > 0 && conditions.every(c => evaluateCondition(c));
+
+      if (met && rule.actions?.activate) {
+        rule.actions.activate.forEach(id => activatedIds.add(id));
+      }
+    });
+
+    // 2. Filter questions in the section based on conditions
+    return section.questions.filter(q => {
+      // Always show non-conditional questions
+      if (!q.isConditional) return true;
+      // Show conditional questions only if activated by a rule
+      return activatedIds.has(q.id);
+    });
+  };
+
+  const activeSection = sections[currentStep - 1] || null;
+  const displayedQuestions = getDisplayedQuestions(activeSection);
+
+  // Dynamic calculation for progress tracker
+  // Step 1 includes Full Name + Phone Number + API Questions
+  const profileFieldsCount = currentStep === 1 ? 2 : 0;
+  const mandatoryInSection = displayedQuestions.filter(q => q.mandatory).length + profileFieldsCount;
+
+  const profileAnsweredCount = currentStep === 1
+    ? (userInfo.fullName.trim() !== '' ? 1 : 0) + (userInfo.phone.length === 10 ? 1 : 0)
+    : 0;
+
+  const answeredMandatoryCount = displayedQuestions.filter(q => {
+    if (!q.mandatory) return false;
+    const val = selectedOptions[q.id];
+    if (q.type === 'MULTI_SELECT') return val && val.length > 0;
+    return val !== undefined && val !== '';
+  }).length + profileAnsweredCount;
+
+  const totalAnswered = displayedQuestions.filter(q => {
+    const val = selectedOptions[q.id];
+    if (q.type === 'MULTI_SELECT') return val && val.length > 0;
+    return val !== undefined && val !== '';
+  }).length + profileAnsweredCount;
+
+  const handleUserInfoChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name === 'phone') {
+      // Only allow numbers and max 10 digits
+      const cleaned = value.replace(/\D/g, '').slice(0, 10);
+      setUserInfo(prev => ({ ...prev, [name]: cleaned }));
+
+      if (cleaned.length > 0 && cleaned.length < 10) {
+        setUserErrors(prev => ({ ...prev, phone: 'Phone number must be 10 digits' }));
+      } else if (cleaned.length === 0) {
+        setUserErrors(prev => ({ ...prev, phone: 'Phone number is required' }));
+      } else {
+        setUserErrors(prev => ({ ...prev, phone: '' }));
+        // Persist for Lead Gate
+        localStorage.setItem('user_phone', cleaned);
+      }
+    } else {
+      setUserInfo(prev => {
+        const updated = { ...prev, [name]: value };
+        // Also store in localStorage for the Lead Gate
+        localStorage.setItem('user_full_name', value);
+        return updated;
+      });
+      if (value.trim() === '') {
+        setUserErrors(prev => ({ ...prev, fullName: 'Full name is required' }));
+      } else {
+        setUserErrors(prev => ({ ...prev, fullName: '' }));
+      }
+    }
+  };
+
+  const isProfileValid = currentStep === 1
+    ? (userInfo.fullName.trim() !== '' && userInfo.phone.length === 10 && userErrors.fullName === '' && userErrors.phone === '')
+    : true;
+
+  const validateSection = (questions) => {
+    const allAnswered = questions.every(q => {
+      if (!q.mandatory) return true;
+      const val = selectedOptions[q.id];
+      if (q.type === 'MULTI_SELECT') return val && val.length > 0;
+      return val !== undefined && val !== '';
+    });
+    return allAnswered && isProfileValid;
+  };
+
+  const handleNextStep = async () => {
+    if (activeSection) {
+      if (validateSection(displayedQuestions)) {
+        if (currentStep < sections.length) {
+          setCurrentStep(prev => prev + 1);
+        } else {
+          // PHASE 2 Finalization
+          try {
+            const sessionId = localStorage.getItem('hair_assessment_session_id');
+            if (sessionId) {
+              await finalizeQuiz(sessionId);
+            }
+            setCurrentView("ai-analysis");
+            setAiSubStep("intro");
+          } catch (error) {
+            console.error("Quiz completion error:", error);
+            alert("Error finalizing result. Proceeding anyway...");
+            setCurrentView("ai-analysis");
+            setAiSubStep("intro");
+          }
+        }
+      } else {
+        setShowErrors(true);
+      }
+    }
+  };
 
   const renderSectionContent = () => {
-    if (currentStep === 1) {
-      return (
-        <>
-          <SectionProgressTracker sectionName="Patient Profile" total={5} answered={answeredCount} numMode={false} />
+    if (!activeSection) return null;
 
+    return (
+      <>
+        <SectionProgressTracker
+          sectionName={activeSection.title}
+          total={mandatoryInSection}
+          answered={answeredMandatoryCount}
+          numMode={currentStep !== 1}
+        />
+
+        {currentStep === 1 && (
           <div className="flow-card">
             <div className="card-header">
               <h3 className="card-title-main">Basic Information</h3>
               <p className="card-subtitle-main">Help us personalize your report and securely save your results</p>
             </div>
             <div className="input-group">
-              <label className="input-label">Full Name</label>
-              <input type="text" className="flow-input" placeholder="Enter your full name" />
+              <label className="input-label">Full Name <span style={{ color: '#ff4d4d' }}>*</span></label>
+              <input
+                type="text"
+                name="fullName"
+                className={`flow-input ${(userErrors.fullName || (showErrors && !userInfo.fullName)) ? 'input-error' : ''}`}
+                placeholder="Enter your full name"
+                value={userInfo.fullName}
+                onChange={handleUserInfoChange}
+              />
+              {(userErrors.fullName || (showErrors && !userInfo.fullName)) && <span className="field-error-msg">{userErrors.fullName || "Full name is required"}</span>}
             </div>
             <div className="input-group">
-              <label className="input-label">Phone Number</label>
-              <input type="text" className="flow-input" placeholder="Enter your mobile number" />
+              <label className="input-label">Phone Number <span style={{ color: '#ff4d4d' }}>*</span></label>
+              <input
+                type="text"
+                name="phone"
+                className={`flow-input ${(userErrors.phone || (showErrors && userInfo.phone.length < 10)) ? 'input-error' : ''}`}
+                placeholder="Enter your mobile number"
+                value={userInfo.phone}
+                onChange={handleUserInfoChange}
+                maxLength="10"
+              />
+              {(userErrors.phone || (showErrors && userInfo.phone.length < 10)) && <span className="field-error-msg">{userErrors.phone || "Phone number must be 10 digits"}</span>}
             </div>
             <div className="card-footer-info">
               <p className="usage-note">We'll use this to generate and share your personalized hair report.</p>
@@ -88,86 +292,90 @@ const HairAssessmentFlow = () => {
               </div>
             </div>
           </div>
+        )}
 
-          <QuestionCard
-            title="Q1 — Age Group"
-            subtitle="Helps determine age-related hair loss patterns"
-            options={["18-24", "25-34", "35-44", "45-54", "55+"]}
-            selectedOption={selectedOptions['q1']}
-            onSelect={(opt) => handleOptionSelect('q1', opt)}
+        {displayedQuestions.map((q, idx) => (
+          <DynamicQuestionCard
+            key={q.id}
+            index={currentStep === 1 ? idx + 3 : idx + 1}
+            question={q}
+            selectedValue={selectedOptions[q.id]}
+            onSelect={(val) => {
+              handleOptionSelect(q.id, val, q.type === 'MULTI_SELECT');
+              if (showErrors) setShowErrors(false);
+            }}
+            showError={showErrors && q.mandatory && (q.type === 'MULTI_SELECT' ? !(selectedOptions[q.id]?.length > 0) : !selectedOptions[q.id])}
           />
-          <QuestionCard
-            title="Q2 — Biological Gender"
-            subtitle="Determines hormonal hair loss pathway"
-            options={["Male", "Female", "Other / Prefer not to say"]}
-            selectedOption={selectedOptions['q2']}
-            onSelect={(opt) => handleOptionSelect('q2', opt)}
-          />
-          <QuestionCard
-            title="Q3 — Climate You Live In"
-            subtitle="Environmental factors affect scalp oil balance and hair health"
-            options={["Humid / Tropical", "Dry / Arid", "Coastal / Salty air", "Moderate / Mixed"]}
-            selectedOption={selectedOptions['q3']}
-            onSelect={(opt) => handleOptionSelect('q3', opt)}
-          />
-          <QuestionCard
-            title="Q4 — Occupation Type"
-            subtitle="Stress level and physical exposure factor into hair loss"
-            options={["Office / Desk work", "High-stress role", "Field / Outdoor work", "Factory / Industrial", "Student", "Homemaker"]}
-            selectedOption={selectedOptions['q4']}
-            onSelect={(opt) => handleOptionSelect('q4', opt)}
-          />
-          <QuestionCard
-            title="Q5 — Daily Helmet / Cap Use"
-            subtitle="Trapped heat and friction can accelerate scalp issues"
-            options={["Never", "Rarely (< 2x/week)", "Often (4-5x/week)", "Daily (all day)"]}
-            selectedOption={selectedOptions['q5']}
-            onSelect={(opt) => handleOptionSelect('q5', opt)}
-          />
-        </>
-      );
-    }
-
-    // Default medical/diagnostic steps
-    const stepData = {
-      2: { name: "Medical History", icon: <FaHeart />, q: ["Family History", "Previous Treatments", "Medical Conditions", "Recent Illness"] },
-      3: { name: "Hair Loss Pattern", q: ["Receding Hairline", "Crown Thinning", "Diffuse Thinning", "Rate of Loss"] },
-      4: { name: "Hair Density", q: ["Current Thickness", "Hair Bundle Size", "Scalp Visibility"] },
-      5: { name: "Scalp Condition", q: ["Scalp Type", "Dandruff Presence", "Inflammation", "Washing Frequency"] },
-      6: { name: "Lifestyle Factors", q: ["Sleep Quality", "Smoking", "Alcohol", "Physical Activity"] },
-      7: { name: "Diet & Nutrition", q: ["Protein Intake", "Fast Food", "Water Intake", "Diet Type"] },
-      8: { name: "Stress Levels", q: ["Work/Life Stress", "Emotional Trauma", "Relaxation Quality"] },
-      9: { name: "History & Duration", q: ["Duration of Loss", "Shedding Amount", "Your Growth Goal"] }
-    };
-
-    const current = stepData[currentStep];
-    return (
-      <>
-        <SectionProgressTracker sectionName={current.name} total={stepTotals[currentStep]} answered={answeredCount} />
-        {current.q.map((qTitle, idx) => {
-          const qId = `${stepPrefixes[currentStep]}${idx + 1}`;
-          return (
-            <QuestionCard
-              key={qId}
-              title={`Q${idx + 1} — ${qTitle}`}
-              options={["Option A", "Option B", "Option C", "Option D"]}
-              selectedOption={selectedOptions[qId]}
-              onSelect={(opt) => handleOptionSelect(qId, opt)}
-            />
-          );
-        })}
+        ))}
       </>
     );
   };
 
   if (currentView === "ai-analysis") {
+    const sessionId = localStorage.getItem('hair_assessment_session_id');
     return (
       <AiAnalysisView
+        sessionId={sessionId}
         subStep={aiSubStep}
         setSubStep={setAiSubStep}
         onBack={() => setCurrentView("diagnostic")}
-        onNext={() => alert("Analysis started!")}
+        onNext={() => setCurrentStep(prev => prev + 1)}
       />
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="hair-flow-container">
+        <header className="prep-header">
+          <div className="header-left-group">
+            <div className="back-btn"><FaChevronLeft /> BACK</div>
+            <div className="header-divider"></div>
+            <div className="prep-logo"><img src="/reportlogo.png" alt="HairSnCare" /></div>
+          </div>
+          <div className="shimmer-active shimmer-tab-item" style={{ width: 80, height: 20 }}></div>
+        </header>
+
+        <main className="flow-content shimmer-wrapper">
+          <div className="shimmer-active shimmer-hero"></div>
+
+          <div className="shimmer-tabs">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => <div key={i} className="shimmer-active shimmer-tab-item"></div>)}
+          </div>
+
+          <div className="shimmer-active" style={{ height: 120, marginBottom: 24 }}></div>
+
+          <div className="shimmer-active" style={{ padding: 24 }}>
+            <div className="shimmer-title" style={{ width: '60%' }}></div>
+            <div className="shimmer-text"></div>
+            <div className="shimmer-options">
+              {[1, 2].map(i => <div key={i} className="shimmer-opt-btn shimmer-active"></div>)}
+            </div>
+          </div>
+
+          {[1, 2, 3].map(i => (
+            <div key={i} className="shimmer-active shimmer-card" style={{ padding: 24 }}>
+              <div className="shimmer-title"></div>
+              <div className="shimmer-text"></div>
+              <div className="shimmer-options">
+                {[1, 2, 3, 4].map(j => <div key={j} className="shimmer-opt-btn shimmer-active"></div>)}
+              </div>
+            </div>
+          ))}
+        </main>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="hair-flow-container error-state">
+        <div className="error-box">
+          <FaInfoCircle />
+          <p>{error}</p>
+          <button onClick={() => window.location.reload()}>Retry</button>
+        </div>
+      </div>
     );
   }
 
@@ -184,24 +392,23 @@ const HairAssessmentFlow = () => {
           </div>
         </div>
         <div className="step-indicator">
-          Step {currentStep.toString().padStart(2, '0')} / 09
+          Step {currentStep.toString().padStart(2, '0')} / {sections.length.toString().padStart(2, '0')}
         </div>
       </header>
 
       <main className="flow-content">
         <SectionHero
           num={currentStep.toString().padStart(2, '0')}
-          sectionLabel={menuItems[currentStep - 1].label.toUpperCase()}
-          title={currentStep === 1 ? "Patient Profile" : menuItems[currentStep - 1].label}
-          subtitle={`Completing your ${menuItems[currentStep - 1].label.toLowerCase()} analysis phase.`}
+          sectionLabel={activeSection ? activeSection.title.toUpperCase() : ""}
+          title={activeSection ? activeSection.title : ""}
+          subtitle={`Completing your ${activeSection ? activeSection.title.toLowerCase() : ""} analysis phase.`}
         />
 
         <div className="section-tabs-container">
           {menuItems.map((item) => (
             <div
               key={item.step}
-              className={`tab-item ${currentStep === item.step ? 'active' : ''} ${currentStep > item.step ? 'completed' : ''}`}
-              onClick={() => setCurrentStep(item.step)}
+              className={`tab-item ${currentStep === item.step ? 'active' : ''} ${currentStep > item.step ? 'completed' : ''} no-click`}
             >
               <div className="tab-progress-line"></div>
               <span className="tab-label">{item.label}</span>
@@ -215,7 +422,7 @@ const HairAssessmentFlow = () => {
 
         <div className="flow-actions-footer">
           <div className="answered-summary-bar">
-            <strong>{answeredCount} of {totalInSection}</strong> questions answered in this section
+            <strong>{answeredMandatoryCount} of {mandatoryInSection}</strong> mandatory questions answered
           </div>
           <div className="flow-button-row">
             {currentStep > 1 && (
@@ -224,17 +431,10 @@ const HairAssessmentFlow = () => {
               </button>
             )}
             <button
-              className={`flow-continue-btn ${answeredCount < totalInSection ? 'disabled' : ''}`}
-              onClick={() => {
-                if (currentStep === 9 && answeredCount === totalInSection) {
-                  setCurrentView("ai-analysis");
-                } else {
-                  setCurrentStep(prev => Math.min(9, prev + 1));
-                }
-              }}
-              disabled={answeredCount < totalInSection}
+              className={`flow-continue-btn ${(!validateSection(displayedQuestions)) ? 'disabled' : ''}`}
+              onClick={handleNextStep}
             >
-              Continue to {currentStep === 9 ? 'AI Analysis' : 'Next Section'}
+              Continue to {currentStep === sections.length ? 'AI Analysis' : 'Next Section'}
             </button>
           </div>
         </div>
@@ -259,33 +459,123 @@ const SectionHero = ({ num, sectionLabel, title, subtitle }) => (
   </div>
 );
 
-const QuestionCard = ({ title, subtitle, options, selectedOption, onSelect }) => (
-  <div className="flow-card">
-    <div className="question-header">
-      <div className="q-title-box">
-        <h3>{title}</h3>
-        {subtitle && <p className="q-desc">{subtitle}</p>}
-      </div>
-      <div className={`saved-badge ${selectedOption ? 'visible' : ''}`}>
-        <FaCheck className="check-icon-small" /> Saved
-      </div>
-    </div>
-    <div className="options-grid">
-      {options.map((opt, i) => (
-        <button
-          key={i}
-          className={`option-btn ${selectedOption === opt ? 'selected' : ''}`}
-          onClick={() => onSelect(opt)}
-        >
-          <div className="checkbox-circle">
-            {selectedOption === opt && <FaCheck className="check-icon-option" />}
+const DynamicQuestionCard = ({ index, question, selectedValue, onSelect, showError }) => {
+  const { id, text, type, options, min, max, mandatory, imageUrl } = question;
+
+  const isSelected = (val) => {
+    if (type === 'MULTI_SELECT') return (selectedValue || []).includes(val);
+    return selectedValue === val;
+  };
+
+  const renderOptions = () => {
+    if (type === 'NUMERIC') {
+      return (
+        <div className="input-group">
+          <input
+            type="number"
+            className={`flow-input ${showError ? 'input-error' : ''}`}
+            placeholder={min && max ? `Enter value (${min}-${max})` : 'Enter value'}
+            value={selectedValue || ''}
+            onChange={(e) => onSelect(e.target.value)}
+            min={min}
+            max={max}
+          />
+        </div>
+      );
+    }
+
+    if (type === 'FREE_TEXT') {
+      return (
+        <div className="input-group">
+          <input
+            type="text"
+            className="flow-input"
+            placeholder="Type your answer here..."
+            value={selectedValue || ''}
+            onChange={(e) => onSelect(e.target.value)}
+          />
+        </div>
+      );
+    }
+
+    if (type === 'SLIDER') {
+      return (
+        <div className="slider-group">
+          <input
+            type="range"
+            className="flow-slider"
+            min={min || 1}
+            max={max || 10}
+            value={selectedValue || min || 1}
+            onChange={(e) => onSelect(e.target.value)}
+          />
+          <div className="slider-labels">
+            <span>Low ({min || 1})</span>
+            <span className="slider-value">{selectedValue || min || 1}</span>
+            <span>High ({max || 10})</span>
           </div>
-          {opt}
-        </button>
-      ))}
+        </div>
+      );
+    }
+
+    if (type === 'IMAGE_SELECT') {
+      return (
+        <div className="image-options-grid">
+          {options.map((opt) => (
+            <button
+              key={opt.id}
+              className={`image-option-btn ${isSelected(opt.id) ? 'selected' : ''}`}
+              onClick={() => onSelect(opt.id)}
+            >
+              <div className="image-container">
+                <img src={opt.imageUrl} alt={opt.label} />
+              </div>
+              <div className="image-option-info">
+                <div className="checkbox-circle">
+                  {isSelected(opt.id) && <FaCheck className="check-icon-option" />}
+                </div>
+                <span>{opt.label}</span>
+              </div>
+            </button>
+          ))}
+        </div>
+      );
+    }
+
+    // Default for SINGLE_SELECT and MULTI_SELECT
+    return (
+      <div className={`options-grid ${type === 'MULTI_SELECT' ? 'multi-mode' : ''}`}>
+        {options.map((opt) => (
+          <button
+            key={opt.id}
+            className={`option-btn ${isSelected(opt.id) ? 'selected' : ''}`}
+            onClick={() => onSelect(opt.id)}
+          >
+            <div className="checkbox-circle">
+              {isSelected(opt.id) && <FaCheck className="check-icon-option" />}
+            </div>
+            {opt.label}
+          </button>
+        ))}
+      </div>
+    );
+  };
+
+  return (
+    <div className={`flow-card ${showError ? 'card-error' : ''}`}>
+      <div className="question-header">
+        <div className="q-title-box">
+          <h3>Q{index} — {text} {mandatory && <span className="mandatory-asterisk" style={{ color: '#ff4d4d', marginLeft: '4px' }}>*</span>}</h3>
+          {showError && <span className="mandatory-tag">! PENDING: THIS FIELD IS REQUIRED</span>}
+        </div>
+        <div className={`saved-badge ${selectedValue && (Array.isArray(selectedValue) ? selectedValue.length > 0 : true) ? 'visible' : ''}`}>
+          <FaCheck className="check-icon-small" /> Saved
+        </div>
+      </div>
+      {renderOptions()}
     </div>
-  </div>
-);
+  );
+};
 
 const SectionProgressTracker = ({ sectionName, total, answered, numMode = true }) => (
   <div className={`flow-card section-progress-card ${!numMode ? 'checkmark-mode' : 'number-mode'}`}>
@@ -303,22 +593,67 @@ const SectionProgressTracker = ({ sectionName, total, answered, numMode = true }
   </div>
 );
 
-const AiAnalysisView = ({ subStep, setSubStep, onBack, onNext }) => {
+const AiAnalysisView = ({ sessionId, subStep, setSubStep, onBack, onNext }) => {
   const [uploadedPhotos, setUploadedPhotos] = useState({
-    front: '/assets/img/uploadscalp_front.png', // Simulated for sample
+    front: null,
     top: null,
     left: null,
     right: null
+  });
+  const [isTriggering, setIsTriggering] = useState(false);
+
+  const [uploadProgress, setUploadProgress] = useState({
+    front: false,
+    top: false,
+    left: false,
+    right: false
   });
 
   const handleDeletePhoto = (key) => {
     setUploadedPhotos(prev => ({ ...prev, [key]: null }));
   };
 
-  const handleUploadPhoto = (key, file) => {
+  const handleUploadPhoto = async (key, file) => {
     if (file) {
+      // Show local preview immediately
       const preview = URL.createObjectURL(file);
       setUploadedPhotos(prev => ({ ...prev, [key]: preview }));
+
+      // PHASE 3: Multipart upload
+      try {
+        setUploadProgress(prev => ({ ...prev, [key]: 'uploading' }));
+        const response = await uploadImage(sessionId, key, file);
+        if (response.success) {
+          setUploadProgress(prev => ({ ...prev, [key]: 'done' }));
+        } else {
+          setUploadProgress(prev => ({ ...prev, [key]: 'error' }));
+          alert(`Failed to upload ${key} view properly`);
+        }
+      } catch (err) {
+        console.error("Upload error:", err);
+        setUploadProgress(prev => ({ ...prev, [key]: 'error' }));
+      }
+    }
+  };
+
+  const handleTrigger = async (skip = false) => {
+    try {
+      setIsTriggering(true);
+      const response = await triggerAnalysis(sessionId, skip);
+      if (response.success) {
+        if (skip) {
+          setSubStep('results');
+        } else {
+          setSubStep('processing');
+        }
+      } else {
+        alert(response.message || "Failed to trigger analysis");
+      }
+    } catch (error) {
+      console.error("Analysis trigger error:", error);
+      alert("Error starting analysis. Please try again.");
+    } finally {
+      setIsTriggering(false);
     }
   };
 
@@ -426,12 +761,13 @@ const AiAnalysisView = ({ subStep, setSubStep, onBack, onNext }) => {
 
           <div className="ai-action-footer">
             <button
-              className={`analyze-action-btn ${canAnalyze ? 'active' : ''}`}
-              onClick={() => canAnalyze ? setSubStep('processing') : alert("Please upload required photos")}
+              className={`analyze-action-btn ${canAnalyze && !isTriggering ? 'active' : ''}`}
+              onClick={() => canAnalyze ? handleTrigger(false) : alert("Please upload required photos")}
+              disabled={!canAnalyze || isTriggering}
             >
-              Analyze Photos <SparklesIcon />
+              {isTriggering ? 'Starting...' : 'Analyze Photos'} <SparklesIcon />
             </button>
-            <button className="skip-btn-lg" onClick={() => setSubStep('results')}>
+            <button className="skip-btn-lg" onClick={() => handleTrigger(true)} disabled={isTriggering}>
               Skip Photo Analysis
             </button>
             <p className="ai-final-note">Photo analysis improves diagnostic accuracy by up to 34%.</p>
@@ -444,6 +780,7 @@ const AiAnalysisView = ({ subStep, setSubStep, onBack, onNext }) => {
   if (subStep === 'processing') {
     return (
       <ProcessingView
+        sessionId={sessionId}
         onBack={() => setSubStep('upload')}
         onComplete={() => setSubStep('results')}
       />
@@ -451,7 +788,7 @@ const AiAnalysisView = ({ subStep, setSubStep, onBack, onNext }) => {
   }
 
   if (subStep === 'results') {
-    return <ResultsView onBack={() => setSubStep('processing')} onNext={onNext} />;
+    return <ResultsView sessionId={sessionId} onBack={() => setSubStep('processing')} onNext={onNext} />;
   }
 
   return (
@@ -563,8 +900,12 @@ const AiAnalysisView = ({ subStep, setSubStep, onBack, onNext }) => {
           <button className="upload-btn-lg" onClick={() => setSubStep('upload')}>
             Upload Scalp Photos <UploadIcon />
           </button>
-          <button className="skip-btn-lg" onClick={() => setSubStep('results')}>
-            Skip Photo Analysis
+          <button
+            className="skip-btn-lg"
+            onClick={() => handleTrigger(true)}
+            disabled={isTriggering}
+          >
+            {isTriggering ? 'Skipping...' : 'Skip Photo Analysis'}
           </button>
           <p className="ai-final-note">This information helps improve the accuracy of your diagnosis.</p>
         </div>
@@ -608,7 +949,7 @@ const GridIconSmall = () => (
 
 const PhotoReqIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10 18.3334C8.912 18.3334 7.872 18.1167 6.88 17.6834C5.93067 17.2612 5.08533 16.6639 4.344 15.8917C3.60267 15.1195 3.02933 14.2389 2.624 13.25C2.208 12.2167 2 11.1334 2 10C2 8.86671 2.208 7.78337 2.624 6.75004C3.02933 5.76115 3.60267 4.8806 4.344 4.10837C5.08533 3.33615 5.93067 2.73893 6.88 2.31671C7.872 1.88338 8.912 1.66671 10 1.66671C11.088 1.66671 12.128 1.88338 13.12 2.31671C14.0693 2.73893 14.9147 3.33615 15.656 4.10837C16.3973 4.8806 16.9707 5.76115 17.376 6.75004C17.792 7.78337 18 8.86671 18 10C18 11.1334 17.792 12.2167 17.376 13.25C16.9707 14.2389 16.3973 15.1195 15.656 15.8917C14.9147 16.6639 14.0693 17.2612 13.12 17.6834C12.128 18.1167 11.088 18.3334 10 18.3334ZM10 16.6667C11.1627 16.6667 12.24 16.3612 13.232 15.75C14.192 15.1612 14.9547 14.3667 15.52 13.3667C16.1067 12.3334 16.4 11.2112 16.4 10C16.4 8.78893 16.1067 7.66671 15.52 6.63338C14.9547 5.63338 14.192 4.83893 13.232 4.25004C12.24 3.63893 11.1627 3.33337 10 3.33337C8.83733 3.33337 7.76 3.63893 6.768 4.25004C5.808 4.83893 5.04533 5.63338 4.48 6.63338C3.89333 7.66671 3.6 8.78893 3.6 10C3.6 11.2112 3.89333 12.3334 4.48 13.3667C5.04533 14.3667 5.808 15.1612 6.768 15.75C7.76 16.3612 8.83733 16.6667 10 16.6667ZM9.2 13.3334L5.808 9.80004L6.944 8.61671L9.2 10.9834L13.728 6.26671L14.864 7.43337L9.2 13.3334Z" fill="#0ED7B5" />
+    <path d="M10 18.3334C8.912 18.3334 7.872 18.1167 6.88 17.6834C5.93067 17.2612 5.08533 16.6639 4.344 15.8917C3.60267 15.1195 3.02933 14.2389 2.624 13.25C2.208 12.2167 2 11.1334 2 10C2 8.86671 2.208 7.78337 2.624 6.75004C3.02933 5.76115 3.60267 4.8806 4.344 4.10837C5.08533 3.33615 5.93067 2.73893 6.88 2.31671C7.872 1.88338 8.912 1.66671 10 1.66671C11.088 1.66671 12.128 1.88338 13.12 2.31671C14.0693 2.73893 14.9147 3.33615 15.656 4.10837C16.3973 4.8806 16.9707 5.76115 15.656 15.8917C14.9147 16.6639 14.0693 17.2612 13.12 17.6834C12.128 18.1167 11.088 18.3334 10 18.3334ZM10 16.6667C11.1627 16.6667 12.24 16.3612 13.232 15.75C14.192 15.1612 14.9547 14.3667 15.52 13.3667C16.1067 12.3334 16.4 11.2112 16.4 10C16.4 8.78893 16.1067 7.66671 15.52 6.63338C14.9547 5.63338 14.192 4.83893 13.232 4.25004C12.24 3.63893 11.1627 3.33337 10 3.33337C8.83733 3.33337 7.76 3.63893 6.768 4.25004C5.808 4.83893 5.04533 5.63338 4.48 6.63338C3.89333 7.66671 3.6 8.78893 3.6 10C3.6 11.2112 3.89333 12.3334 4.48 13.3667C5.04533 14.3667 5.808 15.1612 6.768 15.75C7.76 16.3612 8.83733 16.6667 10 16.6667ZM9.2 13.3334L5.808 9.80004L6.944 8.61671L9.2 10.9834L13.728 6.26671L14.864 7.43337L9.2 13.3334Z" fill="#0ED7B5" />
   </svg>
 );
 
@@ -618,26 +959,54 @@ const UploadIcon = () => (
   </svg>
 );
 
-const ProcessingView = ({ onBack, onComplete }) => {
+const ProcessingView = ({ sessionId, onBack, onComplete }) => {
   const [progress, setProgress] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
+  const [status, setStatus] = useState('INIT');
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(timer);
-          setTimeout(() => {
-            onComplete();
-          }, 800);
-          return 100;
-        }
-        return prev + 1;
-      });
-    }, 120); // ~12 seconds total
+    let pollInterval;
 
-    return () => clearInterval(timer);
-  }, [onComplete]);
+    const checkStatus = async () => {
+      try {
+        const response = await checkSessionStatus(sessionId);
+        if (response.success) {
+          const currentStatus = response.data.status;
+          setStatus(currentStatus);
+
+          // Map status to progress for visual feel
+          if (currentStatus === 'PROCESSING') setProgress(45);
+          if (currentStatus === 'ANALYSIS_COMPLETE') {
+            setProgress(100);
+            clearInterval(pollInterval);
+            setTimeout(() => onComplete(), 1500);
+          }
+        }
+      } catch (error) {
+        console.error("Status check failed:", error);
+      }
+    };
+
+    // Initial check
+    checkStatus();
+
+    // Poll every 3 seconds as per Step 6
+    pollInterval = setInterval(checkStatus, 3000);
+
+    return () => clearInterval(pollInterval);
+  }, [sessionId, onComplete]);
+
+  useEffect(() => {
+    // Fake some granular progress increments within status bands
+    const fakeTimer = setInterval(() => {
+      setProgress(prev => {
+        if (prev < 40 && status === 'INIT') return prev + 2;
+        if (prev < 90 && status === 'PROCESSING') return prev + 1;
+        return prev;
+      });
+    }, 500);
+    return () => clearInterval(fakeTimer);
+  }, [status]);
 
   useEffect(() => {
     setActiveStep(Math.min(Math.floor(progress / 20), 4));
@@ -722,19 +1091,46 @@ const ProcessingView = ({ onBack, onComplete }) => {
           <p>Please keep this page open while your analysis completes.</p>
         </div>
 
-        <button className="skip-btn-lg proc-skip" onClick={onComplete}>
-          Skip Photo Analysis
-        </button>
       </main>
     </div>
   );
 };
 
-const OtpModal = ({ isOpen, onClose, onVerify }) => {
+const OtpModal = ({ isOpen, onClose, onVerify, phone }) => {
   const [otp, setOtp] = React.useState(['', '', '', '', '', '']);
+  const [timer, setTimer] = useState(60);
+  const [canResend, setCanResend] = useState(false);
   const inputRefs = React.useRef([]);
 
+  useEffect(() => {
+    let interval;
+    if (isOpen && timer > 0) {
+      interval = setInterval(() => {
+        setTimer(prev => prev - 1);
+      }, 1000);
+    } else if (timer === 0) {
+      setCanResend(true);
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isOpen, timer]);
+
+  const handleResend = () => {
+    if (!canResend) return;
+    // Logic to trigger backend resend would go here
+    setTimer(60);
+    setCanResend(false);
+    setOtp(['', '', '', '', '', '']);
+    inputRefs.current[0]?.focus();
+  };
+
   if (!isOpen) return null;
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `0${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  };
 
   const handleChange = (element, index) => {
     if (isNaN(element.value)) return false;
@@ -767,7 +1163,7 @@ const OtpModal = ({ isOpen, onClose, onVerify }) => {
             </div>
             <div className="otp-header-text">
               <h4>Verify Your Number</h4>
-              <span>OTP sent to +91 1234567890</span>
+              <span>OTP sent to +91 {phone || '1234567890'}</span>
             </div>
           </div>
           <button className="otp-close-btn" onClick={onClose}>
@@ -778,7 +1174,7 @@ const OtpModal = ({ isOpen, onClose, onVerify }) => {
         </div>
 
         <div className="otp-body">
-          <p className="otp-instruct">Enter the 6-digit code sent to +91 1234567890</p>
+          <p className="otp-instruct">Enter the 6-digit code sent to +91 {phone || '1234567890'}</p>
           <div className="otp-inputs-row">
             {otp.map((data, index) => (
               <input
@@ -813,12 +1209,20 @@ const OtpModal = ({ isOpen, onClose, onVerify }) => {
             </div>
           </button>
 
-          <p className="resend-timer-text">Resend OTP in <span className="blue-bold">01:34 min</span></p>
+          <div className="otp-resend-wrapper">
+            {canResend ? (
+              <button className="resend-link-btn" onClick={handleResend}>
+                Didn't receive OTP? <span className="blue-bold">Resend OTP</span>
+              </button>
+            ) : (
+              <p className="resend-timer-text">Resend OTP in <span className="blue-bold">{formatTime(timer)} min</span></p>
+            )}
+          </div>
 
           <div className="otp-security-notice">
             <div className="notice-lock-v">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3.11969 4.25V3.75C3.11969 3.21 3.25089 2.70667 3.51329 2.24C3.76929 1.78667 4.11489 1.42667 4.55009 1.16C4.99809 0.886667 5.48129 0.75 5.99969 0.75C6.51809 0.75 7.00129 0.886667 7.44929 1.16C7.88449 1.42667 8.23009 1.78667 8.48609 2.24C8.74849 2.70667 8.87969 3.21 8.87969 3.75V4.25H9.83969C9.97409 4.25 10.0877 4.29833 10.1805 4.395C10.2733 4.49167 10.3197 4.61 10.3197 4.75V10.75C10.3197 10.89 10.2733 11.0083 10.1805 11.105C10.0877 11.2017 9.97409 11.25 9.83969 11.25H2.15969C2.02529 11.25 1.91169 11.2017 1.81889 11.105C1.72609 11.0083 1.67969 10.89 1.67969 10.75V4.75C1.67969 4.61 1.72609 4.49167 1.81889 4.395C1.91169 4.29833 2.02529 4.25 2.15969 4.25H3.11969ZM9.35969 5.25H2.63969V10.25H9.35969V5.25ZM5.51969 8.12C5.37249 8.02667 5.25569 7.90333 5.16929 7.75C5.08289 7.59667 5.03969 7.43 5.03969 7.25C5.03969 7.07 5.08289 6.90333 5.16929 6.75C5.25569 6.59667 5.37249 6.475 5.51969 6.385C5.66689 6.295 5.82689 6.25 5.99969 6.25C6.17249 6.25 6.33249 6.295 6.47969 6.385C6.62689 6.475 6.74369 6.59667 6.83009 6.75C6.91649 6.90333 6.95969 7.07 6.95969 7.25C6.95969 7.43 6.91649 7.59667 6.83009 7.75C6.74369 7.90333 6.62689 8.02667 6.47969 8.12V9.25H5.51969V8.12ZM4.07969 4.25H7.91969V3.75C7.91969 3.39 7.83329 3.05667 7.66049 2.75C7.48769 2.44333 7.25409 2.2 6.95969 2.02C6.66529 1.84 6.34529 1.75 5.99969 1.75C5.65409 1.75 5.33409 1.84 5.03969 2.02C4.74529 2.2 4.51169 2.44333 4.33889 2.75C4.16609 3.05667 4.07969 3.39 4.07969 3.75V4.25Z" fill="#0ED7B5" fill-opacity="0.3" />
+                <path d="M3.11969 4.25V3.75C3.11969 3.21 3.25089 2.70667 3.51329 2.24C3.76929 1.78667 4.11489 1.42667 4.55009 1.16C4.99809 0.886667 5.48129 0.75 5.99969 0.75C6.51809 0.75 7.00129 0.886667 7.44929 1.16C7.88449 1.42667 8.23009 1.78667 8.48609 2.24C8.74849 2.70667 8.87969 3.21 8.87969 3.75V4.25H9.83969C9.97409 4.25 10.0877 4.29833 10.1805 4.395C10.2733 4.49167 10.3197 4.61 10.3197 4.75V10.75C10.3197 10.89 10.2733 11.0083 10.1805 11.105C10.0877 11.2017 9.97409 11.25 9.83969 11.25H2.15969C2.02529 11.25 1.91169 11.2017 1.81889 11.105C1.72609 11.0083 1.67969 10.89 1.67969 10.75V4.75C1.67969 4.61 1.72609 4.49167 1.81889 4.395C1.91169 4.29833 2.02529 4.25 2.15969 4.25H3.11969ZM9.35969 5.25H2.63969V10.25H9.35969V5.25ZM5.51969 8.12C5.37249 8.02667 5.25569 7.90333 5.16929 7.75C5.08289 7.59667 5.03969 7.43 5.03969 7.25C5.03969 7.07 5.08289 6.90333 5.16929 6.75C5.25569 6.59667 5.37249 6.475 5.51969 6.385C5.66689 6.295 5.82689 6.25 5.99969 6.25C6.17249 6.25 6.33249 6.295 6.47969 6.385C6.62689 6.475 6.74369 6.59667 6.83009 6.75C6.91649 6.90333 6.95969 7.07 6.95969 7.25C6.95969 7.43 6.91649 7.59667 6.83009 7.75C6.74369 7.90333 6.62689 8.02667 6.47969 8.12V9.25H5.51969V8.12ZM4.07969 4.25H7.91969V3.75C7.91969 3.39 7.83329 3.05667 7.66049 2.75C7.48769 2.44333 7.25409 2.2 6.95969 2.02C6.66529 1.84 6.34529 1.75 5.99969 1.75C5.65409 1.75 5.33409 1.84 5.03969 2.02C4.74529 2.2 4.51169 2.44333 4.33889 2.75C4.16609 3.05667 4.07969 3.39 4.07969 3.75V4.25Z" fill="#0ED7B5" fillOpacity="0.3" />
               </svg>
             </div>
             <span>Your information is secure and will not be shared.</span>
@@ -829,11 +1233,132 @@ const OtpModal = ({ isOpen, onClose, onVerify }) => {
   );
 };
 
-const ResultsView = ({ onBack, onNext }) => {
+const ResultsView = ({ sessionId, onBack, onNext }) => {
   const [isOtpOpen, setIsOtpOpen] = React.useState(false);
+  const [email, setEmail] = useState('');
+  const [city, setCity] = useState('');
+  const [consents, setConsents] = useState({
+    privacy: true,
+    contact: true
+  });
+  const [isCreatingLead, setIsCreatingLead] = useState(false);
+  const [reportUrl, setReportUrl] = useState(null);
+  const [error, setError] = useState(null);
+  const [formErrors, setFormErrors] = useState({ email: '', city: '' });
+  const [showFormErrors, setShowFormErrors] = useState(false);
+  const [isAnalysisComplete, setIsAnalysisComplete] = useState(false);
 
-  const handleUnlockClick = () => {
-    setIsOtpOpen(true);
+  // Get auto-filled data from previous steps if possible
+  const [userInfo, setUserInfo] = useState({
+    name: '',
+    phone: ''
+  });
+
+  useEffect(() => {
+    // Try to recover user info from state or localStorage
+    const savedName = localStorage.getItem('user_full_name') || '';
+    const savedPhone = localStorage.getItem('user_phone') || '';
+    setUserInfo({ name: savedName, phone: savedPhone });
+  }, []);
+
+  // Background polling for analysis status
+  useEffect(() => {
+    let pollInterval;
+    if (!reportUrl && !isAnalysisComplete) {
+      const checkStatus = async () => {
+        try {
+          const response = await checkSessionStatus(sessionId);
+          if (response.success && response.data.status === 'ANALYSIS_COMPLETE') {
+            console.log("Analysis ready in background!");
+            setIsAnalysisComplete(true);
+            clearInterval(pollInterval);
+          }
+        } catch (err) {
+          console.error("Background poll failed:", err);
+        }
+      };
+
+      // Initial check
+      checkStatus();
+
+      // Poll every 5 seconds
+      pollInterval = setInterval(checkStatus, 5000);
+    }
+    return () => {
+      if (pollInterval) clearInterval(pollInterval);
+    };
+  }, [sessionId, reportUrl, isAnalysisComplete]);
+
+  const handleLeadSubmit = async () => {
+    let errors = { email: '', city: '' };
+    let hasErr = false;
+
+    if (!email) { errors.email = "Email is required"; hasErr = true; }
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errors.email = "Invalid email format"; hasErr = true; }
+
+    if (!city) { errors.city = "City is required"; hasErr = true; }
+
+    if (hasErr) {
+      setFormErrors(errors);
+      setShowFormErrors(true);
+      return;
+    }
+
+    if (!consents.privacy) {
+      alert("Please accept the privacy policy to continue.");
+      return;
+    }
+
+    try {
+      setIsCreatingLead(true);
+      setError(null);
+
+      const leadResponse = await createLead({
+        name: userInfo.name,
+        phone: userInfo.phone,
+        email: email,
+        city: city,
+        sessionId: sessionId,
+        consentPrivacyPolicy: consents.privacy,
+        consentToContact: consents.contact
+      });
+
+      if (leadResponse.success) {
+        setIsOtpOpen(true);
+      } else {
+        alert(leadResponse.message || "Failed to create lead");
+      }
+    } catch (err) {
+      console.error("Lead creation failed:", err);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setIsCreatingLead(false);
+    }
+  };
+
+  const handleOtpVerify = async (code) => {
+    try {
+      // Step 7: Verify OTP
+      const verifyResponse = await verifyOtp(sessionId, code);
+      
+      if (verifyResponse.success) {
+        // Step 8: Final Report Download
+        const reportResponse = await fetchReport(sessionId);
+        if (reportResponse.success && reportResponse.data.reportUrl) {
+          setReportUrl(reportResponse.data.reportUrl);
+          setIsOtpOpen(false);
+          alert("Phone verified successfully! Your report is now ready.");
+          window.open(reportResponse.data.reportUrl, '_blank');
+        } else {
+          alert("Report generation in progress. Please wait a moment.");
+        }
+      } else {
+        alert(verifyResponse.message || "Invalid OTP. Please try again.");
+      }
+    } catch (err) {
+      console.error("Verification failed:", err);
+      alert("Invalid OTP or verification failed. Please check the code and try again.");
+    }
   };
 
   return (
@@ -890,7 +1415,7 @@ const ResultsView = ({ onBack, onNext }) => {
                 <div className="floating-badges-stack">
                   <div className="f-badge badge-amber">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M11.4285 10.6016L13.9243 13.0983L13.0963 13.9266L10.6005 11.43C10.1418 11.7955 9.64027 12.0755 9.09602 12.27C8.52067 12.4722 7.92977 12.5733 7.32332 12.5733C6.37477 12.5733 5.49231 12.3361 4.67593 11.8616C3.88288 11.395 3.257 10.765 2.79827 9.97164C2.31622 9.15497 2.0752 8.27219 2.0752 7.3233C2.0752 6.37441 2.31622 5.49164 2.79827 4.67497C3.257 3.88164 3.88288 3.25552 4.67593 2.79664C5.49231 2.31441 6.37477 2.0733 7.32332 2.0733C8.27187 2.0733 9.15433 2.31441 9.97071 2.79664C10.7638 3.25552 11.3935 3.88164 11.86 4.67497C12.3343 5.49164 12.5714 6.37441 12.5714 7.3233C12.5714 7.92997 12.4704 8.52108 12.2682 9.09664C12.0738 9.64108 11.7939 10.1427 11.4285 10.6016ZM10.2506 10.17C10.616 9.79664 10.8998 9.36886 11.102 8.88664C11.3041 8.38886 11.4052 7.86775 11.4052 7.3233C11.4052 6.58441 11.2186 5.89608 10.8454 5.2583C10.4877 4.64386 10.0018 4.15775 9.38758 3.79997C8.75003 3.42664 8.06195 3.23997 7.32332 3.23997C6.5847 3.23997 5.89661 3.42664 5.25906 3.79997C4.64483 4.15775 4.1589 4.64386 3.80125 5.2583C3.42805 5.89608 3.24145 6.58441 3.24145 7.3233C3.24145 8.06219 3.42805 8.75052 3.80125 9.3883C4.1589 10.0027 4.64483 10.4889 5.25906 10.8466C5.89661 11.22 6.5847 11.4066 7.32332 11.4066C7.86757 11.4066 8.3885 11.3055 8.8861 11.1033C9.36815 10.9011 9.79577 10.6172 10.169 10.2516L10.2506 10.17ZM8.01141 5.09497C7.80926 5.1883 7.64404 5.33025 7.51575 5.5208C7.38746 5.71136 7.32332 5.9233 7.32332 6.15664C7.32332 6.36664 7.3758 6.56108 7.48076 6.73997C7.58573 6.91886 7.72762 7.0608 7.90645 7.1658C8.08527 7.2708 8.27965 7.3233 8.48957 7.3233C8.72282 7.3233 8.93469 7.26108 9.12518 7.13664C9.31566 7.01219 9.45756 6.84497 9.55086 6.63497C9.62083 6.86052 9.65582 7.08997 9.65582 7.3233C9.65582 7.7433 9.55086 8.13219 9.34093 8.48997C9.13101 8.84775 8.84722 9.13164 8.48957 9.34164C8.13192 9.55164 7.74317 9.65664 7.32332 9.65664C6.90347 9.65664 6.51472 9.55164 6.15707 9.34164C5.79942 9.13164 5.51563 8.84775 5.30571 8.48997C5.09578 8.13219 4.99082 7.7433 4.99082 7.3233C4.99082 6.9033 5.09578 6.51441 5.30571 6.15664C5.51563 5.79886 5.79942 5.51497 6.15707 5.30497C6.51472 5.09497 6.90347 4.98997 7.32332 4.98997C7.55657 4.98997 7.78593 5.02497 8.01141 5.09497Z" fill="#F4C430" />
+                      <path d="M11.4285 10.6016L13.9243 13.0983L13.0963 13.9266L10.6005 11.43C10.1418 11.7955 9.64027 12.0755 9.09602 12.27C8.52067 12.4722 7.92977 12.5733 7.32332 12.5733C6.37477 12.5733 5.49231 12.3361 4.67593 11.8616C3.88288 11.395 3.257 10.765 2.79827 9.97164C2.31622 9.15497 2.0752 8.27219 2.0752 7.3233C2.0752 6.37441 2.31622 5.49164 2.79827 4.67497C3.257 3.88164 3.88288 3.25552 4.67593 2.79664C5.49231 2.31441 6.37477 2.0733 7.32332 2.0733C8.27187 2.0733 9.15433 2.31441 9.97071 2.79664C10.7638 3.25552 11.3935 3.88164 11.86 4.67497C12.3343 5.49164 12.5714 6.37441 12.5714 7.3233C12.5714 7.92997 12.4704 8.52108 12.2682 9.09664C12.0738 9.64108 11.7939 10.1427 11.4285 10.6016ZM10.2506 10.17C10.616 9.79664 10.8998 9.36886 11.102 8.88664C11.3041 8.38886 11.4052 7.86775 11.4052 7.3233C11.4052 6.58441 11.2186 5.89608 10.8454 5.2583C10.4877 4.64386 10.0018 4.15775 9.38758 3.79997C8.75003 3.42664 8.06195 3.23997 7.32332 3.23997C6.5847 3.23997 5.89661 3.42664 5.25906 3.79997C4.64483 4.15775 4.1589 4.64386 3.80125 5.2583C3.42805 5.89608 3.24145 6.58441 7.3233 7.3233C3.24145 8.06219 3.42805 8.75052 3.80125 9.3883C4.1589 10.0027 4.64483 10.4889 5.25906 10.8466C5.89661 11.22 6.5847 11.4066 7.32332 11.4066C7.86757 11.4066 8.3885 11.3055 8.8861 11.1033C9.36815 10.9011 9.79577 10.6172 10.169 10.2516L10.2506 10.17ZM8.01141 5.09497C7.80926 5.1883 7.64404 5.33025 7.51575 5.5208C7.38746 5.71136 7.32332 5.9233 7.32332 6.15664C7.32332 6.36664 7.3758 6.56108 7.48076 6.73997C7.58573 6.91886 7.72762 7.0608 7.90645 7.1658C8.08527 7.2708 8.27965 7.3233 8.48957 7.3233C8.72282 7.3233 8.93469 7.26108 9.12518 7.13664C9.31566 7.01219 9.45756 6.84497 9.55086 6.63497C9.62083 6.86052 9.65582 7.08997 9.65582 7.3233C9.65582 7.7433 9.55086 8.13219 9.34093 8.48997C9.13101 8.84775 8.84722 9.13164 8.48957 9.34164C8.13192 9.55164 7.74317 9.65664 7.32332 9.65664C6.90347 9.65664 6.51472 9.55164 6.15707 9.34164C5.79942 9.13164 5.51563 8.84775 5.30571 8.48997C5.09578 8.13219 4.99082 7.7433 4.99082 7.3233C4.99082 6.9033 5.09578 6.51441 5.30571 6.15664C5.51563 5.79886 5.79942 5.51497 6.15707 5.30497C6.51472 5.09497 6.90347 4.98997 7.32332 4.98997C7.55657 4.98997 7.78593 5.02497 8.01141 5.09497Z" fill="#F4C430" />
                     </svg>
 
                     <span>Hair Loss Pattern Identified</span>
@@ -1015,46 +1540,106 @@ const ResultsView = ({ onBack, onNext }) => {
 
                 <div className="res-input-row">
                   <label>Full Name</label>
-                  <input type="text" placeholder="Name auto filled" defaultValue="Name auto filled" readOnly className="auto-filled-input" />
+                  <input type="text" placeholder="Your Name" value={userInfo.name} readOnly className="auto-filled-input" />
                 </div>
 
                 <div className="res-input-row">
                   <label>Mobile Number</label>
-                  <input type="text" placeholder="Number auto filled" defaultValue="Number auto filled" readOnly className="auto-filled-input" />
+                  <input type="text" placeholder="Your Phone" value={userInfo.phone} readOnly className="auto-filled-input" />
                 </div>
 
                 <div className="res-input-row">
                   <label>Email Address</label>
-                  <div className="input-with-icon">
+                  <div className={`input-with-icon ${(showFormErrors && formErrors.email) ? 'input-error' : ''}`}>
                     <div className="i-icon">
                       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M2.23961 2H13.7596C13.9388 2 14.0903 2.06444 14.214 2.19333C14.3377 2.32222 14.3996 2.48 14.3996 2.66667V13.3333C14.3996 13.52 14.3377 13.6778 14.214 13.8067C14.0903 13.9356 13.9388 14 13.7596 14H2.23961C2.06041 14 1.90894 13.9356 1.78521 13.8067C1.66148 13.6778 1.59961 13.52 1.59961 13.3333V2.66667C1.59961 2.48 1.66148 2.32222 1.78521 2.19333C1.90894 2.06444 2.06041 2 2.23961 2ZM13.1196 4.82667L8.05081 9.56L2.87961 4.81333V12.6667H13.1196V4.82667ZM3.21241 3.33333L8.03801 7.77333L12.7996 3.33333H3.21241Z" fill="#2E4A66" />
                       </svg>
                     </div>
-                    <input type="email" placeholder="Enter your email" />
+                    <input
+                      type="email"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (showFormErrors) setFormErrors(prev => ({ ...prev, email: '' }));
+                      }}
+                    />
                   </div>
+                  {showFormErrors && formErrors.email && <span className="field-error-msg">{formErrors.email}</span>}
                 </div>
 
                 <div className="res-input-row">
                   <label>City</label>
-                  <div className="input-with-icon">
+                  <div className={`input-with-icon ${(showFormErrors && formErrors.city) ? 'input-error' : ''}`}>
                     <div className="i-icon">
                       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8.00023 13.36L11.1618 10.0533C11.7421 9.45777 12.1346 8.75555 12.3394 7.94666C12.5357 7.15555 12.5357 6.36443 12.3394 5.57332C12.1346 4.76443 11.7442 4.05999 11.1682 3.45999C10.5922 2.85999 9.91597 2.45332 9.13943 2.23999C8.37997 2.03555 7.6205 2.03555 6.86103 2.23999C6.0845 2.45332 5.40823 2.85999 4.83223 3.45999C4.25623 4.05999 3.86583 4.76443 3.66103 5.57332C3.46477 6.36443 3.46477 7.15555 3.66103 7.94666C3.86583 8.75555 4.25837 9.45777 4.83863 10.0533L8.00023 13.36ZM8.00023 15.24L3.92983 11C3.18743 10.2355 2.68823 9.32888 2.43223 8.27999C2.17623 7.26666 2.17623 6.25332 2.43223 5.23999C2.68823 4.1911 3.1853 3.28221 3.92343 2.51332C4.66157 1.74443 5.5341 1.22221 6.54103 0.946656C7.51383 0.688879 8.48663 0.688879 9.45943 0.946656C10.4664 1.22221 11.3389 1.74443 12.077 2.51332C12.8152 3.28221 13.3122 4.1911 13.5682 5.23999C13.8242 6.25332 13.8242 7.26666 13.5682 8.27999C13.3122 9.32888 12.813 10.2355 12.0706 11L8.00023 15.24ZM8.00023 8.09332C8.23063 8.09332 8.44397 8.03332 8.64023 7.91332C8.8365 7.79332 8.99223 7.6311 9.10743 7.42666C9.22263 7.22221 9.28023 6.99999 9.28023 6.75999C9.28023 6.51999 9.22263 6.29777 9.10743 6.09332C8.99223 5.88888 8.8365 5.72666 8.64023 5.60666C8.44397 5.48666 8.23063 5.42666 8.00023 5.42666C7.76983 5.42666 7.5565 5.48666 7.36023 5.60666C7.16397 5.72666 7.00823 5.88888 6.89303 6.09332C6.77783 6.29777 6.72023 6.51999 6.72023 6.75999C6.72023 6.99999 6.77783 7.22221 6.89303 7.42666C7.00823 7.6311 7.16397 7.79332 7.36023 7.91332C7.5565 8.03332 7.76983 8.09332 8.00023 8.09332ZM8.00023 9.42666C7.53943 9.42666 7.11277 9.30666 6.72023 9.06666C6.3277 8.82666 6.01623 8.50221 5.78583 8.09332C5.55543 7.68443 5.44023 7.23777 5.44023 6.75332C5.44023 6.26888 5.55543 5.82443 5.78583 5.41999C6.01623 5.01555 6.3277 4.69332 6.72023 4.45332C7.11277 4.21332 7.53943 4.09332 8.00023 4.09332C8.46103 4.09332 8.8877 4.21332 9.28023 4.45332C9.67277 4.69332 9.98423 5.01555 10.2146 5.41999C10.445 5.82443 10.5602 6.26888 10.5602 6.75332C10.5602 7.23777 10.445 7.68443 10.2146 8.09332C9.98423 8.50221 9.67277 8.82666 9.28023 9.06666C8.8877 9.30666 8.46103 9.42666 8.00023 9.42666Z" fill="#2E4A66" />
                       </svg>
                     </div>
-                    <input type="text" placeholder="Enter your city" />
+                    <input
+                      type="text"
+                      placeholder="Enter your city"
+                      value={city}
+                      onChange={(e) => {
+                        setCity(e.target.value);
+                        if (showFormErrors) setFormErrors(prev => ({ ...prev, city: '' }));
+                      }}
+                    />
                   </div>
+                  {showFormErrors && formErrors.city && <span className="field-error-msg">{formErrors.city}</span>}
                 </div>
 
-                <div className="form-notice">
-                  <FaInfoCircle />
+                <div className="res-input-row consent-row">
+                  <label className="checkbox-label-v">
+                    <input
+                      type="checkbox"
+                      checked={consents.privacy}
+                      onChange={(e) => setConsents(prev => ({ ...prev, privacy: e.target.checked }))}
+                    />
+                    <span>I agree to the <a href="/privacy" target="_blank">Privacy Policy</a> and terms of service.</span>
+                  </label>
+                </div>
+
+                <div className="res-input-row consent-row">
+                  <label className="checkbox-label-v">
+                    <input
+                      type="checkbox"
+                      checked={consents.contact}
+                      onChange={(e) => setConsents(prev => ({ ...prev, contact: e.target.checked }))}
+                    />
+                    <span>I consent to be contacted by experts for diagnostic support.</span>
+                  </label>
+                </div>
+
+                <div className="res-security-banner">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 0L0 2.625V6.125C0 10.3838 2.975 14 7 14C11.025 14 14 10.3838 14 6.125V2.625L7 0Z" fill="#0ED7B5" />
+                  </svg>
                   <span>We use your details to generate and securely deliver your personalized report.</span>
                 </div>
+                <div className="res-btn-container">
+                  <button
+                    className={`btn-unlock-gold ${(isCreatingLead || !isAnalysisComplete) ? 'is-generating' : ''}`}
+                    onClick={handleLeadSubmit}
+                    disabled={isCreatingLead || !isAnalysisComplete}
+                  >
+                    {(isCreatingLead || !isAnalysisComplete) ? (
+                      <div className="btn-loader-wrapper">
+                        <div className="btn-spinner"></div>
+                        <span>{!isAnalysisComplete ? 'Analysis in progress...' : 'Creating access...'}</span>
+                      </div>
+                    ) : 'Unlock My Report'}
+                  </button>
+                </div>
 
-                <button className="btn-unlock-gold" onClick={handleUnlockClick}>
-                  Unlock My Report
-                </button>
+                {reportUrl && (
+                  <div className="report-ready-download">
+                    <a href={reportUrl} target="_blank" rel="noopener noreferrer" className="download-link-btn">
+                      Download PDF Report <FaArrowRight />
+                    </a>
+                  </div>
+                )}
 
                 <div className="btn-lock-sec">
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1070,7 +1655,8 @@ const ResultsView = ({ onBack, onNext }) => {
         <OtpModal
           isOpen={isOtpOpen}
           onClose={() => setIsOtpOpen(false)}
-          onVerify={(code) => alert(`Verifying: ${code}`)}
+          onVerify={handleOtpVerify}
+          phone={userInfo.phone}
         />
 
         {/* Feature Footer */}

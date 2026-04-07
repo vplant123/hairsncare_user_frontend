@@ -216,6 +216,19 @@
   transition: border-color 0.3s;
 }
 
+/* Global Autofill Fix for all hair flow inputs */
+.hair-flow-container input:-webkit-autofill,
+.hair-flow-container input:-webkit-autofill:hover,
+.hair-flow-container input:-webkit-autofill:focus,
+.hair-flow-container input:-webkit-autofill:active,
+.ai-results-container input:-webkit-autofill,
+.ai-results-container input:-webkit-autofill:hover,
+.ai-results-container input:-webkit-autofill:focus,
+.ai-results-container input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #041126 inset !important;
+  -webkit-text-fill-color: #E6F1FF !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
 
 .flow-input::placeholder {
   color: #E6F1FF;
@@ -2313,6 +2326,15 @@
   outline: none;
 }
 
+.res-input-row input:-webkit-autofill,
+.res-input-row input:-webkit-autofill:hover,
+.res-input-row input:-webkit-autofill:focus,
+.res-input-row input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #041126 inset !important;
+  -webkit-text-fill-color: #E6F1FF !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 .res-input-row input:focus {
   outline: none;
   box-shadow: none;
@@ -2377,6 +2399,7 @@
 }
 
 .btn-unlock-gold {
+  position: relative !important;
   width: 100%;
   background: linear-gradient(97.24deg, #C49010 0%, #F5C842 50%, #D4A017 100%);
   border: none;
@@ -2748,7 +2771,7 @@
     height: 44px !important;
     margin-bottom: 12px !important;
   }
-  
+
   .lock-circle-premium svg {
     width: 20px !important;
     height: 20px !important;
@@ -3015,4 +3038,380 @@
     text-overflow: ellipsis !important;
     padding: 2px 6px !important;
   }
+}
+
+/* Form Validation Styles */
+.input-error {
+  border-color: #ff4d4d !important;
+  background-color: rgba(255, 77, 77, 0.05) !important;
+}
+
+.field-error-msg {
+  color: #ff4d4d;
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 4px;
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Dynamic Question Styles */
+.slider-group {
+  padding: 20px 0;
+  width: 100%;
+}
+
+.flow-slider {
+  width: 100%;
+  height: 6px;
+  background: #054358;
+  border-radius: 3px;
+  appearance: none;
+  outline: none;
+}
+
+.flow-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #00E5FF;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  font-size: 12px;
+  color: #6B85A6;
+}
+
+.slider-value {
+  color: #00E5FF;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.image-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.image-option-btn {
+  background: #041126;
+  border: 1px solid #054358;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.image-option-btn.selected {
+  border-color: #00E5FF;
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+}
+
+.image-container {
+  width: 100%;
+  height: 120px;
+  background: #020617;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.image-option-info {
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #E6F1FF;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Loading & Error States */
+.loading-state,
+.error-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+}
+
+.loader-box,
+.error-box {
+  text-align: center;
+  color: #7FA6D9;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(0, 229, 255, 0.1);
+  border-top: 3px solid #00E5FF;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.mandatory-tag {
+  font-size: 10px;
+  color: #ff4d4d;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 2px;
+  display: block;
+}
+
+
+/* Shimmer Skeleton Styles */
+.shimmer-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.shimmer-active {
+  background: #061A2E;
+  border: 1px solid #054358;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.shimmer-active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 150%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 229, 255, 0.05) 50%, transparent 100%);
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -150%;
+  }
+
+  100% {
+    left: 150%;
+  }
+}
+
+.shimmer-hero {
+  height: 100px;
+  width: 100%;
+  margin: 40px 0;
+  background: #041126;
+  border-radius: 16px;
+}
+
+.shimmer-tabs {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.shimmer-tab-item {
+  width: 60px;
+  height: 40px;
+  background: #041126;
+  border-radius: 6px;
+}
+
+.shimmer-card {
+  padding: 30px;
+  min-height: 160px;
+}
+
+.shimmer-title {
+  height: 20px;
+  width: 40%;
+  background: #054358;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.shimmer-text {
+  height: 14px;
+  width: 80%;
+  background: #041126;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+
+.shimmer-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.shimmer-opt-btn {
+  height: 40px;
+  width: 120px;
+  background: #041126;
+  border: 1px solid #054358;
+  border-radius: 12px;
+}
+
+.no-click {
+  cursor: default !important;
+  pointer-events: none;
+}
+
+/* Results View UI Fixes */
+.consent-row {
+  margin-bottom: 12px;
+}
+
+.checkbox-label-v {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-label-v input[type="checkbox"] {
+  width: 16px !important;
+  height: 16px !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+  accent-color: #F4C430;
+  cursor: pointer;
+}
+
+.checkbox-label-v span {
+  font-size: 11px !important;
+  color: #7FA6D9 !important;
+  line-height: 1.4 !important;
+}
+
+.checkbox-label-v a {
+  color: #00E5FF;
+  text-decoration: underline;
+}
+
+.res-security-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(14, 215, 181, 0.05);
+  border: 1px solid rgba(14, 215, 181, 0.1);
+  padding: 12px;
+  border-radius: 10px;
+  margin: 16px 0 20px;
+}
+
+.res-security-banner svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.res-security-banner span {
+  font-size: 11px;
+  color: #9FB4D0;
+  line-height: 1.5;
+}
+
+/* Stable Button Container */
+.res-btn-container {
+  width: 100% !important;
+  display: block !important;
+  position: relative !important;
+  margin-top: 10px;
+}
+
+.btn-unlock-gold {
+  position: relative !important;
+  transform: none !important;
+  width: 100% !important;
+}
+
+.btn-unlock-gold.loading {
+  opacity: 0.8;
+  cursor: not-allowed;
+  transform: none !important;
+  /* Force disable running away */
+  animation: none !important;
+}
+
+/* Resend OTP Link Styling */
+.resend-link-btn {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  color: #7FA6D9 !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center;
+  gap: 4px;
+  margin: 15px auto;
+  font-family: inherit;
+}
+
+.resend-link-btn .blue-bold {
+  color: #00E5FF;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.btn-loader-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: btn-spin 0.8s linear infinite;
+}
+
+@keyframes btn-spin {
+  to { transform: rotate(360deg); }
 }

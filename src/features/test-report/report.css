@@ -616,7 +616,7 @@
 
 .card-main-title {
    margin: 0;
-   font-size: 18px;
+   font-size: 14px;
    font-weight: 700;
    color: #fff;
    line-height: 1.4;
@@ -694,7 +694,7 @@
    }
 
    .card-main-title {
-      font-size: 14px;
+      font-size: 12px;
    }
 
    .report-series-title {
@@ -9462,7 +9462,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
       min-width: 0;
    }
 
-   
+
 
    .nutritional-card {
       padding: 12px;
@@ -9593,6 +9593,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
 }
 
 @media (max-width: 360px) {
+
    .clinician-pill,
    .questionnaire-pill,
    .verified-pill {
@@ -9618,6 +9619,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
    Daily Protocol Section - Mobile Responsive
 ========================================================= */
 @media (max-width: 768px) {
+
    /* Daily Protocol Header */
    .daily-protocol-header {
       flex-direction: row;
@@ -9706,7 +9708,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
       height: 6px;
    }
 
-   .daily-routine-row > p {
+   .daily-routine-row>p {
       display: block;
       margin: 0;
       flex: 1;
@@ -9919,7 +9921,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
       margin-bottom: 6px;
    }
 
-   .stress-cortisol-main .stress-img-info-warpper > p {
+   .stress-cortisol-main .stress-img-info-warpper>p {
       font-size: 12px;
       line-height: 19.5px;
       margin: 0;
@@ -9957,7 +9959,7 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
       flex-wrap: wrap;
    }
 
-   .stress-technique-how > span:first-child {
+   .stress-technique-how>span:first-child {
       flex-shrink: 0;
    }
 

@@ -14,6 +14,7 @@
     "@mui/system": "^7.3.0",
     "@mui/x-date-pickers": "^8.9.2",
     "@react-email/components": "^0.0.22",
+    "@react-pdf/renderer": "^4.4.0",
     "@reduxjs/toolkit": "^1.9.7",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -97,8 +98,8 @@
     "postcss": "^8.5.6",
     "postcss-cli": "^11.0.1",
     "react-snap": "^1.23.0",
-    "webpack-bundle-analyzer": "^4.10.2",
-    "source-map-explorer": "^2.5.2"
+    "source-map-explorer": "^2.5.2",
+    "webpack-bundle-analyzer": "^4.10.2"
   },
   "reactSnap": {
     "include": [

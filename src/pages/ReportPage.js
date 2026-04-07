@@ -64,7 +64,7 @@ export default function ReportPage(props) {
 							Generated: Mar 18, 2026
 						</span>
 					</div>
-					
+
 					<div className="meta-right-group">
 						<button className="mobile-download-square-btn" aria-label="Download PDF">
 							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

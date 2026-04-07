@@ -931,7 +931,7 @@ const aiPhotoMetricCards = [
 export default function TestReport() {
   // State for controlling locked/unlocked sections
   const [withPhotoAnalysis, setWithPhotoAnalysis] = useState(true);
-  const [fullReport, setFullReport] = useState(false);
+  const [fullReport, setFullReport] = useState(true);
 
   const sharedThumbImage = `${process.env.PUBLIC_URL}/report-image/IMG-4004.png`;
   const scalpRepresentativeImage = `${process.env.PUBLIC_URL}/report-image/IMG-840.png`;
@@ -975,6 +975,24 @@ export default function TestReport() {
       unavailable: true,
     },
   ];
+
+  const getAdditionalFactorTone = (tag) => {
+    const normalizedTag = (tag || "").toLowerCase();
+
+    if (normalizedTag === "contributing") {
+      return "cyan";
+    }
+
+    if (normalizedTag === "minor") {
+      return "amber";
+    }
+
+    if (normalizedTag === "low") {
+      return "red";
+    }
+
+    return "cyan";
+  };
 
   return (
     <section className="test-report-page container">
@@ -2363,7 +2381,11 @@ export default function TestReport() {
 
           {/* Section: Additional Contributing Factors */}
           <section
-            className="additional-factors-section"
+            className={`additional-factors-section ${
+              fullReport
+                ? "additional-factors-section-colored"
+                : "additional-factors-section-dull"
+            }`}
             aria-label="Additional contributing factors"
           >
             <div className="additional-factors-title-row">
@@ -2380,7 +2402,7 @@ export default function TestReport() {
                 >
                   <path
                     d="M0 2C0 0.895431 0.895431 0 2 0C3.10457 0 4 0.895431 4 2V14C4 15.1046 3.10457 16 2 16C0.895431 16 0 15.1046 0 14V2Z"
-                    fill="#4A6080"
+                    fill={fullReport ? "#00E5FF" : "#4A6080"}
                   />
                 </svg>
               </span>
@@ -2388,33 +2410,48 @@ export default function TestReport() {
             </div>
 
             <div className="additional-factors-list">
-              {additionalContributingFactors.map((factor) => (
-                <article className="additional-factor-card" key={factor.rank}>
-                  <div className="additional-factor-head">
-                    <div className="additional-factor-rank-title">
-                      <span className="additional-factor-rank">
-                        #{factor.rank}
-                      </span>
-                      <h4>{factor.title}</h4>
-                    </div>
-                    <span className="additional-factor-tag">{factor.tag}</span>
-                  </div>
+              {additionalContributingFactors.map((factor) => {
+                const factorTone = getAdditionalFactorTone(factor.tag);
 
-                  <p className="additional-factor-summary">{factor.summary}</p>
-
-                  <div className="additional-factor-progress-row">
-                    <div className="additional-factor-track" aria-hidden="true">
+                return (
+                  <article
+                    className={`additional-factor-card additional-factor-card-${factorTone}`}
+                    key={factor.rank}
+                  >
+                    <div className="additional-factor-head">
+                      <div className="additional-factor-rank-title">
+                        <span
+                          className={`additional-factor-rank additional-factor-rank-${factorTone}`}
+                        >
+                          #{factor.rank}
+                        </span>
+                        <h4>{factor.title}</h4>
+                      </div>
                       <span
-                        className="additional-factor-fill"
-                        style={{ width: `${factor.score}%` }}
-                      />
+                        className={`additional-factor-tag additional-factor-tag-${factorTone}`}
+                      >
+                        {factor.tag}
+                      </span>
                     </div>
-                    <span className="additional-factor-score">
-                      {factor.score}%
-                    </span>
-                  </div>
-                </article>
-              ))}
+
+                    <p className="additional-factor-summary">{factor.summary}</p>
+
+                    <div className="additional-factor-progress-row">
+                      <div className="additional-factor-track" aria-hidden="true">
+                        <span
+                          className={`additional-factor-fill additional-factor-fill-${factorTone}`}
+                          style={{ width: `${factor.score}%` }}
+                        />
+                      </div>
+                      <span
+                        className={`additional-factor-score additional-factor-score-${factorTone}`}
+                      >
+                        {factor.score}%
+                      </span>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </section>
 

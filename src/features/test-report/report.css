@@ -3828,6 +3828,74 @@ html, body {
    line-height: 15px;
 }
 
+.additional-factors-section-colored .additional-factors-title-row h3 {
+   color: #00e5ff;
+}
+
+.additional-factors-section-colored .additional-factor-card {
+   border-radius: 8px;
+   border: 1px solid rgba(5, 67, 88, 0.5);
+   background: #041126;
+   opacity: 1;
+}
+
+.additional-factors-section-colored .additional-factor-rank-title h4 {
+   color: #fff;
+}
+
+.additional-factors-section-colored .additional-factor-summary {
+   color: #9fb4d0;
+}
+
+.additional-factors-section-colored .additional-factor-track {
+   background: #041126;
+}
+
+.additional-factors-section-colored .additional-factor-rank-cyan,
+.additional-factors-section-colored .additional-factor-tag-cyan,
+.additional-factors-section-colored .additional-factor-score-cyan {
+   color: #00e5ff;
+}
+
+.additional-factors-section-colored .additional-factor-tag-cyan {
+   border: 1px solid rgba(0, 229, 255, 0.2);
+   background: rgba(74, 96, 128, 0.1);
+}
+
+.additional-factors-section-colored .additional-factor-fill-cyan {
+   background: #00e5ff;
+}
+
+.additional-factors-section-colored .additional-factor-rank-amber,
+.additional-factors-section-colored .additional-factor-tag-amber,
+.additional-factors-section-colored .additional-factor-score-amber {
+   color: #f4c430;
+}
+
+.additional-factors-section-colored .additional-factor-tag-amber {
+   border: 1px solid rgba(244, 196, 48, 0.2);
+   background: rgba(74, 96, 128, 0.1);
+}
+
+.additional-factors-section-colored .additional-factor-fill-amber {
+   background: #f4c430;
+}
+
+.additional-factors-section-colored .additional-factor-rank-red,
+.additional-factors-section-colored .additional-factor-tag-red,
+.additional-factors-section-colored .additional-factor-score-red {
+   color: #ef4444;
+}
+
+.additional-factors-section-colored .additional-factor-tag-red {
+   border: 1px solid rgba(239, 68, 68, 0.2);
+   background: rgba(74, 96, 128, 0.1);
+}
+
+.additional-factors-section-colored .additional-factor-fill-red {
+   background: #ef4444;
+}
+
 /* =========================================================
    Scalp condition and recovery
 ========================================================= */

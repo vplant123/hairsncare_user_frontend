@@ -5227,121 +5227,121 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
 .meal-plan-panel {
    display: flex;
    width: 100%;
-   min-height: 344px;
-   padding: 21px;
+   padding: 24px;
    flex-direction: column;
    align-items: flex-start;
-   border-radius: 16px;
-   border: 1px solid #054358;
+   border-radius: 20px;
+   border: 1px solid rgba(0, 229, 255, 0.12);
    background: #061a2e;
    box-sizing: border-box;
 }
 
 .meal-plan-panel h4 {
-   margin: 0;
+   margin: 0 0 20px 0;
    display: inline-flex;
    align-items: center;
-   gap: 10px;
+   gap: 12px;
    color: #fff;
    font-family: Roboto, sans-serif;
-   font-size: 14px;
+   font-size: 16px;
    font-style: normal;
-   font-weight: 700;
-   line-height: 20px;
+   font-weight: 600;
+   line-height: 1.4;
+   letter-spacing: 0.5px;
 }
 
 .meal-plan-title-icon {
+   width: 30px;
+   height: 30px;
    display: inline-flex;
    align-items: center;
    justify-content: center;
    color: #00e5ff;
+   background: rgba(0, 229, 255, 0.1);
+   border-radius: 8px;
 }
 
 .meal-plan-list {
-   margin-top: 14px;
    width: 100%;
-   display: grid;
-   gap: 10px;
-   position: relative;
-}
-
-.meal-plan-row {
-   border-radius: 12px;
-   border: 1px solid #054358;
-   background: #041126;
-   padding: 11px 14px;
    display: flex;
-   align-items: center;
+   flex-direction: column;
    gap: 12px;
 }
 
+.meal-plan-row {
+   padding: 10px 0;
+   display: flex;
+   align-items: center;
+   gap: 16px;
+   width: 100%;
+   background: transparent;
+   border: none;
+   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+   transition: all 0.2s ease;
+}
+
+.meal-plan-row:last-child {
+   border-bottom: none;
+}
+
+.meal-plan-row:hover {
+   background: rgba(255, 255, 255, 0.03);
+}
+
 .meal-plan-row-icon {
-   width: 28px;
-   height: 28px;
-   border-radius: 8px;
+   width: 36px;
+   height: 36px;
+   border-radius: 50%;
    display: inline-flex;
    align-items: center;
    justify-content: center;
    flex: 0 0 auto;
+   color: #ffffff !important;
 }
 
-.meal-plan-row-icon-amber {
-   color: #f4c430;
-   background: rgba(244, 196, 48, 0.08);
+.meal-plan-row-icon.amber {
+   background: #FFB300;
+   box-shadow: 0 0 15px rgba(255, 179, 0, 0.3);
 }
 
-.meal-plan-row-icon-green {
-   color: #10b981;
-   background: rgba(16, 185, 129, 0.08);
+.meal-plan-row-icon.green {
+   background: #2E7D32;
+   box-shadow: 0 0 15px rgba(46, 125, 50, 0.3);
 }
 
-.meal-plan-row-icon-cyan {
-   color: #00e5ff;
-   background: rgba(0, 229, 255, 0.08);
+.meal-plan-row-icon.cyan {
+   background: #00B8D4;
+   box-shadow: 0 0 15px rgba(0, 184, 212, 0.3);
 }
 
-.meal-plan-row-icon-slate {
-   color: #9fb4d0;
-   background: rgba(159, 180, 208, 0.08);
+.meal-plan-row-icon.slate {
+   background: #546E7A;
+   box-shadow: 0 0 15px rgba(84, 110, 122, 0.3);
 }
 
-.meal-plan-row p {
-   margin: 0;
-   display: inline-flex;
+.meal-content-wrapper {
+   flex: 1;
+   display: flex;
    align-items: center;
-   gap: 10px;
-   flex-wrap: wrap;
-   color: #9fb4d0;
+   gap: 8px;
    font-family: Roboto, sans-serif;
-   font-size: 12px;
-   font-style: normal;
-   font-weight: 400;
-   line-height: 16px;
-}
-
-.meal-plan-label {
-   font-family: Roboto, sans-serif;
-   font-size: 12px;
-   font-style: normal;
-   font-weight: 700;
-   line-height: 16px;
-}
-
-.meal-plan-label-amber {
-   color: #f4c430;
-}
-
-.meal-plan-label-green {
-   color: #10b981;
-}
-
-.meal-plan-label-cyan {
-   color: #00e5ff;
-}
-
-.meal-plan-label-slate {
+   font-size: 13.5px;
+   line-height: 1.5;
    color: #9fb4d0;
 }
+
+.meal-label {
+   font-weight: 800;
+   margin-right: 6px;
+   letter-spacing: 0.3px;
+   background: transparent !important;
+   padding: 0 !important;
+}
+
+.meal-label.amber { color: #FFB300; }
+.meal-label.green { color: #4CAF50; }
+.meal-label.cyan { color: #00E5FF; }
+.meal-label.slate { color: #B0BEC5; }
 
 /* =========================================================
    Unlock Overlay Component

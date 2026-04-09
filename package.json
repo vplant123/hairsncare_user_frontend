@@ -65,13 +65,13 @@
     "xlsx": "^0.18.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "node init && react-scripts start",
+    "build": "node init && react-scripts build",
     "postbuild": "node scripts/compress-build.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "analyze": "react-scripts build && npx webpack-bundle-analyzer build/static/js/*.js || true",
-    "start:prod": "node server/serve-compressed.js"
+    "start:prod": "node init && node server/serve-compressed.js"
   },
   "eslintConfig": {
     "extends": [

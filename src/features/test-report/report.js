@@ -3,19 +3,55 @@ import "./report.css";
 import { FiCalendar } from "react-icons/fi";
 import { checkSessionStatus } from '../hair-assessment/HairAssessmentApi';
 import { toast } from 'react-toastify';
+import API_BASE_URL from '../../Config';
+
+// Helper to format API URLs with BASE_URL if relative
+const formatUrl = (url) => {
+  if (!url) return null;
+  if (url.startsWith('http')) return url;
+  if (!API_BASE_URL) return url;
+
+  // Static assets (like /uploads) usually live at server root, not under /api/v1
+  // We extract the domain/host part from API_BASE_URL
+  const serverRoot = API_BASE_URL.split('/api/v1')[0];
+  const cleanBase = serverRoot.endsWith('/') ? serverRoot.slice(0, -1) : serverRoot;
+  const cleanUrl = url.startsWith('/') ? url : `/${url}`;
+  
+  return `${cleanBase}${cleanUrl}`;
+};
 
 // Purely dynamic mapping from sessionId status API
+const safeArray = (arr) => Array.isArray(arr) ? arr : [];
 
 
 
 
-export default function TestReport({ sessionId, reportData: initialData }) {
+
+
+const UnlockOverlay = ({ title, description, ctaText, onUnlock }) => (
+  <div className="unlock-overlay-container">
+    <div className="unlock-overlay flex-column-center">
+      <div className="unlock-icon-shield">
+        <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10.7878 4.95833H11.954C12.1173 4.95833 12.2553 5.01472 12.368 5.1275C12.4808 5.24028 12.5371 5.37833 12.5371 5.54167V12.5417C12.5371 12.705 12.4808 12.8431 12.368 12.9558C12.2553 13.0686 12.1173 13.125 11.954 13.125H2.62402C2.46074 13.125 2.32274 13.0686 2.21 12.9558C2.09726 12.8431 2.04089 12.705 2.04089 12.5417V5.54167C2.04089 5.37833 2.09726 5.24028 2.21 5.1275C2.32274 5.01472 2.46074 4.95833 2.62402 4.95833H3.79027V4.375C3.79027 3.745 3.94966 3.15778 4.26843 2.61333C4.57943 2.08444 4.99928 1.66444 5.52798 1.35333C6.07223 1.03444 6.65924 0.875 7.28902 0.875C7.91879 0.875 8.50581 1.03444 9.05006 1.35333C9.57876 1.66444 9.99861 2.08444 10.3096 2.61333C10.6284 3.15778 10.7878 3.745 10.7878 4.375V4.95833ZM6.70589 9.47333V10.7917H7.87214V9.47333C8.05097 9.36444 8.19286 9.22056 8.29782 9.04167C8.40279 8.86278 8.45527 8.66833 8.45527 8.45833C8.45527 8.24833 8.40279 8.05389 8.29782 7.875C8.19286 7.69611 8.05097 7.55417 7.87214 7.44917C7.69332 7.34417 7.49894 7.29167 7.28902 7.29167C7.07909 7.29167 6.88472 7.34417 6.70589 7.44917C6.52707 7.55417 6.38517 7.69611 6.28021 7.875C6.17525 8.05389 6.12277 8.24833 6.12277 8.45833C6.12277 8.66833 6.17525 8.86278 6.28021 9.04167C6.38517 9.22056 6.52707 9.36444 6.70589 9.47333ZM9.62152 4.95833V4.375C9.62152 3.955 9.51656 3.56611 9.30663 3.20833C9.09671 2.85056 8.81292 2.56667 8.45527 2.35667C8.09762 2.14667 7.70887 2.04167 7.28902 2.04167C6.86917 2.04167 6.48042 2.14667 6.12277 2.35667C5.76512 2.56667 5.48133 2.85056 5.27141 3.20833C5.06148 3.56611 4.95652 3.955 4.95652 4.375V4.95833H9.62152Z" fill="#F4C430" />
+        </svg>
+      </div>
+      <h5 className="unlock-title">{title}</h5>
+      <p className="unlock-description">{description}</p>
+      <button className="unlock-cta-btn" onClick={onUnlock}>Unlock Insights</button>
+    </div>
+  </div>
+);
+
+export default function TestReport({ sessionId, reportData: initialData, onDownloadPdf, onUnlockReport, isPrintMode }) {
   const [reportData, setReportData] = React.useState(initialData || null);
   const [loading, setLoading] = React.useState(false);
+  const [fullReport, setFullReport] = React.useState(!!initialData?.fullReportAccess || false);
 
   React.useEffect(() => {
     if (initialData) {
       setReportData(initialData);
+      setFullReport(!!initialData.fullReportAccess || isPrintMode);
       return;
     }
 
@@ -26,6 +62,7 @@ export default function TestReport({ sessionId, reportData: initialData }) {
         const response = await checkSessionStatus(sessionId);
         if (response.success) {
           setReportData(response.data);
+          setFullReport(!!response.data.fullReportAccess || isPrintMode);
           console.log("Loaded report data:", response.data);
         }
       } catch (err) {
@@ -36,16 +73,182 @@ export default function TestReport({ sessionId, reportData: initialData }) {
     };
 
     getReportResults();
-  }, [sessionId, initialData]);
+  }, [sessionId, initialData, isPrintMode]);
 
-  // Normalize API data to support different response formats (singular vs plural keys)
-  const clinicalNarrative = reportData?.clinicalNarrative || reportData?.analysisResults;
-  const dseResult = reportData?.dseResult || reportData?.dseResults;
+  const useStatic = (!fullReport && !isPrintMode);
 
-  // State for controlling locked/unlocked sections
-  // Derive photo analysis visibility from API results
-  const withPhotoAnalysis = !!(dseResult?.visionAdjusted || false);
-  const [fullReport, setFullReport] = React.useState(false);
+  // --- STATIC FALLBACK DATA FOR LOCKED/UNAUTHORIZED VIEW ---
+  const LOCKED_STATIC_DATA = {
+    clinicalNarrative: {
+      summary: "AI-generated clinical assessment indicates early-stage pattern-based thinning (Norwood Stage II) with secondary stress-induced shedding markers. Results suggest strong recovery potential if stimulus protocol is initiated within the next 90 days. Unlock your full clinical dossier for the complete molecular root-cause breakdown.",
+      prognosis: "Positive recovery potential. Follicle viability remains high (72%) across primary zones. Stabilisation phase expected within 3-4 months with consistent topical and nutritional compliance.",
+      disclaimer: "AI-generated diagnostic assessment based on profile inputs. This is not a medical diagnosis — consult a qualified trichologist for clinical confirmation.",
+      conditions: [
+        { classification: 'PRIMARY_CONDITION', name: "Stress-Induced (Telogen Effluvium)", explanation: "Elevated cortisol disrupting hair growth cycle and pushing follicles into premature resting phase.", probabilityPct: 82, tone: "cyan" },
+        { classification: 'PRIMARY_CONDITION', name: "Nutritional Deficiency", explanation: "Iron, Vitamin D, and Biotin levels likely below optimal thresholds for hair synthesis.", probabilityPct: 74, tone: "cyan" },
+        { classification: 'PRIMARY_CONDITION', name: "Hormonal Imbalance", explanation: "Elevated DHT-to-testosterone ratio detected; possible thyroid marker involvement.", probabilityPct: 61, tone: "amber" }
+      ],
+      nutritionalPlan: [
+        { id: 1, category: "Biotin (Vitamin B7)", dosage: "5,000 mcg/day", description: "Supports keratin synthesis — deficiency causes thinning and brittle hair.", tone: "amber", icon: "chain", items: ["Eggs", "Almonds", "Sweet potato", "Salmon"], imageType: "biotin" },
+        { id: 2, category: "Iron & Ferritin", dosage: "18–27 mg/day", description: "Iron deficiency reduces oxygen delivery to follicles, triggering shedding.", tone: "red", icon: "drop", items: ["Red meat", "Spinach", "Lentils", "Pumpkin seeds"], imageType: "iron" },
+        { id: 3, category: "Zinc", dosage: "15–30 mg/day", description: "Critical for follicle cell repair and DHT metabolism.", tone: "cyan", icon: "shield", items: ["Oysters", "Beef", "Chickpeas", "Cashews"], imageType: "zinc" },
+        { id: 4, category: "Vitamin D3", dosage: "2,000–5,000 IU/day", description: "Regulates hair follicles to initiate growth cycles — deficiency causes telogen effluvium.", tone: "amber", icon: "sun", items: ["Fatty fish", "Egg yolks", "Fortified milk"], imageType: "vitd" }
+      ],
+      dailyMealPlan: [
+        { type: "Breakfast", menu: ["3 boiled eggs + spinach omelette", "avocado toast on whole grain", "fortified milk"], tone: "amber", icon: "sun" },
+        { type: "Lunch", menu: ["Grilled salmon with quinoa", "mixed greens", "olive oil dressing"], tone: "cyan", icon: "leaf" },
+        { type: "Snack", menu: ["Mixed nuts (almonds, cashews)", "Greek yogurt"], tone: "cyan", icon: "snack" },
+        { type: "Dinner", menu: ["Lean chicken breast", "steamed broccoli", "sweet potato"], tone: "slate", icon: "moon" },
+        { type: "Supplement", menu: ["Biotin 5000mcg + Vitamin D3 2000IU + Iron 18mg + Zinc 15mg with meals"], tone: "amber", icon: "pill" }
+      ],
+      toAvoid: [
+        { title: "Crash Dieting", explanation: "Triggers telogen effluvium from nutrient deprivation", tone: "danger" },
+        { title: "Excess Sugar", explanation: "Promotes insulin resistance which increases scalp oiliness and DHT levels", tone: "danger" },
+        { title: "Trans Fats", explanation: "Promote systemic inflammation around hair follicles", tone: "danger" },
+        { title: "High Sodium", explanation: "Reduces blood flow to the scalp and increases scalp inflammation", tone: "danger" },
+        { title: "Processed Foods", explanation: "Disrupt nutrient absorption and hormonal balance", tone: "danger" },
+        { title: "Excessive Alcohol", explanation: "Depletes zinc, B12 and folic acid — key for follicles", tone: "danger" }
+      ],
+      dailyRoutine: [
+        { time: "Morning", activity: "Scalp massage 3-5 min", note: "stimulates blood flow to follicles" },
+        { time: "Post-Wash", activity: "Apply Minoxidil on DRY scalp", note: "wet scalp reduces absorption rate" },
+        { time: "Nightly", activity: "Sleep on a silk pillowcase", note: "reduces friction and mechanical breakage" }
+      ],
+      weeklySchedule: [
+        { day: "Mon/Thu", activities: ["Scalp massage", "Minoxidil AM", "Light yoga"], locked: false },
+        { day: "Tue/Fri", activities: ["Medicated shampoo", "Zinc supplement", "Iron + Vit C"], locked: true },
+        { day: "Wed/Sat", activities: ["Deep conditioning", "Cardio 30 min", "Minoxidil PM"], locked: true }
+      ],
+      stressTechniques: [
+        { name: "4-7-8 Breathing", explanation: "Activates parasympathetic system - reduces cortisol within minutes.", icon: "breathing", impact: "Lowers heart rate rapidly" },
+        { name: "Scalp Self-Massage", explanation: "Increases circulation and reduces localised DHT accumulation.", icon: "massage", impact: "Boosts oxygen delivery" }
+      ],
+      stressFoods: [
+        { name: "Dark Chocolate (85%)", explanation: "Lowers adrenaline + cortisol response" },
+        { name: "Matcha Green Tea", explanation: "L-theanine promotes calm without sedation" }
+      ],
+      activeRisks: [
+        { name: "Early Onset (Age <30)", description: "Advanced future staging risk without early intervention" },
+        { name: "Elevated Stress", description: "Chronic cortisol disrupts growth cycle" }
+      ],
+      bloodWorkSuggestions: [
+        { name: "Serum Ferritin", explanation: "Ferritin < 30 ng/ml causes hair loss even without anemia. Target > 70 ng/ml." },
+        { name: "TSH (Thyroid)", explanation: "Hormonal disruption is a major cause of diffuse thinning." }
+      ],
+      prognosisPlan: [
+        { milestone: "Shedding Control", timeline: "3-4 Months", probability: "85%" },
+        { milestone: "Visible Regrowth", timeline: "6-12 Months", probability: "72%" }
+      ],
+      treatmentExplanation: {
+        "Phase 1": "Stabilize current shedding and reduce DHT sensitivity through topical vasodilators.",
+        "Phase 2": "Re-activate dormant follicles via targeted nutritional support and stimulus therapy.",
+        "Phase 3": "Increase hair shaft diameter and overall global density for consolidated growth."
+      }
+    },
+    dseResult: {
+      severityBand: "Moderate",
+      hairHealthIndex: 72,
+      totalScore: 72,
+      geneticRisk: 34,
+      conditions: [
+        { classification: 'CONTRIBUTING', name: "Genetic Sensitivity", explanation: "Low-moderate androgen receptor sensitivity detected.", score: 34 },
+        { classification: 'MINOR', name: "Scalp Condition", explanation: "Mild sebum imbalance and minor scalp inflammation.", score: 28 }
+      ],
+      recommendations: [
+        { name: "Topical Minoxidil (5%)", explanation: "FDA-approved vasodilator - stimulates follicle activity.", priority: "HIGH", priorityTone: "high", timeFrame: "1-3 mo" },
+        { name: "Anti-DHT Complex", explanation: "Blocks DHT at the root to prevent further miniaturisation.", priority: "HIGH", priorityTone: "high", timeFrame: "Ongoing" }
+      ],
+      freebies: [
+        { name: "Free Hair Consultation", explanation: "Get expert guidance tailored to your AI report outcomes." },
+        { name: "Personalized Diet Plan", explanation: "Custom hair-synthesis nutrition plan for recovery." }
+      ],
+      metrics: [
+        { name: "Hair Density", status: "Mild", score: 52, scoreLabel: "Mild Thinning", note: "Early-stage density reduction observed", tone: "mild", dashArray: "84.95 163.36" },
+        { name: "Fall Control", status: "High Risk", score: 38, scoreLabel: "Active Shedding", note: "Above-normal daily shedding detected", tone: "high-risk", dashArray: "62.08 163.36" }
+      ],
+      detailedMetrics: [
+        { name: "Hair Health Index", value: 91, score: 91, tone: "cyan", standing: "Top 25%", explanation: "Your overall hair health is in good shape with high potential.", benchmarkTitle: "AGE BENCHMARK (30-40)", benchmarkLines: ["Typical HHI is around 56.", "Your score of 91 places you in Top 15%."] },
+        { name: "Miniaturization Rate", value: 38, score: 38, tone: "amber", standing: "Elevated", explanation: "Rate at which terminal hairs are shrinking." }
+      ],
+      regionalDensity: [
+        { zoneId: "front", zoneName: "Frontal Zone", coveragePct: 52, status: "Moderate", note: "Mild diffuse thinning noted" },
+        { zoneId: "crown", zoneName: "Crown / Vertex", coveragePct: 58, status: "Moderate", note: "Minor involvement detected" }
+      ],
+      lifestyleFactors: [
+        { factor: "Stress Level", impactTone: "high", impactDescription: "High cortisol may trigger TE shedding.", mitigation: "Improve meditation consistency.", value: 86, label: "High" },
+        { factor: "Sleep Quality", impactTone: "moderate", impactDescription: "Irregular cycles affect cell regeneration.", mitigation: "Target 7-8 hours daily.", value: 56, label: "Moderate" }
+      ],
+      aiInsights: [
+        { name: "Hairline Analysis", severity: "Mild", explanation: "Early recession detected in temporal regions.", iconType: "hairline", tone: "mild" },
+        { name: "Scalp Visibility", severity: "Significant", explanation: "Density reduction more apparent in vertex zone.", iconType: "visibility", tone: "significant" }
+      ],
+      visualMetrics: [
+        { name: "Confidence Level", value: "High", label: "High Confidence", percent: 94, tone: "confidence" },
+        { name: "Diagnostic Accuracy", value: "+32%", label: "Accuracy Boost", percent: 82, tone: "accuracy" }
+      ],
+      scalpInsights: [
+        { name: "Hair Breakage", value: "Moderate", label: "Present", explanation: "Shaft integrity weakened by past chemical styling.", summary: "Reduce heat styling. Use wide-tooth comb.", steps: ["Switch to silk pillowcase", "Apply protein conditioner"], tone: "amber", showImage: true },
+        { name: "Scalp Oiliness", value: "Elevated", label: "Mild", explanation: "Sebum accumulation noted in frontal zone.", summary: "Wash every 2-3 days with balancing shampoo.", steps: ["Apply witch hazel toner", "Avoid touching scalp"], tone: "amber" }
+      ],
+      predictiveRisks: [
+        { name: "Age-related Progression", level: "Medium", value: 65 },
+        { name: "Genetic Predisposition", level: "High", value: 88 }
+      ]
+    }
+  };
+
+
+  // DYNAMIC DATA from API
+  const dynamicNarrative = reportData?.clinicalNarrative || reportData?.analysisResults || reportData?.story || {};
+  const dynamicDse = reportData?.dseResult || reportData?.dseResults || {};
+
+  // STATIC Fallback
+  const staticNarrative = LOCKED_STATIC_DATA.clinicalNarrative;
+  const staticDse = LOCKED_STATIC_DATA.dseResult;
+
+  // Sections that are ALWAYS dynamic (Header, Clinical Insight Cards, AI Photo Analysis)
+  const clinicalNarrative = dynamicNarrative; 
+  const dseResult = dynamicDse;
+
+  // Sections that depend on fullReport status (Weekly Schedule, Protocol, Meal Plan)
+  const lockedNarrative = dynamicNarrative;
+  const lockedDse = dynamicDse;
+
+  // Derive photo analysis visibility from API results or uploaded images
+  const withPhotoAnalysis = !!(reportData?.imagesUploaded > 0 || dseResult?.visionAdjusted || reportData?.photos?.length > 0);
+
+  React.useEffect(() => {
+    if (reportData?.fullReportAccess || isPrintMode) {
+      setFullReport(true);
+    }
+  }, [reportData, isPrintMode]);
+
+  // Phase 3 Signal: Set window.reportReady = true when UI is fully rendered
+  // This is used by the /report-print/ route and the backend PDF capture service.
+  React.useEffect(() => {
+    if (reportData) {
+      // 5s buffer to ensure all charts, regional density SVG, and AI text blocks are fully painted
+      const signalTimer = setTimeout(() => {
+        window.reportReady = true;
+        console.log("Diagnostic Flow Readiness: window.reportReady = true (Signal Emitted)");
+      }, 5000); 
+
+      return () => {
+        clearTimeout(signalTimer);
+        window.reportReady = false; // Reset if component unmounts or data changes
+      };
+    }
+  }, [reportData]); // Only re-emit when reportData itself changes
+
+  const handleUnlockReport = () => {
+    if (onUnlockReport) {
+      onUnlockReport();
+    } else {
+      // Fallback/Legacy: Local State Flip
+      setFullReport(true);
+      toast.success("Full Premium Report Unlocked!");
+    }
+  };
 
   const sharedThumbImage = `${process.env.PUBLIC_URL}/report-image/IMG-4004.png`;
   const scalpRepresentativeImage = `${process.env.PUBLIC_URL}/report-image/IMG-840.png`;
@@ -58,252 +261,330 @@ export default function TestReport({ sessionId, reportData: initialData }) {
   const aiPhotoImageCrown = `${process.env.PUBLIC_URL}/report-image/IMG-579.png`;
   const aiPhotoImageTemple = `${process.env.PUBLIC_URL}/report-image/IMG-596.png`;
 
+
+  const apiPhotos = safeArray(reportData?.photos);
   const aiPhotoTiles = [
     {
       id: "front-hairline",
-      label: "Front Hairline",
+      label: "Frontal View",
       zone: "Recession zone",
-      image: aiPhotoImageFront,
+      image: apiPhotos[0] || (!useStatic && safeArray(reportData?.images).find(img => img.type === "front" || img.id === "front")?.url) || aiPhotoImageFront,
       markerTop: "37%",
       markerLeft: "48%",
     },
     {
       id: "crown-view",
-      label: "Crown / Top View",
+      label: "Crown View",
       zone: "Thinning zone",
-      image: aiPhotoImageCrown,
+      image: apiPhotos[1] || (!useStatic && safeArray(reportData?.images).find(img => img.type === "top" || img.id === "top" || img.id === "crown")?.url) || aiPhotoImageCrown,
       markerTop: "44%",
       markerLeft: "52%",
     },
     {
-      id: "left-profile",
-      label: "Left Profile",
+      id: "temple-view",
+      label: "Side / Temple View",
       zone: "Temple area",
-      image: aiPhotoImageTemple,
+      image: apiPhotos[2] || (!useStatic && safeArray(reportData?.images).find(img => img.type === "left" || img.id === "left")?.url) || aiPhotoImageTemple,
       markerTop: "43%",
       markerLeft: "35%",
     },
     {
       id: "right-profile",
-      label: "Right Profile",
-      unavailable: true,
+      label: "Profile Analysis",
+      image: apiPhotos[3] || (!useStatic && safeArray(reportData?.images).find(img => img.type === "right" || img.id === "right")?.url),
+      unavailable: !apiPhotos[3] && (useStatic || !safeArray(reportData?.images).find(img => img.type === "right" || img.id === "right")),
     },
   ];
 
 
+  const clinicalSummaryText = lockedNarrative?.executiveSummary || lockedNarrative?.summary || "Clinical assessment pending.";
 
-  // Map conditions from API if available
-  const apiConditions = clinicalNarrative?.conditions || dseResult?.conditions || [];
-  const primaryCauses = apiConditions
-    .filter(c => c.classification === 'PRIMARY_CONDITION')
-    .map((c, i) => ({
-      rank: i + 1,
-      title: c.name,
-      tag: "Primary Finding",
-      score: c.probabilityPct,
-      tone: "cyan",
-      summary: c.explanation || clinicalNarrative?.rootCause || "High-confidence clinical finding."
-    }));
-
-  const secondaryCauses = apiConditions
-    .filter(c => c.classification === 'LOW_PROBABILITY_FACTOR')
-    .map((c, i) => ({
-      rank: (primaryCauses.length || 1) + i + 1,
-      title: c.name,
-      tag: "Contributing",
-      score: c.probabilityPct,
-      tone: "amber",
-      summary: c.explanation || "Secondary factor detected by the diagnostic engine."
-    }));
-
-  const treatmentExplanation = clinicalNarrative?.treatmentExplanation || {};
-  const phases = Object.entries(treatmentExplanation).map(([key, value], i) => ({
-    id: i + 1,
-    title: key.toUpperCase().replace('PHASE', 'Phase '),
-    summary: value,
-    status: i === 0 ? "Active" : "Locked",
-    locked: i !== 0
-  }));
-
-  const recommendationRows = (dseResult?.recommendations || []).map(r => ({
-    title: r.name,
-    desc: r.explanation,
-    priority: r.priority,
+  const rootCausesRaw = safeArray(lockedNarrative?.rootCauseAnalysis || lockedNarrative?.rootCausePrimary);
+  const primaryCauses = rootCausesRaw.filter(c => (c.tag || c.classification) === "Primary").map(c => ({
+    rank: c.rank || 1,
+    title: c.factor || c.title,
+    tag: c.tag || "Primary Cause",
+    score: c.contributionPct || c.score || 0,
+    tone: c.tone || "red",
+    summary: c.why || c.summary,
+    impact: c.impact,
     fromApi: true
   }));
 
-  const freebiesRows = (dseResult?.freebies || []).map(f => ({
-    title: f.name,
-    desc: f.explanation,
+  const secondaryCauses = rootCausesRaw.filter(c => (c.tag || c.classification) === "Contributing" || (c.tag || c.classification) === "Secondary").map(c => ({
+    rank: c.rank || 3,
+    title: c.factor || c.title,
+    tag: c.tag || "Contributing Factor",
+    score: c.contributionPct || c.score || 0,
+    tone: c.tone || "cyan",
+    summary: c.why || c.summary,
     fromApi: true
   }));
 
-  const clinicalDimensions = (dseResult?.metrics || []).map(m => ({
-    title: m.name,
-    status: m.status,
-    score: m.value,
-    scoreLabel: m.label,
-    note: m.explanation,
-    tone: m.tone || "cyan",
-    dashArray: `${(m.value) * 1.63} 163`,
+  const personalisedTreatmentPhases = safeArray(lockedNarrative?.personalisedTreatmentPhases).map((p, i) => ({
+    phase: p.phase || `Phase ${i+1}`,
+    monthRange: p.monthRange || "",
+    subtitle: p.subtitle || "",
+    tone: p.tone || "cyan",
+    icon: p.icon || "shield",
+    bullets: safeArray(p.bullets),
     fromApi: true
   }));
 
-  const deepMetricRows = (dseResult?.detailedMetrics || []).map(dm => ({
-    title: dm.name,
-    score: dm.value,
-    progress: dm.value,
+  const phases = personalisedTreatmentPhases;
+
+  const recommendationRows = safeArray(lockedNarrative?.recommendationRows).map(r => ({
+    title: r.title,
+    desc: r.desc,
+    priority: r.tag || "Recommended",
+    priorityTone: (r.tagTone || "recommended").toLowerCase(),
+    markerTone: (r.purposeTone?.replace('purpose-', '') || "cyan").toLowerCase(),
+    timeFrame: r.timeFrame || "Ongoing",
+    duration: r.duration || "Initial Protocol",
+    showImage: !!r.thumbClass,
+    fromApi: true
+  }));
+
+  const healthIndicatorsRaw = safeArray(lockedNarrative?.healthIndicators?.dashboard).length > 0
+    ? lockedNarrative.healthIndicators.dashboard
+    : safeArray(lockedNarrative?.clinicalDimensions);
+
+  const clinicalDimensions = healthIndicatorsRaw.map(m => {
+    let finalTone = m.tone || (m.score > 80 ? "healthy" : m.score > 50 ? "mild" : "high-risk");
+    // Normalize colors to CSS classes
+    if (finalTone === 'green') finalTone = 'healthy';
+    if (finalTone === 'amber') finalTone = 'mild';
+    if (finalTone === 'red') finalTone = 'high-risk';
+
+    return {
+      title: m.title || m.name,
+      status: m.status,
+      score: m.score || 0,
+      scoreLabel: m.scoreLabel || `${m.score || 0}/100`,
+      note: m.note || m.meaning,
+      tone: finalTone,
+      dashArray: m.dashArray || `${(m.score || 0) * 1.63} 163`,
+      fromApi: true
+    };
+  });
+
+  const deepMetricRows = safeArray(lockedNarrative?.deepMetricRows).map(dm => ({
+    title: dm.title,
+    score: dm.score || 0,
+    progress: dm.progress || dm.score || 0,
     tone: dm.tone || "cyan",
-    scoreStand: dm.standing || "Within range",
-    scoreNote: dm.note,
-    benchmarkTitle: dm.benchmarkTitle || "Peer Range",
-    benchmarkLines: dm.benchmarkLines || [],
-    meaning: dm.explanation,
+    scoreStand: dm.scoreStand || "Assessment Provided",
+    scoreNote: dm.scoreNote || "",
+    benchmarkTitle: dm.benchmarkTitle || "Clinical Range",
+    benchmarkLines: safeArray(dm.benchmarkLines),
+    meaning: dm.meaning || "",
     fromApi: true
   }));
 
-  const regionalZones = (dseResult?.regionalDensity || []).map(z => ({
-    id: z.zoneId,
-    title: z.zoneName,
-    percent: z.coveragePct,
+  const regionalZones = safeArray(lockedNarrative?.regionalZones).map(z => ({
+    name: z.name,
+    percent: z.percent || 0,
     status: z.status || "Analyzing",
+    note: z.note || "",
     fromApi: true
   }));
 
-  const lifestyleRiskFactors = (clinicalNarrative?.lifestyleFactors || []).map(l => ({
-    title: l.factor,
-    tone: l.impactTone || "amber", // red, amber, green
-    impact: l.impactDescription,
-    mitigation: l.mitigation,
+  const lifestyleRiskFactors = safeArray(lockedNarrative?.lifestyleRiskFactors).map(l => ({
+    label: l.label,
+    tag: l.tag || "Moderate",
+    tone: l.tone || "amber", 
+    progress: l.progress || 50,
     fromApi: true
   }));
 
-  const nutritionalProtocolCards = (clinicalNarrative?.nutritionalPlan || []).map(n => ({
-    id: n.id,
-    phase: n.phase,
-    title: n.category,
-    desc: n.description,
-    foods: n.items || [],
+  const nutritionalProtocolCards = safeArray(lockedNarrative?.nutritionalProtocolCards).map(n => ({
+    title: n.title,
+    desc: n.desc,
+    foods: safeArray(n.foods),
+    tone: n.tone || "cyan",
+    icon: n.icon || "drop",
+    dosage: n.dosage || "",
+    imageType: n.imageType || null,
     fromApi: true
   }));
 
-  const aiAnalysisInsightRows = (dseResult?.aiInsights || []).map(ai => ({
-    title: ai.name,
-    severity: ai.severity,
-    desc: ai.explanation,
-    icon: ai.iconType, // hairline, crown, visibility, shaft
-    tone: ai.tone || "amber",
-    fromApi: true
-  }));
+  const visionAnalysis = reportData?.visionAnalysis;
+  const aiAnalysisInsightRows = [
+    visionAnalysis?.frontal_analysis && {
+      title: "Frontal View Analysis",
+      severity: visionAnalysis.frontal_analysis.hairline_recession_grade || "Analyzed",
+      desc: visionAnalysis.frontal_analysis.observations,
+      icon: "hairline",
+      tone: "amber",
+      fromApi: true
+    },
+    visionAnalysis?.crown_analysis && {
+      title: "Vertex / Crown Analysis",
+      severity: visionAnalysis.crown_analysis.ludwig_norwood_grade || "Analyzed",
+      desc: visionAnalysis.crown_analysis.observations,
+      icon: "crown",
+      tone: "amber",
+      fromApi: true
+    },
+    visionAnalysis?.macro_analysis && {
+      title: "Macro Scalp Context",
+      severity: visionAnalysis.macro_analysis.follicular_unit_density || "Analyzed",
+      desc: visionAnalysis.macro_analysis.observations,
+      icon: "shaft",
+      tone: "cyan",
+      fromApi: true
+    }
+  ].filter(Boolean);
 
-  const aiPhotoMetricCards = (dseResult?.visualMetrics || []).map(vm => ({
+  if (aiAnalysisInsightRows.length === 0) {
+    const fallbackRows = safeArray(dseResult?.aiInsights).map(ai => ({
+      title: ai.name,
+      severity: ai.severity,
+      desc: ai.explanation,
+      icon: ai.iconType, // hairline, crown, visibility, shaft
+      tone: ai.tone || "amber",
+      fromApi: true
+    }));
+    aiAnalysisInsightRows.push(...fallbackRows);
+  }
+
+  const aiPhotoMetricCards = safeArray(dseResult?.visualMetrics).map(vm => ({
     title: vm.name,
     value: vm.value,
     subtitle: vm.label,
-    progress: vm.percent,
+    progress: vm.percent || 0,
     tone: vm.tone || "confidence", // confidence, density
     fromApi: true
   }));
 
-  const scalpRecoveryCards = (clinicalNarrative?.prognosisPlan || []).map(p => ({
-    title: p.milestone,
-    duration: p.timeline,
-    confidence: p.probability,
+  const scalpRecoveryCards = clinicalDimensions.filter(d => d.title === "Recovery" || d.title === "Scalp Health").map(p => ({
+    ...p,
+    levels: ["Low", "Moderate", "Good", "Excellent"],
+    activeLevel: p.status || "Moderate"
+  }));
+
+  const dailyMealPlanRows = safeArray(lockedNarrative?.dailyMealPlanRows).map(m => ({
+    meal: m.meal,
+    detail: m.detail,
+    tone: m.tone || "cyan",
+    icon: m.icon || "leaf",
     fromApi: true
   }));
 
-  const nutritionalRows = (clinicalNarrative?.dailyMealPlan || []).map(m => ({
-    meal: m.type,
-    items: m.menu,
-    timing: m.time,
+  const improvementPredictionCards = safeArray(lockedNarrative?.improvementPredictionCards).map(p => ({
+    period: p.period || "Current",
+    phase: p.phase || "Assessment",
+    tone: p.tone || "cyan",
+    metrics: safeArray(p.metrics).map(m => ({
+      label: m.label,
+      value: typeof m.value === 'object' ? "Detail Loading..." : (m.value || "Calculating"),
+      progress: m.progress || 0
+    })),
     fromApi: true
   }));
 
-  const dailyMealPlanRows = nutritionalRows;
-
-  const improvementPredictionCards = (clinicalNarrative?.prognosis || []).map(p => ({
-    milestone: p.milestone,
-    timeframe: p.timeline,
-    probability: p.probability,
-    fromApi: true
-  }));
 
   const treatmentRecommendationRows = recommendationRows;
 
-  const foodsHabitsToAvoid = (clinicalNarrative?.toAvoid || []).map(f => ({
+  const foodsHabitsToAvoid = safeArray(lockedNarrative?.foodsHabitsToAvoid).map(f => ({
     title: f.title,
-    desc: f.explanation,
+    explanation: f.detail || f.explanation,
+    tone: f.tone || "warning",
     fromApi: true
   }));
 
-  const dailyRoutineItems = (clinicalNarrative?.dailyRoutine || []).map(r => ({
-    time: r.time,
-    activity: r.activity,
+  const dailyRoutineItems = safeArray(lockedNarrative?.dailyRoutineItems).map(r => ({
+    label: r.label || r.time,
+    action: r.action || r.activity,
     note: r.note,
+    highlight: !!r.highlight,
     fromApi: true
   }));
 
-  const weeklyHairSchedule = (clinicalNarrative?.weeklySchedule || []).map(s => ({
+  const weeklyHairSchedule = safeArray(lockedNarrative?.weeklyHairSchedule).map(s => ({
     day: s.day,
-    tasks: s.activities,
+    tasks: s.activities || s.tasks || [],
     fromApi: true
   }));
 
-  const stressReductionTechniques = (clinicalNarrative?.stressTechniques || []).map(t => ({
-    title: t.name,
-    desc: t.explanation,
-    icon: t.icon, // lotus, cortisol, sleep
+  const stressReductionTechniques = safeArray(lockedNarrative?.stressTechniques).map(t => ({
+    title: t.name || t.title,
+    desc: t.explanation || t.desc,
+    icon: t.icon, 
+    impact: t.impact,
+    how: t.how,
+    tone: t.tone || "cyan",
     fromApi: true
   }));
 
-  const cortisolReducingFoods = (clinicalNarrative?.stressFoods || []).map(f => ({
+  const cortisolReducingFoods = safeArray(lockedNarrative?.stressFoods).map(f => ({
     title: f.name,
     desc: f.explanation,
     fromApi: true
   }));
 
-  const predictiveRiskRows = (dseResult?.predictiveRisks || []).map(r => ({
-    factor: r.name,
-    risk: r.level,
-    score: r.value,
+  const predictiveRiskRows = safeArray(lockedNarrative?.riskProjections?.predictions).map(r => ({
+    label: r.label,
+    untreated: r.untreated,
+    treated: r.treated,
     fromApi: true
   }));
 
-  const activeRiskFactors = (clinicalNarrative?.activeRisks || []).map(r => ({
-    title: r.name,
-    impact: r.description,
+  const activeRiskFactors = safeArray(lockedNarrative?.activeRisks).map(r => ({
+    title: r.name || r.title,
+    impact: r.description || r.impact,
+    tone: r.tone || "amber",
     fromApi: true
   }));
 
-  const shaftScalpInsightCards = (dseResult?.scalpInsights || []).map(i => ({
+  const healthIndicators = safeArray(lockedNarrative?.healthIndicators?.dashboard).map(hi => ({
+    title: hi.title,
+    score: hi.score,
+    status: hi.status,
+    note: hi.note,
+    fromApi: true
+  }));
+
+  const evidenceTrail = safeArray(lockedNarrative?.evidenceTrail).map(e => ({
+    claim: e.claim,
+    sources: safeArray(e.sources),
+    fromApi: true
+  }));
+
+  const prognosisText = lockedNarrative?.prognosis || "Clinical prognosis pending.";
+
+  const shaftScalpInsightCards = safeArray(lockedNarrative?.scalpInsights).map(i => ({
     title: i.name,
     metric: i.value,
     status: i.label,
     desc: i.explanation,
+    summary: i.summary || i.explanation,
+    steps: i.steps || [],
+    tone: i.tone || "cyan",
+    showImage: i.showImage || false,
     fromApi: true
   }));
 
-  const bloodInvestigationCards = (clinicalNarrative?.bloodWorkSuggestions || []).map(b => ({
-    test: b.name,
-    reason: b.explanation,
+  const freebiesRows = safeArray(lockedDse?.freebies).map(f => ({
+    title: f.name,
+    desc: f.explanation,
+    fromApi: true
+  }));
+
+  const bloodInvestigationCards = safeArray(lockedNarrative?.bloodInvestigationCards).map(b => ({
+    title: b.title,
+    desc: b.desc,
+    status: b.status || "Recommended",
+    tone: b.tone || "cyan",
+    icon: b.icon || "tsh",
     fromApi: true
   }));
 
   const getAdditionalFactorTone = (tag) => {
     const normalizedTag = (tag || "").toLowerCase();
-
-    if (normalizedTag === "contributing") {
-      return "cyan";
-    }
-
-    if (normalizedTag === "minor") {
-      return "amber";
-    }
-
-    if (normalizedTag === "low") {
-      return "red";
-    }
-
+    if (normalizedTag === "contributing") return "cyan";
+    if (normalizedTag === "minor") return "amber";
+    if (normalizedTag === "low" || normalizedTag === "primary cause") return "red";
     return "cyan";
   };
 
@@ -403,11 +684,11 @@ export default function TestReport({ sessionId, reportData: initialData }) {
               <div className="clinical-hero-content">
                 <h1 className="report-main-heading">Hair Intelligence Report</h1>
                 <p className="report-summary-text">
-                  {clinicalNarrative?.summary || "AI-generated clinical assessment based on your questionnaire inputs. Results indicate hair health status and contributing factors."}
+                  {clinicalSummaryText}
                 </p>
                 {clinicalNarrative?.prognosis && (
                   <p className="report-prognosis-text" style={{ marginTop: '10px', fontSize: '14px', color: '#00E5FF', fontStyle: 'italic' }}>
-                    <strong>Prognosis:</strong> {clinicalNarrative.prognosis}
+                    <strong>Prognosis:</strong> {typeof clinicalNarrative.prognosis === 'string' ? clinicalNarrative.prognosis : (clinicalNarrative.prognosis?.summary || "Favourable recovery potential with adherence to protocol.") }
                   </p>
                 )}
                 <p className="report-disclaimer-text" style={{ marginTop: '12px', fontSize: '11px', opacity: 0.6 }}>
@@ -435,7 +716,7 @@ export default function TestReport({ sessionId, reportData: initialData }) {
                   Assessment Category
                 </div>
                 <h3 className="card-main-title">
-                  {clinicalNarrative?.conditions?.[0]?.name || "Assessment Pending"}
+                  {clinicalNarrative?.classification || clinicalNarrative?.conditions?.[0]?.name || "Assessment Complete"}
                 </h3>
                 <div className="card-footer-note">Alopecia Classification</div>
               </article>
@@ -458,7 +739,7 @@ export default function TestReport({ sessionId, reportData: initialData }) {
                   Trichological Assessment
                 </div>
                 <h3 className="card-main-title">
-                  {primaryCauses?.[0]?.title || dseResult?.conditions?.find(c => c.classification === 'PRIMARY_CONDITION')?.name || "Analysis Complete"}
+                  {primaryCauses?.[0]?.title || clinicalNarrative?.conditions?.[0]?.name || dseResult?.conditions?.find(c => c.classification === 'PRIMARY_CONDITION')?.name || "Analysis Complete"}
                 </h3>
                 <div className="card-footer-note note-highlight">
                   <span className="dot-marker" />
@@ -702,14 +983,14 @@ export default function TestReport({ sessionId, reportData: initialData }) {
                   />
                   <path
                     d="M179.478 96C179.478 49.8962 142.104 12.5218 96 12.5218C49.8962 12.5218 12.5217 49.8962 12.5217 96C12.5217 142.104 49.8962 179.478 96 179.478C142.104 179.478 179.478 142.104 179.478 96Z"
-                    stroke="#10B981"
+                    stroke={(dseResult?.HHI || dseResult?.hairHealthIndex || 72) > 80 ? "#10B981" : (dseResult?.HHI || dseResult?.hairHealthIndex || 72) > 50 ? "#F4C430" : "#EF4444"}
                     strokeWidth="14"
                     strokeLinecap="round"
-                    strokeDasharray="271.43 502.65"
+                    strokeDasharray={`${((dseResult?.HHI || dseResult?.hairHealthIndex || 72) * 502.65) / 100} 502.65`}
                   />
                 </svg>
                 <div className="health-ring-center">
-                  <strong>{dseResult?.hairHealthIndex || dseResult?.totalScore || 72}</strong>
+                  <strong>{dseResult?.HHI || dseResult?.hairHealthIndex || dseResult?.totalScore || 72}</strong>
                   <span>/ 100</span>
                   <p>HAIR HEALTH INDEX</p>
                 </div>
@@ -1032,10 +1313,16 @@ export default function TestReport({ sessionId, reportData: initialData }) {
                     >
                       {!item.unavailable ? (
                         <>
-                          <div
-                            className="ai-photo-image"
-                            style={{ backgroundImage: `url(${item.image})` }}
-                          />
+                          <div style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', overflow: 'hidden' }}>
+                            <img 
+                              src={formatUrl(item.image)} 
+                              alt={item.label} 
+                              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                              onError={(e) => {
+                                console.error("Image load error:", item.image);
+                              }}
+                            />
+                          </div>
                           <div
                             className="ai-photo-zone-marker"
                             style={{ top: item.markerTop, left: item.markerLeft }}
@@ -1253,11 +1540,26 @@ export default function TestReport({ sessionId, reportData: initialData }) {
                   AI + Questionnaire Correlation
                 </h4>
                 <p>
-                  Photo analysis <strong>confirms</strong> early-stage thinning
-                  patterns detected in your questionnaire responses. Visual data
-                  indicates crown density reduction is slightly more advanced than
-                  self-reported data - consistent with gradual onset.
+                  {clinicalNarrative?.aiCorrelationSummary || 
+                   `Photo analysis confirms thinning patterns detected in your profile. Visual data indicates crown and hairline recession are consistent with physiological indicators - highlighting ${dseResult?.topConditions?.[0] || 'active condition'} progression.`
+                  }
                 </p>
+
+                {evidenceTrail.length > 0 && (
+                  <div className="evidence-trail-wrap">
+                    <h5>Evidence Trail (Diagnostic Basis)</h5>
+                    <div className="evidence-trail-list">
+                      {evidenceTrail.map((ev, idx) => (
+                        <div key={idx} className="evidence-item">
+                          <span className="evidence-claim">{ev.claim}</span>
+                          <div className="evidence-sources">
+                            {ev.sources.map((s, si) => <span key={si} className="source-tag">{s}</span>)}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </article>
 
               <div className="ai-photo-metrics-grid">
@@ -1791,15 +2093,32 @@ export default function TestReport({ sessionId, reportData: initialData }) {
                   aria-hidden="true"
                 >
                   <svg
-                    width="19"
+                    width="22"
                     height="18"
-                    viewBox="0 0 19 18"
+                    viewBox="0 0 22 18"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M10.275 1.98002L12.705 6.19502C12.815 6.37502 12.8425 6.56502 12.7875 6.76502C12.7325 6.96502 12.615 7.11502 12.435 7.21502L11.46 7.78502L12.21 9.09002L10.905 9.84002L10.155 8.53502L9.195 9.09002C9.015 9.20002 8.825 9.22752 8.625 9.17252C8.425 9.11752 8.27 9.00002 8.16 8.82002L6.78 6.43502C6.27 6.59502 5.815 6.85002 5.415 7.20002C5.015 7.55002 4.7 7.97002 4.47 8.46002C4.24 8.95002 4.125 9.47002 4.125 10.02C4.125 10.48 4.205 10.925 4.365 11.355C4.975 10.965 5.645 10.77 6.375 10.77C6.995 10.77 7.5725 10.9125 8.1075 11.1975C8.6425 11.4825 9.085 11.87 9.435 12.36L15.195 9.03002L15.945 10.32L10.035 13.74C10.095 14 10.125 14.26 10.125 14.52C10.125 14.78 10.1 15.03 10.05 15.27H16.125V16.77H3.375C3.135 16.45 2.95 16.1 2.82 15.72C2.69 15.34 2.625 14.94 2.625 14.52C2.625 13.78 2.83 13.1 3.24 12.48C2.83 11.71 2.625 10.89 2.625 10.02C2.625 9.29002 2.77 8.59002 3.06 7.92002C3.35 7.27002 3.75 6.70252 4.26 6.21752C4.77 5.73252 5.355 5.36502 6.015 5.11502L5.73 4.60502C5.59 4.36502 5.52 4.11252 5.52 3.84752C5.52 3.58252 5.5875 3.33502 5.7225 3.10502C5.8575 2.87502 6.04 2.69002 6.27 2.55002L8.22 1.42502C8.46 1.28502 8.7125 1.21752 8.9775 1.22252C9.2425 1.22752 9.49 1.29502 9.72 1.42502C9.95 1.55502 10.135 1.74002 10.275 1.98002ZM6.375 12.27C5.965 12.27 5.5875 12.3725 5.2425 12.5775C4.8975 12.7825 4.625 13.0575 4.425 13.4025C4.225 13.7475 4.125 14.12 4.125 14.52C4.125 14.78 4.17 15.03 4.26 15.27H8.49C8.58 15.03 8.625 14.78 8.625 14.52C8.625 14.12 8.525 13.7475 8.325 13.4025C8.125 13.0575 7.8525 12.7825 7.5075 12.5775C7.1625 12.3725 6.785 12.27 6.375 12.27ZM8.97 2.73002L7.02 3.85502L9.09 7.42502L11.04 6.30002L8.97 2.73002Z"
-                      fill="#00E5FF"
+                      d="M11 1.5L2 6.5V11.5L11 16.5L20 11.5V6.5L11 1.5Z"
+                      stroke="#00E5FF"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M2 6.5L11 11.5L20 6.5"
+                      stroke="#00E5FF"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M11 16.5V11.5"
+                      stroke="#00E5FF"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </svg>
                 </span>
@@ -1810,63 +2129,69 @@ export default function TestReport({ sessionId, reportData: initialData }) {
               </div>
 
               <div className="scalp-recovery-grid">
-                {scalpRecoveryCards.map((card) => (
-                  <article className="scalp-recovery-card" key={card.title}>
-                    <p className="scalp-recovery-card-title">{card.title}</p>
+                {scalpRecoveryCards.map((card) => {
+                  const score = card.score || 0;
+                  const activeSegments = Math.max(1, Math.min(4, Math.ceil(score / 25)));
+                  
+                  return (
+                    <article className="scalp-recovery-card" key={card.title}>
+                      <p className="scalp-recovery-card-title">{card.title}</p>
 
-                    <div className="scalp-recovery-ring-wrap" aria-hidden="true">
-                      <svg
-                        width="96"
-                        height="96"
-                        viewBox="0 0 96 96"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M84.48 48C84.48 27.8526 68.1474 11.52 48 11.52C27.8527 11.52 11.52 27.8526 11.52 48C11.52 68.1473 27.8527 84.48 48 84.48C68.1474 84.48 84.48 68.1473 84.48 48Z"
-                          stroke="white"
-                          strokeOpacity="0.06"
-                          strokeWidth="7"
-                        />
-                        <path
-                          d="M84.48 48C84.48 27.8526 68.1474 11.52 48 11.52C27.8527 11.52 11.52 27.8526 11.52 48C11.52 68.1473 27.8527 84.48 48 84.48C68.1474 84.48 84.48 68.1473 84.48 48Z"
-                          className={`scalp-recovery-ring-progress scalp-recovery-ring-progress-${card.tone}`}
-                          strokeWidth="7"
-                          strokeLinecap="round"
-                          strokeDasharray={card.dashArray}
-                        />
-                      </svg>
-                      <div className="scalp-recovery-ring-center">
-                        <strong>{card.score}</strong>
-                        <span>/100</span>
+                      <div className="scalp-recovery-ring-wrap" aria-hidden="true">
+                        <svg
+                          width="110"
+                          height="110"
+                          viewBox="0 0 110 110"
+                          fill="none"
+                        >
+                          {[0, 1, 2, 3].map((i) => {
+                            const rotation = i * 90;
+                            const isActive = i < activeSegments;
+                            return (
+                              <path
+                                key={i}
+                                d="M55 10C80 10 100 30 100 55"
+                                transform={`rotate(${rotation + 5}, 55, 55)`}
+                                stroke={isActive ? (card.tone === 'amber' ? '#f4c430' : '#00e5ff') : 'rgba(255,255,255,0.06)'}
+                                strokeWidth="8"
+                                strokeLinecap="round"
+                                style={{ strokeDasharray: '62 100' }}
+                              />
+                            );
+                          })}
+                        </svg>
+                        <div className="scalp-recovery-ring-center">
+                          <strong>{card.score}</strong>
+                          <span>/100</span>
+                        </div>
                       </div>
-                    </div>
 
-                    <p
-                      className={`scalp-recovery-score-label scalp-recovery-score-label-${card.tone}`}
-                    >
-                      {card.scoreLabel}
-                    </p>
-                    <p className="scalp-recovery-note">{card.note}</p>
+                      <p
+                        className={`scalp-recovery-score-label scalp-recovery-score-label-${card.tone}`}
+                      >
+                        {card.scoreLabel}
+                      </p>
+                      <p className="scalp-recovery-note">{card.note}</p>
 
-                    <div className="scalp-recovery-levels" role="presentation">
-                      {card.levels.map((level) => {
-                        const isActive = card.activeLevel === level;
-                        return (
-                          <span
-                            key={level}
-                            className={`scalp-recovery-level-pill ${isActive
-                              ? `scalp-recovery-level-pill-active scalp-recovery-level-pill-active-${card.tone}`
-                              : ""
-                              }`}
-                          >
-                            {level}
-                          </span>
-                        );
-                      })}
-                    </div>
-                  </article>
-                ))}
+                      <div className="scalp-recovery-levels" role="presentation">
+                        {card.levels.map((level) => {
+                          const isActive = card.activeLevel === level;
+                          return (
+                            <span
+                              key={level}
+                              className={`scalp-recovery-level-pill ${isActive
+                                ? `scalp-recovery-level-pill-active scalp-recovery-level-pill-active-${card.tone}`
+                                : ""
+                                }`}
+                            >
+                              {level}
+                            </span>
+                          );
+                        })}
+                      </div>
+                    </article>
+                  );
+                })}
               </div>
             </section>
           )}
@@ -2317,108 +2642,45 @@ export default function TestReport({ sessionId, reportData: initialData }) {
                 <h4>Critical Nutrients for Hair Growth</h4>
               </div>
 
+
               {fullReport ? (
                 <div className="nutritional-card-grid">
                   {nutritionalProtocolCards.map((item) => (
                     <article className="nutritional-card" key={item.title}>
                       <div className="nutritional-card-head">
-                        <span
-                          className={`nutritional-card-icon nutritional-card-icon-${item.tone}`}
-                          aria-hidden="true"
-                        >
-                          {item.icon === "chain" && (
-                            <svg
-                              width="15"
-                              height="14"
-                              viewBox="0 0 15 14"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M11.8258 2.4621C12.2767 2.91321 12.58 3.4421 12.7355 4.04876C12.891 4.63987 12.891 5.23099 12.7355 5.8221C12.58 6.43654 12.2767 6.96543 11.8258 7.40876L7.69727 11.5388C7.2541 11.9899 6.7254 12.2932 6.11117 12.4488C5.52027 12.6043 4.92937 12.6043 4.33847 12.4488C3.73202 12.2932 3.20332 11.9899 2.75237 11.5388C2.30142 11.0877 1.9982 10.5588 1.8427 9.9521C1.6872 9.36099 1.6872 8.76987 1.8427 8.17876C1.9982 7.56432 2.30142 7.03543 2.75237 6.5921L6.8809 2.4621C7.32407 2.01099 7.85277 1.70765 8.467 1.5521C9.0579 1.39654 9.6488 1.39654 10.2397 1.5521C10.8461 1.70765 11.3748 2.01099 11.8258 2.4621ZM8.52531 9.06543L5.22482 5.76376L3.58041 7.40876C3.27719 7.7121 3.07309 8.06404 2.96813 8.4646C2.86317 8.86515 2.86317 9.26571 2.96813 9.66626C3.07309 10.0668 3.27524 10.4168 3.57458 10.7163C3.87392 11.0157 4.22379 11.2179 4.62421 11.3229C5.02462 11.4279 5.42503 11.4279 5.82544 11.3229C6.22586 11.2179 6.57767 11.0138 6.8809 10.7104L8.52531 9.06543ZM10.9978 3.29043C10.7023 2.9871 10.3544 2.78293 9.95397 2.67793C9.55356 2.57293 9.15314 2.57293 8.75273 2.67793C8.35232 2.78293 8.0005 2.9871 7.69727 3.29043L6.05286 4.93543L9.35335 8.2371L10.9978 6.5921C11.301 6.28876 11.5051 5.93682 11.61 5.53626C11.715 5.13571 11.715 4.73515 11.61 4.3346C11.5051 3.93404 11.301 3.58599 10.9978 3.29043Z"
-                                fill="currentColor"
-                              />
-                            </svg>
-                          )}
+                        <span className={`nutritional-card-icon nutritional-card-icon-${item.tone}`}>
+                          {item.icon === "chain" && <FiCalendar />}
                           {item.icon === "drop" && (
-                            <svg
-                              width="15"
-                              height="14"
-                              viewBox="0 0 15 14"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M7.28914 2.30999L4.4085 5.20332C3.8798 5.72443 3.52215 6.33888 3.33555 7.04665C3.15673 7.73888 3.15673 8.4311 3.33555 9.12332C3.52215 9.8311 3.87786 10.4475 4.40267 10.9725C4.92748 11.4975 5.54365 11.8533 6.25118 12.04C6.94315 12.2189 7.63513 12.2189 8.3271 12.04C9.03463 11.8533 9.6508 11.4975 10.1756 10.9725C10.7004 10.4475 11.0561 9.8311 11.2427 9.12332C11.4216 8.4311 11.4216 7.73888 11.2427 7.04665C11.0561 6.33888 10.6985 5.72443 10.1698 5.20332L7.28914 2.30999ZM7.28914 0.664987L10.9978 4.37499C11.6742 5.04388 12.1291 5.83721 12.3623 6.75499C12.5956 7.64165 12.5956 8.52832 12.3623 9.41499C12.1291 10.3328 11.6762 11.128 11.0036 11.8008C10.3311 12.4736 9.53612 12.9305 8.61867 13.1717C7.73232 13.3972 6.84597 13.3972 5.95962 13.1717C5.04217 12.9305 4.24717 12.4736 3.57463 11.8008C2.9021 11.128 2.4492 10.3328 2.21595 9.41499C1.9827 8.52832 1.9827 7.64165 2.21595 6.75499C2.4492 5.83721 2.90404 5.04388 3.58047 4.37499L7.28914 0.664987Z"
-                                fill="currentColor"
-                              />
-                            </svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                           )}
                           {item.icon === "shield" && (
-                            <svg
-                              width="15"
-                              height="14"
-                              viewBox="0 0 15 14"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M2.49585 1.64533L7.28914 0.583659L12.0824 1.64533C12.2146 1.67644 12.3235 1.74644 12.409 1.85533C12.4945 1.96421 12.5373 2.08477 12.5373 2.21699V8.03866C12.5373 8.62977 12.3993 9.18199 12.1232 9.69533C11.8472 10.2087 11.4643 10.6287 10.9745 10.9553L7.28914 13.417L3.60379 10.9553C3.11397 10.6287 2.73105 10.2087 2.45503 9.69533C2.17902 9.18199 2.04102 8.62977 2.04102 8.03866V2.21699C2.04102 2.08477 2.08378 1.96421 2.1693 1.85533C2.25483 1.74644 2.36368 1.67644 2.49585 1.64533ZM3.20727 2.68366V8.03866C3.20727 8.43533 3.29862 8.80477 3.48133 9.14699C3.66405 9.48921 3.91868 9.76921 4.24523 9.98699L7.28914 12.017L10.3331 9.98699C10.6596 9.76921 10.9142 9.48921 11.0969 9.14699C11.2797 8.80477 11.371 8.43533 11.371 8.03866V2.68366L7.28914 1.77366L3.20727 2.68366Z"
-                                fill="currentColor"
-                              />
-                            </svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                           )}
                           {item.icon === "sun" && (
-                            <svg
-                              width="15"
-                              height="14"
-                              viewBox="0 0 15 14"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M7.28889 10.5003C6.65911 10.5003 6.0721 10.3409 5.52785 10.022C4.99915 9.71088 4.5793 9.29088 4.2683 8.76199C3.94952 8.21755 3.79014 7.63033 3.79014 7.00033C3.79014 6.37033 3.94952 5.7831 4.2683 5.23866C4.5793 4.70977 4.99915 4.28977 5.52785 3.97866C6.0721 3.65977 6.65911 3.50033 7.28889 3.50033C7.91866 3.50033 8.50567 3.65977 9.04992 3.97866C9.57862 4.28977 9.99847 4.70977 10.3095 5.23866C10.6282 5.7831 10.7876 6.37033 10.7876 7.00033C10.7876 7.63033 10.6282 8.21755 10.3095 8.76199C9.99847 9.29088 9.57862 9.71088 9.04992 10.022C8.50567 10.3409 7.91866 10.5003 7.28889 10.5003ZM7.28889 9.33366C7.70874 9.33366 8.09749 9.22866 8.45514 9.01866C8.81279 8.80866 9.09657 8.52477 9.3065 8.16699C9.51642 7.80921 9.62139 7.42033 9.62139 7.00033C9.62139 6.58033 9.51642 6.19144 9.3065 5.83366C9.09657 5.47588 8.81279 5.19199 8.45514 4.98199C8.09749 4.77199 7.70874 4.66699 7.28889 4.66699C6.86904 4.66699 6.48029 4.77199 6.12264 4.98199C5.76499 5.19199 5.4812 5.47588 5.27127 5.83366C5.06135 6.19144 4.95639 6.58033 4.95639 7.00033C4.95639 7.42033 5.06135 7.80921 5.27127 8.16699C5.4812 8.52477 5.76499 8.80866 6.12264 9.01866C6.48029 9.22866 6.86904 9.33366 7.28889 9.33366ZM6.70576 0.583659H7.87201V2.33366H6.70576V0.583659ZM6.70576 11.667H7.87201V13.417H6.70576V11.667ZM2.34399 2.87033L3.16036 2.05366L4.40825 3.29033L3.58021 4.11866L2.34399 2.87033ZM10.1695 10.7103L10.9976 9.88199L12.2338 11.1303L11.4174 11.947L10.1695 10.7103ZM11.4174 2.05366L12.2338 2.87033L10.9976 4.11866L10.1695 3.29033L11.4174 2.05366ZM3.58021 9.88199L4.40825 10.7103L3.16036 11.947L2.34399 11.1303L3.58021 9.88199ZM13.7033 6.41699V7.58366H11.9539V6.41699H13.7033ZM2.62389 6.41699V7.58366H0.874512V6.41699H2.62389Z"
-                                fill="currentColor"
-                              />
-                            </svg>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
                           )}
                         </span>
-
                         <div className="nutritional-card-title-wrap">
                           <h5>{item.title}</h5>
-                          <p
-                            className={`nutritional-dose nutritional-dose-${item.tone}`}
-                          >
-                            {item.dosage}
-                          </p>
+                          <p className={`nutritional-dose nutritional-dose-${item.tone}`}>{item.dosage}</p>
                         </div>
                       </div>
-
-                      {item.imageType && (
-                        <div
-                          className="nutritional-card-image"
-                          style={{
-                            backgroundImage: `url(${item.imageType === "egg" ? nutritionalEggImage : nutritionalIronImage})`,
-                          }}
-                          aria-hidden="true"
-                        />
-                      )}
-
-                      <p className="nutritional-card-desc">{item.desc}</p>
-
-                      <ul
-                        className="nutritional-food-list"
-                        aria-label={`${item.title} food sources`}
-                      >
-                        {item.foods.map((food) => (
-                          <li
-                            key={food}
-                            className={`nutritional-food-pill nutritional-food-pill-${item.tone}`}
-                          >
-                            {food}
-                          </li>
-                        ))}
-                      </ul>
+                      <div className="nutritional-card-body-layout">
+                        <p className="nutritional-card-desc">{item.desc}</p>
+                        <div className="nutritional-bottom-row">
+                          <ul className="nutritional-food-list">
+                            {item.foods.map((food) => (
+                              <li key={food} className="nutritional-food-pill">{food}</li>
+                            ))}
+                          </ul>
+                          <div
+                            className="nutrient-visual-asset"
+                            style={{
+                              backgroundImage: `url(${item.imageType === "biotin" ? nutritionalEggImage : item.imageType === "iron" ? nutritionalIronImage : item.imageType === "zinc" ? stressProtocolImage : nutritionalEggImage})`,
+                            }}
+                          />
+                        </div>
+                      </div>
                     </article>
                   ))}
                 </div>
@@ -2427,133 +2689,32 @@ export default function TestReport({ sessionId, reportData: initialData }) {
                   {nutritionalProtocolCards.map((item) => (
                     <article className="nutritional-card" key={item.title}>
                       <div className="nutritional-card-head">
-                        <span
-                          className={`nutritional-card-icon nutritional-card-icon-${item.tone}`}
-                          aria-hidden="true"
-                        >
-                          {item.icon === "chain" && (
-                            <svg
-                              width="15"
-                              height="14"
-                              viewBox="0 0 15 14"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M11.8258 2.4621C12.2767 2.91321 12.58 3.4421 12.7355 4.04876C12.891 4.63987 12.891 5.23099 12.7355 5.8221C12.58 6.43654 12.2767 6.96543 11.8258 7.40876L7.69727 11.5388C7.2541 11.9899 6.7254 12.2932 6.11117 12.4488C5.52027 12.6043 4.92937 12.6043 4.33847 12.4488C3.73202 12.2932 3.20332 11.9899 2.75237 11.5388C2.30142 11.0877 1.9982 10.5588 1.8427 9.9521C1.6872 9.36099 1.6872 8.76987 1.8427 8.17876C1.9982 7.56432 2.30142 7.03543 2.75237 6.5921L6.8809 2.4621C7.32407 2.01099 7.85277 1.70765 8.467 1.5521C9.0579 1.39654 9.6488 1.39654 10.2397 1.5521C10.8461 1.70765 11.3748 2.01099 11.8258 2.4621ZM8.52531 9.06543L5.22482 5.76376L3.58041 7.40876C3.27719 7.7121 3.07309 8.06404 2.96813 8.4646C2.86317 8.86515 2.86317 9.26571 2.96813 9.66626C3.07309 10.0668 3.27524 10.4168 3.57458 10.7163C3.87392 11.0157 4.22379 11.2179 4.62421 11.3229C5.02462 11.4279 5.42503 11.4279 5.82544 11.3229C6.22586 11.2179 6.57767 11.0138 6.8809 10.7104L8.52531 9.06543ZM10.9978 3.29043C10.7023 2.9871 10.3544 2.78293 9.95397 2.67793C9.55356 2.57293 9.15314 2.57293 8.75273 2.67793C8.35232 2.78293 8.0005 2.9871 7.69727 3.29043L6.05286 4.93543L9.35335 8.2371L10.9978 6.5921C11.301 6.28876 11.5051 5.93682 11.61 5.53626C11.715 5.13571 11.715 4.73515 11.61 4.3346C11.5051 3.93404 11.301 3.58599 10.9978 3.29043Z"
-                                fill="currentColor"
-                              />
-                            </svg>
-                          )}
-                          {item.icon === "drop" && (
-                            <svg
-                              width="15"
-                              height="14"
-                              viewBox="0 0 15 14"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M7.28914 2.30999L4.4085 5.20332C3.8798 5.72443 3.52215 6.33888 3.33555 7.04665C3.15673 7.73888 3.15673 8.4311 3.33555 9.12332C3.52215 9.8311 3.87786 10.4475 4.40267 10.9725C4.92748 11.4975 5.54365 11.8533 6.25118 12.04C6.94315 12.2189 7.63513 12.2189 8.3271 12.04C9.03463 11.8533 9.6508 11.4975 10.1756 10.9725C10.7004 10.4475 11.0561 9.8311 11.2427 9.12332C11.4216 8.4311 11.4216 7.73888 11.2427 7.04665C11.0561 6.33888 10.6985 5.72443 10.1698 5.20332L7.28914 2.30999ZM7.28914 0.664987L10.9978 4.37499C11.6742 5.04388 12.1291 5.83721 12.3623 6.75499C12.5956 7.64165 12.5956 8.52832 12.3623 9.41499C12.1291 10.3328 11.6762 11.128 11.0036 11.8008C10.3311 12.4736 9.53612 12.9305 8.61867 13.1717C7.73232 13.3972 6.84597 13.3972 5.95962 13.1717C5.04217 12.9305 4.24717 12.4736 3.57463 11.8008C2.9021 11.128 2.4492 10.3328 2.21595 9.41499C1.9827 8.52832 1.9827 7.64165 2.21595 6.75499C2.4492 5.83721 2.90404 5.04388 3.58047 4.37499L7.28914 0.664987Z"
-                                fill="currentColor"
-                              />
-                            </svg>
-                          )}
-                          {item.icon === "shield" && (
-                            <svg
-                              width="15"
-                              height="14"
-                              viewBox="0 0 15 14"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M2.49585 1.64533L7.28914 0.583659L12.0824 1.64533C12.2146 1.67644 12.3235 1.74644 12.409 1.85533C12.4945 1.96421 12.5373 2.08477 12.5373 2.21699V8.03866C12.5373 8.62977 12.3993 9.18199 12.1232 9.69533C11.8472 10.2087 11.4643 10.6287 10.9745 10.9553L7.28914 13.417L3.60379 10.9553C3.11397 10.6287 2.73105 10.2087 2.45503 9.69533C2.17902 9.18199 2.04102 8.62977 2.04102 8.03866V2.21699C2.04102 2.08477 2.08378 1.96421 2.1693 1.85533C2.25483 1.74644 2.36368 1.67644 2.49585 1.64533ZM3.20727 2.68366V8.03866C3.20727 8.43533 3.29862 8.80477 3.48133 9.14699C3.66405 9.48921 3.91868 9.76921 4.24523 9.98699L7.28914 12.017L10.3331 9.98699C10.6596 9.76921 10.9142 9.48921 11.0969 9.14699C11.2797 8.80477 11.371 8.43533 11.371 8.03866V2.68366L7.28914 1.77366L3.20727 2.68366Z"
-                                fill="currentColor"
-                              />
-                            </svg>
-                          )}
-                          {item.icon === "sun" && (
-                            <svg
-                              width="15"
-                              height="14"
-                              viewBox="0 0 15 14"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M7.28889 10.5003C6.65911 10.5003 6.0721 10.3409 5.52785 10.022C4.99915 9.71088 4.5793 9.29088 4.2683 8.76199C3.94952 8.21755 3.79014 7.63033 3.79014 7.00033C3.79014 6.37033 3.94952 5.7831 4.2683 5.23866C4.5793 4.70977 4.99915 4.28977 5.52785 3.97866C6.0721 3.65977 6.65911 3.50033 7.28889 3.50033C7.91866 3.50033 8.50567 3.65977 9.04992 3.97866C9.57862 4.28977 9.99847 4.70977 10.3095 5.23866C10.6282 5.7831 10.7876 6.37033 10.7876 7.00033C10.7876 7.63033 10.6282 8.21755 10.3095 8.76199C9.99847 9.29088 9.57862 9.71088 9.04992 10.022C8.50567 10.3409 7.91866 10.5003 7.28889 10.5003ZM7.28889 9.33366C7.70874 9.33366 8.09749 9.22866 8.45514 9.01866C8.81279 8.80866 9.09657 8.52477 9.3065 8.16699C9.51642 7.80921 9.62139 7.42033 9.62139 7.00033C9.62139 6.58033 9.51642 6.19144 9.3065 5.83366C9.09657 5.47588 8.81279 5.19199 8.45514 4.98199C8.09749 4.77199 7.70874 4.66699 7.28889 4.66699C6.86904 4.66699 6.48029 4.77199 6.12264 4.98199C5.76499 5.19199 5.4812 5.47588 5.27127 5.83366C5.06135 6.19144 4.95639 6.58033 4.95639 7.00033C4.95639 7.42033 5.06135 7.80921 5.27127 8.16699C5.4812 8.52477 5.76499 8.80866 6.12264 9.01866C6.48029 9.22866 6.86904 9.33366 7.28889 9.33366ZM6.70576 0.583659H7.87201V2.33366H6.70576V0.583659ZM6.70576 11.667H7.87201V13.417H6.70576V11.667ZM2.34399 2.87033L3.16036 2.05366L4.40825 3.29033L3.58021 4.11866L2.34399 2.87033ZM10.1695 10.7103L10.9976 9.88199L12.2338 11.1303L11.4174 11.947L10.1695 10.7103ZM11.4174 2.05366L12.2338 2.87033L10.9976 4.11866L10.1695 3.29033L11.4174 2.05366ZM3.58021 9.88199L4.40825 10.7103L3.16036 11.947L2.34399 11.1303L3.58021 9.88199ZM13.7033 6.41699V7.58366H11.9539V6.41699H13.7033ZM2.62389 6.41699V7.58366H0.874512V6.41699H2.62389Z"
-                                fill="currentColor"
-                              />
-                            </svg>
-                          )}
+                        <span className={`nutritional-card-icon nutritional-card-icon-${item.tone}`}>
+                          {item.icon === "chain" && <FiCalendar />}
                         </span>
-
                         <div className="nutritional-card-title-wrap">
                           <h5>{item.title}</h5>
-                          <p
-                            className={`nutritional-dose nutritional-dose-${item.tone}`}
-                          >
-                            {item.dosage}
-                          </p>
+                          <p className={`nutritional-dose nutritional-dose-${item.tone}`}>{item.dosage}</p>
                         </div>
                       </div>
-
-                      {item.imageType && (
-                        <div
-                          className="nutritional-card-image"
-                          style={{
-                            backgroundImage: `url(${item.imageType === "egg" ? nutritionalEggImage : nutritionalIronImage})`,
-                          }}
-                          aria-hidden="true"
-                        />
-                      )}
-
-                      <p className="nutritional-card-desc">{item.desc}</p>
-
-                      <ul
-                        className="nutritional-food-list"
-                        aria-label={`${item.title} food sources`}
-                      >
-                        {item.foods.map((food) => (
-                          <li
-                            key={food}
-                            className={`nutritional-food-pill nutritional-food-pill-${item.tone}`}
-                          >
-                            {food}
-                          </li>
-                        ))}
-                      </ul>
+                      <div className="nutritional-card-body-layout">
+                        <p className="nutritional-card-desc">{item.desc}</p>
+                        <div className="nutritional-bottom-row">
+                          <ul className="nutritional-food-list">
+                            {item.foods.map((food, i) => (
+                              <li key={i} className="nutritional-food-pill">{food}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
                     </article>
                   ))}
-                  <div className="unlock-overlay">
-                    <div className="unlock-overlay-container">
-                      <div className="unlock-lock-icon-wrap">
-                        <svg
-                          width="15"
-                          height="14"
-                          viewBox="0 0 15 14"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M10.7878 4.95833H11.954C12.1173 4.95833 12.2553 5.01472 12.368 5.1275C12.4808 5.24028 12.5371 5.37833 12.5371 5.54167V12.5417C12.5371 12.705 12.4808 12.8431 12.368 12.9558C12.2553 13.0686 12.1173 13.125 11.954 13.125H2.62402C2.46074 13.125 2.32274 13.0686 2.21 12.9558C2.09726 12.8431 2.04089 12.705 2.04089 12.5417V5.54167C2.04089 5.37833 2.09726 5.24028 2.21 5.1275C2.32274 5.01472 2.46074 4.95833 2.62402 4.95833H3.79027V4.375C3.79027 3.745 3.94966 3.15778 4.26843 2.61333C4.57943 2.08444 4.99928 1.66444 5.52798 1.35333C6.07223 1.03444 6.65924 0.875 7.28902 0.875C7.91879 0.875 8.50581 1.03444 9.05006 1.35333C9.57876 1.66444 9.99861 2.08444 10.3096 2.61333C10.6284 3.15778 10.7878 3.745 10.7878 4.375V4.95833ZM6.70589 9.47333V10.7917H7.87214V9.47333C8.05097 9.36444 8.19286 9.22056 8.29782 9.04167C8.40279 8.86278 8.45527 8.66833 8.45527 8.45833C8.45527 8.24833 8.40279 8.05389 8.29782 7.875C8.19286 7.69611 8.05097 7.55417 7.87214 7.44917C7.69332 7.34417 7.49894 7.29167 7.28902 7.29167C7.07909 7.29167 6.88472 7.34417 6.70589 7.44917C6.52707 7.55417 6.38517 7.69611 6.28021 7.875C6.17525 8.05389 6.12277 8.24833 6.12277 8.45833C6.12277 8.66833 6.17525 8.86278 6.28021 9.04167C6.38517 9.22056 6.52707 9.36444 6.70589 9.47333ZM9.62152 4.95833V4.375C9.62152 3.955 9.51656 3.56611 9.30663 3.20833C9.09671 2.85056 8.81292 2.56667 8.45527 2.35667C8.09762 2.14667 7.70887 2.04167 7.28902 2.04167C6.86917 2.04167 6.48042 2.14667 6.12277 2.35667C5.76512 2.56667 5.48133 2.85056 5.27141 3.20833C5.06148 3.56611 4.95652 3.955 4.95652 4.375V4.95833H9.62152Z"
-                            fill="#F4C430"
-                          />
-                        </svg>
-                      </div>
-                      <h5 className="unlock-title">Unlock Complete Nutrient Plan</h5>
-                      <p className="unlock-description">
-                        Get exact dosage, absorption strategy, and personalized recommendations.
-                      </p>
-                      <button
-                        className="unlock-cta-btn"
-                        onClick={() => setFullReport(true)}
-                      >
-                        Unlock Full Nutrition Plan
-                      </button>
-                    </div>
-                  </div>
+                  <UnlockOverlay
+                    title="Unlock Complete Nutrient Plan"
+                    description="Get exact dosage, absorption strategy, and personalized recommendations."
+                    ctaText="Unlock Full Nutrition Plan"
+                    onUnlock={handleUnlockReport}
+                  />
                 </div>
               )}
             </article>
@@ -2587,89 +2748,15 @@ export default function TestReport({ sessionId, reportData: initialData }) {
                 <div className="meal-plan-list">
                   {dailyMealPlanRows.map((item) => (
                     <article className="meal-plan-row" key={item.meal}>
-                      <span
-                        className={`meal-plan-row-icon meal-plan-row-icon-${item.tone}`}
-                        aria-hidden="true"
-                      >
-                        {item.icon === "sun" && (
-                          <svg
-                            width="13"
-                            height="12"
-                            viewBox="0 0 13 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M6.25 9C5.71 9 5.20667 8.86333 4.74 8.59C4.28667 8.32333 3.92667 7.96333 3.66 7.51C3.38667 7.04333 3.25 6.54 3.25 6C3.25 5.46 3.38667 4.95667 3.66 4.49C3.92667 4.03667 4.28667 3.67667 4.74 3.41C5.20667 3.13667 5.71 3 6.25 3C6.79 3 7.29333 3.13667 7.76 3.41C8.21333 3.67667 8.57333 4.03667 8.84 4.49C9.11333 4.95667 9.25 5.46 9.25 6C9.25 6.54 9.11333 7.04333 8.84 7.51C8.57333 7.96333 8.21333 8.32333 7.76 8.59C7.29333 8.86333 6.79 9 6.25 9ZM6.25 8C6.61 8 6.94333 7.91 7.25 7.73C7.55667 7.55 7.8 7.30667 7.98 7C8.16 6.69333 8.25 6.36 8.25 6C8.25 5.64 8.16 5.30667 7.98 5C7.8 4.69333 7.55667 4.45 7.25 4.27C6.94333 4.09 6.61 4 6.25 4C5.89 4 5.55667 4.09 5.25 4.27C4.94333 4.45 4.7 4.69333 4.52 5C4.34 5.30667 4.25 5.64 4.25 6C4.25 6.36 4.34 6.69333 4.52 7C4.7 7.30667 4.94333 7.55 5.25 7.73C5.55667 7.91 5.89 8 6.25 8ZM5.75 0.5H6.75V2H5.75V0.5ZM5.75 10H6.75V11.5H5.75V10ZM2.01 2.46L2.71 1.76L3.78 2.82L3.07 3.53L2.01 2.46ZM8.72 9.18L9.43 8.47L10.49 9.54L9.79 10.24L8.72 9.18ZM9.79 1.76L10.49 2.46L9.43 3.53L8.72 2.82L9.79 1.76ZM3.07 8.47L3.78 9.18L2.71 10.24L2.01 9.54L3.07 8.47ZM11.75 5.5V6.5H10.25V5.5H11.75ZM2.25 5.5V6.5H0.75V5.5H2.25Z"
-                              fill="currentColor"
-                            />
-                          </svg>
-                        )}
-                        {item.icon === "leaf" && (
-                          <svg
-                            width="13"
-                            height="12"
-                            viewBox="0 0 13 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M10.75 1.25V2.25C10.75 3.79667 10.4767 5.11333 9.93 6.2C9.42333 7.21333 8.70667 7.98 7.78 8.5C6.9 9 5.89 9.25 4.75 9.25H2.87C2.79 9.70333 2.75 10.2033 2.75 10.75H1.75C1.75 10.07 1.80667 9.44667 1.92 8.88C1.80667 8.23333 1.75 7.35667 1.75 6.25C1.75 5.57 1.88 4.92 2.14 4.3C2.39333 3.70667 2.75167 3.17833 3.215 2.715C3.67833 2.25167 4.20667 1.89333 4.8 1.64C5.42 1.38 6.07 1.25 6.75 1.25C6.95 1.25 7.26333 1.28333 7.69 1.35C8.03667 1.40333 8.31 1.43667 8.51 1.45C8.85 1.47667 9.18333 1.48 9.51 1.46C9.90333 1.42667 10.3167 1.35667 10.75 1.25ZM6.75 2.25C6.02333 2.25 5.35 2.43333 4.73 2.8C4.13 3.15333 3.65333 3.63 3.3 4.23C2.93333 4.85 2.75 5.52333 2.75 6.25V6.77C3.05667 6.29 3.44333 5.84333 3.91 5.43C4.35667 5.03667 4.88667 4.66667 5.5 4.32L6 5.18C5.26 5.60667 4.66333 6.05667 4.21 6.53C3.73 7.03 3.37333 7.60333 3.14 8.25H4.75C5.75667 8.25 6.63167 8.03 7.375 7.59C8.11833 7.15 8.69 6.50333 9.09 5.65C9.51 4.76333 9.73 3.69333 9.75 2.44C9.41667 2.47333 9.07667 2.48333 8.73 2.47C8.41667 2.45 8.05333 2.41 7.64 2.35C7.34667 2.30333 7.15 2.275 7.05 2.265C6.95 2.255 6.85 2.25 6.75 2.25Z"
-                              fill="currentColor"
-                            />
-                          </svg>
-                        )}
-                        {item.icon === "apple" && (
-                          <svg
-                            width="13"
-                            height="12"
-                            viewBox="0 0 13 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M8.36998 4.12958C8.25665 4.12292 8.13165 4.13458 7.99498 4.16458C7.85831 4.19458 7.68998 4.24625 7.48998 4.31958C7.50331 4.31292 7.48998 4.31958 7.44998 4.33958L7.00998 4.50958C6.74998 4.59625 6.51998 4.63958 6.31998 4.63958C6.11998 4.63958 5.89331 4.59625 5.63998 4.50958C5.56665 4.48958 5.48331 4.45958 5.38998 4.41958L5.15998 4.32958C4.85998 4.21625 4.63998 4.15958 4.49998 4.15958C4.21331 4.16625 3.94165 4.24792 3.68498 4.40458C3.42831 4.56125 3.21998 4.77625 3.05998 5.04958C2.85331 5.41625 2.74665 5.87292 2.73998 6.41958C2.73331 6.93958 2.81665 7.48125 2.98998 8.04458C3.16331 8.60792 3.40665 9.11625 3.71998 9.56958C3.95998 9.90958 4.15665 10.1629 4.30998 10.3296C4.44998 10.4763 4.54831 10.5479 4.60498 10.5446C4.66165 10.5413 4.71665 10.5329 4.76998 10.5196C4.82331 10.5063 4.89998 10.4763 4.99998 10.4296L5.07998 10.3996C5.34665 10.2863 5.57665 10.2063 5.76998 10.1596C5.98331 10.1129 6.21498 10.0896 6.46498 10.0896C6.71498 10.0896 6.94331 10.1129 7.14998 10.1596C7.33665 10.2063 7.55331 10.2829 7.79998 10.3896L7.88998 10.4196C7.98998 10.4663 8.06498 10.4963 8.11498 10.5096C8.16498 10.5229 8.21998 10.5296 8.27998 10.5296C8.37331 10.5229 8.48331 10.4563 8.60998 10.3296C8.74998 10.1896 8.93665 9.94625 9.16998 9.59958C9.30331 9.40625 9.42331 9.20292 9.52998 8.98958C9.46331 8.93625 9.39665 8.87958 9.32998 8.81958C8.99665 8.49958 8.74331 8.13958 8.56998 7.73958C8.38331 7.31292 8.28665 6.84958 8.27998 6.34958C8.27331 5.57625 8.50665 4.87958 8.97998 4.25958C8.80665 4.19292 8.60331 4.14958 8.36998 4.12958ZM8.44998 3.13958C8.77665 3.15958 9.07665 3.22292 9.34998 3.32958C9.81665 3.51625 10.1933 3.81958 10.48 4.23958C10.38 4.29292 10.2666 4.37292 10.14 4.47958C9.90665 4.68625 9.71665 4.91958 9.56998 5.17958C9.36998 5.53958 9.27331 5.92625 9.27998 6.33958C9.28665 6.83958 9.41665 7.28292 9.66998 7.66958C9.84998 7.94292 10.0866 8.17625 10.38 8.36958C10.54 8.48292 10.67 8.55625 10.77 8.58958C10.73 8.72958 10.6666 8.89958 10.58 9.09958C10.4133 9.47958 10.22 9.83292 9.99998 10.1596C9.79998 10.4529 9.63998 10.6729 9.51998 10.8196C9.33331 11.0396 9.14998 11.2063 8.96998 11.3196C8.75665 11.4529 8.53331 11.5229 8.29998 11.5296C8.13998 11.5296 7.98331 11.5096 7.82998 11.4696C7.73665 11.4429 7.60331 11.3913 7.42998 11.3146C7.25665 11.2379 7.11998 11.1863 7.01998 11.1596C6.84665 11.1129 6.66165 11.0896 6.46498 11.0896C6.26831 11.0896 6.07665 11.1129 5.88998 11.1596C5.78331 11.1929 5.63665 11.2496 5.44998 11.3296C5.28998 11.3963 5.16665 11.4429 5.07998 11.4696C4.93998 11.5096 4.79665 11.5329 4.64998 11.5396C4.42331 11.5463 4.19998 11.4796 3.97998 11.3396C3.79331 11.2196 3.59998 11.0429 3.39998 10.8096C3.27331 10.6563 3.10665 10.4329 2.89998 10.1396C2.55998 9.65292 2.28665 9.09292 2.07998 8.45958C1.84665 7.76625 1.72998 7.09625 1.72998 6.44958C1.73665 5.71625 1.89331 5.08292 2.19998 4.54958C2.43998 4.12958 2.76498 3.79458 3.17498 3.54458C3.58498 3.29458 4.02331 3.16625 4.48998 3.15958C4.66998 3.15292 4.86998 3.18292 5.08998 3.24958C5.21665 3.28292 5.39998 3.34625 5.63998 3.43958C5.80665 3.51292 5.92998 3.55958 6.00998 3.57958C6.12998 3.61958 6.22998 3.63958 6.30998 3.63958C6.38998 3.63958 6.48998 3.62292 6.60998 3.58958C6.67665 3.56292 6.79331 3.51958 6.95998 3.45958C7.25331 3.33958 7.48331 3.25958 7.64998 3.21958C7.92998 3.14625 8.19665 3.11958 8.44998 3.13958ZM7.87998 2.22958C7.67331 2.47625 7.42665 2.66958 7.13998 2.80958C6.83331 2.96958 6.53331 3.03625 6.23998 3.00958C6.19998 2.70958 6.23998 2.39625 6.35998 2.06958C6.47331 1.78292 6.62998 1.52292 6.82998 1.28959C7.02998 1.05625 7.28165 0.861252 7.58498 0.704585C7.88831 0.547918 8.17998 0.466252 8.45998 0.459585C8.49331 0.766252 8.45331 1.08292 8.33998 1.40958C8.23998 1.70958 8.08665 1.98292 7.87998 2.22958Z"
-                              fill="#00E5FF"
-                            />
-                          </svg>
-                        )}
-                        {item.icon === "moon" && (
-                          <svg
-                            width="13"
-                            height="12"
-                            viewBox="0 0 13 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M5.25 3.5C5.25 4.13333 5.41 4.72333 5.73 5.27C6.03667 5.79667 6.45333 6.21333 6.98 6.52C7.52667 6.84 8.11667 7 8.75 7C9.23 7 9.69 6.90667 10.13 6.72C10.55 6.54 10.9233 6.28333 11.25 5.95V6C11.25 6.68 11.12 7.33 10.86 7.95C10.6067 8.54333 10.2483 9.07167 9.785 9.535C9.32167 9.99833 8.79333 10.3567 8.2 10.61C7.58 10.87 6.93 11 6.25 11C5.57 11 4.92 10.87 4.3 10.61C3.70667 10.3567 3.17833 9.99833 2.715 9.535C2.25167 9.07167 1.89333 8.54333 1.64 7.95C1.38 7.33 1.25 6.68 1.25 6C1.25 5.32 1.38 4.67 1.64 4.05C1.89333 3.45667 2.25167 2.92833 2.715 2.465C3.17833 2.00167 3.70667 1.64333 4.3 1.39C4.92 1.13 5.57 1 6.25 1H6.3C5.96667 1.32667 5.71 1.7 5.53 2.12C5.34333 2.56 5.25 3.02 5.25 3.5ZM2.25 6C2.25 6.72667 2.43333 7.4 2.8 8.02C3.15333 8.62 3.63 9.09667 4.23 9.45C4.85 9.81667 5.52333 10 6.25 10C7.00333 10 7.7 9.80333 8.34 9.41C8.96 9.03 9.44 8.52 9.78 7.88C9.44 7.96 9.09667 8 8.75 8C7.93667 8 7.18 7.79667 6.48 7.39C5.8 6.99 5.26 6.45 4.86 5.77C4.45333 5.07 4.25 4.31333 4.25 3.5C4.25 3.15333 4.29 2.81 4.37 2.47C3.73 2.81 3.22 3.29 2.84 3.91C2.44667 4.55 2.25 5.24667 2.25 6Z"
-                              fill="currentColor"
-                            />
-                          </svg>
-                        )}
-                        {item.icon === "chain" && (
-                          <svg
-                            width="13"
-                            height="12"
-                            viewBox="0 0 13 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M10.14 2.10953C10.5266 2.4962 10.7866 2.94953 10.92 3.46953C11.0533 3.9762 11.0533 4.48286 10.92 4.98953C10.7866 5.5162 10.5266 5.96953 10.14 6.34953L6.59998 9.88953C6.21998 10.2762 5.76665 10.5362 5.23998 10.6695C4.73331 10.8029 4.22665 10.8029 3.71998 10.6695C3.19998 10.5362 2.74665 10.2762 2.35998 9.88953C1.97331 9.50286 1.71331 9.04953 1.57998 8.52953C1.44665 8.02286 1.44665 7.5162 1.57998 7.00953C1.71331 6.48286 1.97331 6.02953 2.35998 5.64953L5.89998 2.10953C6.27998 1.72287 6.73331 1.46286 7.25998 1.32953C7.76665 1.1962 8.27331 1.1962 8.77998 1.32953C9.29998 1.46286 9.75331 1.72287 10.14 2.10953ZM7.30998 7.76953L4.47998 4.93953L3.06998 6.34953C2.80998 6.60953 2.63498 6.9112 2.54498 7.25453C2.45498 7.59786 2.45498 7.9412 2.54498 8.28453C2.63498 8.62786 2.80831 8.92786 3.06498 9.18453C3.32165 9.4412 3.62165 9.61453 3.96498 9.70453C4.30831 9.79453 4.65165 9.79453 4.99498 9.70453C5.33831 9.61453 5.63998 9.43953 5.89998 9.17953L7.30998 7.76953ZM9.42998 2.81953C9.17665 2.55953 8.87831 2.38453 8.53498 2.29453C8.19165 2.20453 7.84831 2.20453 7.50498 2.29453C7.16165 2.38453 6.85998 2.55953 6.59998 2.81953L5.18998 4.22953L8.01998 7.05953L9.42998 5.64953C9.68998 5.38953 9.86498 5.08786 9.95498 4.74453C10.045 4.4012 10.045 4.05786 9.95498 3.71453C9.86498 3.3712 9.68998 3.07286 9.42998 2.81953Z"
-                              fill="currentColor"
-                            />
-                          </svg>
-                        )}
-                      </span>
-                      <p>
-                        <strong
-                          className={`meal-plan-label meal-plan-label-${item.tone}`}
-                        >
-                          {item.meal}
-                        </strong>
-                        <span>{item.detail}</span>
-                      </p>
+                      <span className="meal-type-label">{item.meal}</span>
+                      <ul className="meal-content-list">
+                        {(item.items ? item.items : (item.detail ? item.detail.split(",") : [])).map((food, i) => (
+                          <li key={i} className="meal-item-pill">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            {typeof food === "string" ? food.trim() : food}
+                          </li>
+                        ))}
+                      </ul>
                     </article>
                   ))}
                 </div>
@@ -2677,122 +2764,24 @@ export default function TestReport({ sessionId, reportData: initialData }) {
                 <div className="meal-plan-list">
                   {dailyMealPlanRows.map((item) => (
                     <article className="meal-plan-row" key={item.meal}>
-                      <span
-                        className={`meal-plan-row-icon meal-plan-row-icon-${item.tone}`}
-                        aria-hidden="true"
-                      >
-                        {item.icon === "sun" && (
-                          <svg
-                            width="13"
-                            height="12"
-                            viewBox="0 0 13 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M6.25 9C5.71 9 5.20667 8.86333 4.74 8.59C4.28667 8.32333 3.92667 7.96333 3.66 7.51C3.38667 7.04333 3.25 6.54 3.25 6C3.25 5.46 3.38667 4.95667 3.66 4.49C3.92667 4.03667 4.28667 3.67667 4.74 3.41C5.20667 3.13667 5.71 3 6.25 3C6.79 3 7.29333 3.13667 7.76 3.41C8.21333 3.67667 8.57333 4.03667 8.84 4.49C9.11333 4.95667 9.25 5.46 9.25 6C9.25 6.54 9.11333 7.04333 8.84 7.51C8.57333 7.96333 8.21333 8.32333 7.76 8.59C7.29333 8.86333 6.79 9 6.25 9ZM6.25 8C6.61 8 6.94333 7.91 7.25 7.73C7.55667 7.55 7.8 7.30667 7.98 7C8.16 6.69333 8.25 6.36 8.25 6C8.25 5.64 8.16 5.30667 7.98 5C7.8 4.69333 7.55667 4.45 7.25 4.27C6.94333 4.09 6.61 4 6.25 4C5.89 4 5.55667 4.09 5.25 4.27C4.94333 4.45 4.7 4.69333 4.52 5C4.34 5.30667 4.25 5.64 4.25 6C4.25 6.36 4.34 6.69333 4.52 7C4.7 7.30667 4.94333 7.55 5.25 7.73C5.55667 7.91 5.89 8 6.25 8ZM5.75 0.5H6.75V2H5.75V0.5ZM5.75 10H6.75V11.5H5.75V10ZM2.01 2.46L2.71 1.76L3.78 2.82L3.07 3.53L2.01 2.46ZM8.72 9.18L9.43 8.47L10.49 9.54L9.79 10.24L8.72 9.18ZM9.79 1.76L10.49 2.46L9.43 3.53L8.72 2.82L9.79 1.76ZM3.07 8.47L3.78 9.18L2.71 10.24L2.01 9.54L3.07 8.47ZM11.75 5.5V6.5H10.25V5.5H11.75ZM2.25 5.5V6.5H0.75V5.5H2.25Z"
-                              fill="currentColor"
-                            />
-                          </svg>
-                        )}
-                        {item.icon === "leaf" && (
-                          <svg
-                            width="13"
-                            height="12"
-                            viewBox="0 0 13 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M10.75 1.25V2.25C10.75 3.79667 10.4767 5.11333 9.93 6.2C9.42333 7.21333 8.70667 7.98 7.78 8.5C6.9 9 5.89 9.25 4.75 9.25H2.87C2.79 9.70333 2.75 10.2033 2.75 10.75H1.75C1.75 10.07 1.80667 9.44667 1.92 8.88C1.80667 8.23333 1.75 7.35667 1.75 6.25C1.75 5.57 1.88 4.92 2.14 4.3C2.39333 3.70667 2.75167 3.17833 3.215 2.715C3.67833 2.25167 4.20667 1.89333 4.8 1.64C5.42 1.38 6.07 1.25 6.75 1.25C6.95 1.25 7.26333 1.28333 7.69 1.35C8.03667 1.40333 8.31 1.43667 8.51 1.45C8.85 1.47667 9.18333 1.48 9.51 1.46C9.90333 1.42667 10.3167 1.35667 10.75 1.25ZM6.75 2.25C6.02333 2.25 5.35 2.43333 4.73 2.8C4.13 3.15333 3.65333 3.63 3.3 4.23C2.93333 4.85 2.75 5.52333 2.75 6.25V6.77C3.05667 6.29 3.44333 5.84333 3.91 5.43C4.35667 5.03667 4.88667 4.66667 5.5 4.32L6 5.18C5.26 5.60667 4.66333 6.05667 4.21 6.53C3.73 7.03 3.37333 7.60333 3.14 8.25H4.75C5.75667 8.25 6.63167 8.03 7.375 7.59C8.11833 7.15 8.69 6.50333 9.09 5.65C9.51 4.76333 9.73 3.69333 9.75 2.44C9.41667 2.47333 9.07667 2.48333 8.73 2.47C8.41667 2.45 8.05333 2.41 7.64 2.35C7.34667 2.30333 7.15 2.275 7.05 2.265C6.95 2.255 6.85 2.25 6.75 2.25Z"
-                              fill="currentColor"
-                            />
-                          </svg>
-                        )}
-                        {item.icon === "apple" && (
-                          <svg
-                            width="13"
-                            height="12"
-                            viewBox="0 0 13 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M8.36998 4.12958C8.25665 4.12292 8.13165 4.13458 7.99498 4.16458C7.85831 4.19458 7.68998 4.24625 7.48998 4.31958C7.50331 4.31292 7.48998 4.31958 7.44998 4.33958L7.00998 4.50958C6.74998 4.59625 6.51998 4.63958 6.31998 4.63958C6.11998 4.63958 5.89331 4.59625 5.63998 4.50958C5.56665 4.48958 5.48331 4.45958 5.38998 4.41958L5.15998 4.32958C4.85998 4.21625 4.63998 4.15958 4.49998 4.15958C4.21331 4.16625 3.94165 4.24792 3.68498 4.40458C3.42831 4.56125 3.21998 4.77625 3.05998 5.04958C2.85331 5.41625 2.74665 5.87292 2.73998 6.41958C2.73331 6.93958 2.81665 7.48125 2.98998 8.04458C3.16331 8.60792 3.40665 9.11625 3.71998 9.56958C3.95998 9.90958 4.15665 10.1629 4.30998 10.3296C4.44998 10.4763 4.54831 10.5479 4.60498 10.5446C4.66165 10.5413 4.71665 10.5329 4.76998 10.5196C4.82331 10.5063 4.89998 10.4763 4.99998 10.4296L5.07998 10.3996C5.34665 10.2863 5.57665 10.2063 5.76998 10.1596C5.98331 10.1129 6.21498 10.0896 6.46498 10.0896C6.71498 10.0896 6.94331 10.1129 7.14998 10.1596C7.33665 10.2063 7.55331 10.2829 7.79998 10.3896L7.88998 10.4196C7.98998 10.4663 8.06498 10.4963 8.11498 10.5096C8.16498 10.5229 8.21998 10.5296 8.27998 10.5296C8.37331 10.5229 8.48331 10.4563 8.60998 10.3296C8.74998 10.1896 8.93665 9.94625 9.16998 9.59958C9.30331 9.40625 9.42331 9.20292 9.52998 8.98958C9.46331 8.93625 9.39665 8.87958 9.32998 8.81958C8.99665 8.49958 8.74331 8.13958 8.56998 7.73958C8.38331 7.31292 8.28665 6.84958 8.27998 6.34958C8.27331 5.57625 8.50665 4.87958 8.97998 4.25958C8.80665 4.19292 8.60331 4.14958 8.36998 4.12958ZM8.44998 3.13958C8.77665 3.15958 9.07665 3.22292 9.34998 3.32958C9.81665 3.51625 10.1933 3.81958 10.48 4.23958C10.38 4.29292 10.2666 4.37292 10.14 4.47958C9.90665 4.68625 9.71665 4.91958 9.56998 5.17958C9.36998 5.53958 9.27331 5.92625 9.27998 6.33958C9.28665 6.83958 9.41665 7.28292 9.66998 7.66958C9.84998 7.94292 10.0866 8.17625 10.38 8.36958C10.54 8.48292 10.67 8.55625 10.77 8.58958C10.73 8.72958 10.6666 8.89958 10.58 9.09958C10.4133 9.47958 10.22 9.83292 9.99998 10.1596C9.79998 10.4529 9.63998 10.6729 9.51998 10.8196C9.33331 11.0396 9.14998 11.2063 8.96998 11.3196C8.75665 11.4529 8.53331 11.5229 8.29998 11.5296C8.13998 11.5296 7.98331 11.5096 7.82998 11.4696C7.73665 11.4429 7.60331 11.3913 7.42998 11.3146C7.25665 11.2379 7.11998 11.1863 7.01998 11.1596C6.84665 11.1129 6.66165 11.0896 6.46498 11.0896C6.26831 11.0896 6.07665 11.1129 5.88998 11.1596C5.78331 11.1929 5.63665 11.2496 5.44998 11.3296C5.28998 11.3963 5.16665 11.4429 5.07998 11.4696C4.93998 11.5096 4.79665 11.5329 4.64998 11.5396C4.42331 11.5463 4.19998 11.4796 3.97998 11.3396C3.79331 11.2196 3.59998 11.0429 3.39998 10.8096C3.27331 10.6563 3.10665 10.4329 2.89998 10.1396C2.55998 9.65292 2.28665 9.09292 2.07998 8.45958C1.84665 7.76625 1.72998 7.09625 1.72998 6.44958C1.73665 5.71625 1.89331 5.08292 2.19998 4.54958C2.43998 4.12958 2.76498 3.79458 3.17498 3.54458C3.58498 3.29458 4.02331 3.16625 4.48998 3.15958C4.66998 3.15292 4.86998 3.18292 5.08998 3.24958C5.21665 3.28292 5.39998 3.34625 5.63998 3.43958C5.80665 3.51292 5.92998 3.55958 6.00998 3.57958C6.12998 3.61958 6.22998 3.63958 6.30998 3.63958C6.38998 3.63958 6.48998 3.62292 6.60998 3.58958C6.67665 3.56292 6.79331 3.51958 6.95998 3.45958C7.25331 3.33958 7.48331 3.25958 7.64998 3.21958C7.92998 3.14625 8.19665 3.11958 8.44998 3.13958ZM7.87998 2.22958C7.67331 2.47625 7.42665 2.66958 7.13998 2.80958C6.83331 2.96958 6.53331 3.03625 6.23998 3.00958C6.19998 2.70958 6.23998 2.39625 6.35998 2.06958C6.47331 1.78292 6.62998 1.52292 6.82998 1.28959C7.02998 1.05625 7.28165 0.861252 7.58498 0.704585C7.88831 0.547918 8.17998 0.466252 8.45998 0.459585C8.49331 0.766252 8.45331 1.08292 8.33998 1.40958C8.23998 1.70958 8.08665 1.98292 7.87998 2.22958Z"
-                              fill="#00E5FF"
-                            />
-                          </svg>
-                        )}
-                        {item.icon === "moon" && (
-                          <svg
-                            width="13"
-                            height="12"
-                            viewBox="0 0 13 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M5.25 3.5C5.25 4.13333 5.41 4.72333 5.73 5.27C6.03667 5.79667 6.45333 6.21333 6.98 6.52C7.52667 6.84 8.11667 7 8.75 7C9.23 7 9.69 6.90667 10.13 6.72C10.55 6.54 10.9233 6.28333 11.25 5.95V6C11.25 6.68 11.12 7.33 10.86 7.95C10.6067 8.54333 10.2483 9.07167 9.785 9.535C9.32167 9.99833 8.79333 10.3567 8.2 10.61C7.58 10.87 6.93 11 6.25 11C5.57 11 4.92 10.87 4.3 10.61C3.70667 10.3567 3.17833 9.99833 2.715 9.535C2.25167 9.07167 1.89333 8.54333 1.64 7.95C1.38 7.33 1.25 6.68 1.25 6C1.25 5.32 1.38 4.67 1.64 4.05C1.89333 3.45667 2.25167 2.92833 2.715 2.465C3.17833 2.00167 3.70667 1.64333 4.3 1.39C4.92 1.13 5.57 1 6.25 1H6.3C5.96667 1.32667 5.71 1.7 5.53 2.12C5.34333 2.56 5.25 3.02 5.25 3.5ZM2.25 6C2.25 6.72667 2.43333 7.4 2.8 8.02C3.15333 8.62 3.63 9.09667 4.23 9.45C4.85 9.81667 5.52333 10 6.25 10C7.00333 10 7.7 9.80333 8.34 9.41C8.96 9.03 9.44 8.52 9.78 7.88C9.44 7.96 9.09667 8 8.75 8C7.93667 8 7.18 7.79667 6.48 7.39C5.8 6.99 5.26 6.45 4.86 5.77C4.45333 5.07 4.25 4.31333 4.25 3.5C4.25 3.15333 4.29 2.81 4.37 2.47C3.73 2.81 3.22 3.29 2.84 3.91C2.44667 4.55 2.25 5.24667 2.25 6Z"
-                              fill="currentColor"
-                            />
-                          </svg>
-                        )}
-                        {item.icon === "chain" && (
-                          <svg
-                            width="13"
-                            height="12"
-                            viewBox="0 0 13 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M10.14 2.10953C10.5266 2.4962 10.7866 2.94953 10.92 3.46953C11.0533 3.9762 11.0533 4.48286 10.92 4.98953C10.7866 5.5162 10.5266 5.96953 10.14 6.34953L6.59998 9.88953C6.21998 10.2762 5.76665 10.5362 5.23998 10.6695C4.73331 10.8029 4.22665 10.8029 3.71998 10.6695C3.19998 10.5362 2.74665 10.2762 2.35998 9.88953C1.97331 9.50286 1.71331 9.04953 1.57998 8.52953C1.44665 8.02286 1.44665 7.5162 1.57998 7.00953C1.71331 6.48286 1.97331 6.02953 2.35998 5.64953L5.89998 2.10953C6.27998 1.72287 6.73331 1.46286 7.25998 1.32953C7.76665 1.1962 8.27331 1.1962 8.77998 1.32953C9.29998 1.46286 9.75331 1.72287 10.14 2.10953ZM7.30998 7.76953L4.47998 4.93953L3.06998 6.34953C2.80998 6.60953 2.63498 6.9112 2.54498 7.25453C2.45498 7.59786 2.45498 7.9412 2.54498 8.28453C2.63498 8.62786 2.80831 8.92786 3.06498 9.18453C3.32165 9.4412 3.62165 9.61453 3.96498 9.70453C4.30831 9.79453 4.65165 9.79453 4.99498 9.70453C5.33831 9.61453 5.63998 9.43953 5.89998 9.17953L7.30998 7.76953ZM9.42998 2.81953C9.17665 2.55953 8.87831 2.38453 8.53498 2.29453C8.19165 2.20453 7.84831 2.20453 7.50498 2.29453C7.16165 2.38453 6.85998 2.55953 6.59998 2.81953L5.18998 4.22953L8.01998 7.05953L9.42998 5.64953C9.68998 5.38953 9.86498 5.08786 9.95498 4.74453C10.045 4.4012 10.045 4.05786 9.95498 3.71453C9.86498 3.3712 9.68998 3.07286 9.42998 2.81953Z"
-                              fill="currentColor"
-                            />
-                          </svg>
-                        )}
-                      </span>
-                      <p>
-                        <strong
-                          className={`meal-plan-label meal-plan-label-${item.tone}`}
-                        >
-                          {item.meal}
-                        </strong>
-                        <span>{item.detail}</span>
-                      </p>
+                      <span className="meal-type-label">{item.meal}</span>
+                      <ul className="meal-content-list">
+                        {(item.items ? item.items : (item.detail ? item.detail.split(",") : [])).map((food, i) => (
+                          <li key={i} className="meal-item-pill">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            {typeof food === "string" ? food.trim() : food}
+                          </li>
+                        ))}
+                      </ul>
                     </article>
                   ))}
-                  <div className="unlock-overlay">
-                    <div className="unlock-overlay-container">
-                      <div className="unlock-lock-icon-wrap">
-                        <svg
-                          width="15"
-                          height="14"
-                          viewBox="0 0 15 14"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M10.7878 4.95833H11.954C12.1173 4.95833 12.2553 5.01472 12.368 5.1275C12.4808 5.24028 12.5371 5.37833 12.5371 5.54167V12.5417C12.5371 12.705 12.4808 12.8431 12.368 12.9558C12.2553 13.0686 12.1173 13.125 11.954 13.125H2.62402C2.46074 13.125 2.32274 13.0686 2.21 12.9558C2.09726 12.8431 2.04089 12.705 2.04089 12.5417V5.54167C2.04089 5.37833 2.09726 5.24028 2.21 5.1275C2.32274 5.01472 2.46074 4.95833 2.62402 4.95833H3.79027V4.375C3.79027 3.745 3.94966 3.15778 4.26843 2.61333C4.57943 2.08444 4.99928 1.66444 5.52798 1.35333C6.07223 1.03444 6.65924 0.875 7.28902 0.875C7.91879 0.875 8.50581 1.03444 9.05006 1.35333C9.57876 1.66444 9.99861 2.08444 10.3096 2.61333C10.6284 3.15778 10.7878 3.745 10.7878 4.375V4.95833ZM6.70589 9.47333V10.7917H7.87214V9.47333C8.05097 9.36444 8.19286 9.22056 8.29782 9.04167C8.40279 8.86278 8.45527 8.66833 8.45527 8.45833C8.45527 8.24833 8.40279 8.05389 8.29782 7.875C8.19286 7.69611 8.05097 7.55417 7.87214 7.44917C7.69332 7.34417 7.49894 7.29167 7.28902 7.29167C7.07909 7.29167 6.88472 7.34417 6.70589 7.44917C6.52707 7.55417 6.38517 7.69611 6.28021 7.875C6.17525 8.05389 6.12277 8.24833 6.12277 8.45833C6.12277 8.66833 6.17525 8.86278 6.28021 9.04167C6.38517 9.22056 6.52707 9.36444 6.70589 9.47333ZM9.62152 4.95833V4.375C9.62152 3.955 9.51656 3.56611 9.30663 3.20833C9.09671 2.85056 8.81292 2.56667 8.45527 2.35667C8.09762 2.14667 7.70887 2.04167 7.28902 2.04167C6.86917 2.04167 6.48042 2.14667 6.12277 2.35667C5.76512 2.56667 5.48133 2.85056 5.27141 3.20833C5.06148 3.56611 4.95652 3.955 4.95652 4.375V4.95833H9.62152Z"
-                            fill="#F4C430"
-                          />
-                        </svg>
-                      </div>
-                      <h5 className="unlock-title">Unlock Personalized Meal Plan</h5>
-                      <p className="unlock-description">
-                        Get a day-by-day diet plan tailored to your hair recovery needs.
-                      </p>
-                      <button
-                        className="unlock-cta-btn"
-                        onClick={() => setFullReport(true)}
-                      >
-                        View Full Plan
-                      </button>
-                    </div>
-                  </div>
-
+                  <UnlockOverlay
+                    title="Unlock Personalized Meal Plan"
+                    description="Get a day-by-day diet plan tailored to your hair recovery needs."
+                    ctaText="Unlock Full Plan"
+                    onUnlock={handleUnlockReport}
+                  />
                 </div>
-
               )}
             </article>
           </section>
@@ -2821,102 +2810,41 @@ export default function TestReport({ sessionId, reportData: initialData }) {
                 Foods &amp; Habits to Avoid
               </h4>
 
-              {fullReport ?
+              {fullReport ? (
                 <div className="avoid-habits-grid">
                   {foodsHabitsToAvoid.map((item) => (
-                    <article
-                      className={`avoid-habit-card avoid-habit-card-${item.tone}`}
-                      key={item.title}
-                    >
-                      <div className="avoid-habit-head">
-                        <span
-                          className={`avoid-habit-icon avoid-habit-icon-${item.tone}`}
-                          aria-hidden="true"
-                        >
-                          <svg
-                            width="13"
-                            height="12"
-                            viewBox="0 0 13 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M6.25 11C5.57 11 4.92 10.87 4.3 10.61C3.70667 10.3567 3.17833 9.99833 2.715 9.535C2.25167 9.07167 1.89333 8.54333 1.64 7.95C1.38 7.33 1.25 6.68 1.25 6C1.25 5.32 1.38 4.67 1.64 4.05C1.89333 3.45667 2.25167 2.92833 2.715 2.465C3.17833 2.00167 3.70667 1.64333 4.3 1.39C4.92 1.13 5.57 1 6.25 1C6.93 1 7.58 1.13 8.2 1.39C8.79333 1.64333 9.32167 2.00167 9.785 2.465C10.2483 2.92833 10.6067 3.45667 10.86 4.05C11.12 4.67 11.25 5.32 11.25 6C11.25 6.68 11.12 7.33 10.86 7.95C10.6067 8.54333 10.2483 9.07167 9.785 9.535C9.32167 9.99833 8.79333 10.3567 8.2 10.61C7.58 10.87 6.93 11 6.25 11ZM6.25 5.29L4.84 3.88L4.13 4.59L5.54 6L4.13 7.41L4.84 8.12L6.25 6.71L7.66 8.12L8.37 7.41L6.96 6L8.37 4.59L7.66 3.88L6.25 5.29Z"
-                              fill="currentColor"
-                            />
-                          </svg>
-                        </span>
+                    <article className="avoid-habit-item" key={item.title}>
+                      <span className="avoid-item-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                      </span>
+                      <div className="avoid-item-text">
                         <h5>{item.title}</h5>
+                        <p>{item.explanation}</p>
                       </div>
-                      <p>{item.detail}</p>
                     </article>
                   ))}
-
-
                 </div>
-
-                :
-
+              ) : (
                 <div className="avoid-habits-grid">
                   {foodsHabitsToAvoid.map((item) => (
-                    <article
-                      className={`avoid-habit-card avoid-habit-card-${item.tone}`}
-                      key={item.title}
-                    >
-                      <div className="avoid-habit-head">
-                        <span
-                          className={`avoid-habit-icon avoid-habit-icon-${item.tone}`}
-                          aria-hidden="true"
-                        >
-                          <svg
-                            width="13"
-                            height="12"
-                            viewBox="0 0 13 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M6.25 11C5.57 11 4.92 10.87 4.3 10.61C3.70667 10.3567 3.17833 9.99833 2.715 9.535C2.25167 9.07167 1.89333 8.54333 1.64 7.95C1.38 7.33 1.25 6.68 1.25 6C1.25 5.32 1.38 4.67 1.64 4.05C1.89333 3.45667 2.25167 2.92833 2.715 2.465C3.17833 2.00167 3.70667 1.64333 4.3 1.39C4.92 1.13 5.57 1 6.25 1C6.93 1 7.58 1.13 8.2 1.39C8.79333 1.64333 9.32167 2.00167 9.785 2.465C10.2483 2.92833 10.6067 3.45667 10.86 4.05C11.12 4.67 11.25 5.32 11.25 6C11.25 6.68 11.12 7.33 10.86 7.95C10.6067 8.54333 10.2483 9.07167 9.785 9.535C9.32167 9.99833 8.79333 10.3567 8.2 10.61C7.58 10.87 6.93 11 6.25 11ZM6.25 5.29L4.84 3.88L4.13 4.59L5.54 6L4.13 7.41L4.84 8.12L6.25 6.71L7.66 8.12L8.37 7.41L6.96 6L8.37 4.59L7.66 3.88L6.25 5.29Z"
-                              fill="currentColor"
-                            />
-                          </svg>
-                        </span>
+                    <article className="avoid-habit-item" key={item.title}>
+                      <span className="avoid-item-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                      </span>
+                      <div className="avoid-item-text">
                         <h5>{item.title}</h5>
+                        <p>{item.explanation}</p>
                       </div>
-                      <p>{item.detail}</p>
                     </article>
                   ))}
-
-                  <div className="unlock-overlay">
-                    <div className="unlock-overlay-container">
-                      <div className="unlock-lock-icon-wrap">
-                        <svg
-                          width="15"
-                          height="14"
-                          viewBox="0 0 15 14"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M10.7878 4.95833H11.954C12.1173 4.95833 12.2553 5.01472 12.368 5.1275C12.4808 5.24028 12.5371 5.37833 12.5371 5.54167V12.5417C12.5371 12.705 12.4808 12.8431 12.368 12.9558C12.2553 13.0686 12.1173 13.125 11.954 13.125H2.62402C2.46074 13.125 2.32274 13.0686 2.21 12.9558C2.09726 12.8431 2.04089 12.705 2.04089 12.5417V5.54167C2.04089 5.37833 2.09726 5.24028 2.21 5.1275C2.32274 5.01472 2.46074 4.95833 2.62402 4.95833H3.79027V4.375C3.79027 3.745 3.94966 3.15778 4.26843 2.61333C4.57943 2.08444 4.99928 1.66444 5.52798 1.35333C6.07223 1.03444 6.65924 0.875 7.28902 0.875C7.91879 0.875 8.50581 1.03444 9.05006 1.35333C9.57876 1.66444 9.99861 2.08444 10.3096 2.61333C10.6284 3.15778 10.7878 3.745 10.7878 4.375V4.95833ZM6.70589 9.47333V10.7917H7.87214V9.47333C8.05097 9.36444 8.19286 9.22056 8.29782 9.04167C8.40279 8.86278 8.45527 8.66833 8.45527 8.45833C8.45527 8.24833 8.40279 8.05389 8.29782 7.875C8.19286 7.69611 8.05097 7.55417 7.87214 7.44917C7.69332 7.34417 7.49894 7.29167 7.28902 7.29167C7.07909 7.29167 6.88472 7.34417 6.70589 7.44917C6.52707 7.55417 6.38517 7.69611 6.28021 7.875C6.17525 8.05389 6.12277 8.24833 6.12277 8.45833C6.12277 8.66833 6.17525 8.86278 6.28021 9.04167C6.38517 9.22056 6.52707 9.36444 6.70589 9.47333ZM9.62152 4.95833V4.375C9.62152 3.955 9.51656 3.56611 9.30663 3.20833C9.09671 2.85056 8.81292 2.56667 8.45527 2.35667C8.09762 2.14667 7.70887 2.04167 7.28902 2.04167C6.86917 2.04167 6.48042 2.14667 6.12277 2.35667C5.76512 2.56667 5.48133 2.85056 5.27141 3.20833C5.06148 3.56611 4.95652 3.955 4.95652 4.375V4.95833H9.62152Z"
-                            fill="#F4C430"
-                          />
-                        </svg>
-                      </div>
-                      <h5 className="unlock-title">See What's Affecting Your Hair Health</h5>
-                      <p className="unlock-description">
-                        Identify hidden dietary triggers slowing your recovery.
-                      </p>
-                      <button
-                        className="unlock-cta-btn"
-                        onClick={() => setFullReport(true)}
-                      >
-                        Unlock Insights
-                      </button>
-                    </div>
-                  </div>
+                  <UnlockOverlay
+                    title="Unlock Avoidance Guide"
+                    description="Detailed breakdown of hidden dietary triggers and habits slowing your recovery."
+                    ctaText="Unlock Full Plan"
+                    onUnlock={handleUnlockReport}
+                  />
                 </div>
-              }
+              )}
             </article>
           </section>
 
@@ -2957,8 +2885,7 @@ export default function TestReport({ sessionId, reportData: initialData }) {
               <div className="daily-routine-list">
                 {dailyRoutineItems.map((item) => (
                   <article
-                    // className={`daily-routine-row ${item.highlight ? " daily-routine-row-highlight" : ""}`}
-                    className={`daily-routine-row `}
+                    className={`daily-routine-row ${item.highlight ? " daily-routine-row-highlight" : ""}`}
                     key={item.label}
                   >
                     <span className="daily-routine-dot" aria-hidden="true">
@@ -2975,11 +2902,11 @@ export default function TestReport({ sessionId, reportData: initialData }) {
                         />
                       </svg>
                     </span>
-                    <p>
+                    <div className="daily-routine-content-block">
                       <span className="daily-routine-label">{item.label}</span>
-                      <p>{item.action}</p>
-                      <span className="daily-routine-note">- {item.note}</span>
-                    </p>
+                      <p className="daily-routine-action-text">{item.action}</p>
+                      {item.note && <span className="daily-routine-note">- {item.note}</span>}
+                    </div>
                   </article>
                 ))}
               </div>
@@ -3082,34 +3009,13 @@ export default function TestReport({ sessionId, reportData: initialData }) {
                       </ul>
                     </article>
                   ))}
-                  <div className="unlock-overlay">
-                    <div className="unlock-overlay-container">
-                      <div className="unlock-lock-icon-wrap">
-                        <svg
-                          width="15"
-                          height="14"
-                          viewBox="0 0 15 14"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M10.7878 4.95833H11.954C12.1173 4.95833 12.2553 5.01472 12.368 5.1275C12.4808 5.24028 12.5371 5.37833 12.5371 5.54167V12.5417C12.5371 12.705 12.4808 12.8431 12.368 12.9558C12.2553 13.0686 12.1173 13.125 11.954 13.125H2.62402C2.46074 13.125 2.32274 13.0686 2.21 12.9558C2.09726 12.8431 2.04089 12.705 2.04089 12.5417V5.54167C2.04089 5.37833 2.09726 5.24028 2.21 5.1275C2.32274 5.01472 2.46074 4.95833 2.62402 4.95833H3.79027V4.375C3.79027 3.745 3.94966 3.15778 4.26843 2.61333C4.57943 2.08444 4.99928 1.66444 5.52798 1.35333C6.07223 1.03444 6.65924 0.875 7.28902 0.875C7.91879 0.875 8.50581 1.03444 9.05006 1.35333C9.57876 1.66444 9.99861 2.08444 10.3096 2.61333C10.6284 3.15778 10.7878 3.745 10.7878 4.375V4.95833ZM6.70589 9.47333V10.7917H7.87214V9.47333C8.05097 9.36444 8.19286 9.22056 8.29782 9.04167C8.40279 8.86278 8.45527 8.66833 8.45527 8.45833C8.45527 8.24833 8.40279 8.05389 8.29782 7.875C8.19286 7.69611 8.05097 7.55417 7.87214 7.44917C7.69332 7.34417 7.49894 7.29167 7.28902 7.29167C7.07909 7.29167 6.88472 7.34417 6.70589 7.44917C6.52707 7.55417 6.38517 7.69611 6.28021 7.875C6.17525 8.05389 6.12277 8.24833 6.12277 8.45833C6.12277 8.66833 6.17525 8.86278 6.28021 9.04167C6.38517 9.22056 6.52707 9.36444 6.70589 9.47333ZM9.62152 4.95833V4.375C9.62152 3.955 9.51656 3.56611 9.30663 3.20833C9.09671 2.85056 8.81292 2.56667 8.45527 2.35667C8.09762 2.14667 7.70887 2.04167 7.28902 2.04167C6.86917 2.04167 6.48042 2.14667 6.12277 2.35667C5.76512 2.56667 5.48133 2.85056 5.27141 3.20833C5.06148 3.56611 4.95652 3.955 4.95652 4.375V4.95833H9.62152Z"
-                            fill="#F4C430"
-                          />
-                        </svg>
-                      </div>
-                      <h5 className="unlock-title">Unlock Your Personalized Weekly Routine</h5>
-                      <p className="unlock-description">
-                        Get a structured day-by-day plan tailored to your hair recovery journey.
-                      </p>
-                      <button
-                        className="unlock-cta-btn"
-                        onClick={() => setFullReport(true)}
-                      >
-                        Unlock Full Routine
-                      </button>
-                    </div>
-                  </div>
+                  {!fullReport && (
+                    <UnlockOverlay
+                      title="Unlock Your Personalized Weekly Routine"
+                      description="Get a structured day-by-day plan tailored to your hair recovery journey."
+                      onUnlock={handleUnlockReport}
+                    />
+                  )}
                 </div>
               )}
             </article>
@@ -3468,17 +3374,17 @@ export default function TestReport({ sessionId, reportData: initialData }) {
 
             <div className="predictive-summary-grid">
               <article className="predictive-summary-card predictive-summary-card-red">
-                <p>5-Year Risk (Untreated)</p>
+                <p>Peak Risk (Untreated)</p>
                 <h5>
-                  85<span>/100</span>
+                  {Math.max(...predictiveRiskRows.map(r => r.untreated || 0), 85)}<span>/100</span>
                 </h5>
                 <em>Severe Progression</em>
               </article>
 
               <article className="predictive-summary-card predictive-summary-card-green">
-                <p>5-Year Risk (Treated)</p>
+                <p>Stabilized Risk (Treated)</p>
                 <h5>
-                  15<span>/100</span>
+                  {Math.min(...safeArray(predictiveRiskRows).filter(r => r.treated > 0).map(r => r.treated), 15)}<span>/100</span>
                 </h5>
                 <em>Long-term Stable</em>
               </article>
@@ -3489,22 +3395,22 @@ export default function TestReport({ sessionId, reportData: initialData }) {
 
               <div className="predictive-factor-list">
                 {activeRiskFactors.map((factor) => (
-                  <div className="predictive-factor-item" key={factor.label}>
+                  <div className="predictive-factor-item" key={factor.title}>
                     <div className="predictive-factor-row">
                       <div className="predictive-factor-left">
                         <i
                           className={`predictive-factor-dot predictive-factor-dot-${factor.tone}`}
                           aria-hidden="true"
                         />
-                        <span>{factor.label}</span>
+                        <span>{factor.title}</span>
                       </div>
                       <strong
                         className={`predictive-factor-level predictive-factor-level-${factor.tone}`}
                       >
-                        {factor.level}
+                        {factor.level || "Active"}
                       </strong>
                     </div>
-                    <p className="predictive-factor-subnote">{factor.note}</p>
+                    <p className="predictive-factor-subnote">{factor.impact}</p>
                   </div>
                 ))}
               </div>
@@ -3528,12 +3434,7 @@ export default function TestReport({ sessionId, reportData: initialData }) {
               <div className="predictive-outlook-copy">
                 <h4>5-Year Outlook</h4>
                 <p>
-                  <strong>Positive with early intervention.</strong> Projected
-                  risk reduction of
-                  <b> 65% over 5 years</b>. with consistent treatment adherence.
-                  Delay beyond 12+ months reduces follicle recovery potential
-                  significantly. Current trajectory, if untreated, leads to
-                  Norwood Stage IV-V classification within 4-5 years.
+                  {lockedNarrative?.riskProjections?.summary || "Positive with early intervention. Projected risk reduction of healthy results with consistent treatment adherence."}
                 </p>
               </div>
             </article>
@@ -3760,7 +3661,7 @@ export default function TestReport({ sessionId, reportData: initialData }) {
                               <p className="lock-desc">
                                 Access deeper scalp analysis and action priorities tailored to your report.
                               </p>
-                              <button className="unlock-cta" onClick={() => setFullReport(true)}>
+                              <button className="unlock-cta" onClick={handleUnlockReport}>
                                 Unlock Full Plan
                               </button>
                             </div>
@@ -4151,7 +4052,7 @@ export default function TestReport({ sessionId, reportData: initialData }) {
 
                   <article className="clinical-summary-card">
                     <p className="clinical-summary-item">
-                      Primary Assessment: <strong>{clinicalNarrative?.rootCause || "Assessment Pending"}</strong>
+                      Primary Assessment: <strong>{clinicalNarrative?.root_cause || clinicalNarrative?.rootCause || "Assessment Pending"}</strong>
                     </p>
                     <p className="clinical-summary-item">
                       Impact Correlation: <strong>{clinicalNarrative?.symptomCorrelation || "Consistent with reported symptoms."}</strong>
@@ -4537,6 +4438,26 @@ export default function TestReport({ sessionId, reportData: initialData }) {
                 <p className="side-subtitle">
                   Based on your diagnosis and root causes
                 </p>
+                <div className="recommendation-list">
+                  {recommendationRows.map((row, idx) => (
+                    <article className="recommendation-item" key={idx}>
+                      <div className="recommendation-tag-row">
+                        <span className={`recommendation-status-badge badge-${row.priorityTone}`}>
+                          {row.priority}
+                        </span>
+                      </div>
+                      <div className="recommendation-copy">
+                        <h4>{row.title}</h4>
+                        <p>{row.desc}</p>
+                        <div className="recommendation-schedule">
+                          <span className="schedule-detail">
+                            {row.timeFrame} · {row.duration}
+                          </span>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
               </div>
             )}
 
@@ -4609,8 +4530,8 @@ export default function TestReport({ sessionId, reportData: initialData }) {
                   Proceed with Recommended Kit
                 </button>
               </article>
-          )}
-        </aside>
+            )}
+          </aside>
         )}
       </div>
 

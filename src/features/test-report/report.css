@@ -17,13 +17,16 @@
 /* =========================================================
    Global Overflow Prevention
 ========================================================= */
-html, body {
+html,
+body {
    overflow-x: hidden;
    max-width: 100%;
    box-sizing: border-box;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
    box-sizing: border-box;
 }
 
@@ -5343,17 +5346,17 @@ linear-gradient(180deg, rgba(2, 11, 31, 0.92) 0%, rgba(2, 8, 24, 0.9) 100%); */
 /* =========================================================
    Unlock Overlay Component
 ========================================================= */
-.unlock-overlay{
- height: 100%;
- width: 100%;
- display: flex;
- align-items: center;
- justify-content: center;
- position: absolute;
-backdrop-filter: blur(2px);
-  /* -webkit-backdrop-filter: blur(20px); */
+.unlock-overlay {
+   height: 100%;
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   position: absolute;
+   backdrop-filter: blur(2px);
+   /* -webkit-backdrop-filter: blur(20px); */
 
-  /* background: rgba(0, 0, 255, 0.3);  */
+   /* background: rgba(0, 0, 255, 0.3);  */
 }
 
 .unlock-overlay-container {
@@ -6017,9 +6020,9 @@ backdrop-filter: blur(2px);
 }
 
 .locked-insight-badge {
-  display: flex;
-  align-items: center;
-  margin-right: 5px; 
+   display: flex;
+   align-items: center;
+   margin-right: 5px;
    border-radius: 9999px;
    border: 1px solid rgba(244, 196, 48, 0.20);
    background: rgba(244, 196, 48, 0.10);
@@ -9919,7 +9922,7 @@ backdrop-filter: blur(2px);
       min-width: 0;
    }
 
-   
+
 
    .nutritional-card {
       padding: 12px;
@@ -10050,6 +10053,7 @@ backdrop-filter: blur(2px);
 }
 
 @media (max-width: 360px) {
+
    .clinician-pill,
    .questionnaire-pill,
    .verified-pill {
@@ -10075,6 +10079,7 @@ backdrop-filter: blur(2px);
    Daily Protocol Section - Mobile Responsive
 ========================================================= */
 @media (max-width: 768px) {
+
    /* Daily Protocol Header */
    .daily-protocol-header {
       flex-direction: row;
@@ -10163,7 +10168,7 @@ backdrop-filter: blur(2px);
       height: 6px;
    }
 
-   .daily-routine-row > p {
+   .daily-routine-row>p {
       display: block;
       margin: 0;
       flex: 1;
@@ -10376,7 +10381,7 @@ backdrop-filter: blur(2px);
       margin-bottom: 6px;
    }
 
-   .stress-cortisol-main .stress-img-info-warpper > p {
+   .stress-cortisol-main .stress-img-info-warpper>p {
       font-size: 12px;
       line-height: 19.5px;
       margin: 0;
@@ -10414,7 +10419,7 @@ backdrop-filter: blur(2px);
       flex-wrap: wrap;
    }
 
-   .stress-technique-how > span:first-child {
+   .stress-technique-how>span:first-child {
       flex-shrink: 0;
    }
 
@@ -11385,6 +11390,7 @@ backdrop-filter: blur(2px);
    it overrides all other responsive styles for 320px screens
 ========================================================= */
 @media (max-width: 380px) {
+
    /* CRITICAL: Absolute width enforcement - MUST BE FIRST */
    html {
       max-width: 100vw !important;
@@ -11557,7 +11563,7 @@ backdrop-filter: blur(2px);
 
    /* Cards */
    .clinical-insight-card,
-   .diagnostic-insight-stack > * {
+   .diagnostic-insight-stack>* {
       padding: 14px !important;
       gap: 10px !important;
    }
@@ -11687,13 +11693,20 @@ backdrop-filter: blur(2px);
    }
 
    /* Ensure text wraps properly */
-   h1, h2, h3, h4, h5, h6 {
+   h1,
+   h2,
+   h3,
+   h4,
+   h5,
+   h6 {
       word-wrap: break-word;
       overflow-wrap: break-word;
       hyphens: auto;
    }
 
-   p, span, div {
+   p,
+   span,
+   div {
       word-wrap: break-word;
       overflow-wrap: break-word;
    }
@@ -11706,7 +11719,8 @@ backdrop-filter: blur(2px);
    }
 
    /* Ensure images don't overflow */
-   img, svg {
+   img,
+   svg {
       max-width: 100% !important;
       height: auto !important;
    }
@@ -12239,7 +12253,7 @@ backdrop-filter: blur(2px);
       margin-bottom: 8px !important;
    }
 
-   .stress-cortisol-main .stress-img-info-warpper > p {
+   .stress-cortisol-main .stress-img-info-warpper>p {
       font-size: 11px !important;
       line-height: 1.6 !important;
    }
@@ -12282,7 +12296,7 @@ backdrop-filter: blur(2px);
       display: block !important;
    }
 
-   .review-stat-box > div {
+   .review-stat-box>div {
       height: auto !important;
       overflow: visible !important;
    }
@@ -12325,4 +12339,412 @@ backdrop-filter: blur(2px);
       flex-wrap: wrap !important;
       gap: 10px !important;
    }
+}
+
+/* =========================================================
+   Unlock Overlay & Paywall Styles
+   ========================================================= */
+/* Unlock Overlay Centered Modal */
+.unlock-overlay-container {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   display: flex !important;
+   align-items: center !important;
+   justify-content: center !important;
+   z-index: 100;
+   background: rgba(4, 18, 40, 0.4);
+   backdrop-filter: blur(8px);
+   border-radius: 16px;
+}
+
+.unlock-overlay-modal {
+   display: flex;
+   flex-direction: column !important;
+   align-items: center !important;
+   justify-content: center !important;
+   text-align: center;
+   padding: 40px 30px;
+   width: 100%;
+   max-width: 420px;
+   background: #041a33;
+   border: 1px solid rgba(0, 229, 255, 0.2);
+   border-radius: 24px;
+   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+}
+
+.unlock-modal-lock-icon {
+   margin-bottom: 20px;
+   width: 48px;
+   height: 48px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background: rgba(244, 203, 48, 0.1);
+   border-radius: 50%;
+}
+
+.unlock-modal-title {
+   font-size: 20px;
+   font-weight: 700;
+   color: #ffffff;
+   margin-bottom: 12px;
+}
+
+.unlock-modal-description {
+   font-size: 14px;
+   color: #94a3b8;
+   line-height: 1.6;
+   margin-bottom: 30px;
+}
+
+.unlock-modal-btn {
+   background: #00e5ff;
+   color: #000000;
+   font-size: 15px;
+   font-weight: 700;
+   padding: 12px 32px;
+   border-radius: 12px;
+   border: none;
+   cursor: pointer;
+   transition: all 0.2s ease;
+   width: 100%;
+}
+
+.unlock-modal-btn:hover {
+   background: #33ebff;
+   transform: translateY(-2px);
+}
+
+/* Nutrients Grid (2 Columns) */
+.nutritional-card-grid {
+   display: grid !important;
+   grid-template-columns: repeat(2, 1fr) !important;
+   gap: 20px !important;
+   position: relative;
+}
+
+.nutritional-card {
+   background: rgba(255, 255, 255, 0.03) !important;
+   border: 1px solid rgba(255, 255, 255, 0.05) !important;
+   border-radius: 16px !important;
+   padding: 20px !important;
+   position: relative;
+   overflow: hidden;
+}
+
+.nutritional-card-head {
+   display: flex !important;
+   align-items: flex-start !important;
+   gap: 12px !important;
+   margin-bottom: 16px !important;
+}
+
+.nutritional-card-icon {
+   width: 36px !important;
+   height: 36px !important;
+   border-radius: 8px !important;
+   flex-shrink: 0 !important;
+   display: flex !important;
+   align-items: center !important;
+   justify-content: center !important;
+}
+
+.nutritional-card-icon-amber {
+   background: rgba(245, 158, 11, 0.1) !important;
+   color: #f59e0b !important;
+}
+
+.nutritional-card-icon-red {
+   background: rgba(239, 68, 68, 0.1) !important;
+   color: #ef4444 !important;
+}
+
+.nutritional-card-icon-cyan {
+   background: rgba(6, 182, 212, 0.1) !important;
+   color: #06b6d4 !important;
+}
+
+.nutritional-card-title-wrap h5 {
+   font-size: 16px !important;
+   color: #fff !important;
+   margin-bottom: 4px !important;
+}
+
+.nutritional-dose {
+   font-size: 12px !important;
+   font-weight: 500 !important;
+}
+
+.nutritional-dose-amber {
+   color: #fbbf24 !important;
+}
+
+.nutritional-dose-red {
+   color: #f87171 !important;
+}
+
+.nutritional-dose-cyan {
+   color: #22d3ee !important;
+}
+
+.nutritional-card-body-layout {
+   display: flex !important;
+   flex-direction: column !important;
+   gap: 12px !important;
+}
+
+.nutritional-card-desc {
+   font-size: 13px !important;
+   color: #94a3b8 !important;
+   line-height: 1.5 !important;
+}
+
+.nutritional-bottom-row {
+   display: flex !important;
+   justify-content: space-between !important;
+   align-items: flex-end !important;
+   margin-top: 8px !important;
+}
+
+.nutritional-food-list {
+   display: flex !important;
+   flex-wrap: wrap !important;
+   gap: 6px !important;
+   list-style: none !important;
+   padding: 0 !important;
+   margin: 0 !important;
+   max-width: 65% !important;
+}
+
+.nutritional-food-pill {
+   font-size: 11px !important;
+   padding: 4px 8px !important;
+   border-radius: 20px !important;
+   background: rgba(255, 255, 255, 0.05) !important;
+   color: #cbd5e1 !important;
+}
+
+.nutrient-visual-asset {
+   width: 60px !important;
+   height: 60px !important;
+   border-radius: 12px !important;
+   background-size: cover !important;
+   background-position: center !important;
+}
+
+/* Meal Plan Rows */
+.meal-plan-list {
+   display: flex !important;
+   flex-direction: column !important;
+   gap: 12px !important;
+   position: relative !important;
+}
+
+.meal-plan-row {
+   display: flex !important;
+   align-items: center !important;
+   gap: 16px !important;
+   background: rgba(255, 255, 255, 0.02) !important;
+   border: 1px solid rgba(255, 255, 255, 0.05) !important;
+   border-radius: 12px !important;
+   padding: 14px 20px !important;
+}
+
+.meal-type-label {
+   font-size: 11px !important;
+   font-weight: 700 !important;
+   color: #94a3b8 !important;
+   text-transform: uppercase !important;
+   letter-spacing: 1px !important;
+   width: 90px !important;
+   flex-shrink: 0 !important;
+}
+
+.meal-content-list {
+   display: flex !important;
+   flex-wrap: wrap !important;
+   gap: 12px 20px !important;
+   list-style: none !important;
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+.meal-item-pill {
+   font-size: 13px !important;
+   color: #fff !important;
+   display: flex !important;
+   align-items: center !important;
+   gap: 8px !important;
+}
+
+/* Foods to Avoid (2 Columns) */
+.avoid-habits-grid {
+   display: grid !important;
+   grid-template-columns: repeat(2, 1fr) !important;
+   gap: 16px !important;
+   position: relative !important;
+}
+
+.avoid-habit-item {
+   display: flex !important;
+   align-items: flex-start !important;
+   gap: 12px !important;
+   background: rgba(239, 68, 68, 0.04) !important;
+   border: 1px solid rgba(239, 68, 68, 0.08) !important;
+   padding: 18px !important;
+   border-radius: 16px !important;
+}
+
+.avoid-item-icon {
+   color: #ef4444 !important;
+   margin-top: 2px !important;
+}
+
+.avoid-item-text h5 {
+   font-size: 15px !important;
+   color: #fff !important;
+   margin-bottom: 6px !important;
+   font-weight: 600 !important;
+}
+
+.avoid-item-text p {
+   font-size: 12.5px !important;
+   color: #94a3b8 !important;
+   line-height: 1.5 !important;
+}
+
+/* Section-specific blurring when locked */
+.locked-section-blur {
+   position: relative;
+   min-height: 200px;
+}
+
+/* OVERRIDE FOR SCALP SECTION */
+.scalp-recovery-grid {
+   margin-top: 20px;
+   display: grid;
+   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+   gap: 20px;
+}
+
+.scalp-recovery-card {
+   border-radius: 16px;
+   border: 1px solid rgba(0, 229, 255, 0.15) !important;
+   background: rgba(3, 22, 45, 0.4) !important;
+   padding: 24px 20px !important;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   min-width: 0;
+   transition: transform 0.3s ease;
+}
+
+.scalp-recovery-card:hover {
+   transform: translateY(-4px);
+   border-color: rgba(0, 229, 255, 0.3) !important;
+}
+
+.scalp-recovery-ring-wrap {
+   width: 110px !important;
+   height: 110px !important;
+}
+
+.scalp-recovery-ring-center strong {
+   font-size: 24px !important;
+}
+
+.scalp-recovery-score-label {
+   margin-top: 16px !important;
+   font-size: 16px !important;
+   font-weight: 700 !important;
+}
+
+.scalp-recovery-note {
+   font-size: 11px !important;
+   color: #4a6580 !important;
+}
+
+.scalp-recovery-levels {
+   margin-top: 20px !important;
+   gap: 6px !important;
+}
+
+.scalp-recovery-level-pill {
+   height: 36px !important;
+   background: rgba(10, 20, 40, 0.4) !important;
+   font-size: 10px !important;
+   color: #4a6580;
+}
+
+.scalp-recovery-level-pill-active-amber {
+   border: 1.5px solid #f4c430 !important;
+   background: rgba(244, 196, 48, 0.1) !important;
+   color: #f4c430 !important;
+}
+
+.scalp-recovery-level-pill-active-cyan {
+   border: 1.5px solid #00e5ff !important;
+   background: rgba(0, 229, 255, 0.1) !important;
+   color: #00e5ff !important;
+}
+/* MEAL PLAN HORIZONTAL ROWS (IMAGE 1 STYLE) */
+.meal-plan-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+  margin-top: 20px !important;
+  position: relative !important;
+}
+
+.meal-plan-row {
+  display: grid !important;
+  grid-template-columns: 110px 1fr !important;
+  align-items: center !important;
+  gap: 20px !important;
+  background: rgba(3, 22, 45, 0.4) !important;
+  border: 1px solid rgba(0, 229, 255, 0.1) !important;
+  border-radius: 12px !important;
+  padding: 16px 20px !important;
+  transition: all 0.3s ease !important;
+}
+
+.meal-plan-row:hover {
+  border-color: rgba(0, 229, 255, 0.25) !important;
+  background: rgba(3, 22, 45, 0.6) !important;
+}
+
+.meal-type-label {
+  color: #00e5ff !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.8px !important;
+}
+
+.meal-content-list {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.meal-item-pill {
+  background: rgba(10, 20, 40, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #e2e8f0 !important;
+  padding: 5px 12px !important;
+  border-radius: 100px !important;
+  font-size: 12.5px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.meal-item-pill svg {
+  flex-shrink: 0;
 }

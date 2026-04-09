@@ -4,6 +4,7 @@ import { FiCalendar } from "react-icons/fi";
 import { checkSessionStatus } from '../hair-assessment/HairAssessmentApi';
 import { toast } from 'react-toastify';
 import API_BASE_URL from '../../Config';
+import { useNavigate } from 'react-router-dom';
 
 // Helper to format API URLs with BASE_URL if relative
 const formatUrl = (url) => {
@@ -16,7 +17,7 @@ const formatUrl = (url) => {
   const serverRoot = API_BASE_URL.split('/api/v1')[0];
   const cleanBase = serverRoot.endsWith('/') ? serverRoot.slice(0, -1) : serverRoot;
   const cleanUrl = url.startsWith('/') ? url : `/${url}`;
-  
+
   return `${cleanBase}${cleanUrl}`;
 };
 
@@ -43,10 +44,74 @@ const UnlockOverlay = ({ title, description, ctaText, onUnlock }) => (
   </div>
 );
 
+const MealIcon = ({ type }) => {
+  switch (type) {
+    case 'sun':
+    case 'Breakfast':
+      return (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      );
+    case 'leaf':
+    case 'Lunch':
+      return (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 8.8C19.7 17 15.5 19.4 11 20z"></path>
+          <path d="M19 2c-3 3-7.5 9.5-8 18"></path>
+        </svg>
+      );
+    case 'apple':
+    case 'snack':
+    case 'Snack':
+    case 'Mid-Morning Snack':
+    case 'Evening Snack':
+      return (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 22c4.97 0 9-3.048 9-6.803 0-3.252-2.316-5.968-5.748-6.613a2.2 2.2 0 0 0-2.37.585l-1.63 1.63L9.622 9.17a2.2 2.2 0 0 0-2.37-.585C3.816 9.23 1.5 11.946 1.5 15.197 1.5 18.952 5.53 22 10.5 22h1.5z"></path>
+          <path d="M13.322 2.1a2 2 0 0 1 2.8 2.8L12 9"></path>
+        </svg>
+      );
+    case 'moon':
+    case 'Dinner':
+    case 'Bedtime':
+      return (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      );
+    case 'pill':
+    case 'supplement':
+    case 'Supplement':
+      return (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M10.5 20.5a7 7 0 1 1 9.9-9.9l-6.36 6.36a4.5 4.5 0 0 1-6.36-6.36l6.36-6.36"></path>
+        </svg>
+      );
+    default:
+      return (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      );
+  }
+};
+
 export default function TestReport({ sessionId, reportData: initialData, onDownloadPdf, onUnlockReport, isPrintMode }) {
   const [reportData, setReportData] = React.useState(initialData || null);
   const [loading, setLoading] = React.useState(false);
   const [fullReport, setFullReport] = React.useState(!!initialData?.fullReportAccess || false);
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     if (initialData) {
@@ -96,7 +161,7 @@ export default function TestReport({ sessionId, reportData: initialData, onDownl
       ],
       dailyMealPlan: [
         { type: "Breakfast", menu: ["3 boiled eggs + spinach omelette", "avocado toast on whole grain", "fortified milk"], tone: "amber", icon: "sun" },
-        { type: "Lunch", menu: ["Grilled salmon with quinoa", "mixed greens", "olive oil dressing"], tone: "cyan", icon: "leaf" },
+        { type: "Lunch", menu: ["Grilled salmon with quinoa", "mixed greens", "olive oil dressing"], tone: "green", icon: "leaf" },
         { type: "Snack", menu: ["Mixed nuts (almonds, cashews)", "Greek yogurt"], tone: "cyan", icon: "snack" },
         { type: "Dinner", menu: ["Lean chicken breast", "steamed broccoli", "sweet potato"], tone: "slate", icon: "moon" },
         { type: "Supplement", menu: ["Biotin 5000mcg + Vitamin D3 2000IU + Iron 18mg + Zinc 15mg with meals"], tone: "amber", icon: "pill" }
@@ -207,11 +272,11 @@ export default function TestReport({ sessionId, reportData: initialData, onDownl
   const staticDse = LOCKED_STATIC_DATA.dseResult;
 
   // Sections that are ALWAYS dynamic (Header, Clinical Insight Cards, AI Photo Analysis)
-  const clinicalNarrative = dynamicNarrative; 
+  const clinicalNarrative = dynamicNarrative;
   const dseResult = dynamicDse;
 
   // Sections that depend on fullReport status (Weekly Schedule, Protocol, Meal Plan)
-  const lockedNarrative = dynamicNarrative;
+  const lockedNarrative = (useStatic || Object.keys(dynamicNarrative).length === 0) ? staticNarrative : dynamicNarrative;
   const lockedDse = dynamicDse;
 
   // Derive photo analysis visibility from API results or uploaded images
@@ -231,7 +296,7 @@ export default function TestReport({ sessionId, reportData: initialData, onDownl
       const signalTimer = setTimeout(() => {
         window.reportReady = true;
         console.log("Diagnostic Flow Readiness: window.reportReady = true (Signal Emitted)");
-      }, 5000); 
+      }, 5000);
 
       return () => {
         clearTimeout(signalTimer);
@@ -322,7 +387,7 @@ export default function TestReport({ sessionId, reportData: initialData, onDownl
   }));
 
   const personalisedTreatmentPhases = safeArray(lockedNarrative?.personalisedTreatmentPhases).map((p, i) => ({
-    phase: p.phase || `Phase ${i+1}`,
+    phase: p.phase || `Phase ${i + 1}`,
     monthRange: p.monthRange || "",
     subtitle: p.subtitle || "",
     tone: p.tone || "cyan",
@@ -392,7 +457,7 @@ export default function TestReport({ sessionId, reportData: initialData, onDownl
   const lifestyleRiskFactors = safeArray(lockedNarrative?.lifestyleRiskFactors).map(l => ({
     label: l.label,
     tag: l.tag || "Moderate",
-    tone: l.tone || "amber", 
+    tone: l.tone || "amber",
     progress: l.progress || 50,
     fromApi: true
   }));
@@ -463,13 +528,28 @@ export default function TestReport({ sessionId, reportData: initialData, onDownl
     activeLevel: p.status || "Moderate"
   }));
 
-  const dailyMealPlanRows = safeArray(lockedNarrative?.dailyMealPlanRows).map(m => ({
-    meal: m.meal,
-    detail: m.detail,
-    tone: m.tone || "cyan",
-    icon: m.icon || "leaf",
-    fromApi: true
-  }));
+  const dailyMealPlanRows = safeArray(lockedNarrative?.dailyMealPlanRows || lockedNarrative?.dailyMealPlan).map(m => {
+    const mealName = m.meal || m.type || "";
+    let resolvedTone = m.tone;
+
+    // Auto-resolve tone if missing or based on specific design requirements
+    if (!resolvedTone || resolvedTone === "cyan") {
+       if (mealName.includes("Breakfast")) resolvedTone = "amber";
+       else if (mealName.includes("Lunch")) resolvedTone = "green";
+       else if (mealName.includes("Snack")) resolvedTone = "cyan";
+       else if (mealName.includes("Dinner")) resolvedTone = "slate";
+       else if (mealName.includes("Supplement")) resolvedTone = "amber";
+       else if (mealName.includes("Bedtime")) resolvedTone = "slate";
+    }
+
+    return {
+      meal: mealName,
+      items: m.items || (Array.isArray(m.menu) ? m.menu : (m.detail ? m.detail.split(",") : (m.menu ? [m.menu] : []))),
+      tone: resolvedTone || "cyan",
+      icon: m.icon || "leaf",
+      fromApi: true
+    };
+  });
 
   const improvementPredictionCards = safeArray(lockedNarrative?.improvementPredictionCards).map(p => ({
     period: p.period || "Current",
@@ -510,7 +590,7 @@ export default function TestReport({ sessionId, reportData: initialData, onDownl
   const stressReductionTechniques = safeArray(lockedNarrative?.stressTechniques).map(t => ({
     title: t.name || t.title,
     desc: t.explanation || t.desc,
-    icon: t.icon, 
+    icon: t.icon,
     impact: t.impact,
     how: t.how,
     tone: t.tone || "cyan",
@@ -688,7 +768,7 @@ export default function TestReport({ sessionId, reportData: initialData, onDownl
                 </p>
                 {clinicalNarrative?.prognosis && (
                   <p className="report-prognosis-text" style={{ marginTop: '10px', fontSize: '14px', color: '#00E5FF', fontStyle: 'italic' }}>
-                    <strong>Prognosis:</strong> {typeof clinicalNarrative.prognosis === 'string' ? clinicalNarrative.prognosis : (clinicalNarrative.prognosis?.summary || "Favourable recovery potential with adherence to protocol.") }
+                    <strong>Prognosis:</strong> {typeof clinicalNarrative.prognosis === 'string' ? clinicalNarrative.prognosis : (clinicalNarrative.prognosis?.summary || "Favourable recovery potential with adherence to protocol.")}
                   </p>
                 )}
                 <p className="report-disclaimer-text" style={{ marginTop: '12px', fontSize: '11px', opacity: 0.6 }}>
@@ -1314,9 +1394,9 @@ export default function TestReport({ sessionId, reportData: initialData, onDownl
                       {!item.unavailable ? (
                         <>
                           <div style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', overflow: 'hidden' }}>
-                            <img 
-                              src={formatUrl(item.image)} 
-                              alt={item.label} 
+                            <img
+                              src={formatUrl(item.image)}
+                              alt={item.label}
                               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                               onError={(e) => {
                                 console.error("Image load error:", item.image);
@@ -1540,8 +1620,8 @@ export default function TestReport({ sessionId, reportData: initialData, onDownl
                   AI + Questionnaire Correlation
                 </h4>
                 <p>
-                  {clinicalNarrative?.aiCorrelationSummary || 
-                   `Photo analysis confirms thinning patterns detected in your profile. Visual data indicates crown and hairline recession are consistent with physiological indicators - highlighting ${dseResult?.topConditions?.[0] || 'active condition'} progression.`
+                  {clinicalNarrative?.aiCorrelationSummary ||
+                    `Photo analysis confirms thinning patterns detected in your profile. Visual data indicates crown and hairline recession are consistent with physiological indicators - highlighting ${dseResult?.topConditions?.[0] || 'active condition'} progression.`
                   }
                 </p>
 
@@ -2132,7 +2212,7 @@ export default function TestReport({ sessionId, reportData: initialData, onDownl
                 {scalpRecoveryCards.map((card) => {
                   const score = card.score || 0;
                   const activeSegments = Math.max(1, Math.min(4, Math.ceil(score / 25)));
-                  
+
                   return (
                     <article className="scalp-recovery-card" key={card.title}>
                       <p className="scalp-recovery-card-title">{card.title}</p>
@@ -2728,61 +2808,32 @@ export default function TestReport({ sessionId, reportData: initialData, onDownl
             <article className="meal-plan-panel">
               <h4>
                 <span className="meal-plan-title-icon" aria-hidden="true">
-                  <svg
-                    width="15"
-                    height="14"
-                    viewBox="0 0 15 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M5.53988 1.16634V2.33301H9.03863V1.16634H10.2049V2.33301H12.5374C12.7007 2.33301 12.8387 2.3894 12.9514 2.50217C13.0641 2.61495 13.1205 2.75301 13.1205 2.91634V12.2497C13.1205 12.413 13.0641 12.5511 12.9514 12.6638C12.8387 12.7766 12.7007 12.833 12.5374 12.833H2.04113C1.87786 12.833 1.73985 12.7766 1.62711 12.6638C1.51438 12.5511 1.45801 12.413 1.45801 12.2497V2.91634C1.45801 2.75301 1.51438 2.61495 1.62711 2.50217C1.73985 2.3894 1.87786 2.33301 2.04113 2.33301H4.37363V1.16634H5.53988ZM11.9543 6.99967H2.62426V11.6663H11.9543V6.99967ZM4.37363 3.49967H2.62426V5.83301H11.9543V3.49967H10.2049V4.66634H9.03863V3.49967H5.53988V4.66634H4.37363V3.49967Z"
-                      fill="#00E5FF"
-                    />
-                  </svg>
+                  <FiCalendar size={18} />
                 </span>
                 Sample Daily Meal Plan
               </h4>
 
-              {fullReport ? (
-                <div className="meal-plan-list">
-                  {dailyMealPlanRows.map((item) => (
-                    <article className="meal-plan-row" key={item.meal}>
-                      <span className="meal-type-label">{item.meal}</span>
-                      <ul className="meal-content-list">
-                        {(item.items ? item.items : (item.detail ? item.detail.split(",") : [])).map((food, i) => (
-                          <li key={i} className="meal-item-pill">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            {typeof food === "string" ? food.trim() : food}
-                          </li>
-                        ))}
-                      </ul>
-                    </article>
-                  ))}
-                </div>
-              ) : (
-                <div className="meal-plan-list">
-                  {dailyMealPlanRows.map((item) => (
-                    <article className="meal-plan-row" key={item.meal}>
-                      <span className="meal-type-label">{item.meal}</span>
-                      <ul className="meal-content-list">
-                        {(item.items ? item.items : (item.detail ? item.detail.split(",") : [])).map((food, i) => (
-                          <li key={i} className="meal-item-pill">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            {typeof food === "string" ? food.trim() : food}
-                          </li>
-                        ))}
-                      </ul>
-                    </article>
-                  ))}
+              <div className="meal-plan-list">
+                {dailyMealPlanRows.map((item) => (
+                  <article className="meal-plan-row" key={item.meal}>
+                    <div className={`meal-plan-row-icon ${item.tone}`}>
+                      <MealIcon type={item.icon || item.meal} />
+                    </div>
+                    <div className="meal-content-wrapper">
+                      <span className={`meal-label ${item.tone}`}>{item.meal}</span>
+                      {item.items.join(", ")}
+                    </div>
+                  </article>
+                ))}
+                {!fullReport && (
                   <UnlockOverlay
                     title="Unlock Personalized Meal Plan"
                     description="Get a day-by-day diet plan tailored to your hair recovery needs."
                     ctaText="Unlock Full Plan"
                     onUnlock={handleUnlockReport}
                   />
-                </div>
-              )}
+                )}
+              </div>
             </article>
           </section>
 
@@ -4196,7 +4247,7 @@ export default function TestReport({ sessionId, reportData: initialData, onDownl
                 Download Full PDF Report
               </button>
 
-              <button type="button" className="recovery-journey-retake-btn">
+              <button type="button" className="recovery-journey-retake-btn" onClick={() => navigate('/hair-test-assessment')}>
                 <span
                   className="recovery-journey-action-icon"
                   aria-hidden="true"

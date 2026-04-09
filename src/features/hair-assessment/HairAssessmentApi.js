@@ -200,3 +200,19 @@ export const verifyOtp = async (sessionId, otp) => {
         throw error;
     }
 };
+/**
+ * Resend OTP for session
+ * @param {string} sessionId 
+ * @returns {Promise<Object>}
+ */
+export const resendOtp = async (sessionId) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/sessions/${sessionId}/resend-otp`, {}, {
+            headers: getAuthHeaders()
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error resending OTP:", error);
+        throw error;
+    }
+};

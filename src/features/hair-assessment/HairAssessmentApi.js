@@ -83,7 +83,7 @@ export const finalizeQuiz = async (sessionId) => {
  */
 export const uploadImage = async (sessionId, photoId, file) => {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('image', file);
     try {
         const response = await axios.post(`${BASE_URL}/sessions/${sessionId}/images/${photoId}`, formData, {
             headers: {
@@ -134,6 +134,23 @@ export const checkSessionStatus = async (sessionId) => {
 };
 
 /**
+ * Fetch Full Results (Final Step - requires OTP)
+ * @param {string} sessionId 
+ * @returns {Promise<Object>}
+ */
+export const fetchFullResult = async (sessionId) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/sessions/${sessionId}/result`, {
+            headers: getAuthHeaders()
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching full result:", error);
+        throw error;
+    }
+};
+
+/**
  * Create Lead (Compliance Gate)
  * @param {Object} leadData { name, email, phone, sessionId, ... }
  * @returns {Promise<Object>}
@@ -157,7 +174,7 @@ export const createLead = async (leadData) => {
  */
 export const fetchReport = async (sessionId) => {
     try {
-        const response = await axios.get(`${BASE_URL}/sessions/reports/${sessionId}`, {
+        const response = await axios.get(`${BASE_URL}/sessions/${sessionId}/report`, {
             headers: getAuthHeaders()
         });
         return response.data;

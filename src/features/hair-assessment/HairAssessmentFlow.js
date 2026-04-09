@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FaChevronLeft, FaChevronRight, FaTimes, FaCamera, FaCheckCircle, FaTrashAlt, FaClock, FaInfoCircle, FaHeart, FaCheck, FaShieldAlt, FaLightbulb, FaLock, FaMagic, FaSearchPlus, FaGift, FaHeartbeat, FaChartBar, FaStethoscope, FaCalendarAlt, FaEnvelope, FaMapMarkerAlt, FaArrowRight, FaHospital } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import './HairAssessmentFlow.css';
-import { getAssessmentQuestions, createSession, updateAnswers, triggerAnalysis, checkSessionStatus, createLead, fetchReport, finalizeQuiz, uploadImage, verifyOtp } from './HairAssessmentApi';
+import { getAssessmentQuestions, createSession, updateAnswers, triggerAnalysis, checkSessionStatus, createLead, fetchReport, finalizeQuiz, uploadImage, verifyOtp, fetchFullResult } from './HairAssessmentApi';
 
 /* Shared Shield Icon */
 const ShieldIcon = () => (
@@ -24,6 +25,7 @@ const PhotoSecureIcon = () => (
 );
 
 const HairAssessmentFlow = () => {
+   const navigate = useNavigate();
   const [currentView, setCurrentView] = useState("diagnostic"); // "diagnostic" or "ai-analysis"
   const [aiSubStep, setAiSubStep] = useState('intro'); // 'intro', 'upload', 'processing', 'results'
   const [currentStep, setCurrentStep] = useState(1);
@@ -71,28 +73,49 @@ const HairAssessmentFlow = () => {
   const handleOptionSelect = async (qId, option, isMulti = false) => {
     const sessionId = localStorage.getItem('hair_assessment_session_id');
 
-    // 1. Calculate the NEW value first
+    // 1. Calculate the NEW value
     let newValue;
     if (isMulti) {
       const current = selectedOptions[qId] || [];
       const isSelected = current.includes(option);
-      newValue = isSelected
-        ? current.filter(o => o !== option)
-        : [...current, option];
+      newValue = isSelected ? current.filter(o => o !== option) : [...current, option];
     } else {
       newValue = option;
     }
 
-    // 2. Update state locally for immediate UI response
-    setSelectedOptions(prev => ({ ...prev, [qId]: newValue }));
+    // 2. Identify and Clean Branching Side-Effects
+    let finalNextOptions = { ...selectedOptions, [qId]: newValue };
+    let answersToClear = [];
 
-    // 3. Step 3: Progressive Answering (Auto-save)
-    // Execute once outside the state updater
+    // Determine if this question is a routing trigger (global rule or local condition)
+    const isRoutingTrigger = branchingRules.some(r => r.conditions.some(c => c.questionId === qId)) || 
+                           sections.some(s => s.questions.some(q => q.conditions?.some(c => c.questionId === qId)));
+
+    if (isRoutingTrigger) {
+      const visibleIds = getVisibleQuestionIds(finalNextOptions);
+      const cleanedOptions = {};
+      
+      // Identify answers for questions that are NO LONGER visible
+      Object.keys(finalNextOptions).forEach(id => {
+        if (visibleIds.has(id)) {
+          cleanedOptions[id] = finalNextOptions[id];
+        } else if (id !== qId) { // Never clear the question the user just touched
+          answersToClear.push({ questionId: id, value: null });
+        }
+      });
+      finalNextOptions = cleanedOptions;
+    }
+
+    setSelectedOptions(finalNextOptions);
+
+    // 3. Persistent Sync with Backend
     if (sessionId) {
       try {
-        await updateAnswers(sessionId, { questionId: qId, value: newValue });
+        // Send the updated answer PLUS any cleared answers (cascading cleanup)
+        const syncPayload = [{ questionId: qId, value: newValue }, ...answersToClear];
+        await updateAnswers(sessionId, syncPayload);
       } catch (err) {
-        console.error("Auto-save failed:", err);
+        console.error("Auto-save transition failed:", err);
       }
     }
   };
@@ -103,44 +126,91 @@ const HairAssessmentFlow = () => {
     fullTitle: s.title
   }));
 
-  const getDisplayedQuestions = (section) => {
-    if (!section) return [];
+  /**
+   * Helper to evaluate a specific branching condition against current state
+   */
+  const evaluateCondition = (cond, currentOptions) => {
+    if (!cond || !cond.questionId) return false;
+    const userValue = currentOptions[cond.questionId];
 
-    // 1. Collect all activated IDs across all branching rules
-    let activatedIds = new Set();
+    // Dependency not answered yet
+    if (userValue === undefined || userValue === null || userValue === '') return false;
 
-    const evaluateCondition = (cond) => {
-      const userValue = selectedOptions[cond.questionId];
-      if (userValue === undefined) return false;
+    const op = cond.operator;
+    const val = cond.value;
 
-      switch (cond.operator) {
-        case 'equals': return userValue === cond.value;
-        case 'not_equals': return userValue !== cond.value;
-        case 'in': return Array.isArray(cond.value) ? cond.value.includes(userValue) : false;
-        case 'gte': return Number(userValue) >= Number(cond.value);
-        case 'lte': return Number(userValue) <= Number(cond.value);
-        default: return false;
-      }
-    };
+    switch (op) {
+      case 'equals':
+        return Array.isArray(userValue) ? userValue.includes(val) : userValue === val;
+      case 'not_equals':
+        return Array.isArray(userValue) ? !userValue.includes(val) : userValue !== val;
+      case 'in':
+        if (Array.isArray(val)) {
+          return Array.isArray(userValue) 
+            ? userValue.some(v => val.includes(v))
+            : val.includes(userValue);
+        }
+        return false;
+      case 'gte':
+        return Number(userValue) >= Number(val);
+      case 'lte':
+        return Number(userValue) <= Number(val);
+      default:
+        return false;
+    }
+  };
 
-    // Evaluate all branching rules to determine what's active
+  /**
+   * Identifies all question IDs that are currently visible across the entire questionnaire
+   */
+  const getVisibleQuestionIds = (currentOptions) => {
+    const visibleIds = new Set();
+    const activatedByIds = new Set();
+    const deactivatedByIds = new Set();
+
+    // 1. Evaluate global branching rules - determine forced visibility/invisibility
     branchingRules.forEach(rule => {
       const conditions = rule.conditions || [];
-      // Implicit AND for all conditions in the rule
-      const met = conditions.length > 0 && conditions.every(c => evaluateCondition(c));
-
-      if (met && rule.actions?.activate) {
-        rule.actions.activate.forEach(id => activatedIds.add(id));
+      const isMet = conditions.length > 0 && conditions.every(c => evaluateCondition(c, currentOptions));
+      
+      if (isMet) {
+        rule.actions?.activate?.forEach(id => activatedByIds.add(id));
+        rule.actions?.deactivate?.forEach(id => deactivatedByIds.add(id));
       }
     });
 
-    // 2. Filter questions in the section based on conditions
-    return section.questions.filter(q => {
-      // Always show non-conditional questions
-      if (!q.isConditional) return true;
-      // Show conditional questions only if activated by a rule
-      return activatedIds.has(q.id);
+    // 2. Scan all sections to determine final visibility based on precedence
+    sections.forEach(section => {
+      section.questions.forEach(q => {
+        let isVisible = false;
+
+        // PRECEDENCE RULES:
+        // 1. Deactivate overrides everything (forced hide)
+        // 2. Activate overrides conditions (forced show)
+        // 3. Local conditions (conditional logic)
+        // 4. Default visibility (if question is not conditional)
+
+        if (deactivatedByIds.has(q.id)) {
+          isVisible = false;
+        } else if (activatedByIds.has(q.id)) {
+          isVisible = true;
+        } else if (q.conditions && q.conditions.length > 0) {
+          isVisible = q.conditions.every(c => evaluateCondition(c, currentOptions));
+        } else if (!q.isConditional) {
+          isVisible = true;
+        }
+
+        if (isVisible) visibleIds.add(q.id);
+      });
     });
+
+    return visibleIds;
+  };
+
+  const getDisplayedQuestions = (section) => {
+    if (!section) return [];
+    const visibleIds = getVisibleQuestionIds(selectedOptions);
+    return section.questions.filter(q => visibleIds.has(q.id));
   };
 
   const activeSection = sections[currentStep - 1] || null;
@@ -206,10 +276,23 @@ const HairAssessmentFlow = () => {
 
   const validateSection = (questions) => {
     const allAnswered = questions.every(q => {
-      if (!q.mandatory) return true;
       const val = selectedOptions[q.id];
-      if (q.type === 'MULTI_SELECT') return val && val.length > 0;
-      return val !== undefined && val !== '';
+      const isAnswered = q.type === 'MULTI_SELECT' ? (val && val.length > 0) : (val !== undefined && val !== '');
+      
+      if (!isAnswered) return !q.mandatory;
+
+      // Range Validation for NUMERIC
+      if (q.type === 'NUMERIC') {
+        const num = Number(val);
+        if ((q.min !== undefined && num < q.min) || (q.max !== undefined && num > q.max)) return false;
+      }
+
+      // No Numbers validation for City/Region
+      if (q.type === 'FREE_TEXT' && (q.text.toLowerCase().includes('city') || q.text.toLowerCase().includes('region'))) {
+        if (/\d/.test(val)) return false;
+      }
+      
+      return true;
     });
     return allAnswered && isProfileValid;
   };
@@ -230,7 +313,7 @@ const HairAssessmentFlow = () => {
             setAiSubStep("intro");
           } catch (error) {
             console.error("Quiz completion error:", error);
-            alert("Error finalizing result. Proceeding anyway...");
+            toast.info("Error finalizing result. Proceeding anyway...");
             setCurrentView("ai-analysis");
             setAiSubStep("intro");
           }
@@ -304,7 +387,14 @@ const HairAssessmentFlow = () => {
               handleOptionSelect(q.id, val, q.type === 'MULTI_SELECT');
               if (showErrors) setShowErrors(false);
             }}
-            showError={showErrors && q.mandatory && (q.type === 'MULTI_SELECT' ? !(selectedOptions[q.id]?.length > 0) : !selectedOptions[q.id])}
+            showError={showErrors && (
+              (q.mandatory && (q.type === 'MULTI_SELECT' ? !(selectedOptions[q.id]?.length > 0) : !selectedOptions[q.id])) ||
+              (q.type === 'NUMERIC' && selectedOptions[q.id] && (
+                (q.min !== undefined && Number(selectedOptions[q.id]) < q.min) ||
+                (q.max !== undefined && Number(selectedOptions[q.id]) > q.max)
+              )) ||
+              (q.type === 'FREE_TEXT' && selectedOptions[q.id] && (q.text.toLowerCase().includes('city') || q.text.toLowerCase().includes('region')) && /\d/.test(selectedOptions[q.id]))
+            )}
           />
         ))}
       </>
@@ -489,10 +579,18 @@ const DynamicQuestionCard = ({ index, question, selectedValue, onSelect, showErr
         <div className="input-group">
           <input
             type="text"
-            className="flow-input"
+            className={`flow-input ${showError ? 'input-error' : ''}`}
             placeholder="Type your answer here..."
             value={selectedValue || ''}
-            onChange={(e) => onSelect(e.target.value)}
+            onChange={(e) => {
+              const val = e.target.value;
+              // If it's a city/region question, optionally strip numbers immediately or just let parent validate
+              if (text.toLowerCase().includes('city') || text.toLowerCase().includes('region')) {
+                onSelect(val.replace(/[0-9]/g, ''));
+              } else {
+                onSelect(val);
+              }
+            }}
           />
         </div>
       );
@@ -521,23 +619,40 @@ const DynamicQuestionCard = ({ index, question, selectedValue, onSelect, showErr
     if (type === 'IMAGE_SELECT') {
       return (
         <div className="image-options-grid">
-          {options.map((opt) => (
-            <button
-              key={opt.id}
-              className={`image-option-btn ${isSelected(opt.id) ? 'selected' : ''}`}
-              onClick={() => onSelect(opt.id)}
-            >
-              <div className="image-container">
-                <img src={opt.imageUrl} alt={opt.label} />
-              </div>
-              <div className="image-option-info">
-                <div className="checkbox-circle">
-                  {isSelected(opt.id) && <FaCheck className="check-icon-option" />}
+          {options.map((opt) => {
+            // Asset Fallback logic for Norwood/Ludwig
+            let displayImageUrl = opt.imageUrl;
+            if (!displayImageUrl) {
+              const romanToWord = {
+                'I': 'one', 'II': 'two', 'III': 'three', 'IV': 'four', 
+                'V': 'five', 'VI': 'six', 'VII': 'seven'
+              };
+              const word = romanToWord[opt.id] || opt.id.toLowerCase();
+              if (id === 'Q_S02_005') { // Norwood (Male)
+                displayImageUrl = `/assets/img/baldness-${word}.png`;
+              } else if (id === 'Q_S02_008') { // Ludwig (Female)
+                displayImageUrl = `/assets/img/1-${word}.png`;
+              }
+            }
+
+            return (
+              <button
+                key={opt.id}
+                className={`image-option-btn ${isSelected(opt.id) ? 'selected' : ''}`}
+                onClick={() => onSelect(opt.id)}
+              >
+                <div className="image-container">
+                  <img src={displayImageUrl} alt={opt.label} />
                 </div>
-                <span>{opt.label}</span>
-              </div>
-            </button>
-          ))}
+                <div className="image-option-info">
+                  <div className="checkbox-circle">
+                    {isSelected(opt.id) && <FaCheck className="check-icon-option" />}
+                  </div>
+                  <span>{opt.label} Stage {opt.label}</span>
+                </div>
+              </button>
+            );
+          })}
         </div>
       );
     }
@@ -561,12 +676,26 @@ const DynamicQuestionCard = ({ index, question, selectedValue, onSelect, showErr
     );
   };
 
+  const isInvalid = (type === 'NUMERIC' && selectedValue && (
+    (min !== undefined && Number(selectedValue) < min) ||
+    (max !== undefined && Number(selectedValue) > max)
+  )) || (type === 'FREE_TEXT' && selectedValue && (text.toLowerCase().includes('city') || text.toLowerCase().includes('region')) && /\d/.test(selectedValue));
+
   return (
-    <div className={`flow-card ${showError ? 'card-error' : ''}`}>
+    <div className={`flow-card ${showError || isInvalid ? 'card-error' : ''}`}>
       <div className="question-header">
         <div className="q-title-box">
           <h3>Q{index} — {text} {mandatory && <span className="mandatory-asterisk" style={{ color: '#ff4d4d', marginLeft: '4px' }}>*</span>}</h3>
-          {showError && <span className="mandatory-tag">! PENDING: THIS FIELD IS REQUIRED</span>}
+          {(showError || isInvalid) && (
+            <span className="mandatory-tag">
+              {type === 'NUMERIC' && selectedValue && (
+                (min !== undefined && Number(selectedValue) < min) ||
+                (max !== undefined && Number(selectedValue) > max)
+              ) ? `! VALUE MUST BE BETWEEN ${min} AND ${max}` : 
+              (type === 'FREE_TEXT' && selectedValue && (text.toLowerCase().includes('city') || text.toLowerCase().includes('region')) && /\d/.test(selectedValue)) 
+              ? '! NUMBERS ARE NOT ALLOWED IN THIS FIELD' : '! PENDING: THIS FIELD IS REQUIRED'}
+            </span>
+          )}
         </div>
         <div className={`saved-badge ${selectedValue && (Array.isArray(selectedValue) ? selectedValue.length > 0 : true) ? 'visible' : ''}`}>
           <FaCheck className="check-icon-small" /> Saved
@@ -595,18 +724,16 @@ const SectionProgressTracker = ({ sectionName, total, answered, numMode = true }
 
 const AiAnalysisView = ({ sessionId, subStep, setSubStep, onBack, onNext }) => {
   const [uploadedPhotos, setUploadedPhotos] = useState({
-    front: null,
-    top: null,
-    left: null,
-    right: null
+    P01: null,
+    P02: null,
+    P03: null
   });
   const [isTriggering, setIsTriggering] = useState(false);
 
   const [uploadProgress, setUploadProgress] = useState({
-    front: false,
-    top: false,
-    left: false,
-    right: false
+    P01: false,
+    P02: false,
+    P03: false
   });
 
   const handleDeletePhoto = (key) => {
@@ -627,7 +754,7 @@ const AiAnalysisView = ({ sessionId, subStep, setSubStep, onBack, onNext }) => {
           setUploadProgress(prev => ({ ...prev, [key]: 'done' }));
         } else {
           setUploadProgress(prev => ({ ...prev, [key]: 'error' }));
-          alert(`Failed to upload ${key} view properly`);
+          toast.error(`Failed to upload ${key} view properly`);
         }
       } catch (err) {
         console.error("Upload error:", err);
@@ -647,19 +774,19 @@ const AiAnalysisView = ({ sessionId, subStep, setSubStep, onBack, onNext }) => {
           setSubStep('processing');
         }
       } else {
-        alert(response.message || "Failed to trigger analysis");
+        toast.error(response.message || "Failed to trigger analysis");
       }
     } catch (error) {
       console.error("Analysis trigger error:", error);
-      alert("Error starting analysis. Please try again.");
+      toast.error("Error starting analysis. Please try again.");
     } finally {
       setIsTriggering(false);
     }
   };
 
-  const totalRequired = 2;
-  const countRequired = [uploadedPhotos.front, uploadedPhotos.top].filter(Boolean).length;
-  const totalUploaded = Object.values(uploadedPhotos).filter(Boolean).length;
+  const totalRequired = 3;
+  const countRequired = [uploadedPhotos.P01, uploadedPhotos.P02, uploadedPhotos.P03].filter(Boolean).length;
+  const totalUploaded = countRequired;
   const canAnalyze = countRequired === totalRequired;
 
   if (subStep === 'upload') {
@@ -701,36 +828,28 @@ const AiAnalysisView = ({ sessionId, subStep, setSubStep, onBack, onNext }) => {
 
           <div className="ai-upload-grid-cards">
             <UploadCardMain
-              label="Front Hairline View"
+              label="Frontal View (P01)"
               status="Required"
               icon={<FrontViewIcon />}
-              previewUrl={uploadedPhotos.front}
-              onDelete={() => handleDeletePhoto('front')}
-              onUpload={(file) => handleUploadPhoto('front', file)}
+              previewUrl={uploadedPhotos.P01}
+              onDelete={() => handleDeletePhoto('P01')}
+              onUpload={(file) => handleUploadPhoto('P01', file)}
             />
             <UploadCardMain
-              label="Top / Crown View"
+              label="Crown View (P02)"
               status="Required"
               icon={<TopViewIcon />}
-              previewUrl={uploadedPhotos.top}
-              onDelete={() => handleDeletePhoto('top')}
-              onUpload={(file) => handleUploadPhoto('top', file)}
+              previewUrl={uploadedPhotos.P02}
+              onDelete={() => handleDeletePhoto('P02')}
+              onUpload={(file) => handleUploadPhoto('P02', file)}
             />
             <UploadCardMain
-              label="Left Side Profile"
-              status="Optional"
-              icon={<SideViewLeftIcon />}
-              previewUrl={uploadedPhotos.left}
-              onDelete={() => handleDeletePhoto('left')}
-              onUpload={(file) => handleUploadPhoto('left', file)}
-            />
-            <UploadCardMain
-              label="Right Side Profile"
-              status="Optional"
-              icon={<SideViewRightIcon />}
-              previewUrl={uploadedPhotos.right}
-              onDelete={() => handleDeletePhoto('right')}
-              onUpload={(file) => handleUploadPhoto('right', file)}
+              label="Side / Macro View (P03)"
+              status="Required"
+              icon={<SideViewLeftIcon />} // Reusing side icon for P03
+              previewUrl={uploadedPhotos.P03}
+              onDelete={() => handleDeletePhoto('P03')}
+              onUpload={(file) => handleUploadPhoto('P03', file)}
             />
           </div>
 
@@ -762,7 +881,7 @@ const AiAnalysisView = ({ sessionId, subStep, setSubStep, onBack, onNext }) => {
           <div className="ai-action-footer">
             <button
               className={`analyze-action-btn ${canAnalyze && !isTriggering ? 'active' : ''}`}
-              onClick={() => canAnalyze ? handleTrigger(false) : alert("Please upload required photos")}
+              onClick={() => canAnalyze ? handleTrigger(false) : toast.warning("Please upload required photos")}
               disabled={!canAnalyze || isTriggering}
             >
               {isTriggering ? 'Starting...' : 'Analyze Photos'} <SparklesIcon />
@@ -1234,6 +1353,7 @@ const OtpModal = ({ isOpen, onClose, onVerify, phone }) => {
 };
 
 const ResultsView = ({ sessionId, onBack, onNext }) => {
+  const navigate = useNavigate();
   const [isOtpOpen, setIsOtpOpen] = React.useState(false);
   const [email, setEmail] = useState('');
   const [city, setCity] = useState('');
@@ -1247,6 +1367,7 @@ const ResultsView = ({ sessionId, onBack, onNext }) => {
   const [formErrors, setFormErrors] = useState({ email: '', city: '' });
   const [showFormErrors, setShowFormErrors] = useState(false);
   const [isAnalysisComplete, setIsAnalysisComplete] = useState(false);
+  const [completeData, setCompleteData] = useState(null);
 
   // Get auto-filled data from previous steps if possible
   const [userInfo, setUserInfo] = useState({
@@ -1271,6 +1392,7 @@ const ResultsView = ({ sessionId, onBack, onNext }) => {
           if (response.success && response.data.status === 'ANALYSIS_COMPLETE') {
             console.log("Analysis ready in background!");
             setIsAnalysisComplete(true);
+            setCompleteData(response.data);
             clearInterval(pollInterval);
           }
         } catch (err) {
@@ -1305,7 +1427,7 @@ const ResultsView = ({ sessionId, onBack, onNext }) => {
     }
 
     if (!consents.privacy) {
-      alert("Please accept the privacy policy to continue.");
+      toast.warning("Please accept the privacy policy to continue.");
       return;
     }
 
@@ -1326,11 +1448,11 @@ const ResultsView = ({ sessionId, onBack, onNext }) => {
       if (leadResponse.success) {
         setIsOtpOpen(true);
       } else {
-        alert(leadResponse.message || "Failed to create lead");
+        toast.error(leadResponse.message || "Failed to create lead");
       }
     } catch (err) {
       console.error("Lead creation failed:", err);
-      alert("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setIsCreatingLead(false);
     }
@@ -1342,22 +1464,21 @@ const ResultsView = ({ sessionId, onBack, onNext }) => {
       const verifyResponse = await verifyOtp(sessionId, code);
       
       if (verifyResponse.success) {
-        // Step 8: Final Report Download
-        const reportResponse = await fetchReport(sessionId);
-        if (reportResponse.success && reportResponse.data.reportUrl) {
-          setReportUrl(reportResponse.data.reportUrl);
+        // Step 8: Fetch Full Clinical Dossier (Result API)
+        const resultResponse = await fetchFullResult(sessionId);
+         if (resultResponse.success) {
           setIsOtpOpen(false);
-          alert("Phone verified successfully! Your report is now ready.");
-          window.open(reportResponse.data.reportUrl, '_blank');
+          // Transition to the premium interactive dashboard
+          navigate(`/report/${sessionId}`);
         } else {
-          alert("Report generation in progress. Please wait a moment.");
+          toast.info("Preparing your clinical intelligence report...");
         }
       } else {
-        alert(verifyResponse.message || "Invalid OTP. Please try again.");
+        toast.error(verifyResponse.message || "Invalid OTP. Please try again.");
       }
     } catch (err) {
       console.error("Verification failed:", err);
-      alert("Invalid OTP or verification failed. Please check the code and try again.");
+      toast.error("Invalid OTP or verification failed. Please check the code and try again.");
     }
   };
 
@@ -1410,21 +1531,28 @@ const ResultsView = ({ sessionId, onBack, onNext }) => {
               <div className="locked-report-bg">
                 <img src="/yourreportpreview.png" alt="Report Preview" />
               </div>
-
               <div className="lock-overlay">
                 <div className="floating-badges-stack">
+                  {completeData?.dseResult?.hairHealthIndex && (
+                    <div className="f-badge badge-amber">
+                      <FaChartBar />
+                      <span>HHI Score: {completeData.dseResult.hairHealthIndex}/100</span>
+                    </div>
+                  )}
+                  {completeData?.clinicalNarrative?.conditions?.[0] && (
+                    <div className="f-badge badge-cyan">
+                      <FaStethoscope />
+                      <span>Condition: {completeData.clinicalNarrative.conditions[0].name}</span>
+                    </div>
+                  )}
                   <div className="f-badge badge-amber">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M11.4285 10.6016L13.9243 13.0983L13.0963 13.9266L10.6005 11.43C10.1418 11.7955 9.64027 12.0755 9.09602 12.27C8.52067 12.4722 7.92977 12.5733 7.32332 12.5733C6.37477 12.5733 5.49231 12.3361 4.67593 11.8616C3.88288 11.395 3.257 10.765 2.79827 9.97164C2.31622 9.15497 2.0752 8.27219 2.0752 7.3233C2.0752 6.37441 2.31622 5.49164 2.79827 4.67497C3.257 3.88164 3.88288 3.25552 4.67593 2.79664C5.49231 2.31441 6.37477 2.0733 7.32332 2.0733C8.27187 2.0733 9.15433 2.31441 9.97071 2.79664C10.7638 3.25552 11.3935 3.88164 11.86 4.67497C12.3343 5.49164 12.5714 6.37441 12.5714 7.3233C12.5714 7.92997 12.4704 8.52108 12.2682 9.09664C12.0738 9.64108 11.7939 10.1427 11.4285 10.6016ZM10.2506 10.17C10.616 9.79664 10.8998 9.36886 11.102 8.88664C11.3041 8.38886 11.4052 7.86775 11.4052 7.3233C11.4052 6.58441 11.2186 5.89608 10.8454 5.2583C10.4877 4.64386 10.0018 4.15775 9.38758 3.79997C8.75003 3.42664 8.06195 3.23997 7.32332 3.23997C6.5847 3.23997 5.89661 3.42664 5.25906 3.79997C4.64483 4.15775 4.1589 4.64386 3.80125 5.2583C3.42805 5.89608 3.24145 6.58441 7.3233 7.3233C3.24145 8.06219 3.42805 8.75052 3.80125 9.3883C4.1589 10.0027 4.64483 10.4889 5.25906 10.8466C5.89661 11.22 6.5847 11.4066 7.32332 11.4066C7.86757 11.4066 8.3885 11.3055 8.8861 11.1033C9.36815 10.9011 9.79577 10.6172 10.169 10.2516L10.2506 10.17ZM8.01141 5.09497C7.80926 5.1883 7.64404 5.33025 7.51575 5.5208C7.38746 5.71136 7.32332 5.9233 7.32332 6.15664C7.32332 6.36664 7.3758 6.56108 7.48076 6.73997C7.58573 6.91886 7.72762 7.0608 7.90645 7.1658C8.08527 7.2708 8.27965 7.3233 8.48957 7.3233C8.72282 7.3233 8.93469 7.26108 9.12518 7.13664C9.31566 7.01219 9.45756 6.84497 9.55086 6.63497C9.62083 6.86052 9.65582 7.08997 9.65582 7.3233C9.65582 7.7433 9.55086 8.13219 9.34093 8.48997C9.13101 8.84775 8.84722 9.13164 8.48957 9.34164C8.13192 9.55164 7.74317 9.65664 7.32332 9.65664C6.90347 9.65664 6.51472 9.55164 6.15707 9.34164C5.79942 9.13164 5.51563 8.84775 5.30571 8.48997C5.09578 8.13219 4.99082 7.7433 4.99082 7.3233C4.99082 6.9033 5.09578 6.51441 5.30571 6.15664C5.51563 5.79886 5.79942 5.51497 6.15707 5.30497C6.51472 5.09497 6.90347 4.98997 7.32332 4.98997C7.55657 4.98997 7.78593 5.02497 8.01141 5.09497Z" fill="#F4C430" />
-                    </svg>
-
-                    <span>Hair Loss Pattern Identified</span>
+                    <FaLock style={{ fontSize: '10px' }} />
+                    <span>Detailed Diagnosis Locked</span>
                   </div>
                   <div className="f-badge badge-cyan">
                     <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M7.79026 1.90167L13.3533 11.5267C13.431 11.6589 13.4485 11.8028 13.4058 11.9583C13.363 12.1139 13.2716 12.2345 13.1317 12.32C13.0462 12.3745 12.949 12.4017 12.8401 12.4017H1.73742C1.57415 12.4017 1.43614 12.3433 1.3234 12.2267C1.21067 12.11 1.1543 11.9739 1.1543 11.8183C1.1543 11.7095 1.17762 11.6122 1.22427 11.5267L6.78728 1.90167C6.86503 1.76167 6.98166 1.67028 7.13716 1.62751C7.29266 1.58473 7.44038 1.60223 7.58033 1.68001C7.67363 1.73445 7.74361 1.80834 7.79026 1.90167ZM2.7404 11.235H11.8371L7.28877 3.36001L2.7404 11.235ZM6.70565 9.48501H7.8719V10.6517H6.70565V9.48501ZM6.70565 5.40167H7.8719V8.31834H6.70565V5.40167Z" fill="#00E5FF" />
                     </svg>
-
                     <span>Multiple contributing factors detected</span>
                   </div>
                 </div>
@@ -1648,9 +1776,9 @@ const ResultsView = ({ sessionId, onBack, onNext }) => {
                   <span>Your information is secure and will not be shared.</span>
                 </div>
               </div>
-            </div>
           </div>
         </div>
+      </div>
 
         <OtpModal
           isOpen={isOtpOpen}
@@ -1713,6 +1841,7 @@ const UploadCardMain = ({ label, status, icon, previewUrl, onDelete, onUpload })
     const file = e.target.files[0];
     if (file) {
       onUpload(file);
+      e.target.value = ''; // Reset to allow re-uploading the same file
     }
   };
 

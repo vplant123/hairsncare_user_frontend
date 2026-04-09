@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./HairAssessmentPrep.css";
 import { FaChevronLeft, FaSpinner } from "react-icons/fa";
 import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { createSession } from "./HairAssessmentApi";
 
 const HairAssessmentPrep = () => {
@@ -24,11 +25,11 @@ const HairAssessmentPrep = () => {
         // Navigate to the diagnostic flow
         navigate("/take-hair-test-premium");
       } else {
-        alert("Unable to start assessment. Please try again.");
+        toast.error("Unable to start assessment. Please try again.");
       }
     } catch (error) {
       console.error("Session creation error:", error);
-      alert("Something went wrong. Please check your connection and try again.");
+      toast.error("Something went wrong. Please check your connection and try again.");
     } finally {
       setLoading(false);
     }

@@ -86,6 +86,9 @@ import HairAssessmentPrep from "./features/hair-assessment/HairAssessmentPrep";
 import HairAssessmentFlow from "./features/hair-assessment/HairAssessmentFlow";
 import ReportPage from "./pages/ReportPage";
 import ReportPrintPage from "./pages/ReportPrintPage";
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
 
 let y =
   "Discover customized hair loss treatments and accurate diagnosis with Hairsncares. Our expert services and advanced hair tests provide personalized solutions for effective hair restoration. Start your journey to fuller, healthier hair today!";
